@@ -68,10 +68,10 @@ new autoComplete({
 ## Release History
 
 * v1.0.0
-  * Added data tags of the generated results
+  * Add customized data tags to generated results
   * Highlight matching results
   * Set maximum number for shown results
-  * Added placeholder text to the input field
+  * Add placeholder text to the input field
 
 ----
 
