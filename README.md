@@ -1,8 +1,4 @@
 # autoComplete.js
 Simple autocomplete pure vanilla Javascript library.
 
-<iframe
-  src="https://carbon.now.sh/embed/?bg=rgba(255%2C255%2C255%2C1)&t=material&wt=none&l=javascript&ds=true&dsyoff=20px&dsblur=68px&wc=true&wa=true&pv=48px&ph=32px&ln=false&fm=Hack&fs=14px&lh=133%25&si=false&code=%252F%252F%2520The%2520app%2520instance%2520creator%250A%250Anew%2520autoComplete(%257B%250A%2509dataSrc%253A%2520grocery%252C%2509%2509%2509%252F%252F%2520Array%2520data%2520source%250A%2509placeHolder%253A%2520%2522Try%2520me%2520...%2522%252C%2509%252F%252F%2520Place%2520Holder%2520text%250A%2509maxNum%253A%252010%252C%2509%2509%2509%2509%2509%252F%252F%2520Max%2520number%2520of%2520results%250A%2509highlight%253A%2520true%252C%2509%2509%2509%252F%252F%2520Highlight%2520matching%2520results%250A%2509dataAttribute%253A%2520%257B%250A%2509%2509tag%253A%2520%2522set%2522%252C%2509%2509%2509%2509%252F%252F%2520Data%2520attribute%2520tag%250A%2509%2509value%253A%2520%2522value%2522%2509%2509%2509%252F%252F%2520Data%2520attribute%2520value%250A%2509%257D%252C%250A%2520%2520%250A%2509onSelection%253A%2520value%2520%253D%253E%2520%257B%250A%2520%2520%2520%2520%2520%2520%2509%252F%252F%2520Action%2520script%2520onClick%2520event%250A%2509%2509document.querySelector(%2522.selection%2522).innerHTML%2520%253D%2520value.id%253B%250A%2509%257D%250A%257D)%253B&es=2x&wm=false&ts=false"
-  style="transform:scale(0.7); width:1024px; height:473px; border:0; overflow:hidden;"
-  sandbox="allow-scripts allow-same-origin">
-</iframe>
+![Semantic description of image](/README/img/autoComplete.png "autoComplete.js Init.")
