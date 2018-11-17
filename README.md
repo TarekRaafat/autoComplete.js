@@ -4,7 +4,7 @@
 ![[Size]()](https://img.shields.io/badge/Size-101%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)]()
 
-> Simple autocomplete pure vanilla Javascript library. [Demo](https://www.tarekraafat.com/dev/projects/autoComplete/)
+> Simple autocomplete pure vanilla Javascript library. <a href="https://www.tarekraafat.com/dev/projects/autoComplete/" target="_blank">Demo</a>
 
 autoComplete.js is a pure vanilla Javascript library, that was built for speed, high versatility and seemless integration with wide variety of projects & systems.
 <br>
