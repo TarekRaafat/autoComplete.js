@@ -70,7 +70,7 @@ new autoComplete({
 ## Release History
 
 * v1.0.0
-  * Add customized data tags to generated results
+  * Add customized data tags for generated results
   * Highlight matching results
   * Set maximum number for shown results
   * Add placeholder text to the input field
