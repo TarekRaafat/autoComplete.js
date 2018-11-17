@@ -19,8 +19,7 @@ autoComplete.js is a pure vanilla Javascript library, that was built for speed, 
 - [x] Versitle
 - [x] Customizable
 
-<br>
-
+![autoComplete.js Initialization Example](./README/img/autoComplete.init.png "autoComplete.js Initialization Example")
 ----
 
 ## Get Started
