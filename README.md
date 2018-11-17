@@ -12,7 +12,7 @@ autoComplete.js is a pure vanilla Javascript library, that was built for speed, 
 ![autoComplete.js Design](./README/img/autoComplete.js.png "autoComplete.js Design")
 
 ## Features
-- [x] Easy to use
+- [x] Simple & Easy to use
 - [x] Pure Vanilla Javascript
 - [x] Zero Dependencies
 - [x] Lightweight
