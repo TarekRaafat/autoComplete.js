@@ -6,12 +6,12 @@ Simple autocomplete pure vanilla Javascript library.
 
 ## Roadmap
 
-Core Functionality:
+### Core Functionality:
 - [ ] Navigate results list with keyboard
 
 ----
 
-Interface Functionality:
+### Interface Functionality:
 - [ ] Show number of results inside text field
 - [ ] Change input field Color
 - [ ] Change input field Icon
