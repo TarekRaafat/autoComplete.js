@@ -1,6 +1,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Build Status](https://travis-ci.com/TarekRaafat/autoComplete.js.svg?branch=master)](https://travis-ci.com/TarekRaafat/autoComplete.js)
-![Size](https://img.shields.io/badge/Size-101%20KB-green.svg)
+![[Size]()](https://img.shields.io/badge/Size-101%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)]()
 
 # autoComplete.js :sparkles:
