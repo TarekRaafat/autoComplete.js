@@ -9,7 +9,7 @@
 
 > Simple autocomplete pure vanilla Javascript library. <a href="https://www.tarekraafat.com/dev/projects/autoComplete/" target="_blank">Demo</a>
 
-autoComplete.js is a pure vanilla Javascript library, that's built for speed, high versatility and seemless integration with wide variety of projects & systems.
+autoComplete.js is a pure vanilla Javascript library, that's built for speed, high versatility and seemless integration with wide range of projects & systems.
 
 ## Features
 - [x] Simple & Easy to use
