@@ -11,6 +11,11 @@ h1 {
 	color: rgba(255, 122, 122, 1);
 }
 
+a {
+	text-decoration: none;
+	color: rgb(116, 116, 116);
+}
+
 .selection {
 	margin-top: 25vh;
 	font-size: 2rem;
