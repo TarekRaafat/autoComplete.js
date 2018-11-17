@@ -9,10 +9,7 @@ Simple autocomplete pure vanilla Javascript library.
 }
 </style>
 
-<div class="panel panel-success">
 **Roadmap**
-{: .panel-heading}
-<div class="panel-body">
 
 *Core Functionality
 > Navigate results list with keyboard
