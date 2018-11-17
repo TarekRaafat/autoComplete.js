@@ -55,7 +55,6 @@ new autoComplete({
 		tag: "set",	    // Data attribute tag
 		value: "value"	    // Data attribute value
     	},
-    
 	onSelection: value => {     // Action script onClick event
 		document.querySelector(".selection").innerHTML = value.id;
 	}
