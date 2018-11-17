@@ -1,11 +1,7 @@
 # autoComplete.js :sparkles:
-Simple autocomplete pure vanilla Javascript library.
+Simple autocomplete pure vanilla Javascript library. [autoComplete.js Demo](https://www.tarekraafat.com/dev/projects/autoComplete/)
 
 ![autoComplete.js Initialization](./README/img/autoComplete.js.png "autoComplete.js Initialization")
-
-<br>
-
-[autoComplete.js Demo](https://www.tarekraafat.com/dev/projects/autoComplete/)
 
 ## Roadmap
 
