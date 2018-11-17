@@ -1,0 +1,55 @@
+{
+	"name": "autocomplete",
+	"version": "1.0.0",
+	"description": "Simple autocomplete pure vanilla Javascript library.",
+	"main": "autoComplete.js",
+	"scripts": {
+		"babel": "babel src -d lib",
+		"dev": "webpack --mode development",
+		"build": "webpack --mode production",
+		"start": "webpack-dev-server --open"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://TarekRaafat@bitbucket.org/TarekRaafat/autocomplete.git"
+	},
+	"keywords": [
+		"simple",
+		"autocomplete",
+		"pure",
+		"beautiful",
+		"vanilla",
+		"javascript",
+		"light",
+		"fast",
+		"lighting fast",
+		"lightweight",
+		"slim",
+		"modern",
+		"versitle",
+		"customizable",
+		"easy",
+		"library",
+		"plugin"
+	],
+	"author": "Tarek Raafat",
+	"license": "Apache-2.0",
+	"bugs": {
+		"url": "https://bitbucket.org/TarekRaafat/autocomplete/issues"
+	},
+	"homepage": "https://bitbucket.org/TarekRaafat/autocomplete#readme",
+	"devDependencies": {
+		"babel-core": "^6.26.3",
+		"babel-loader": "^7.1.5",
+		"babel-minify-webpack-plugin": "^0.3.1",
+		"babel-plugin-add-module-exports": "^0.2.1",
+		"babel-preset-env": "^1.7.0",
+		"copy-webpack-plugin": "^4.5.2",
+		"webpack": "^4.16.0",
+		"webpack-cli": "^3.0.8",
+		"webpack-dev-server": "^3.1.10"
+	},
+	"dependencies": {
+		"babel-polyfill": "^6.26.0"
+	}
+}
