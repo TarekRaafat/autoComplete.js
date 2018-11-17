@@ -7,7 +7,7 @@ Simple autocomplete pure vanilla Javascript library.
 ##Roadmap
 
 Core Functionality:
--Navigate results list with keyboard
+- Navigate results list with keyboard
 
 ----
 
