@@ -71,6 +71,7 @@ new autoComplete({
   * Highlight matching results
   * Set maximum number for shown results
   * Add placeholder text to the input field
+  * Placeholder keeps the last selection value
 
 ----
 
