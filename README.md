@@ -3,6 +3,12 @@ Simple autocomplete pure vanilla Javascript library.
 
 ![autoComplete.js Initialization](./README/img/autoComplete.js.png "autoComplete.js Initialization")*autoComplete.js Initialization*
 
+<style>
+.alert-danger {
+  color: rgb(169,68,66) !important;
+}
+</style>
+
 <div class="panel panel-success">
 **Roadmap**
 {: .panel-heading}
