@@ -7,14 +7,14 @@ Simple autocomplete pure vanilla Javascript library. [autoComplete.js Demo](http
 
 ## Roadmap
 
-#### Core Functionality:
+#### Functionality:
 - [ ] Navigate results list with keyboard
 - [ ] Add different types of data source (Objects, Multidimensional Arrays, etc...)
 - [ ] Multi-Search
 
 <br>
 
-#### Interface Functionality:
+#### Interface:
 - [ ] Show number of results inside text field
 - [ ] Change input field Color
 - [ ] Change input field Icon
