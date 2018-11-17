@@ -2,7 +2,7 @@
 Simple autocomplete pure vanilla Javascript library.
 
 ![autoComplete.js Initialization](./README/img/autoComplete.js.png "autoComplete.js Initialization")
-[autoComplete.js Demo][https://www.tarekraafat.com/dev/projects/autoComplete/]
+[autoComplete.js Demo](https://www.tarekraafat.com/dev/projects/autoComplete/)
 
 ##Roadmap
 
