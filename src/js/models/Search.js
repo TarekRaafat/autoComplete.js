@@ -34,11 +34,6 @@ export default class Search {
 				: searchView.error(
 						"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
 				  );
-		/** Future functions to be added
-		/* Show number of results
-		/* Change input Color
-		/* Change input Icon
-		**/
 
 		// Starts the app Enigne
 		this.init();
