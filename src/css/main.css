@@ -11,9 +11,9 @@ h1 {
 	color: rgba(255, 122, 122, 1);
 }
 
-a {
-	text-decoration: none;
-	color: rgb(116, 116, 116);
+h1 > a {
+	text-decoration: inherit;
+	color: inherit;
 }
 
 .selection {
@@ -29,6 +29,11 @@ a {
 	bottom: 2rem;
 	color: rgb(147, 147, 147);
 	transition: all 0.1s ease-in-out;
+}
+
+.footer > div > a {
+		text-decoration: inherit;
+		color: inherit;
 }
 
 .copyrights {
