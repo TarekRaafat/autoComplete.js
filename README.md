@@ -9,7 +9,7 @@ Simple autocomplete pure vanilla Javascript library.
 ### Core Functionality:
 - [ ] Navigate results list with keyboard
 
-----
+<br>
 
 ### Interface Functionality:
 - [ ] Show number of results inside text field
