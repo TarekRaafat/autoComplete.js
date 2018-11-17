@@ -11,7 +11,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://TarekRaafat@bitbucket.org/TarekRaafat/autocomplete.git"
+		"url": "git+https://github.com/TarekRaafat/autoComplete.js.git"
 	},
 	"keywords": [
 		"simple",
@@ -35,9 +35,9 @@
 	"author": "Tarek Raafat",
 	"license": "Apache-2.0",
 	"bugs": {
-		"url": "https://bitbucket.org/TarekRaafat/autocomplete/issues"
+		"url": "https://github.com/TarekRaafat/autoComplete.js/issues"
 	},
-	"homepage": "https://bitbucket.org/TarekRaafat/autocomplete#readme",
+	"homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
 	"devDependencies": {
 		"babel-core": "^6.26.3",
 		"babel-loader": "^7.1.5",
