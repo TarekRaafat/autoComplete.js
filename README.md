@@ -1,4 +1,4 @@
-# autoComplete.js
+# autoComplete.js :sparkles:
 Simple autocomplete pure vanilla Javascript library.
 
 ![autoComplete.js Initialization](./README/img/autoComplete.js.png "autoComplete.js Initialization")
@@ -7,14 +7,14 @@ Simple autocomplete pure vanilla Javascript library.
 ## Roadmap
 
 Core Functionality:
-- [] Navigate results list with keyboard
+- [ ] Navigate results list with keyboard
 
 ----
 
 Interface Functionality:
-- [] Show number of results inside text field
-- [] Change input field Color
-- [] Change input field Icon
+- [ ] Show number of results inside text field
+- [ ] Change input field Color
+- [ ] Change input field Icon
 
 </div>
 </div>
