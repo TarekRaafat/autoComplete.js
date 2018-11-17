@@ -11,6 +11,8 @@ Simple autocomplete pure vanilla Javascript library.
 
 ### Core Functionality:
 - [ ] Navigate results list with keyboard
+- [ ] Add different types of data source (Objects, Multidimensional Arrays, etc...)
+- [ ] Navigate results list with keyboard
 
 <br>
 
