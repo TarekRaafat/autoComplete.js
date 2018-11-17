@@ -1,5 +1,5 @@
 {
-	"name": "autocomplete",
+	"name": "autocomplete.js",
 	"version": "1.0.0",
 	"description": "Simple autocomplete pure vanilla Javascript library.",
 	"main": "autoComplete.js",
