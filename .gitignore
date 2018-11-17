@@ -4,6 +4,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.gitignore
 
 # Runtime data
 pids
@@ -53,6 +54,7 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
+.travis.yml
 
 # dotenv environment variables file
 .env
