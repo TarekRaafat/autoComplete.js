@@ -4,7 +4,6 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.gitignore
 
 # Runtime data
 pids
@@ -54,7 +53,6 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
-.travis.yml
 
 # dotenv environment variables file
 .env
@@ -74,7 +72,7 @@ dist/
 ehthumbs.db
 Thumbs.db
 
-#IDE (eclipse / intellij) related files
+# IDE (eclipse / intellij) related files
 .idea
 .classpath
 .project
@@ -82,3 +80,10 @@ Thumbs.db
 .metadata
 *.iml
 *.ipr
+
+# VS Code related files
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
