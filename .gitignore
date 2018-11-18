@@ -64,3 +64,21 @@ typings/
 
 # Distribution folder
 dist/
+
+# OS generated files #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+#IDE (eclipse / intellij) related files
+.idea
+.classpath
+.project
+.settings
+.metadata
+*.iml
+*.ipr
