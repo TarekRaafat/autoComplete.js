@@ -45,7 +45,7 @@ $ npm run build
 
 
 > HTML file
-1. Assign id "autoComplete" to input filed
+1. Assign id="autoComplete" to the input filed
 
 ```html
 <input id="autoComplete" type="text">
@@ -92,11 +92,12 @@ new autoComplete({
 #### Functionality:
 - [ ] Navigate results list with keyboard
 - [ ] Add different types of data source (Objects, Multidimensional Arrays, etc...)
-- [ ] Multi keyword Search
+- [ ] Multi-keyword Search
 
 
 #### Interface:
-- [ ] Show number of results inside text field
+- [ ] Different design styles for inspiration (Ongoing)
+- [ ] Number of results inside input field (Optional)
 - [ ] Change input field Color
 - [ ] Change input field Icon
 
