@@ -43,9 +43,16 @@ $ npm run build
 
 ### How to use:
 
-1. Instantiate autoComplete engine
-2. Configure it as shown below
-3. You're ready to go
+
+> HTML file
+1. Assign id "autoComplete" to input filed
+
+```html
+<input id="autoComplete" type="text">
+```
+> JS file
+
+2. Create new instance of autoComplete engine
 ```js
 // The app instance creator
 
@@ -63,6 +70,8 @@ new autoComplete({
 	}
 });
 ```
+3. That's it you're ready to go!
+
 <br>
 
 ---
@@ -83,7 +92,7 @@ new autoComplete({
 #### Functionality:
 - [ ] Navigate results list with keyboard
 - [ ] Add different types of data source (Objects, Multidimensional Arrays, etc...)
-- [ ] Multi-Search
+- [ ] Multi keyword Search
 
 
 #### Interface:
