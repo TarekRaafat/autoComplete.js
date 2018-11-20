@@ -70,7 +70,7 @@ new autoComplete({
 	}
 });
 ```
-3. That's it you're ready to go!
+3. That's it, you're ready to go!
 
 <br>
 
@@ -91,15 +91,18 @@ new autoComplete({
 
 #### Functionality:
 - [ ] Navigate results list with keyboard
-- [ ] Add different types of data source (Objects, Multidimensional Arrays, etc...)
+- [ ] Add support for different types of data source
+	- [ ] JS Object
+	- [ ] JSON
+	- [ ] Multidimensional Array
 - [ ] Multi-keyword Search
 
 
 #### Interface:
-- [ ] Different design styles for inspiration (Ongoing)
+- [ ] New designs for inspiration (Ongoing)
+	- [ ] Styles
+	- [ ] Interactions
 - [ ] Number of results inside input field (Optional)
-- [ ] Change input field Color
-- [ ] Change input field Icon
 
 
 ----
