@@ -1,5 +1,3 @@
-import "./autoComplete.js";
-
 const grocery = [
 	"The Pop Shoppe - Black Cherry",
 	"Bread - Crumbs, Bulk",
@@ -1006,7 +1004,7 @@ const grocery = [
 // The app instance creator
 new autoComplete({
 	dataSrc: grocery,
-	placeHolder: "Try me ...",
+	placeHolder: "Try me...",
 	maxNum: 10,
 	highlight: true,
 	dataAttribute: {

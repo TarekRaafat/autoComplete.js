@@ -8,8 +8,8 @@ export default class Search {
 		this.dataSrc = Array.isArray(config.dataSrc)
 			? config.dataSrc
 			: searchView.error(
-					"<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>."
-			  );
+				"<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>."
+			);
 		// Placeholder text
 		this.placeHolder = isString(config.placeHolder)
 			? config.placeHolder
@@ -21,19 +21,19 @@ export default class Search {
 		// Assign data attribute tag & value if set in object
 		this.dataAttribute =
 			typeof config.dataAttribute === "object" &&
-			config.dataAttribute.constructor === Object
+				config.dataAttribute.constructor === Object
 				? {
-						tag: config.dataAttribute.tag,
-						value: config.dataAttribute.value
-				  }
+					tag: config.dataAttribute.tag,
+					value: config.dataAttribute.value
+				}
 				: { tag: "autocomplete", value: "" };
 		// Action function on result selection
 		this.onSelection =
 			typeof config.onSelection === "function"
 				? config.onSelection
 				: searchView.error(
-						"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
-				  );
+					"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
+				);
 
 		// Starts the app Enigne
 		this.init();
@@ -111,9 +111,7 @@ export default class Search {
 			.toLowerCase()
 			.replace(
 				selectors.input.value.toLowerCase(),
-				`<span class="autoComplete_highlighted_result">${
-					selectors.input.value
-				}</span>`
+				`<span class="autoComplete_highlighted_result">${selectors.input.value}</span>`
 			);
 
 		// Pushes matching results to the final list of array

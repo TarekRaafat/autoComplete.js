@@ -1,6 +1,7 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
 	mode: "development",
@@ -8,7 +9,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: "js/autoComplete.js",
-		library: "autoComplete",
+		library: "autoComplete.js",
 		libraryTarget: "umd"
 	},
 	devServer: {
@@ -23,7 +24,8 @@ module.exports = {
 			],
 			{ debug: "debug" }
 		),
-		new MinifyPlugin()
+		new MinifyPlugin(),
+		new BundleAnalyzerPlugin()
 	],
 	module: {
 		rules: [

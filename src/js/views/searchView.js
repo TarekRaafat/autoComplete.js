@@ -1,4 +1,3 @@
-import Search from "../models/Search";
 import { selectors } from "./selectors";
 
 // Gets the user's input value
@@ -57,7 +56,7 @@ const clearResults = () => {
 // showing & hidding results list onfocus / blur
 ["focus", "blur"].forEach(eventType => {
 	const result = document.querySelector(".autoComplete_results_list");
-	selectors.input.addEventListener(eventType, function(event) {
+	selectors.input.addEventListener(eventType, (event) => {
 		if (eventType === "blur") {
 			result.style = "opacity: 0; visibility: hidden;";
 		} else {
@@ -84,11 +83,9 @@ const getSelection = value => {
 			// after checking the value length and validate it
 			selectors.input.setAttribute(
 				"placeholder",
-				`${
-					event.target.closest(".autoComplete_result").id.length > 13
-						? event.target.closest(".autoComplete_result").id.slice(0, 13) +
-						  " ..."
-						: event.target.closest(".autoComplete_result").id
+				`${event.target.closest(".autoComplete_result").id.length > 13
+					? event.target.closest(".autoComplete_result").id.slice(0, 13) +
+					" ..." : event.target.closest(".autoComplete_result").id
 				}`
 			);
 		});
