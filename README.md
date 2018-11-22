@@ -80,11 +80,11 @@ new autoComplete({
 Examples
 --------
 
-  For working example of autoComplete.js, visit the [Demo]
+  For working example of autoComplete.js, visit the [Demo].
 
 [Demo]: http://www.tarekraafat.com/dev/projects/autoComplete/
 
-  Or download the [Demo] files from the <a href="./dist" target="_blank">`/dist`</a> folder
+  Or download the [Demo] files from the <a href="./dist" target="_blank">`/dist`</a> folder.
 
 ----
 
