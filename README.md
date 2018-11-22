@@ -75,8 +75,6 @@ new autoComplete({
 ```
 3. That's it, you're ready to go!
 
-<br>
-
 ---
 
 ## Release History
