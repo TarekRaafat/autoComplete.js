@@ -122,6 +122,9 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ## Release History
 
+* v1.0.1
+	* Optimizations Reduced the library weigth by 1KB
+  
 * v1.0.0
   * Add customized data attribute tag for generated results
   * Highlight matching results from the results list

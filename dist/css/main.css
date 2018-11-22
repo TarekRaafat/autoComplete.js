@@ -1,0 +1,55 @@
+.contaier {
+	width: 100vw;
+	height: 100vh;
+}
+
+.header {
+	text-align: center;
+}
+
+h1 {
+	color: rgba(255, 122, 122, 1);
+}
+
+h1 > a {
+	text-decoration: none;
+	color: rgba(255, 122, 122, 1);
+}
+
+.selection {
+	margin-top: 25vh;
+	font-size: 2rem;
+	font-weight: bold;
+	color: #ffc6c6;
+}
+
+.footer {
+	width: 97.6vw;
+	position: absolute;
+	bottom: 2rem;
+	color: rgb(147, 147, 147);
+	transition: all 0.1s ease-in-out;
+}
+
+.footer > div > a {
+		text-decoration: none;
+		color: rgb(147, 147, 147);
+}
+
+.copyrights {
+	text-align: center;
+	font-size: 0.8rem;
+}
+
+@media only screen and (max-width: 600px) {
+	.footer {
+		bottom: 1.5rem;
+		transition: all 0.1s ease-in-out;
+	}
+}
+
+@media only screen and (max-height: 500px) {
+	.footer {
+		display: none;
+	}
+}

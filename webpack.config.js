@@ -1,7 +1,6 @@
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MinifyPlugin = require("babel-minify-webpack-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
 	mode: "development",
@@ -24,8 +23,7 @@ module.exports = {
 			],
 			{ debug: "debug" }
 		),
-		new MinifyPlugin(),
-		new BundleAnalyzerPlugin()
+		new MinifyPlugin()
 	],
 	module: {
 		rules: [
