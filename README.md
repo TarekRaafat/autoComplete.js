@@ -5,9 +5,9 @@
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)]()
 
 
-[![autoComplete.js Design](./README/img/autoComplete.js.png "autoComplete.js Design")](https://www.tarekraafat.com/dev/projects/autoComplete/)
+[![autoComplete.js Design](./README/img/autoComplete.js.png "autoComplete.js Design")](http://www.tarekraafat.com/dev/projects/autoComplete/)
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://www.tarekraafat.com/dev/projects/autoComplete/" target="_blank">Demo</a>
+> Simple autocomplete pure vanilla Javascript library. <a href="http://www.tarekraafat.com/dev/projects/autoComplete/" target="_blank">Demo</a>
 
 autoComplete.js is a simple pure vanilla Javascript library that's built for speed, high versatility and seamless integration with wide range of projects & systems.
 
@@ -19,23 +19,26 @@ autoComplete.js is a simple pure vanilla Javascript library that's built for spe
 - [x] Lightning Fast
 - [x] Versatile
 - [x] Customizable
+- [x] First Class Error Reporting
 
 ![autoComplete.js Code Example](./README/img/autoComplete.init.png "autoComplete.js Code Example")
 ----
 
 ## Get Started
-### Install:
+### Clone:
+* Clone autoComplete.js to your local machine using `https://github.com/TarekRaafat/autoComplete.js.git`
+### Setup:
 
 1. Install Dependencies
-```
+```shell
 $ npm i
 ```
 2. Development live server
-```
+```shell
 $ npm start
 ```
 3. Build Production Package
-```
+```shell
 $ npm run build
 ```
 
@@ -79,11 +82,11 @@ new autoComplete({
 ## Release History
 
 * v1.0.0
-  * Add customized data tags for generated results
-  * Highlight matching results
+  * Add customized data attribute tag for generated results
+  * Highlight matching results from the results list
   * Set maximum number for shown results
   * Add placeholder text to the input field
-  * Placeholder keeps the last selection value
+  * Placeholder keeps the last selection value saved
 
 ----
 
