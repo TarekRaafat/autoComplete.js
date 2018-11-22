@@ -88,6 +88,22 @@ Example
 
 ----
 
+Support
+----------------
+
+For general questions about autoComplete.js, tweet at [@TarekRaafat].
+
+For technical questions, you should post a question on [Stack Overflow] and tag 
+it with [autoComplete.js][so tag].
+
+<!-- section links -->
+
+[Stack Overflow]: http://stackoverflow.com/
+[@TarekRaafat]: https://twitter.com/TarekRaafat
+[so tag]: http://stackoverflow.com/questions/tagged/autoComplete.js
+
+----
+
 ## Browser Support
 ### Desktop
 * Chrome
