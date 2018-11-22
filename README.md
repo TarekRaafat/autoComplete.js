@@ -75,6 +75,49 @@ new autoComplete({
 ```
 3. That's it, you're ready to go!
 
+----
+
+Examples
+--------
+
+  For working example of autoComplete.js, visit the [Demo]
+
+[Demo]: http://www.tarekraafat.com/dev/projects/autoComplete/
+
+  Or download the [Demo] files from the <a href="./dist" target="_blank">`/dist`</a> folder
+
+----
+
+## Browser Support
+### Desktop
+* Chrome
+* Firefox
+* Safari
+* Opera
+* Edge
+
+### Mobile
+* Chrome
+* Safari
+
+----
+
+Versioning
+----------
+
+For transparency and insight into the release cycle, releases will be numbered 
+with the following format:
+
+`<major>.<minor>.<patch>`
+
+And constructed with the following guidelines:
+
+* Breaking backwards compatibility bumps the major
+* New additions without breaking backwards compatibility bumps the minor
+* Bug fixes and misc changes bump the patch
+
+For more information on semantic versioning, please visit http://semver.org/.
+
 ---
 
 ## Release History
@@ -105,17 +148,6 @@ new autoComplete({
 	- [ ] Interactions
 - [ ] Number of results inside input field (Optional)
 
-
-----
-
-## Author
-
-Tarek Raafat - tarek.m.raafat@gmail.com
-
-Distributed under the Apache 2.0 license. See ``Apache 2.0`` for more information.
-
-https://github.com/TarekRaafat/
-
 ----
 
 ## Contribution
@@ -134,6 +166,16 @@ Pull requests are warmly welcome.
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
+
+----
+
+## Author
+
+Tarek Raafat - tarek.m.raafat@gmail.com
+
+Distributed under the Apache 2.0 license. See ``Apache 2.0`` for more information.
+
+https://github.com/TarekRaafat/
 
 ----
 

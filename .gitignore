@@ -61,7 +61,7 @@ typings/
 .next
 
 # Distribution folder
-dist/
+# dist/
 
 # OS generated files #
 .DS_Store
