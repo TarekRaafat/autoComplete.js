@@ -114,7 +114,7 @@ const autoComplete = require("./autoComplete");
 
 new autoComplete({
 	dataSrc: grocery,	    // Array data source
-	placeHolder: "Try me ...",  // Place Holder text
+	placeHolder: "Try me...",   // Place Holder text
 	maxNum: 10,		    // Max number of results
 	highlight: true,	    // Highlight matching results
 	dataAttribute: {
