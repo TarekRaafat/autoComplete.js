@@ -53,7 +53,7 @@ $ npm run build
 
 * jsDelivr CDN
 
-`Stylesheet`
+`CSS`
 ```html
 <head>
 
@@ -61,7 +61,7 @@ $ npm run build
 
 </head>
 ```
-`Javascript`
+`JS`
 ```html
 <body>
 	
@@ -73,13 +73,13 @@ $ npm run build
 * HTML Local load
   
 ```html
-<script src="./path/autoComplete.js"></script>
+<script src="./autoComplete.js"></script>
 ```
 
 * HTML Local load - ES6 module `(Use with Import)`
   
 ```html
-<script src="./path/index.js" type="module"></script>
+<script src="./index.js" type="module"></script>
 ```
 
 * Import module ES6
