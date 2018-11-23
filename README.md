@@ -210,12 +210,13 @@ For more information on semantic versioning, please visit http://semver.org/.
 ## Roadmap
 
 #### Functionality:
-- [ ] Navigate results list with keyboard
 - [ ] Add support for different types of data source
+	- [ ] Fetch for external data source
 	- [ ] JS Object
 	- [ ] JSON
 	- [ ] Multidimensional Array
 - [ ] Multi-keyword Search
+- [ ] Navigate results list with keyboard
 
 
 #### Interface:
