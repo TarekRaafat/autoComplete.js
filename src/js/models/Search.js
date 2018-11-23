@@ -5,15 +5,15 @@ import { isBoolean, isNumber, isString } from "util";
 export default class Search {
 	constructor(config) {
 		// Source of data list
-		this.dataSrc = Array.isArray(config.dataSrc)
-			? config.dataSrc
-			: searchView.error(
-				"<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>."
-			);
+		this.dataSrc = () => {
+			if (Array.isArray(config.dataSrc)) {
+				return config.dataSrc;
+			} else {
+				searchView.error("<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>.");
+			}
+		};
 		// Placeholder text
-		this.placeHolder = isString(config.placeHolder)
-			? config.placeHolder
-			: "Search...";
+		this.placeHolder = isString(config.placeHolder) ? config.placeHolder : "Search...";
 		// Maximum number of results to show
 		this.maxNum = isNumber(config.maxNum) ? config.maxNum : 10;
 		// Highlighting matching results
@@ -29,11 +29,9 @@ export default class Search {
 				: { tag: "autocomplete", value: "" };
 		// Action function on result selection
 		this.onSelection =
-			typeof config.onSelection === "function"
-				? config.onSelection
-				: searchView.error(
-					"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
-				);
+			typeof config.onSelection === "function" ? config.onSelection : searchView.error(
+				"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
+			);
 
 		// Starts the app Enigne
 		this.init();
@@ -77,7 +75,7 @@ export default class Search {
 
 		try {
 			// Checks input matches in data source
-			this.dataSrc.filter(record => {
+			this.dataSrc().filter(record => {
 				if (record.toLowerCase().includes(inputValue.toLowerCase())) {
 					if (this.highlight) {
 						this.activateHighlight(record);
@@ -122,7 +120,7 @@ export default class Search {
 	init() {
 		try {
 			// If the data source is valid run the app else error
-			if (this.dataSourceValidation(this.dataSrc)) {
+			if (this.dataSourceValidation(this.dataSrc())) {
 				this.setPlaceHolder();
 				this.searchInputValidation(searchView.getSearchInput());
 			}
