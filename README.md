@@ -54,6 +54,8 @@ $ npm run build
 * jsDelivr CDN
 
 ```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.0.2/dist/css/autoComplete.css">
+
 <script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.0.2/dist/js/autoComplete.js"></script>
 ```
 
