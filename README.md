@@ -53,7 +53,7 @@ $ npm run build
 
 * jsDelivr CDN
 
-
+`Stylesheet`
 ```html
 <head>
 
@@ -61,6 +61,7 @@ $ npm run build
 
 </head>
 ```
+`Javascript`
 ```html
 <body>
 	
