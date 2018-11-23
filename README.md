@@ -211,7 +211,7 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 #### Functionality:
 - [ ] Add support for different types of data source
-	- [X] Fetch for external data source
+	- [X] Fetch external data source
 	- [ ] JS Object
 	- [ ] JSON
 	- [ ] Multidimensional Array

@@ -13,7 +13,7 @@ export default class Search {
 		// Placeholder text
 		this.placeHolder = isString(config.placeHolder)
 			? config.placeHolder
-			: "Search ...";
+			: "Search...";
 		// Maximum number of results to show
 		this.maxNum = isNumber(config.maxNum) ? config.maxNum : 10;
 		// Highlighting matching results
