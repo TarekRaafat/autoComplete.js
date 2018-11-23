@@ -53,10 +53,20 @@ $ npm run build
 
 * jsDelivr CDN
 
+
 ```html
+<head>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.0.2/dist/css/autoComplete.css">
 
+</head>
+```
+```html
+<body>
+	
 <script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.0.2/dist/js/autoComplete.js"></script>
+
+</body>
 ```
 
 * HTML Local load
