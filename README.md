@@ -73,13 +73,13 @@ $ npm run build
 * HTML Local load
   
 ```html
-<script src="./js/autoComplete.js"></script>
+<script src="./path/autoComplete.js"></script>
 ```
 
 * HTML Local load - ES6 module `(Use with Import)`
   
 ```html
-<script src="./js/index.js" type="module"></script>
+<script src="./path/index.js" type="module"></script>
 ```
 
 * Import module ES6
