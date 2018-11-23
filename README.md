@@ -44,6 +44,42 @@ $ npm run build
 
 <br>
 
+### Installation: 
+
+* jsDelivr CDN
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.0.2/dist/js/autoComplete.js"></script>
+```
+
+* HTML Local load
+  
+```html
+<script src="./js/autoComplete.js"></script>
+```
+
+* HTML Local load - ES6 module + (Import ES6)
+  
+```html
+<script src="./js/index.js" type="module"></script>
+```
+
+* Import module ES6
+
+```js
+import autoComplete from "./autoComplete";
+```
+
+* Node.js
+
+```js
+const autoComplete = require("./autoComplete");
+```
+
+> NOTE: incase your project is being, polyfilled remove pollyfill option from autoComplete.js webpack.config.js file for smooth build.
+
+<br>
+
 ### How to use:
 
 
