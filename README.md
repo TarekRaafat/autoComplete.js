@@ -25,8 +25,13 @@ autoComplete.js is a simple pure vanilla Javascript library that's built for spe
 ----
 
 ## Get Started
+
 ### Clone:
+
 * Clone autoComplete.js to your local machine using `https://github.com/TarekRaafat/autoComplete.js.git`
+
+<br>
+
 ### Setup:
 
 1. Install Dependencies
@@ -81,7 +86,6 @@ const autoComplete = require("./autoComplete");
 <br>
 
 ### How to use:
-
 
 > HTML file
 1. Assign id="autoComplete" to the input filed
@@ -141,6 +145,7 @@ it with [autoComplete.js][so tag].
 ----
 
 ## Browser Support
+
 ### Desktop
 * Chrome
 * Firefox
