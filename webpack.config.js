@@ -8,7 +8,7 @@ module.exports = {
 	output: {
 		path: path.resolve(__dirname, "dist"),
 		filename: "js/autoComplete.js",
-		library: "autoComplete.js",
+		library: "autoComplete",
 		libraryTarget: "umd"
 	},
 	devServer: {
