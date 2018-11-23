@@ -138,6 +138,9 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ## Release History
 
+* v1.0.2
+	* Fixed the library name in the webpack.config.js file
+
 * v1.0.1
 	* Optimizations Reduced the library weigth by 1KB
   
