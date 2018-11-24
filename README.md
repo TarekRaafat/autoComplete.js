@@ -192,7 +192,8 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ## Release History
 * v1.1.0
-	* Reduced the library size 96%
+	* Fixed some bugs caused problems with node apps
+	* Reduced the library size 90%
 	* Replaced webpack with Rollup for better bundling
 * v1.0.3
 	* Refactored & Optimized to reduce size and enhance performance

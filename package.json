@@ -55,8 +55,5 @@
 		"rollup-plugin-babel": "^4.0.3",
 		"rollup-plugin-eslint": "^5.0.0",
 		"rollup-plugin-uglify": "^6.0.0"
-	},
-	"files": [
-		"dist"
-	]
+	}
 }
