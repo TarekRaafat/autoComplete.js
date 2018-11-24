@@ -1,13 +1,14 @@
 {
 	"name": "autocomplete.js",
-	"version": "1.0.3",
+	"version": "1.1.0",
 	"description": "Simple autocomplete pure vanilla Javascript library.",
-	"main": "autoComplete.js",
+	"main": "dist/js/autoComplete.cjs.js",
+	"module": "dist/js/autoComplete.esm.js",
+	"browser": "dist/js/autoComplete.umd.js",
 	"scripts": {
-		"babel": "babel src -d lib",
-		"dev": "webpack --mode development",
-		"build": "webpack --mode production",
-		"start": "webpack-dev-server --open"
+		"build": "rollup -c",
+		"dev": "rollup -c -w",
+		"start": "rollup --watch"
 	},
 	"repository": {
 		"type": "git",
@@ -46,17 +47,16 @@
 	},
 	"homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
 	"devDependencies": {
-		"babel-core": "^6.26.3",
-		"babel-loader": "^7.1.5",
-		"babel-minify-webpack-plugin": "^0.3.1",
-		"babel-plugin-add-module-exports": "^0.2.1",
-		"babel-preset-env": "^1.7.0",
-		"copy-webpack-plugin": "^4.6.0",
-		"webpack": "^4.26.0",
-		"webpack-cli": "^3.1.2",
-		"webpack-dev-server": "^3.1.10"
+		"@babel/core": "^7.1.6",
+		"@babel/preset-env": "^7.1.6",
+		"acorn": "^6.0.4",
+		"babel-preset-es2015-rollup": "^3.0.0",
+		"rollup": "^0.67.3",
+		"rollup-plugin-babel": "^4.0.3",
+		"rollup-plugin-eslint": "^5.0.0",
+		"rollup-plugin-uglify": "^6.0.0"
 	},
-	"dependencies": {
-		"babel-polyfill": "^6.26.0"
-	}
+	"files": [
+		"dist"
+	]
 }

@@ -39,7 +39,7 @@ export default class Search {
 	// Checks user's input search value validity
 	searchInputValidation(selector) {
 		// Input field handler fires an event onKeyup action
-		selector.addEventListener("keyup", event => {
+		selector.addEventListener("keyup", () => {
 			// event.preventDefault();
 			// Check if input is not empty or just have space before triggering the app
 			if (selector.value.length > 0 && selector.value !== " ") {

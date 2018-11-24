@@ -7,7 +7,7 @@ const getSearchInput = () => selectors.input;
 const createResultsList = listContainer => {
 	const list = document.createElement("ul");
 	list.setAttribute("class", "autoComplete_results_list");
-	listContainer.insertAdjacentElement("afterbegin", list);
+	listContainer.appendChild(list);
 };
 
 // Creates results list container
@@ -36,7 +36,7 @@ const addResultsToList = (results, cleanResults, dataAttribute) => {
 		result.setAttribute("id", cleanResults[record]);
 		result.setAttribute("class", resState);
 		result.innerHTML = results[record];
-		resList.insertAdjacentElement("beforeend", result);
+		resList.appendChild(result);
 	});
 };
 
@@ -53,7 +53,7 @@ const clearResults = () => {
 // showing & hidding results list onfocus / blur
 ["focus", "blur"].forEach(eventType => {
 	const result = document.querySelector(".autoComplete_results_list");
-	selectors.input.addEventListener(eventType, (event) => {
+	selectors.input.addEventListener(eventType, () => {
 		if (eventType === "blur") {
 			result.style = "opacity: 0; visibility: hidden;";
 		} else {
