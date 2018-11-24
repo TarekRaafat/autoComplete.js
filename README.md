@@ -57,7 +57,7 @@ $ npm run build
 ```html
 <head>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.0.2/dist/css/autoComplete.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.1.0/dist/css/autoComplete.css">
 
 </head>
 ```
@@ -65,7 +65,7 @@ $ npm run build
 ```html
 <body>
 	
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.0.2/dist/js/autoComplete.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.1.0/dist/js/autoComplete.min.js"></script>
 
 </body>
 ```
@@ -190,8 +190,8 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ## Release History
 * v1.1.0
-	* Reduced the library size 96%
-	* Introducing 2 different verions of the library (vanilla, minified)
+	* Reduced the library size 97% `(101KB -> 4KB)`
+	* Introducing 2 different verions of the library `(pure, minified)`
 	* Replaced webpack with Rollup for better bundling
 	* Fixed some bugs caused problems with node apps
 * v1.0.3

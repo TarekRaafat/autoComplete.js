@@ -7,7 +7,7 @@ export default [
 	{
 		input: 'src/js/models/Search.js',
 		output: {
-			file: pkg.main,
+			file: pkg.browser,
 			name: 'autoComplete',
 			format: 'umd'
 		},
@@ -31,9 +31,9 @@ export default [
 	{
 		input: 'src/js/models/Search.js',
 		output: {
-			file: pkg.browser,
+			file: pkg.main,
 			name: 'autoComplete',
-			format: 'iife'
+			format: 'umd'
 		},
 		plugins: [
 			babel({
