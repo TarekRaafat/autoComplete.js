@@ -65,7 +65,7 @@ $ npm run build
 ```html
 <body>
 	
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.1.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.1.0/dist/js/autoComplete.js"></script>
 
 </body>
 ```
