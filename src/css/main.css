@@ -1,3 +1,7 @@
+html {
+	font-size: 1rem;
+	font-family: "PT Sans", sans-serif;
+}
 .contaier {
 	width: 100vw;
 	height: 100vh;
