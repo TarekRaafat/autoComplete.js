@@ -7,10 +7,9 @@ export default [
 	{
 		input: 'src/js/models/Search.js',
 		output: {
+			file: pkg.main,
 			name: 'autoComplete',
-			file: pkg.browser,
-			format: 'umd',
-			sourceMap: 'inline'
+			format: 'umd'
 		},
 		plugins: [
 			eslint({
@@ -31,10 +30,11 @@ export default [
 	},
 	{
 		input: 'src/js/models/Search.js',
-		output: [
-			{ file: pkg.main, format: 'cjs', sourceMap: 'inline' },
-			{ file: pkg.module, format: 'es', sourceMap: 'inline' }
-		],
+		output: {
+			file: pkg.browser,
+			name: 'autoComplete',
+			format: 'iife'
+		},
 		plugins: [
 			babel({
 				exclude: 'node_modules/**',

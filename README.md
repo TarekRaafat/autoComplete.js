@@ -94,8 +94,6 @@ import autoComplete from "./autoComplete";
 const autoComplete = require("./autoComplete");
 ```
 
-> NOTE: incase your project is being, polyfilled remove pollyfill option from autoComplete.js webpack.config.js file for smooth build.
-
 <br>
 
 ### How to use:
@@ -192,9 +190,10 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ## Release History
 * v1.1.0
-	* Fixed some bugs caused problems with node apps
-	* Reduced the library size 90%
+	* Reduced the library size 96%
+	* Introducing 3 different verions of the library (cjs, esm, umd)
 	* Replaced webpack with Rollup for better bundling
+	* Fixed some bugs caused problems with node apps
 * v1.0.3
 	* Refactored & Optimized to reduce size and enhance performance
 
