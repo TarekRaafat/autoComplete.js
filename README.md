@@ -191,7 +191,7 @@ For more information on semantic versioning, please visit http://semver.org/.
 ## Release History
 * v1.1.0
 	* Reduced the library size 96%
-	* Introducing 3 different verions of the library (cjs, esm, umd)
+	* Introducing 2 different verions of the library (vanilla, minified)
 	* Replaced webpack with Rollup for better bundling
 	* Fixed some bugs caused problems with node apps
 * v1.0.3
