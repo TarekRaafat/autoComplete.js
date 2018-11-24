@@ -1,6 +1,5 @@
 import { renderResults as searchView } from "../views/searchView";
 import { selectors } from "../views/selectors";
-import { isBoolean, isNumber, isString } from "util";
 
 export default class Search {
 	constructor(config) {
@@ -13,26 +12,21 @@ export default class Search {
 			}
 		};
 		// Placeholder text
-		this.placeHolder = isString(config.placeHolder) ? config.placeHolder : "Search...";
+		this.placeHolder = typeof config.placeHolder === "string" ? config.placeHolder : "Search...";
 		// Maximum number of results to show
-		this.maxNum = isNumber(config.maxNum) ? config.maxNum : 10;
+		this.maxNum = typeof config.maxNum === "number" ? config.maxNum : 10;
 		// Highlighting matching results
-		this.highlight = isBoolean(config.highlight) ? config.highlight : true;
+		this.highlight = typeof config.highlight === "boolean" ? config.highlight : true;
 		// Assign data attribute tag & value if set in object
-		this.dataAttribute =
-			typeof config.dataAttribute === "object" &&
-				config.dataAttribute.constructor === Object
-				? {
-					tag: config.dataAttribute.tag,
-					value: config.dataAttribute.value
-				}
-				: { tag: "autocomplete", value: "" };
+		this.dataAttribute = typeof config.dataAttribute === "object" && config.dataAttribute.constructor === Object ? {
+			tag: config.dataAttribute.tag,
+			value: config.dataAttribute.value
+		} : { tag: "autocomplete", value: "" };
 		// Action function on result selection
 		this.onSelection =
 			typeof config.onSelection === "function" ? config.onSelection : searchView.error(
 				"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
 			);
-
 		// Starts the app Enigne
 		this.init();
 	}

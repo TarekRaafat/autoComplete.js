@@ -26,10 +26,7 @@ const addResultsToList = (results, cleanResults, dataAttribute) => {
 
 	results.forEach((event, record) => {
 		const result = document.createElement("li");
-		result.setAttribute(
-			`data-${dataAttribute.tag}`,
-			dataAttribute.value || cleanResults[record]
-		);
+		result.setAttribute(`data-${dataAttribute.tag}`, dataAttribute.value || cleanResults[record]);
 		result.setAttribute("tabindex", record + 1);
 		if (results.length === 1) {
 			resState = "autoComplete_result autoComplete_single_result";
@@ -83,10 +80,8 @@ const getSelection = value => {
 			// after checking the value length and validate it
 			selectors.input.setAttribute(
 				"placeholder",
-				`${event.target.closest(".autoComplete_result").id.length > 13
-					? event.target.closest(".autoComplete_result").id.slice(0, 13) +
-					" ..." : event.target.closest(".autoComplete_result").id
-				}`
+				`${event.target.closest(".autoComplete_result").id.length > 13 ? event.target.closest(".autoComplete_result").id.slice(0, 13) +
+					"..." : event.target.closest(".autoComplete_result").id}`
 			);
 		});
 	});
