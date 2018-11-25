@@ -190,8 +190,9 @@ For more information on semantic versioning, please visit http://semver.org/.
 
 ## Release History
 * v1.2.0
-	* Redesigned the entire search engine for better results
+	* Redesigned the entire search engine for better results & experience
 	* Added support for Multi-keyword search
+	* Fixed issue with Capital letters reflects in results
 * v1.1.0
 	* Reduced the library size 97% `(101KB -> 4KB)`
 	* Introducing 2 different verions of the library `(pure, minified)`
@@ -204,7 +205,7 @@ For more information on semantic versioning, please visit http://semver.org/.
 	* Fixed the library name in the webpack.config.js file
 
 * v1.0.1
-	* Optimizations Reduced the library weigth by 1KB
+	* Optimizations Reduced the library weight by 1KB
   
 * v1.0.0
   * Add customized data attribute tag for generated results
