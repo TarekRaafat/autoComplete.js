@@ -67,7 +67,7 @@ export default class autoComplete {
 		// Query character position based on success
 		let searchPosition = 0;
 
-		// Iterate over record character
+		// Iterate over record characters
 		for (let number = 0; number < record.length; number++) {
 			// Holds current record character
 			let recordChar = record[number];
