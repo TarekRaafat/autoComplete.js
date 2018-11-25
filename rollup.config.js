@@ -5,7 +5,7 @@ import pkg from './package.json';
 
 export default [
 	{
-		input: 'src/js/models/Search.js',
+		input: 'src/js/models/autoComplete.js',
 		output: {
 			file: pkg.browser,
 			name: 'autoComplete',
@@ -29,7 +29,7 @@ export default [
 		]
 	},
 	{
-		input: 'src/js/models/Search.js',
+		input: 'src/js/models/autoComplete.js',
 		output: {
 			file: pkg.main,
 			name: 'autoComplete',

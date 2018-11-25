@@ -189,6 +189,9 @@ For more information on semantic versioning, please visit http://semver.org/.
 ---
 
 ## Release History
+* v1.2.0
+	* Redesigned the entire search engine for better results
+	* Added support for Multi-keyword search
 * v1.1.0
 	* Reduced the library size 97% `(101KB -> 4KB)`
 	* Introducing 2 different verions of the library `(pure, minified)`
@@ -220,7 +223,7 @@ For more information on semantic versioning, please visit http://semver.org/.
 	- [ ] JSON
 	- [ ] Multidimensional Array
 	- [ ] External data source `(Plugin)`
-- [ ] Multi-keyword Search
+- [X] Multi-keyword Search
 - [ ] Navigate results list with keyboard
 
 

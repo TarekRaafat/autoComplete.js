@@ -141,11 +141,11 @@
     error: error
   };
 
-  var Search =
+  var autoComplete =
   /*#__PURE__*/
   function () {
-    function Search(config) {
-      _classCallCheck(this, Search);
+    function autoComplete(config) {
+      _classCallCheck(this, autoComplete);
 
       // Source of data list
       this.dataSrc = function () {
@@ -177,7 +177,7 @@
     } // Checks if the data source is valid
 
 
-    _createClass(Search, [{
+    _createClass(autoComplete, [{
       key: "dataSourceValidation",
       value: function dataSourceValidation(value) {
         return Array.isArray(value);
@@ -205,6 +205,45 @@
             renderResults.clearResults();
           }
         });
+      } // Search common characters within record
+
+    }, {
+      key: "search",
+      value: function search(query, record) {
+        // Search query string sanitized & normalized
+        query = query.replace(/ /g, "").toLowerCase(); // Array of matching characters
+
+        var match = []; // Query character position based on success
+
+        var searchPosition = 0; // Iterate over record character
+
+        for (var number = 0; number < record.length; number++) {
+          // Holds current record character
+          var recordChar = record[number]; // Matching case
+
+          if (searchPosition < query.length && recordChar.toLowerCase() === query[searchPosition]) {
+            if (this.highlight) {
+              // Highlight matching character
+              recordChar = "<span class=\"autoComplete_highlighted_result\">" + recordChar + "</span>"; // Increment search position
+
+              searchPosition++;
+            } else {
+
+              searchPosition++;
+            }
+          } // Adds matching character to the matching list
+
+
+          match.push(recordChar);
+        } // Non-Matching case
+
+
+        if (searchPosition !== query.length) {
+          return "";
+        } // Return the joined match
+
+
+        return match.join("");
       } // List all matching results
 
     }, {
@@ -222,16 +261,12 @@
         try {
           // Checks input matches in data source
           this.dataSrc().filter(function (record) {
-            if (record.toLowerCase().includes(inputValue.toLowerCase())) {
-              if (_this2.highlight) {
-                _this2.activateHighlight(record);
+            var match = _this2.search(inputValue, record);
 
-                _this2.cleanResList.push(record);
-              } else {
-                _this2.resList.push(record);
+            if (match) {
+              _this2.resList.push(match);
 
-                _this2.cleanResList.push(record);
-              }
+              _this2.cleanResList.push(record);
             }
           });
         } catch (error) {
@@ -246,15 +281,6 @@
       key: "setPlaceHolder",
       value: function setPlaceHolder() {
         selectors.input.setAttribute("placeholder", this.placeHolder);
-      } // Highlight matching results function
-
-    }, {
-      key: "activateHighlight",
-      value: function activateHighlight(value) {
-        // Replaces matching input with highlighted result
-        var highlighted = value.toLowerCase().replace(selectors.input.value.toLowerCase(), "<span class=\"autoComplete_highlighted_result\">".concat(selectors.input.value, "</span>")); // Pushes matching results to the final list of array
-
-        this.resList.push(highlighted);
       } // Starts the app Enigne
 
     }, {
@@ -272,9 +298,9 @@
       }
     }]);
 
-    return Search;
+    return autoComplete;
   }();
 
-  return Search;
+  return autoComplete;
 
 })));
