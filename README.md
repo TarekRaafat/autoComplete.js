@@ -109,17 +109,17 @@ const autoComplete = require("./autoComplete");
 2. Create new instance of autoComplete engine
 ```js
 // The app instance creator
-
 new autoComplete({
-	dataSrc: grocery,	    // Array data source
-	placeHolder: "Try me...",   // Place Holder text
-	maxNum: 10,		    // Max number of results
-	highlight: true,	    // Highlight matching results
+	dataSrc: grocery,		  // Array data source
+	placeHolder: "Try me...",  	  // Place Holder text
+	placeHolderLength: 26,		  // Max placeholder length
+	maxResults: 10,		    	  // Max number of results
+	highlight: true,	  	  // Highlight matching results	
 	dataAttribute: {
-		tag: "set",	    // Data attribute tag
-		value: "value"	    // Data attribute value
-    	},
-	onSelection: value => {     // Action script onClick event
+		tag: "set",	    	  // Data attribute tag
+		value: "value"	    	  // Data attribute value
+	},
+	onSelection: value => {    	  // Action script onClick event
 		document.querySelector(".selection").innerHTML = value.id;
 	}
 });
@@ -189,6 +189,8 @@ For more information on semantic versioning, please visit http://semver.org/.
 ---
 
 ## Release History
+* v1.2.1
+	* Added Placeholder text maximum length option
 * v1.2.0
 	* Redesigned the entire search engine for better results & experience
 	* Added support for Multi-keyword search
