@@ -103,10 +103,7 @@
     var result = document.querySelector(".autoComplete_results_list");
     selectors.input.addEventListener(eventType, function () {
       if (eventType === "blur") {
-        result.style = "opacity: 0;";
-        setTimeout(function () {
-          result.style = "display: none;s";
-        }, 1000);
+        result.style = "opacity: 0; visibility: hidden;";
       } else {
         result.style = "opacity: 1; visibility: visible;";
       }
