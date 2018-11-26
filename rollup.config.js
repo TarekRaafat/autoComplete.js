@@ -23,7 +23,8 @@ export default [
 			}),
 			uglify({
 				compress: {
-					toplevel: true
+					toplevel: true,
+					drop_console: true
 				}
 			})
 		]

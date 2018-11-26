@@ -13,8 +13,10 @@ export default class autoComplete {
 		};
 		// Placeholder text
 		this.placeHolder = typeof config.placeHolder === "string" ? config.placeHolder : "Search...";
+		// Maximum Placeholder text length
+		this.placeHolderLength = typeof config.placeHolderLength === "number" ? config.placeHolderLength : Infinity;
 		// Maximum number of results to show
-		this.maxNum = typeof config.maxNum === "number" ? config.maxNum : 10;
+		this.maxResults = typeof config.maxResults === "number" ? config.maxResults : 10;
 		// Highlighting matching results
 		this.highlight = typeof config.highlight === "boolean" ? config.highlight : true;
 		// Assign data attribute tag & value if set in object
@@ -48,7 +50,7 @@ export default class autoComplete {
 				// List matching results
 				this.listMatchedResults();
 				// Gets user's selection
-				autoCompleteView.getSelection(this.onSelection);
+				autoCompleteView.getSelection(this.onSelection, this.placeHolderLength);
 			} else {
 				// clears all results list
 				autoCompleteView.clearResults();
@@ -125,8 +127,8 @@ export default class autoComplete {
 		}
 		// Rendering matching results to the UI list
 		autoCompleteView.addResultsToList(
-			this.resList.slice(0, this.maxNum),
-			this.cleanResList.slice(0, this.maxNum),
+			this.resList.slice(0, this.maxResults),
+			this.cleanResList.slice(0, this.maxResults),
 			this.dataAttribute
 		);
 	}
