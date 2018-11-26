@@ -191,6 +191,7 @@ For more information on semantic versioning, please visit http://semver.org/.
 ## Release History
 * v1.2.1
 	* Added Placeholder text maximum length option
+	* Added new style sheet variation
 * v1.2.0
 	* Redesigned the entire search engine for better results & experience
 	* Added support for Multi-keyword search
@@ -227,12 +228,13 @@ For more information on semantic versioning, please visit http://semver.org/.
 	- [ ] Multidimensional Array
 	- [ ] External data source `(Plugin)`
 - [X] Multi-keyword Search
+- [X] Placeholder text maximum length option
 - [ ] Navigate results list with keyboard
 
 
 #### Interface:
 - [ ] New designs for inspiration (Ongoing)
-	- [ ] Styles
+	- [X] Styles
 	- [ ] Interactions
 - [ ] Number of results inside input field (Optional)
 
