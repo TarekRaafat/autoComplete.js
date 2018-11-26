@@ -137,12 +137,13 @@ html {
 }
 
 @media only screen and (max-width: 600px) {
-	#autoComplete:hover {
-		width: 5rem;
+	#autoComplete {
+		width: 10rem;
+		background: url("./images/magnifier.svg") no-repeat center/25% 1.5rem;
 	}
 
 	#autoComplete:focus {
-		width: 5rem;
+		width: 11rem;
 		background: url("./images/magnifier.svg") no-repeat left/25% 1.5rem;
 	}
 
