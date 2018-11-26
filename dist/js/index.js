@@ -1005,7 +1005,8 @@ const grocery = [
 new autoComplete({
 	dataSrc: grocery,
 	placeHolder: "Try me...",
-	maxNum: 10,
+	placeHolderLength: 26,
+	maxResults: 10,
 	highlight: true,
 	dataAttribute: {
 		tag: "set",

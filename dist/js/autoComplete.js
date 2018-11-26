@@ -110,7 +110,7 @@
     });
   }); // Gets user selection
 
-  var getSelection = function getSelection(value) {
+  var getSelection = function getSelection(value, maxLength) {
     var results = document.querySelectorAll(".autoComplete_result");
     results.forEach(function (selection) {
       selection.addEventListener("click", function (event) {
@@ -122,7 +122,7 @@
         clearResults(); // Set placeholder with the selected value
         // after checking the value length and validate it
 
-        selectors.input.setAttribute("placeholder", "".concat(event.target.closest(".autoComplete_result").id.length > 13 ? event.target.closest(".autoComplete_result").id.slice(0, 13) + "..." : event.target.closest(".autoComplete_result").id));
+        selectors.input.setAttribute("placeholder", "".concat(event.target.closest(".autoComplete_result").id.length > maxLength ? event.target.closest(".autoComplete_result").id.slice(0, maxLength) + "..." : event.target.closest(".autoComplete_result").id));
       });
     });
   }; // Error message render to UI
@@ -157,9 +157,11 @@
       }; // Placeholder text
 
 
-      this.placeHolder = typeof config.placeHolder === "string" ? config.placeHolder : "Search..."; // Maximum number of results to show
+      this.placeHolder = typeof config.placeHolder === "string" ? config.placeHolder : "Search..."; // Maximum Placeholder text length
 
-      this.maxNum = typeof config.maxNum === "number" ? config.maxNum : 10; // Highlighting matching results
+      this.placeHolderLength = typeof config.placeHolderLength === "number" ? config.placeHolderLength : Infinity; // Maximum number of results to show
+
+      this.maxResults = typeof config.maxResults === "number" ? config.maxResults : 10; // Highlighting matching results
 
       this.highlight = typeof config.highlight === "boolean" ? config.highlight : true; // Assign data attribute tag & value if set in object
 
@@ -199,7 +201,7 @@
             _this.listMatchedResults(); // Gets user's selection
 
 
-            renderResults.getSelection(_this.onSelection);
+            renderResults.getSelection(_this.onSelection, _this.placeHolderLength);
           } else {
             // clears all results list
             renderResults.clearResults();
@@ -274,7 +276,7 @@
         } // Rendering matching results to the UI list
 
 
-        renderResults.addResultsToList(this.resList.slice(0, this.maxNum), this.cleanResList.slice(0, this.maxNum), this.dataAttribute);
+        renderResults.addResultsToList(this.resList.slice(0, this.maxResults), this.cleanResList.slice(0, this.maxResults), this.dataAttribute);
       } // Placeholder setting function
 
     }, {
