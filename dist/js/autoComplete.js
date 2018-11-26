@@ -103,7 +103,10 @@
     var result = document.querySelector(".autoComplete_results_list");
     selectors.input.addEventListener(eventType, function () {
       if (eventType === "blur") {
-        result.style = "opacity: 0; visibility: hidden;";
+        result.style = "opacity: 0;";
+        setTimeout(function () {
+          result.style = "display: none;s";
+        }, 1000);
       } else {
         result.style = "opacity: 1; visibility: visible;";
       }
@@ -215,7 +218,7 @@
 
         var match = []; // Query character position based on success
 
-        var searchPosition = 0; // Iterate over record character
+        var searchPosition = 0; // Iterate over record characters
 
         for (var number = 0; number < record.length; number++) {
           // Holds current record character

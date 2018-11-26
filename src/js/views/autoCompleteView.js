@@ -55,7 +55,10 @@ const clearResults = () => {
 	const result = document.querySelector(".autoComplete_results_list");
 	selectors.input.addEventListener(eventType, () => {
 		if (eventType === "blur") {
-			result.style = "opacity: 0; visibility: hidden;";
+			result.style = "opacity: 0;";
+			setTimeout(() => {
+				result.style = "display: none;s";
+			}, 1000);
 		} else {
 			result.style = "opacity: 1; visibility: visible;";
 		}
