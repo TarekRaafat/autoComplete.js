@@ -232,7 +232,7 @@ Releases flags:
 	- [ ] Multidimensional Array
 	- [ ] External data source `(Plugin)`
 - [X] Multi-keyword Search
-- [X] Placeholder text maximum length option
+- [X] Placeholder text maximum length option `[experimental]`
 - [ ] Navigate results list with keyboard
 
 
