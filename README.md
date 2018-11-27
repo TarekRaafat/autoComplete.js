@@ -186,11 +186,15 @@ And constructed with the following guidelines:
 
 For more information on semantic versioning, please visit http://semver.org/.
 
+
+Releases flags:
+
+* `[experimental]`: under testing and might be deprecated at any point.
 ---
 
 ## Release History
 * v1.2.1
-	* Added Placeholder text maximum length option
+	* Added Placeholder text maximum length option `[Experimental]`
 	* Added new style sheet variation
 * v1.2.0
 	* Redesigned the entire search engine for better results & experience
