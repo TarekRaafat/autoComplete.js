@@ -6,8 +6,7 @@
 	"browser": "dist/js/autoComplete.min.js",
 	"scripts": {
 		"build": "rollup -c",
-		"dev": "rollup -c -w",
-		"start": "rollup --watch"
+		"dev": "rollup -c -w"
 	},
 	"repository": {
 		"type": "git",
