@@ -21,7 +21,7 @@ autoComplete.js is a simple pure vanilla Javascript library that's built for spe
 - [x] Customizable
 - [x] First Class Error Reporting
 
-![autoComplete.js Code Example](./README/img/autoComplete.init.png "autoComplete.js Code Example")
+[![autoComplete.js Code Example](./README/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW)
 ----
 
 ## Get Started
@@ -183,9 +183,9 @@ And constructed with the following guidelines:
 For more information on semantic versioning, please visit http://semver.org/.
 
 
-Releases flags:
+Release flags:
 
-* `[experimental]`: under testing and might be deprecated at any point.
+* `[experimental]`: Under testing and might be deprecated at any point.
 ---
 
 ## Release History
