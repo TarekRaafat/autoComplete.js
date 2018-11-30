@@ -12,7 +12,7 @@ export default class autoComplete {
 			}
 		};
 		// Placeholder text
-		this.placeHolder = typeof config.placeHolder === "string" ? config.placeHolder : "Search...";
+		this.placeHolder = typeof config.placeHolder === "string" ? config.placeHolder : false;
 		// Maximum Placeholder text length
 		this.placeHolderLength = typeof config.placeHolderLength === "number" ? config.placeHolderLength : Infinity;
 		// Maximum number of results to show
@@ -135,7 +135,9 @@ export default class autoComplete {
 
 	// Placeholder setting function
 	setPlaceHolder() {
-		selectors.input.setAttribute("placeholder", this.placeHolder);
+		if (this.placeHolder) {
+			selectors.input.setAttribute("placeholder", this.placeHolder);
+		}
 	}
 
 	// Starts the app Enigne
