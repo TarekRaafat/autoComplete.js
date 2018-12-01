@@ -55,7 +55,7 @@ $ npm run build
 
 ### Installation: 
 
-* jsDelivr CDN ([![Link](https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection)](https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection))
+* jsDelivr CDN (<a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection">Link</a>)
 
 `CSS`
 ```html
