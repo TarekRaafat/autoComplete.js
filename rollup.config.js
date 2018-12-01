@@ -5,18 +5,14 @@ import pkg from './package.json';
 
 export default [
 	{
-		input: 'src/js/models/autoComplete.js',
+		input: 'src/models/autoComplete.js',
 		output: {
 			file: pkg.browser,
 			name: 'autoComplete',
 			format: 'umd'
 		},
 		plugins: [
-			eslint({
-				exclude: [
-					'src/css/**'
-				]
-			}),
+			eslint(),
 			babel({
 				exclude: 'node_modules/**',
 				presets: ['@babel/preset-env'],
@@ -30,7 +26,7 @@ export default [
 		]
 	},
 	{
-		input: 'src/js/models/autoComplete.js',
+		input: 'src/models/autoComplete.js',
 		output: {
 			file: pkg.main,
 			name: 'autoComplete',
