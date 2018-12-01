@@ -88,10 +88,18 @@ $ npm run build
 import autoComplete from "./autoComplete";
 ```
 
+* npm install `(Node Package Manager)`
+
+https://www.npmjs.com/package/@tarekraafat/autocomplete.js
+
+```shell
+$ npm i @tarekraafat/autocomplete.js
+```
+
 * Node.js
 
 ```js
-const autoComplete = require("./autoComplete");
+const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete");
 ```
 
 <br>
