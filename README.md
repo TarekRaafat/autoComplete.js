@@ -4,7 +4,8 @@
 [![GitHub version](https://badge.fury.io/gh/tarekraafat%2Fautocomplete.js.svg)](https://badge.fury.io/gh/tarekraafat%2Fautocomplete.js)
 [![npm version](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js.svg)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
 [![](https://data.jsdelivr.com/v1/package/gh/TarekRaafat/autoComplete.js/badge)](https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js)
-![[Size]()](https://img.shields.io/badge/Size-4%20KB-green.svg)
+![[Zero Dependencies](https://github.com/TarekRaafat/autoComplete.js)](https://img.shields.io/badge/0-Dependencies-brightgreen.svg)
+![[Size](https://github.com/TarekRaafat/autoComplete.js)](https://img.shields.io/badge/Size-4%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
 
 
