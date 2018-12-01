@@ -201,6 +201,8 @@ Release flags:
 ---
 
 ## Release History
+* v1.3.0
+	* Added new `datasrc` a function that returns `Array`
 * v1.2.1
 	* Added Placeholder text maximum length option `[Experimental]`
 	* Added new style sheet variation
