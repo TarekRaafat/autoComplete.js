@@ -1,7 +1,7 @@
 # autoComplete.js :sparkles:
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Build Status](https://travis-ci.com/TarekRaafat/autoComplete.js.svg?branch=master)](https://travis-ci.com/TarekRaafat/autoComplete.js)
-[![GitHub version](https://badge.fury.io/gh/tarekraafat%2Fautocomplete.js.svg)](https://badge.fury.io/gh/tarekraafat%2Fautocomplete.js)
+[![GitHub version](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js.svg)](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js)
 [![npm version](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js.svg)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
 [![](https://data.jsdelivr.com/v1/package/gh/TarekRaafat/autoComplete.js/badge)](https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js)
 ![[Zero Dependencies]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
