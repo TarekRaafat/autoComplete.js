@@ -7,6 +7,8 @@ export default class autoComplete {
 		this.dataSrc = () => {
 			if (Array.isArray(config.dataSrc)) {
 				return config.dataSrc;
+			} else if (Array.isArray(config.dataSrc())) {
+				return config.dataSrc();
 			} else {
 				autoCompleteView.error("<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>.");
 			}

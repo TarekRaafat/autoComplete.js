@@ -151,6 +151,8 @@
       this.dataSrc = function () {
         if (Array.isArray(config.dataSrc)) {
           return config.dataSrc;
+        } else if (Array.isArray(config.dataSrc())) {
+          return config.dataSrc();
         } else {
           renderResults.error("<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>.");
         }
