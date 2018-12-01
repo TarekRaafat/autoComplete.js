@@ -61,7 +61,7 @@ $ npm run build
 ```html
 <head>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.2.0/dist/css/autoComplete.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.2.0/dist/css/autoComplete.min.css">
 
 </head>
 ```
