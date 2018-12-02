@@ -1,5 +1,4 @@
 import { renderResults as autoCompleteView } from "../views/autoCompleteView";
-import { selectors } from "../views/selectors";
 
 export default class autoComplete {
 	constructor(config) {
@@ -14,15 +13,15 @@ export default class autoComplete {
 			}
 		};
 		// Placeholder text
-		this.placeHolder = typeof config.placeHolder === "string" ? config.placeHolder : false;
+		this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
 		// Maximum Placeholder text length
-		this.placeHolderLength = typeof config.placeHolderLength === "number" ? config.placeHolderLength : Infinity;
+		this.placeHolderLength = Number(config.placeHolderLength) ? config.placeHolderLength : Infinity;
 		// Maximum number of results to show
-		this.maxResults = typeof config.maxResults === "number" ? config.maxResults : 10;
+		this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
 		// Highlighting matching results
 		this.highlight = typeof config.highlight === "boolean" ? config.highlight : true;
 		// Assign data attribute tag & value if set in object
-		this.dataAttribute = typeof config.dataAttribute === "object" && config.dataAttribute.constructor === Object ? {
+		this.dataAttribute = config.dataAttribute === Object ? {
 			tag: config.dataAttribute.tag,
 			value: config.dataAttribute.value
 		} : { tag: "autocomplete", value: "" };
@@ -33,31 +32,6 @@ export default class autoComplete {
 			);
 		// Starts the app Enigne
 		this.init();
-	}
-
-	// Checks if the data source is valid
-	dataSourceValidation(value) {
-		return Array.isArray(value);
-	}
-
-	// Checks user's input search value validity
-	searchInputValidation(selector) {
-		// Input field handler fires an event onKeyup action
-		selector.addEventListener("keyup", () => {
-			// event.preventDefault();
-			// Check if input is not empty or just have space before triggering the app
-			if (selector.value.length > 0 && selector.value !== " ") {
-				// clear results list
-				autoCompleteView.clearResults();
-				// List matching results
-				this.listMatchedResults();
-				// Gets user's selection
-				autoCompleteView.getSelection(this.onSelection, this.placeHolderLength);
-			} else {
-				// clears all results list
-				autoCompleteView.clearResults();
-			}
-		});
 	}
 
 	// Search common characters within record
@@ -135,10 +109,30 @@ export default class autoComplete {
 		);
 	}
 
+	// Checks user's input search value validity
+	searchInputValidation(selector) {
+		// Input field handler fires an event onKeyup action
+		selector.addEventListener("keyup", () => {
+			// event.preventDefault();
+			// Check if input is not empty or just have space before triggering the app
+			if (selector.value.length > 0 && selector.value !== " ") {
+				// clear results list
+				autoCompleteView.clearResults();
+				// List matching results
+				this.listMatchedResults();
+				// Gets user's selection
+				autoCompleteView.getSelection(this.onSelection, this.placeHolderLength);
+			} else {
+				// clears all results list
+				autoCompleteView.clearResults();
+			}
+		});
+	}
+
 	// Placeholder setting function
 	setPlaceHolder() {
 		if (this.placeHolder) {
-			selectors.input.setAttribute("placeholder", this.placeHolder);
+			autoCompleteView.getSearchInput().setAttribute("placeholder", this.placeHolder);
 		}
 	}
 
@@ -146,7 +140,7 @@ export default class autoComplete {
 	init() {
 		try {
 			// If the data source is valid run the app else error
-			if (this.dataSourceValidation(this.dataSrc())) {
+			if (this.dataSrc()) {
 				this.setPlaceHolder();
 				this.searchInputValidation(autoCompleteView.getSearchInput());
 			}
