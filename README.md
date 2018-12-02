@@ -61,7 +61,7 @@ $ npm run build
 ```html
 <head>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.3.0/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.3.1/dist/css/autoComplete.min.css">
 
 </head>
 ```
@@ -69,7 +69,7 @@ $ npm run build
 ```html
 <body>
 	
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.3.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.3.1/dist/js/autoComplete.min.js"></script>
 
 </body>
 ```
