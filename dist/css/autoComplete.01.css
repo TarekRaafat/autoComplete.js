@@ -1,17 +1,12 @@
-html {
-	font-size: 1rem;
-	font-family: "PT Sans", sans-serif;
-}
-
 #autoComplete {
-	height: 2.1rem;
-	width: 0;
+	height: 3rem;
+	width: 3rem;
 	font-size: 1.2rem;
 	outline: none;
 	border-radius: 50rem;
 	border: 0.05rem solid rgb(255, 255, 255);
-	caret-color: rgba(255, 122, 122, 1);
-	color: rgba(255, 122, 122, 1);
+	caret-color: #FFE457;
+	color: rgba(255, 227, 87, 0);
 	background: url("./images/magnifier.svg") no-repeat center/40% 1.2rem;
 	background-color: #FFE457;
 	transition: all 0.4s ease;
@@ -46,7 +41,6 @@ html {
 	color: rgba(255, 122, 122, 1);
 	height: 3rem;
 	width: 19rem;
-	border-bottom: 0.05rem solid rgba(255, 122, 122, 0.2);
 	background: url("./images/magnifier.svg") no-repeat left/15% 1.5rem;
 	background-color: #FFE457;
 	text-overflow: ellipsis ellipsis;
@@ -71,7 +65,7 @@ html {
 
 .autoComplete_results_list {
 	padding: 0;
-	margin: -0.01rem;
+	margin: -0.1rem;
 	transition: all 0.1s ease-in-out;
 	-webkit-transition: all -webkit-transform 0.1s ease;
 }
@@ -81,14 +75,13 @@ html {
 	padding: 0.6rem;
 	max-width: 15em;
 	min-width: 8rem;
-	border: 0.05rem solid #e3e3e3;
 	list-style: none;
 	text-align: center;
 	font-size: 1.1rem;
-	color: rgb(123, 123, 123);
+	color: rgb(124, 124, 124);
 	text-transform: capitalize;
 	transition: all 0.3s ease-in-out;
-	background-color: #fff;
+	background-color: #FFE457;
 }
 
 .autoComplete_result:last-child {
@@ -97,8 +90,7 @@ html {
 
 .autoComplete_result:hover {
 	cursor: pointer;
-	background-color: #f5f5f5;
-	border-color: #e3e3e300;
+	background-color: #ffffff;
 }
 
 .autoComplete_single_result {
@@ -119,8 +111,7 @@ html {
 
 .autoComplete_one_result:hover {
 	cursor: pointer;
-	background-color: #f5f5f5;
-	border-color: #e3e3e300;
+	background-color: #ffffff;
 }
 
 .autoComplete_highlighted_result {
