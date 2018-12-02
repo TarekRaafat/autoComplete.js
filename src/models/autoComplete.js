@@ -26,10 +26,9 @@ export default class autoComplete {
 			value: config.dataAttribute.value
 		} : { tag: "autocomplete", value: "" };
 		// Action function on result selection
-		this.onSelection =
-			typeof config.onSelection === "function" ? config.onSelection : autoCompleteView.error(
-				"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
-			);
+		this.onSelection = typeof config.onSelection === "function" ? config.onSelection : autoCompleteView.error(
+			"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
+		);
 		// Starts the app Enigne
 		this.init();
 	}
