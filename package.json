@@ -1,5 +1,5 @@
 {
-	"name": "@tarekraafat/autocomplete.js",
+	"name": "autocomplete.js",
 	"version": "1.3.0",
 	"description": "Simple autocomplete pure vanilla Javascript library.",
 	"main": "dist/js/autoComplete.js",
@@ -38,7 +38,11 @@
 		"extensible",
 		"autoCompletejs"
 	],
-	"author": "Tarek Raafat",
+	"author": {
+		"name": "Tarek Raafat",
+		"email": "tarek.m.raafat@gmail.com",
+		"url": "http://www.tarekraafat.com"
+	},
 	"license": "Apache-2.0",
 	"bugs": {
 		"url": "https://github.com/TarekRaafat/autoComplete.js/issues"
@@ -51,6 +55,7 @@
 		"babel-preset-es2015-rollup": "^3.0.0",
 		"rollup": "^0.67.3",
 		"rollup-plugin-babel": "^4.0.3",
+		"rollup-plugin-cleanup": "^3.0.0",
 		"rollup-plugin-eslint": "^5.0.0",
 		"rollup-plugin-uglify": "^6.0.0"
 	}
