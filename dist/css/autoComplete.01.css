@@ -5,7 +5,7 @@
 	outline: none;
 	border-radius: 50rem;
 	border: 0.05rem solid rgb(255, 255, 255);
-	caret-color: #FFE457;
+	caret-color: rgba(255, 122, 122, 1);
 	color: rgba(255, 227, 87, 0);
 	background: url("./images/magnifier.svg") no-repeat center/40% 1.2rem;
 	background-color: #FFE457;
@@ -16,6 +16,11 @@
 #autoComplete::placeholder {
 	color: rgba(255, 122, 122, 0);
 	transition: all 0.3s ease;
+}
+
+#autoComplete:focus::selection {
+	color: #fff;
+	background-color: rgba(255, 122, 122, 1);
 }
 
 #autoComplete:hover {
@@ -47,7 +52,7 @@
 }
 
 #autoComplete:focus::placeholder {
-	padding: 1rem 1rem;
+	padding: 1rem .5rem;
 	font-size: 1rem;
 	color: rgb(255, 122, 122, 0.3);
 	transition: all 0.3s ease;
@@ -58,7 +63,7 @@
 .autoComplete_results_list_container {
 	z-index: 1000;
 	position: absolute;
-	width: 99vw;
+	width: 98.5vw;
 	margin: 0 auto;
 	text-align: center;
 }
@@ -98,11 +103,10 @@
 	padding: 0.6rem;
 	max-width: 15em;
 	min-width: 8rem;
-	border: 0.05rem solid #e3e3e3;
 	list-style: none;
 	text-align: center;
 	font-size: 1.1rem;
-	color: rgb(123, 123, 123);
+	color: rgb(124, 124, 124);
 	text-transform: capitalize;
 	border-radius: 0 0 1rem 1rem;
 	transition: all 0.3s ease-in-out;
@@ -139,8 +143,12 @@
 	}
 
 	#autoComplete:focus {
-		width: 5rem;
+		width: 14rem;
 		background: url("./images/magnifier.svg") no-repeat left/25% 1.5rem;
+	}
+
+	.autoComplete_results_list_container {
+		width: 95.5vw;
 	}
 
 	.autoComplete_result:first-child {
@@ -163,6 +171,7 @@
 
 	#autoComplete:focus {
 		border-width: 1px;
+		background-color: #FFE457;
 	}
 }
 

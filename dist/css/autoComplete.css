@@ -17,6 +17,11 @@
 	transition: all 0.3s ease;
 }
 
+#autoComplete:focus::selection {
+	color: #fff;
+	background-color: rgba(255, 122, 122, 1);
+}
+
 #autoComplete:hover {
 	padding: 0 2rem 0 3.5rem;
 	color: rgba(255, 122, 122, 1);
@@ -43,7 +48,7 @@
 }
 
 #autoComplete:focus::placeholder {
-	padding: 1rem 1rem;
+	padding: 1rem .5rem;
 	font-size: 1rem;
 	color: rgb(255, 122, 122, 0.3);
 	transition: all 0.3s ease;
@@ -141,6 +146,10 @@
 		width: 11rem;
 		background: url("./images/magnifier.svg") no-repeat left/25% 1.5rem;
 	}
+
+	.autoComplete_results_list_container {
+		width: 95vw;
+	}	
 
 	.autoComplete_result:first-child {
 		border-radius: 1rem 1rem 0 0;
