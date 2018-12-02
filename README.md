@@ -240,9 +240,7 @@ Release flags:
 
 #### Functionality:
 - [ ] Add support for different types of data source
-	- [ ] JS Object
-	- [ ] JSON
-	- [ ] Multidimensional Array
+	- [X] Function
 	- [ ] External data source `(Plugin)`
 - [X] Multi-keyword Search
 - [X] Placeholder text maximum length option `[experimental]`
