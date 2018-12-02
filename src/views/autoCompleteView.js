@@ -62,13 +62,10 @@ const getSelection = (value, maxLength) => {
 		selection.addEventListener("click", event => {
 			// value(event.target.closest(".autoComplete_result"));
 			value(event.target.closest(".autoComplete_result"));
-
 			// Clear Input after selection is made
 			clearInput();
-
 			//Clear Results after selection is made
 			clearResults();
-
 			// Set placeholder with the selected value
 			// after checking the value length and validate it
 			getSearchInput().setAttribute(
