@@ -25,11 +25,7 @@ const addResultsToList = (results, cleanResults, dataAttribute) => {
 	results.forEach((event, record) => {
 		const result = document.createElement("li");
 		result.setAttribute(`data-${dataAttribute.tag}`, dataAttribute.value || cleanResults[record]);
-		if (results.length === 1) {
-			resultState = "autoComplete_result autoComplete_single_result";
-		} else {
-			resultState = "autoComplete_result";
-		}
+		resultState = results.length === 1 ? "autoComplete_result autoComplete_single_result" : "autoComplete_result";
 		result.setAttribute("id", cleanResults[record]);
 		result.setAttribute("class", resultState);
 		result.innerHTML = results[record];

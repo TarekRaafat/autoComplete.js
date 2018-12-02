@@ -47,11 +47,7 @@
     results.forEach(function (event, record) {
       var result = document.createElement("li");
       result.setAttribute("data-".concat(dataAttribute.tag), dataAttribute.value || cleanResults[record]);
-      if (results.length === 1) {
-        resultState = "autoComplete_result autoComplete_single_result";
-      } else {
-        resultState = "autoComplete_result";
-      }
+      resultState = results.length === 1 ? "autoComplete_result autoComplete_single_result" : "autoComplete_result";
       result.setAttribute("id", cleanResults[record]);
       result.setAttribute("class", resultState);
       result.innerHTML = results[record];

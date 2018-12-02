@@ -38,18 +38,14 @@ export default class autoComplete {
 	search(query, record) {
 		// Search query string sanitized & normalized
 		query = query.replace(/ /g, "").toLowerCase();
-
 		// Array of matching characters
 		let match = [];
-
 		// Query character position based on success
 		let searchPosition = 0;
-
 		// Iterate over record characters
 		for (let number = 0; number < record.length; number++) {
 			// Holds current record character
 			let recordChar = record[number];
-
 			// Matching case
 			if (searchPosition < query.length && recordChar.toLowerCase() === query[searchPosition]) {
 				if (this.highlight) {
@@ -67,12 +63,10 @@ export default class autoComplete {
 			// Adds matching character to the matching list
 			match.push(recordChar);
 		}
-
 		// Non-Matching case
 		if (searchPosition !== query.length) {
 			return "";
 		}
-
 		// Return the joined match
 		return match.join("");
 	}
@@ -81,10 +75,8 @@ export default class autoComplete {
 	listMatchedResults() {
 		// Final highlighted results list of array
 		this.resList = [];
-
 		// Final clean results list of array
 		this.cleanResList = [];
-
 		// Holds the input search value
 		let inputValue = autoCompleteView.getSearchInput().value;
 
@@ -95,7 +87,6 @@ export default class autoComplete {
 				if (match) {
 					this.resList.push(match);
 					this.cleanResList.push(record);
-
 				}
 			});
 		} catch (error) {
