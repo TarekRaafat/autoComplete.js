@@ -226,4 +226,4 @@ https://github.com/TarekRaafat/
 ----
 
 ## 9. License
-Apache 2.0 © [Tarek Raafat](https://tarekraafat.com)
+Apache 2.0 © [Tarek Raafat](http://www.tarekraafat.com)
