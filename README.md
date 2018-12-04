@@ -51,7 +51,7 @@ $ npm run build
 
 ### 1.3. Installation: 
 
-#### jsDelivr CDN (<a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection">Link</a>)
+* jsDelivr CDN (<a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection">Link</a>)
 
 `CSS`
 ```html
@@ -70,25 +70,25 @@ $ npm run build
 </body>
 ```
 
-#### HTML Local load
+* HTML Local load
   
 ```html
 <script src="./autoComplete.js"></script>
 ```
 
-#### HTML Local load - ES6 module `(Use with Import)`
+* HTML Local load - ES6 module `(Use with Import)`
   
 ```html
 <script src="./index.js" type="module"></script>
 ```
 
-#### Import module ES6
+* Import module ES6
 
 ```js
 import autoComplete from "./autoComplete";
 ```
 
-#### npm install `(Node Package Manager)`
+* npm install `(Node Package Manager)`
 
 https://www.npmjs.com/package/@tarekraafat/autocomplete.js
 
@@ -96,7 +96,7 @@ https://www.npmjs.com/package/@tarekraafat/autocomplete.js
 $ npm i @tarekraafat/autocomplete.js
 ```
 
-#### Node.js
+* Node.js
 
 ```js
 const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete");
