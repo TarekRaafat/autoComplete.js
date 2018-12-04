@@ -185,7 +185,7 @@ it with [autoComplete.js][so tag].
 - [X] Multi-keyword Search
 - [X] Placeholder text maximum length option `[experimental]`
 - [ ] Navigate results list with keyboard
-- [ ] Different types of `Search` Logic
+- [ ] Different types of Search Logic
 
 
 ### 6.2. Usability:
