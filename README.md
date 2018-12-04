@@ -11,7 +11,7 @@
 
 [![autoComplete.js Design](./README/img/autoComplete.js.png "autoComplete.js Design")](http://www.tarekraafat.com/dev/projects/autoComplete/)
 
-> Simple autocomplete pure vanilla Javascript library. <a href="http://www.tarekraafat.com/dev/projects/autoComplete/" target="_blank">Demo</a>
+> Simple autocomplete pure vanilla Javascript library. <a href="http://www.tarekraafat.com/dev/projects/autoComplete/" target="_blank">Live Demo</a>
 
 autoComplete.js is a simple pure vanilla Javascript library that's built for speed, high versatility and seamless integration with wide range of projects & systems.
 
@@ -28,34 +28,30 @@ autoComplete.js is a simple pure vanilla Javascript library that's built for spe
 [![autoComplete.js Code Example](./README/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW)
 ----
 
-## Get Started
+## 1. Get Started
 
-### Clone:
+### 1.1. Clone:
 
 * Clone autoComplete.js to your local machine using `https://github.com/TarekRaafat/autoComplete.js.git`
 
-<br>
-
-### Setup:
+### 1.2. Setup:
 
 1. Install Dependencies
 ```shell
 $ npm i
 ```
-2. Development live server
+2. For Development
 ```shell
-$ npm start
+$ npm run dev
 ```
 3. Build Production Package
 ```shell
 $ npm run build
 ```
 
-<br>
+### 1.3. Installation: 
 
-### Installation: 
-
-* jsDelivr CDN (<a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection">Link</a>)
+#### jsDelivr CDN (<a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection">Link</a>)
 
 `CSS`
 ```html
@@ -74,25 +70,25 @@ $ npm run build
 </body>
 ```
 
-* HTML Local load
+#### HTML Local load
   
 ```html
 <script src="./autoComplete.js"></script>
 ```
 
-* HTML Local load - ES6 module `(Use with Import)`
+#### HTML Local load - ES6 module `(Use with Import)`
   
 ```html
 <script src="./index.js" type="module"></script>
 ```
 
-* Import module ES6
+#### Import module ES6
 
 ```js
 import autoComplete from "./autoComplete";
 ```
 
-* npm install `(Node Package Manager)`
+#### npm install `(Node Package Manager)`
 
 https://www.npmjs.com/package/@tarekraafat/autocomplete.js
 
@@ -100,15 +96,13 @@ https://www.npmjs.com/package/@tarekraafat/autocomplete.js
 $ npm i @tarekraafat/autocomplete.js
 ```
 
-* Node.js
+#### Node.js
 
 ```js
 const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete");
 ```
 
-<br>
-
-### How to use:
+### 1.4. How to use:
 
 > HTML file
 1. Assign id="autoComplete" to the input filed
@@ -140,8 +134,7 @@ new autoComplete({
 
 ----
 
-Example
---------
+## 2. Example
 
   - Working example [Demo]
 
@@ -154,8 +147,7 @@ Example
 
 ----
 
-Support
-----------------
+## 3. Support
 
 For general questions about autoComplete.js, tweet at [@TarekRaafat].
 
@@ -170,7 +162,7 @@ it with [autoComplete.js][so tag].
 
 ----
 
-## Browsers Support
+## 4. Browsers Support
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>iOS Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Samsung | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera-mini/opera-mini_48x48.png" alt="Opera Mini" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera Mini | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/electron/electron_48x48.png" alt="Electron" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Electron |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -178,76 +170,25 @@ it with [autoComplete.js][so tag].
 
 ----
 
-Versioning
-----------
+## 5. What's New?
 
-For transparency and insight into the release cycle, releases will be numbered 
-with the following format:
-
-`<major>.<minor>.<patch>`
-
-And constructed with the following guidelines:
-
-* Breaking backwards compatibility bumps the major
-* New additions without breaking backwards compatibility bumps the minor
-* Bug fixes and misc changes bump the patch
-
-For more information on semantic versioning, please visit http://semver.org/.
-
-
-Release flags:
-
-* `[experimental]`: Under testing and might be deprecated at any point.
----
-
-## Release History
-* v1.3.1
-	* Refactored for higher speed & smaller foorprint
-	* Bugfixes & Optimizations
-* v1.3.0
-	* Added new `datasrc` a function that returns `Array`
-* v1.2.1
-	* Added Placeholder text maximum length option `[Experimental]`
-	* Added new style sheet variation
-* v1.2.0
-	* Redesigned the entire search engine for better results & experience
-	* Added support for Multi-keyword search
-	* Fixed issue with Capital letters reflects in results
-* v1.1.0
-	* Reduced the library size 97% `(101KB -> 4KB)`
-	* Introducing 2 different verions of the library `(pure, minified)`
-	* Replaced webpack with Rollup for better bundling
-	* Fixed some bugs caused problems with node apps
-* v1.0.3
-	* Refactored & Optimized to reduce size and enhance performance
-
-* v1.0.2
-	* Fixed the library name in the webpack.config.js file
-
-* v1.0.1
-	* Optimizations Reduced the library weight by 1KB
-  
-* v1.0.0
-  * Add customized data attribute tag for generated results
-  * Highlight matching results from the results list
-  * Set maximum number for shown results
-  * Add placeholder text to the input field
-  * Placeholder keeps the last selection value saved
+<a href="./README/Releases.md">Releases</a> Information
 
 ----
 
-## Roadmap
+## 6. Roadmap
 
-#### Functionality:
+### 6.1. Functionality:
 - [ ] Add support for different types of data source
 	- [X] Function
 	- [ ] External data source `(Plugin)`
 - [X] Multi-keyword Search
 - [X] Placeholder text maximum length option `[experimental]`
 - [ ] Navigate results list with keyboard
+- [ ] Different types of `Search` Functionality
 
 
-#### Interface:
+### 6.2. Usability:
 - [ ] New designs for inspiration (Ongoing)
 	- [X] Styles
 	- [ ] Interactions
@@ -255,7 +196,7 @@ Release flags:
 
 ----
 
-## Contribution
+## 7. Contribution
 
 > Contributions are always more than  welcome!
 
@@ -274,7 +215,7 @@ Pull requests are warmly welcome.
 
 ----
 
-## Author
+## 8. Author
 
 Tarek Raafat - tarek.m.raafat@gmail.com
 
@@ -284,5 +225,5 @@ https://github.com/TarekRaafat/
 
 ----
 
-## License
+## 9. License
 Apache 2.0 © [Tarek Raafat](https://tarekraafat.com)
