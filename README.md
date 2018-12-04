@@ -136,7 +136,7 @@ new autoComplete({
 
 ## 2. Example
 
-  - Working example [Demo]
+  - Live working [Demo]
 
 
   - Try it on [CodePen](https://codepen.io/tarekraafat/pen/rQopdW)
