@@ -22,35 +22,32 @@ Release flags:
 
 ## Release Notes
 
-* v1.3.2
-    * Bug fixes & Optimizations
+* v1.4.0
+    * Added new type of Search Engine `strict`
+    * Detached the results list style behaviour from code
+    * Depricated "Placeholder max. length" setting
 
 * v1.3.1
 	* Refactored for higher speed & smaller foorprint
 	* Bug fixes & Optimizations
 
-
 * v1.3.0
 	* Added new `datasrc` a function that returns `Array`
-
 
 * v1.2.1
 	* Added Placeholder text maximum length option `[Experimental]`
 	* Added new style sheet variation
-
 
 * v1.2.0
 	* Redesigned the entire search engine for better results & experience
 	* Added support for Multi-keyword search
 	* Fixed issue with Capital letters reflects in results
 
-
 * v1.1.0
 	* Reduced the library size 97% `(101KB -> 4KB)`
 	* Introducing 2 different verions of the library `(pure, minified)`
 	* Replaced webpack with Rollup for better bundling
 	* Fixed some bugs caused problems with node apps
-
 
 * v1.0.3
 	* Refactored & Optimized to reduce size and enhance performance

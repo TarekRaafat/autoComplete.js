@@ -57,7 +57,7 @@ $ npm run build
 ```html
 <head>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.3.1/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.4.0/dist/css/autoComplete.min.css">
 
 </head>
 ```
@@ -65,7 +65,7 @@ $ npm run build
 ```html
 <body>
 	
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.3.1/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.4.0/dist/js/autoComplete.min.js"></script>
 
 </body>
 ```
@@ -114,11 +114,10 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 
 2. Create new instance of autoComplete engine
 ```js
-// The app instance creator
 new autoComplete({
 	dataSrc: grocery,		  // Array data source
+	searchEngine: "loose",		  // Search Engine type
 	placeHolder: "Try me...",  	  // Place Holder text
-	placeHolderLength: 26,		  // Max placeholder length
 	maxResults: 10,		    	  // Max number of results
 	highlight: true,	  	  // Highlight matching results	
 	dataAttribute: {
@@ -185,7 +184,7 @@ it with [autoComplete.js][so tag].
 - [X] Multi-keyword Search
 - [X] Placeholder text maximum length option `[experimental]`
 - [ ] Navigate results list with keyboard
-- [ ] Different types of Search Logic
+- [X] Different types of Search Logic
 
 
 ### 6.2. Usability:
