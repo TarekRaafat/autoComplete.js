@@ -142,7 +142,7 @@
 
 @media only screen and (max-width: 600px) {
 	#autoComplete {
-		width: 10rem;
+		width: 5rem;
 		background: url("./images/magnifier.svg") no-repeat center/25% 1.5rem;
 		text-overflow: ellipsis;
 		white-space: nowrap;

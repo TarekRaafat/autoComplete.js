@@ -21,6 +21,43 @@ h1 > a {
 	color: rgba(255, 122, 122, 1);
 }
 
+.seetings {
+	display: grid;
+	background-color: #000;
+}
+
+.toggele {
+	display: grid;
+	position: abolute;
+	margin-top: 50px;
+	background-color: #ffc6c6;
+	height: 35px;
+	width: 70px;
+	border-radius: 50px;
+	justify-content: start;
+}
+
+.toggeler {
+	display: grid;
+	cursor: pointer;
+	background-color: #fff;
+	color: #ffc6c6;
+	height: 25px;
+	width: 25px;
+	border-radius: 50px;
+	margin: 5px;
+	text-align: center;
+	align-content: center;
+}
+
+.strict {
+	display: inline;
+}
+
+.loose {
+	display: inline;
+}
+
 .selection {
 	margin-top: 25vh;
 	font-size: 2rem;

@@ -1001,8 +1001,8 @@ const grocery = [
 	"Wine - Dubouef Macon - Villages"
 ];
 
-// The app instance creator
-new autoComplete({
+// The autoComplete.js app instance creator
+let autoCompletejs = new autoComplete({
 	dataSrc: grocery,
 	searchEngine: "strict",
 	placeHolder: "Food & Drinks...",
@@ -1014,5 +1014,19 @@ new autoComplete({
 	},
 	onSelection: value => {
 		document.querySelector(".selection").innerHTML = value.id;
+	}
+});
+
+document.querySelector(".toggeler").addEventListener("mousedown", () => {
+	let toggele = document.querySelector(".toggele").style.justifyContent;
+
+	if (toggele === "start") {
+		document.querySelector(".toggele").style.justifyContent = "end";
+		document.querySelector(".toggeler").innerHTML = "L";
+		autoCompletejs.searchEngine = "loose";
+	} else {
+		document.querySelector(".toggele").style.justifyContent = "start";
+		document.querySelector(".toggeler").innerHTML = "S";
+		autoCompletejs.searchEngine = "strict";
 	}
 });
