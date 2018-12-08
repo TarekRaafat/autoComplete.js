@@ -196,6 +196,7 @@ it with [autoComplete.js][so tag].
 - ~~Placeholder text maximum length option `[experimental]`~~ `[Depricated]`
 - [ ] Navigate results list with keyboard
 - [X] Different types of Search Logic
+- [ ] Autocomplete query with nearest result in placeholder
 
 
 ### 6.2. Usability:
