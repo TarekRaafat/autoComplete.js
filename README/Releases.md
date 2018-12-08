@@ -23,7 +23,7 @@ Release flags:
 ## Release Notes
 
 * v1.4.0
-    * Added new type of Search Engine `strict`
+    * Added new type/mode of Search Engine `strict`
     * Detached the results list style behaviour from code
     * Depricated "~~Placeholder max. length~~" setting
     * Optimizations for higher performance

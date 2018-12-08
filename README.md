@@ -129,10 +129,10 @@ new autoComplete({
 	}
 });
 ```
-| Feature | Type | Value | Default
+| Features | Types | Values | Default
 |:-------:|------|:-----:|:-------:
 | `dataSrc` | Data Source | `Array` or <br> `Function` => `Array` | **No**
-| `SearchEngine` | Search Engine Type | `strict` or `loose` lowerCase string | `strict`
+| `SearchEngine` | Search Engine Type/Mode | `strict` or `loose` lowerCase string | `strict`
 | `placeHolder` | Place Holder text | `String` | Blank / Empty
 | `maxResults` | Maximum number of displayed results | `Number` | `10`
 | `highlight` | Highlight matching results | `Boolean` | `false`
@@ -195,7 +195,7 @@ it with [autoComplete.js][so tag].
 - [X] Multi-keyword Search
 - ~~Placeholder text maximum length option `[experimental]`~~ `[Depricated]`
 - [ ] Navigate results list with keyboard
-- [X] Different types of Search Logic
+- [X] Different types/modes of Search Logic
 - [ ] Autocomplete query with nearest result in placeholder
 
 
