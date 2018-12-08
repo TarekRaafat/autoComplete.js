@@ -1005,7 +1005,7 @@ const grocery = [
 new autoComplete({
 	dataSrc: grocery,
 	searchEngine: "strict",
-	placeHolder: "Try me...",
+	placeHolder: "Food & Drinks...",
 	maxResults: 10,
 	highlight: true,
 	dataAttribute: {

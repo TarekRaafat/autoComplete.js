@@ -134,7 +134,7 @@
             return "";
           }
           return match.join("");
-        } else if (this.searchEngine === "strict") {
+        } else {
           if (record.toLowerCase().includes(query.toLowerCase())) {
             if (this.highlight) {
               this.resList.push(record.toLowerCase().replace(renderResults.getSearchInput().value.toLowerCase(), "<span class=\"autoComplete_highlighted_result\">".concat(renderResults.getSearchInput().value.toLowerCase(), "</span>")));

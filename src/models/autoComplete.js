@@ -71,7 +71,7 @@ export default class autoComplete {
 			// Return the joined match
 			return match.join("");
 			// Strict mode
-		} else if (this.searchEngine === "strict") {
+		} else {
 			if (record.toLowerCase().includes(query.toLowerCase())) {
 				// If Highlighted
 				if (this.highlight) {

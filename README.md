@@ -129,6 +129,17 @@ new autoComplete({
 	}
 });
 ```
+| Feature | Type | Value | Default
+|:-------:|------|:-----:|:-------:
+| `dataSrc` | Data Source | `Array` or <br> `Function` => `Array` | **No**
+| `SearchEngine` | Search Engine Type | `strict` or `loose` lowerCase string | `strict`
+| `placeHolder` | Place Holder text | `String` | Blank / Empty
+| `maxResults` | Maximum number of displayed results | `Number` | `10`
+| `highlight` | Highlight matching results | `Boolean` | `false`
+| `dataAttribute` | Data Attribute tag | `Object` | `{tag: "autoComplete", value: "" }`
+| `onSelection` | Action script onClick event | `Function` | **No**
+
+
 3. That's it, you're ready to go!
 
 ----
@@ -182,7 +193,7 @@ it with [autoComplete.js][so tag].
 	- [X] Function
 	- [ ] External data source `(Plugin)`
 - [X] Multi-keyword Search
-- [X] Placeholder text maximum length option `[experimental]`
+- ~~Placeholder text maximum length option `[experimental]`~~ `[Depricated]`
 - [ ] Navigate results list with keyboard
 - [X] Different types of Search Logic
 
