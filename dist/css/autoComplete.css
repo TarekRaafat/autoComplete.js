@@ -1,6 +1,7 @@
 #autoComplete {
-	height: 2.1rem;
-	width: 12rem;
+	padding: 0 2rem 0 3.5rem;
+	height: 3rem;
+	width: 16.5rem;
 	font-size: 1.2rem;
 	outline: none;
 	border-radius: 50rem;
@@ -10,6 +11,9 @@
 	background: url("./images/magnifier.svg") no-repeat center/10% 1.5rem;
 	transition: all 0.4s ease;
 	-webkit-transition: all -webkit-transform 0.4s ease;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+  	overflow: hidden;
 }
 
 #autoComplete::placeholder {
@@ -140,6 +144,9 @@
 	#autoComplete {
 		width: 10rem;
 		background: url("./images/magnifier.svg") no-repeat center/25% 1.5rem;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+  		overflow: hidden;
 	}
 
 	#autoComplete:focus {

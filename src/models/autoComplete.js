@@ -12,10 +12,10 @@ export default class autoComplete {
 				autoCompleteView.error("<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>.");
 			}
 		};
+		// Search engine type
+		this.searchEngine = config.searchEngine === "loose" ? config.searchEngine : "strict";
 		// Placeholder text
 		this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
-		// Maximum Placeholder text length
-		this.placeHolderLength = Number(config.placeHolderLength) ? config.placeHolderLength : Infinity;
 		// Maximum number of results to show
 		this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
 		// Highlighting matching results
@@ -35,39 +35,57 @@ export default class autoComplete {
 
 	// Search common characters within record
 	search(query, record) {
-		// Search query string sanitized & normalized
-		query = query.replace(/ /g, "").toLowerCase();
-		// Array of matching characters
-		let match = [];
-		// Query character position based on success
-		let searchPosition = 0;
-		// Iterate over record characters
-		for (let number = 0; number < record.length; number++) {
-			// Holds current record character
-			let recordChar = record[number];
-			// Matching case
-			if (searchPosition < query.length && recordChar.toLowerCase() === query[searchPosition]) {
+		// Loose mode
+		if (this.searchEngine === "loose") {
+			// Search query string sanitized & normalized
+			query = query.replace(/ /g, "").toLowerCase();
+			// Array of matching characters
+			let match = [];
+			// Query character position based on success
+			let searchPosition = 0;
+			// Iterate over record characters
+			for (let number = 0; number < record.length; number++) {
+				// Holds current record character
+				let recordChar = record[number];
+				// Matching case
+				if (searchPosition < query.length && recordChar.toLowerCase() === query[searchPosition]) {
+					if (this.highlight) {
+						// Highlight matching character
+						recordChar = "<span class=\"autoComplete_highlighted_result\">" + recordChar + "</span>";
+						// Increment search position
+						searchPosition++;
+					} else {
+						// Unhighlighted matching character
+						recordChar;
+						// Increment search position
+						searchPosition++;
+					}
+				}
+				// Adds matching character to the matching list
+				match.push(recordChar);
+			}
+			// Non-Matching case
+			if (searchPosition !== query.length) {
+				return "";
+			}
+			// Return the joined match
+			return match.join("");
+			// Strict mode
+		} else if (this.searchEngine === "strict") {
+			if (record.toLowerCase().includes(query.toLowerCase())) {
+				// If Highlighted
 				if (this.highlight) {
-					// Highlight matching character
-					recordChar = "<span class=\"autoComplete_highlighted_result\">" + recordChar + "</span>";
-					// Increment search position
-					searchPosition++;
+					this.resList.push(record.toLowerCase().replace(autoCompleteView.getSearchInput().value.toLowerCase(),
+						`<span class="autoComplete_highlighted_result">${autoCompleteView.getSearchInput().value.toLowerCase()}</span>`
+					));
+					this.cleanResList.push(record);
+					// If NOT Hightligthed
 				} else {
-					// Unhighlighted matching character
-					recordChar;
-					// Increment search position
-					searchPosition++;
+					this.resList.push(record);
+					this.cleanResList.push(record);
 				}
 			}
-			// Adds matching character to the matching list
-			match.push(recordChar);
 		}
-		// Non-Matching case
-		if (searchPosition !== query.length) {
-			return "";
-		}
-		// Return the joined match
-		return match.join("");
 	}
 
 	// List all matching results
@@ -111,7 +129,7 @@ export default class autoComplete {
 				// List matching results
 				this.listMatchedResults();
 				// Gets user's selection
-				autoCompleteView.getSelection(this.onSelection, this.placeHolderLength);
+				autoCompleteView.getSelection(this.onSelection);
 			} else {
 				// clears all results list
 				autoCompleteView.clearResults();

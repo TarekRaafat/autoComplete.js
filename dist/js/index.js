@@ -1004,8 +1004,8 @@ const grocery = [
 // The app instance creator
 new autoComplete({
 	dataSrc: grocery,
+	searchEngine: "strict",
 	placeHolder: "Try me...",
-	placeHolderLength: 26,
 	maxResults: 10,
 	highlight: true,
 	dataAttribute: {

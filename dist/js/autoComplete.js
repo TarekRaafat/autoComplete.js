@@ -54,16 +54,6 @@
       resultsList.appendChild(result);
     });
   };
-  ["focus", "blur"].forEach(function (eventType) {
-    var result = document.querySelector(".autoComplete_results_list");
-    getSearchInput().addEventListener(eventType, function () {
-      if (eventType === "blur") {
-        result.style = "opacity: 0; visibility: hidden;";
-      } else {
-        result.style = "opacity: 1; visibility: visible;";
-      }
-    });
-  });
   var clearInput = function clearInput() {
     return getSearchInput().value = "";
   };
@@ -71,14 +61,14 @@
     var resultsList = document.querySelector(".autoComplete_results_list");
     resultsList.innerHTML = "";
   };
-  var getSelection = function getSelection(value, maxLength) {
+  var getSelection = function getSelection(value) {
     var results = document.querySelectorAll(".autoComplete_result");
     results.forEach(function (selection) {
       selection.addEventListener("click", function (event) {
         value(event.target.closest(".autoComplete_result"));
         clearInput();
         clearResults();
-        getSearchInput().setAttribute("placeholder", "".concat(event.target.closest(".autoComplete_result").id.length > maxLength ? event.target.closest(".autoComplete_result").id.slice(0, maxLength) + "..." : event.target.closest(".autoComplete_result").id));
+        getSearchInput().setAttribute("placeholder", "".concat(event.target.closest(".autoComplete_result").id));
       });
     });
   };
@@ -107,8 +97,8 @@
           renderResults.error("<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>.");
         }
       };
+      this.searchEngine = config.searchEngine === "loose" ? config.searchEngine : "strict";
       this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
-      this.placeHolderLength = Number(config.placeHolderLength) ? config.placeHolderLength : Infinity;
       this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
       this.highlight = typeof config.highlight === "boolean" ? config.highlight : true;
       this.dataAttribute = config.dataAttribute === Object ? {
@@ -124,25 +114,37 @@
     _createClass(autoComplete, [{
       key: "search",
       value: function search(query, record) {
-        query = query.replace(/ /g, "").toLowerCase();
-        var match = [];
-        var searchPosition = 0;
-        for (var number = 0; number < record.length; number++) {
-          var recordChar = record[number];
-          if (searchPosition < query.length && recordChar.toLowerCase() === query[searchPosition]) {
+        if (this.searchEngine === "loose") {
+          query = query.replace(/ /g, "").toLowerCase();
+          var match = [];
+          var searchPosition = 0;
+          for (var number = 0; number < record.length; number++) {
+            var recordChar = record[number];
+            if (searchPosition < query.length && recordChar.toLowerCase() === query[searchPosition]) {
+              if (this.highlight) {
+                recordChar = "<span class=\"autoComplete_highlighted_result\">" + recordChar + "</span>";
+                searchPosition++;
+              } else {
+                searchPosition++;
+              }
+            }
+            match.push(recordChar);
+          }
+          if (searchPosition !== query.length) {
+            return "";
+          }
+          return match.join("");
+        } else if (this.searchEngine === "strict") {
+          if (record.toLowerCase().includes(query.toLowerCase())) {
             if (this.highlight) {
-              recordChar = "<span class=\"autoComplete_highlighted_result\">" + recordChar + "</span>";
-              searchPosition++;
+              this.resList.push(record.toLowerCase().replace(renderResults.getSearchInput().value.toLowerCase(), "<span class=\"autoComplete_highlighted_result\">".concat(renderResults.getSearchInput().value.toLowerCase(), "</span>")));
+              this.cleanResList.push(record);
             } else {
-              searchPosition++;
+              this.resList.push(record);
+              this.cleanResList.push(record);
             }
           }
-          match.push(recordChar);
         }
-        if (searchPosition !== query.length) {
-          return "";
-        }
-        return match.join("");
       }
     }, {
       key: "listMatchedResults",
@@ -172,7 +174,7 @@
           if (selector.value.length > 0 && selector.value !== " ") {
             renderResults.clearResults();
             _this2.listMatchedResults();
-            renderResults.getSelection(_this2.onSelection, _this2.placeHolderLength);
+            renderResults.getSelection(_this2.onSelection);
           } else {
             renderResults.clearResults();
           }

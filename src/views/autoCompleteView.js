@@ -33,19 +33,6 @@ const addResultsToList = (results, cleanResults, dataAttribute) => {
 	});
 };
 
-// Toggle event for search input
-// showing & hidding results list onfocus / blur
-["focus", "blur"].forEach(eventType => {
-	const result = document.querySelector(".autoComplete_results_list");
-	getSearchInput().addEventListener(eventType, () => {
-		if (eventType === "blur") {
-			result.style = "opacity: 0; visibility: hidden;";
-		} else {
-			result.style = "opacity: 1; visibility: visible;";
-		}
-	});
-});
-
 // Clears user input
 const clearInput = () => getSearchInput().value = "";
 
@@ -56,7 +43,7 @@ const clearResults = () => {
 };
 
 // Gets user selection
-const getSelection = (value, maxLength) => {
+const getSelection = (value) => {
 	const results = document.querySelectorAll(".autoComplete_result");
 	results.forEach(selection => {
 		selection.addEventListener("click", event => {
@@ -70,8 +57,7 @@ const getSelection = (value, maxLength) => {
 			// after checking the value length and validate it
 			getSearchInput().setAttribute(
 				"placeholder",
-				`${event.target.closest(".autoComplete_result").id.length > maxLength ? event.target.closest(".autoComplete_result").id.slice(0, maxLength) +
-					"..." : event.target.closest(".autoComplete_result").id}`
+				`${event.target.closest(".autoComplete_result").id}`
 			);
 		});
 	});
