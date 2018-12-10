@@ -1036,29 +1036,38 @@ document.querySelector(".toggeler").addEventListener("click", () => {
 // showing & hidding results list onfocus / blur
 ["focus", "blur"].forEach(eventType => {
 	const result = document.querySelector(".autoComplete_results_list");
+	const github = document.querySelector(".github-corner");
+	const title = document.querySelector("h1");
+	const query = document.querySelector("#autoComplete");
+	const mode = document.querySelector(".mode");
+	const selection = document.querySelector(".selection");
+	const footer = document.querySelector(".footer");
+
 	document.querySelector("#autoComplete").addEventListener(eventType, () => {
 		if (eventType === "blur") {
 			result.style = "opacity: 0;";
-			document.querySelector(".github-corner").style.opacity = 1;
-			document.querySelector("h1").style.opacity = 1;
-			document.querySelector(".mode").style.opacity = 1;
-			document.querySelector(".selection").style.opacity = 1;
-			document.querySelector(".footer").style.opacity = 1;
+			github.style.opacity = 1;
+			query.style = "color: transparent;";
+			title.style.opacity = 1;
+			mode.style.opacity = 1;
+			selection.style.opacity = 1;
+			footer.style.opacity = 1;
 			setTimeout(() => {
 				result.style = "display: none;";
 				document.querySelector(".autoComplete_results_list_container").style = "display: none;";
-			}, 1000);
+			}, 100);
 		} else {
 			result.style = "opacity: 1;";
-			document.querySelector(".github-corner").style.opacity = 0.1;
-			document.querySelector("h1").style.opacity = 0.3;
-			document.querySelector(".mode").style.opacity = 0.2;
-			document.querySelector(".selection").style.opacity = 0.3;
-			document.querySelector(".footer").style.opacity = 0.1;
+			github.style.opacity = 0.1;
+			query.style = "color: inheret;";
+			title.style.opacity = 0.3;
+			mode.style.opacity = 0.2;
+			selection.style.opacity = 0.1;
+			footer.style.opacity = 0.1;
 			setTimeout(() => {
 				result.style = "display: block;";
 				document.querySelector(".autoComplete_results_list_container").style = "display: block;";
-			}, 4);
+			}, 1);
 		}
 	});
 });
