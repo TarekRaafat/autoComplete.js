@@ -97,10 +97,10 @@
           renderResults.error("<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>.");
         }
       };
-      this.searchEngine = config.searchEngine === "loose" ? config.searchEngine : "strict";
+      this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
       this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
-      this.highlight = typeof config.highlight === "boolean" ? config.highlight : true;
+      this.highlight = config.highlight === true ? true : false;
       this.dataAttribute = config.dataAttribute === Object ? {
         tag: config.dataAttribute.tag,
         value: config.dataAttribute.value

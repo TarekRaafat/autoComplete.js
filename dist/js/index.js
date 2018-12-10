@@ -1017,16 +1017,48 @@ let autoCompletejs = new autoComplete({
 	}
 });
 
-document.querySelector(".toggeler").addEventListener("mousedown", () => {
+// Toggle Search Engine Type/Mode
+document.querySelector(".toggeler").addEventListener("click", () => {
 	let toggele = document.querySelector(".toggele").style.justifyContent;
 
-	if (toggele === "start") {
+	if (toggele === "start" || toggele === "") {
 		document.querySelector(".toggele").style.justifyContent = "end";
-		document.querySelector(".toggeler").innerHTML = "L";
+		document.querySelector(".toggeler").innerHTML = "Loose";
 		autoCompletejs.searchEngine = "loose";
 	} else {
 		document.querySelector(".toggele").style.justifyContent = "start";
-		document.querySelector(".toggeler").innerHTML = "S";
+		document.querySelector(".toggeler").innerHTML = "Strict";
 		autoCompletejs.searchEngine = "strict";
 	}
+});
+
+// Toggle event for search input
+// showing & hidding results list onfocus / blur
+["focus", "blur"].forEach(eventType => {
+	const result = document.querySelector(".autoComplete_results_list");
+	document.querySelector("#autoComplete").addEventListener(eventType, () => {
+		if (eventType === "blur") {
+			result.style = "opacity: 0;";
+			document.querySelector(".github-corner").style.opacity = 1;
+			document.querySelector("h1").style.opacity = 1;
+			document.querySelector(".mode").style.opacity = 1;
+			document.querySelector(".selection").style.opacity = 1;
+			document.querySelector(".footer").style.opacity = 1;
+			setTimeout(() => {
+				result.style = "display: none;";
+				document.querySelector(".autoComplete_results_list_container").style = "display: none;";
+			}, 1000);
+		} else {
+			result.style = "opacity: 1;";
+			document.querySelector(".github-corner").style.opacity = 0.1;
+			document.querySelector("h1").style.opacity = 0.3;
+			document.querySelector(".mode").style.opacity = 0.2;
+			document.querySelector(".selection").style.opacity = 0.3;
+			document.querySelector(".footer").style.opacity = 0.1;
+			setTimeout(() => {
+				result.style = "display: block;";
+				document.querySelector(".autoComplete_results_list_container").style = "display: block;";
+			}, 4);
+		}
+	});
 });

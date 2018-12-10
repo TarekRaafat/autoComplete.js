@@ -13,13 +13,13 @@ export default class autoComplete {
 			}
 		};
 		// Search engine type
-		this.searchEngine = config.searchEngine === "loose" ? config.searchEngine : "strict";
+		this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
 		// Placeholder text
 		this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
 		// Maximum number of results to show
 		this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
 		// Highlighting matching results
-		this.highlight = typeof config.highlight === "boolean" ? config.highlight : true;
+		this.highlight = config.highlight === true ? true : false;
 		// Assign data attribute tag & value if set in object
 		this.dataAttribute = config.dataAttribute === Object ? {
 			tag: config.dataAttribute.tag,
