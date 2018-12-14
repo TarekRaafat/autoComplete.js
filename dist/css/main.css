@@ -49,13 +49,13 @@ h4::selection {
 }
 
 .toggele {
-	display: grid;
+	display: flex;
 	position: abolute;
-	border: 2px solid #ffc6c6;
+	border: 1px solid #ffc6c6;
 	height: 35px;
 	width: 120px;
 	border-radius: 50px;
-	justify-content: start;
+	justify-content: flex-start;
 	align-content: center;
 	transition: var(--transition-1);
 }
@@ -71,12 +71,13 @@ h4::selection {
 	margin: 5px;
 	text-align: center;
 	align-content: center;
+	align-self: flex-start;
 	transition: var(--transition-1);
 }
 
 .toggeler:hover {
 	width: 70px;
-	/* background-color: rgba(255, 122, 122, 1); */
+	background-color: rgba(255, 198, 198, 0.8);
 }
 
 .toggeler::selection {

@@ -1021,12 +1021,12 @@ let autoCompletejs = new autoComplete({
 document.querySelector(".toggeler").addEventListener("click", () => {
 	let toggele = document.querySelector(".toggele").style.justifyContent;
 
-	if (toggele === "start" || toggele === "") {
-		document.querySelector(".toggele").style.justifyContent = "end";
+	if (toggele === "flex-start" || toggele === "") {
+		document.querySelector(".toggele").style.justifyContent = "flex-end";
 		document.querySelector(".toggeler").innerHTML = "Loose";
 		autoCompletejs.searchEngine = "loose";
 	} else {
-		document.querySelector(".toggele").style.justifyContent = "start";
+		document.querySelector(".toggele").style.justifyContent = "flex-start";
 		document.querySelector(".toggeler").innerHTML = "Strict";
 		autoCompletejs.searchEngine = "strict";
 	}
