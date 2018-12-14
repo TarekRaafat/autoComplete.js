@@ -1,9 +1,9 @@
 const search = (async () => {
 	let dataBase = [];
 
-	const source = await fetch("https://www.jasonbase.com/things/WArk.json")
+	const source = await fetch("https://www.jasonbase.com/things/WArk.json");
 	const data = await source.json();
-	data.filter((record) => {
+	data.filter(record => {
 		dataBase.push(record.food);
 	});
 
@@ -79,5 +79,4 @@ const search = (async () => {
 			}
 		});
 	});
-
 })();
