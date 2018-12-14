@@ -64,8 +64,11 @@
 }
 
 #autoComplete_results_list {
+	z-index: 1000;
+	position: absolute;
+	margin: 0;
 	padding: 0;
-	margin: -0.01rem;
+	width: 100vw;
 	transition: all 0.1s ease-in-out;
 	-webkit-transition: all -webkit-transform 0.1s ease;
 }
