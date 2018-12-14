@@ -1005,6 +1005,7 @@ const grocery = [
 let autoCompletejs = new autoComplete({
 	dataSrc: grocery,
 	searchEngine: "strict",
+	renderDist: document.querySelector("#input"),
 	placeHolder: "Food & Drinks...",
 	maxResults: 10,
 	highlight: true,

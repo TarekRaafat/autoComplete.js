@@ -2,12 +2,11 @@
 const getSearchInput = () => document.querySelector("#autoComplete");
 
 // Creats the results list HTML tag
-const createResultsList = () => {
+const createResultsList = (destination) => {
 	const list = document.createElement("ul");
 	list.setAttribute("id", "autoComplete_results_list");
-	getSearchInput().insertAdjacentElement("afterend", list);
+	destination.insertAdjacentElement("afterend", list);
 };
-createResultsList();
 
 // Adding matching results to the list
 const addResultsToList = (results, cleanResults, dataAttribute) => {
@@ -64,6 +63,7 @@ const error = error => {
 
 export const renderResults = {
 	getSearchInput,
+	createResultsList,
 	addResultsToList,
 	getSelection,
 	clearInput,

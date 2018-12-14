@@ -14,6 +14,8 @@ export default class autoComplete {
 		};
 		// Search engine type
 		this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
+		// Render destination
+		this.renderDist = autoCompleteView.createResultsList(config.renderDist ? config.renderDist : autoCompleteView.getSearchInput());
 		// Placeholder text
 		this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
 		// Maximum number of results to show

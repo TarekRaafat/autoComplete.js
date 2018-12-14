@@ -29,12 +29,11 @@
   var getSearchInput = function getSearchInput() {
     return document.querySelector("#autoComplete");
   };
-  var createResultsList = function createResultsList() {
+  var createResultsList = function createResultsList(destination) {
     var list = document.createElement("ul");
     list.setAttribute("id", "autoComplete_results_list");
-    getSearchInput().insertAdjacentElement("afterend", list);
+    destination.insertAdjacentElement("afterend", list);
   };
-  createResultsList();
   var addResultsToList = function addResultsToList(results, cleanResults, dataAttribute) {
     var resultsList = document.querySelector("#autoComplete_results_list");
     results.forEach(function (event, record) {
@@ -69,6 +68,7 @@
   };
   var renderResults = {
     getSearchInput: getSearchInput,
+    createResultsList: createResultsList,
     addResultsToList: addResultsToList,
     getSelection: getSelection,
     clearInput: clearInput,
@@ -90,6 +90,7 @@
         }
       };
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
+      this.renderDist = renderResults.createResultsList(config.renderDist ? config.renderDist : renderResults.getSearchInput());
       this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
       this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
       this.highlight = config.highlight === true ? true : false;
