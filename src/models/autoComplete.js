@@ -9,16 +9,25 @@ export default class autoComplete {
 			} else if (Array.isArray(config.dataSrc())) {
 				return config.dataSrc();
 			} else {
-				autoCompleteView.error("<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>.");
+				autoCompleteView.error(
+					"<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>."
+				);
 			}
 		};
 		// Search engine type
 		this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
 		// Rendered results destination
 		this.renderResults = autoCompleteView.createResultsList(
-			config.renderResults ?
-				{ destination: config.renderResults.destination, position: config.renderResults.position } :
-				{ destination: autoCompleteView.getSearchInput(), position: "afterend" });
+			config.renderResults
+				? {
+					destination: config.renderResults.destination,
+					position: config.renderResults.position
+				}
+				: {
+					destination: autoCompleteView.getSearchInput(),
+					position: "afterend"
+				}
+		);
 		// Placeholder text
 		this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
 		// Maximum number of results to show
@@ -26,14 +35,20 @@ export default class autoComplete {
 		// Highlighting matching results
 		this.highlight = config.highlight === true ? true : false;
 		// Assign data attribute tag & value if set in object
-		this.dataAttribute = config.dataAttribute === Object ? {
-			tag: config.dataAttribute.tag,
-			value: config.dataAttribute.value
-		} : { tag: "autocomplete", value: "" };
+		this.dataAttribute =
+			config.dataAttribute === Object
+				? {
+					tag: config.dataAttribute.tag,
+					value: config.dataAttribute.value
+				}
+				: { tag: "autocomplete", value: "" };
 		// Action function on result selection
-		this.onSelection = typeof config.onSelection === "function" ? config.onSelection : autoCompleteView.error(
-			"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
-		);
+		this.onSelection =
+			typeof config.onSelection === "function"
+				? config.onSelection
+				: autoCompleteView.error(
+					"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
+				);
 		// Starts the app Enigne
 		this.init();
 	}
@@ -53,10 +68,16 @@ export default class autoComplete {
 				// Holds current record character
 				let recordChar = record[number];
 				// Matching case
-				if (searchPosition < query.length && recordChar.toLowerCase() === query[searchPosition]) {
+				if (
+					searchPosition < query.length &&
+					recordChar.toLowerCase() === query[searchPosition]
+				) {
 					if (this.highlight) {
 						// Highlight matching character
-						recordChar = "<span class=\"autoComplete_highlighted_result\">" + recordChar + "</span>";
+						recordChar =
+							"<span class=\"autoComplete_highlighted_result\">" +
+							recordChar +
+							"</span>";
 						// Increment search position
 						searchPosition++;
 					} else {
@@ -80,9 +101,16 @@ export default class autoComplete {
 			if (record.toLowerCase().includes(query.toLowerCase())) {
 				// If Highlighted
 				if (this.highlight) {
-					this.resList.push(record.toLowerCase().replace(autoCompleteView.getSearchInput().value.toLowerCase(),
-						`<span class="autoComplete_highlighted_result">${autoCompleteView.getSearchInput().value.toLowerCase()}</span>`
-					));
+					this.resList.push(
+						record
+							.toLowerCase()
+							.replace(
+								autoCompleteView.getSearchInput().value.toLowerCase(),
+								`<span class="autoComplete_highlighted_result">${autoCompleteView
+									.getSearchInput()
+									.value.toLowerCase()}</span>`
+							)
+					);
 					this.cleanResList.push(record);
 					// If NOT Hightligthed
 				} else {
@@ -145,7 +173,9 @@ export default class autoComplete {
 	// Placeholder setting function
 	setPlaceHolder() {
 		if (this.placeHolder) {
-			autoCompleteView.getSearchInput().setAttribute("placeholder", this.placeHolder);
+			autoCompleteView
+				.getSearchInput()
+				.setAttribute("placeholder", this.placeHolder);
 		}
 	}
 

@@ -2,7 +2,7 @@
 const getSearchInput = () => document.querySelector("#autoComplete");
 
 // Creats the results list HTML tag
-const createResultsList = (renderResults) => {
+const createResultsList = renderResults => {
 	const list = document.createElement("ul");
 	list.setAttribute("id", "autoComplete_results_list");
 	renderResults.destination.insertAdjacentElement(renderResults.position, list);
@@ -14,7 +14,10 @@ const addResultsToList = (results, cleanResults, dataAttribute) => {
 
 	results.forEach((event, record) => {
 		const result = document.createElement("li");
-		result.setAttribute(`data-${dataAttribute.tag}`, dataAttribute.value || cleanResults[record]);
+		result.setAttribute(
+			`data-${dataAttribute.tag}`,
+			dataAttribute.value || cleanResults[record]
+		);
 		result.setAttribute("id", cleanResults[record]);
 		result.setAttribute("class", "autoComplete_result");
 		result.innerHTML = results[record];
@@ -23,7 +26,7 @@ const addResultsToList = (results, cleanResults, dataAttribute) => {
 };
 
 // Clears user input
-const clearInput = () => getSearchInput().value = "";
+const clearInput = () => (getSearchInput().value = "");
 
 // Clears the list of results
 const clearResults = () => {
@@ -32,7 +35,7 @@ const clearResults = () => {
 };
 
 // Gets user selection
-const getSelection = (value) => {
+const getSelection = value => {
 	const results = document.querySelectorAll(".autoComplete_result");
 	results.forEach(selection => {
 		selection.addEventListener("click", event => {
