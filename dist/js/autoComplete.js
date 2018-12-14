@@ -31,19 +31,17 @@
   };
   var createResultsList = function createResultsList() {
     var list = document.createElement("ul");
-    list.setAttribute("class", "autoComplete_results_list");
+    list.setAttribute("id", "autoComplete_results_list");
     getSearchInput().insertAdjacentElement("afterend", list);
   };
   createResultsList();
   var addResultsToList = function addResultsToList(results, cleanResults, dataAttribute) {
-    var resultState;
-    var resultsList = document.querySelector(".autoComplete_results_list");
+    var resultsList = document.querySelector("#autoComplete_results_list");
     results.forEach(function (event, record) {
       var result = document.createElement("li");
       result.setAttribute("data-".concat(dataAttribute.tag), dataAttribute.value || cleanResults[record]);
-      resultState = results.length === 1 ? "autoComplete_result autoComplete_single_result" : "autoComplete_result";
       result.setAttribute("id", cleanResults[record]);
-      result.setAttribute("class", resultState);
+      result.setAttribute("class", "autoComplete_result");
       result.innerHTML = results[record];
       resultsList.appendChild(result);
     });
@@ -52,7 +50,7 @@
     return getSearchInput().value = "";
   };
   var clearResults = function clearResults() {
-    var resultsList = document.querySelector(".autoComplete_results_list");
+    var resultsList = document.querySelector("#autoComplete_results_list");
     resultsList.innerHTML = "";
   };
   var getSelection = function getSelection(value) {

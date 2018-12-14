@@ -4,22 +4,20 @@ const getSearchInput = () => document.querySelector("#autoComplete");
 // Creats the results list HTML tag
 const createResultsList = () => {
 	const list = document.createElement("ul");
-	list.setAttribute("class", "autoComplete_results_list");
+	list.setAttribute("id", "autoComplete_results_list");
 	getSearchInput().insertAdjacentElement("afterend", list);
 };
 createResultsList();
 
 // Adding matching results to the list
 const addResultsToList = (results, cleanResults, dataAttribute) => {
-	let resultState;
-	const resultsList = document.querySelector(".autoComplete_results_list");
+	const resultsList = document.querySelector("#autoComplete_results_list");
 
 	results.forEach((event, record) => {
 		const result = document.createElement("li");
 		result.setAttribute(`data-${dataAttribute.tag}`, dataAttribute.value || cleanResults[record]);
-		resultState = results.length === 1 ? "autoComplete_result autoComplete_single_result" : "autoComplete_result";
 		result.setAttribute("id", cleanResults[record]);
-		result.setAttribute("class", resultState);
+		result.setAttribute("class", "autoComplete_result");
 		result.innerHTML = results[record];
 		resultsList.appendChild(result);
 	});
@@ -30,7 +28,7 @@ const clearInput = () => getSearchInput().value = "";
 
 // Clears the list of results
 const clearResults = () => {
-	const resultsList = document.querySelector(".autoComplete_results_list");
+	const resultsList = document.querySelector("#autoComplete_results_list");
 	resultsList.innerHTML = "";
 };
 

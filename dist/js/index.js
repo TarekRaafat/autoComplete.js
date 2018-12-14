@@ -1035,7 +1035,7 @@ document.querySelector(".toggeler").addEventListener("click", () => {
 // Toggle event for search input
 // showing & hidding results list onfocus / blur
 ["focus", "blur"].forEach(eventType => {
-	const result = document.querySelector(".autoComplete_results_list");
+	const result = document.querySelector("#autoComplete_results_list");
 	const github = document.querySelector(".github-corner");
 	const title = document.querySelector("h1");
 	const query = document.querySelector("#autoComplete");
@@ -1054,7 +1054,6 @@ document.querySelector(".toggeler").addEventListener("click", () => {
 			footer.style.opacity = 1;
 			setTimeout(() => {
 				result.style = "display: none;";
-				document.querySelector(".autoComplete_results_list_container").style = "display: none;";
 			}, 100);
 		} else {
 			result.style = "opacity: 1;";
@@ -1066,7 +1065,6 @@ document.querySelector(".toggeler").addEventListener("click", () => {
 			footer.style.opacity = 0.1;
 			setTimeout(() => {
 				result.style = "display: block;";
-				document.querySelector(".autoComplete_results_list_container").style = "display: block;";
 			}, 1);
 		}
 	});
