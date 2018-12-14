@@ -53,6 +53,7 @@
 	width: 16.5rem;
 	border: 0.05rem solid rgb(255, 122, 122);
 	background: url("./images/magnifier.svg") no-repeat left/15% 1.5rem;
+	box-shadow: rgba(255, 122, 122, .1) 0px 0px 20px 5px;
 }
 
 #autoComplete:focus::placeholder {
@@ -84,7 +85,7 @@
 	font-size: 1.1rem;
 	color: rgb(123, 123, 123);
 	text-transform: capitalize;
-	transition: all 0.3s ease-in-out;
+	transition: all 0.1s ease-in-out;
 	background-color: #fff;
 }
 
@@ -94,8 +95,11 @@
 
 .autoComplete_result:hover {
 	cursor: pointer;
-	background-color: #f5f5f5;
-	border-color: #e3e3e300;
+	background-color: rgba(255, 122, 122, .05);
+	border-left: 2px solid rgba(255, 122, 122, 1);
+	border-right: 2px solid rgba(255, 122, 122, 1);
+	border-top: 2px solid transparent;
+	border-bottom: 2px solid transparent;
 }
 
 .autoComplete_highlighted_result {
