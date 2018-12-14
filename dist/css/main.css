@@ -77,7 +77,7 @@ h4::selection {
 
 .toggeler:hover {
 	width: 70px;
-	background-color: rgba(255, 198, 198, 0.8);
+	background-color: rgba(255, 122, 122, .7);
 }
 
 .toggeler::selection {
