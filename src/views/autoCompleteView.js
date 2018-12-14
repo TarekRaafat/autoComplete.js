@@ -2,20 +2,12 @@
 const getSearchInput = () => document.querySelector("#autoComplete");
 
 // Creats the results list HTML tag
-const createResultsList = listContainer => {
+const createResultsList = () => {
 	const list = document.createElement("ul");
 	list.setAttribute("class", "autoComplete_results_list");
-	listContainer.appendChild(list);
+	getSearchInput().insertAdjacentElement("afterend", list);
 };
-
-// Creates results list container
-const createResultsListContainer = () => {
-	const listContainer = document.createElement("div");
-	listContainer.setAttribute("class", "autoComplete_results_list_container");
-	getSearchInput().insertAdjacentElement("afterend", listContainer);
-	createResultsList(listContainer);
-};
-createResultsListContainer();
+createResultsList();
 
 // Adding matching results to the list
 const addResultsToList = (results, cleanResults, dataAttribute) => {

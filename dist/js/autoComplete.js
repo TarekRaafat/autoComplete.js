@@ -29,18 +29,12 @@
   var getSearchInput = function getSearchInput() {
     return document.querySelector("#autoComplete");
   };
-  var createResultsList = function createResultsList(listContainer) {
+  var createResultsList = function createResultsList() {
     var list = document.createElement("ul");
     list.setAttribute("class", "autoComplete_results_list");
-    listContainer.appendChild(list);
+    getSearchInput().insertAdjacentElement("afterend", list);
   };
-  var createResultsListContainer = function createResultsListContainer() {
-    var listContainer = document.createElement("div");
-    listContainer.setAttribute("class", "autoComplete_results_list_container");
-    getSearchInput().insertAdjacentElement("afterend", listContainer);
-    createResultsList(listContainer);
-  };
-  createResultsListContainer();
+  createResultsList();
   var addResultsToList = function addResultsToList(results, cleanResults, dataAttribute) {
     var resultState;
     var resultsList = document.querySelector(".autoComplete_results_list");

@@ -22,6 +22,13 @@ Release flags:
 
 ## Release Notes
 
+* v1.4.2
+  * Optimizations
+  * Styles fixes
+
+* v1.4.1
+  * Bug Fixes
+
 * v1.4.0
     * Added new type/mode of Search Engine `strict`
     * Detached the results list style behaviour from code

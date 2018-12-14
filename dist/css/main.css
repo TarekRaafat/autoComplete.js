@@ -27,8 +27,16 @@ h1 > a {
 	color: rgba(255, 122, 122, 1);
 }
 
+h1 > a::selection {
+	color: rgb(255, 122, 122);
+}
+
 h4 {
 	margin-bottom: 5px;
+	color: #ffc6c6;
+}
+
+h4::selection {
 	color: #ffc6c6;
 }
 
@@ -71,6 +79,10 @@ h4 {
 	/* background-color: rgba(255, 122, 122, 1); */
 }
 
+.toggeler::selection {
+	color: #fff;
+}
+
 .strict {
 	display: inline;
 }
@@ -85,6 +97,11 @@ h4 {
 	font-weight: bold;
 	color: #ffc6c6;
 	transition: var(--transition-1);
+}
+
+.selection::selection {
+	color: #64CEAA;
+	/* background-color: #64CEAA; */
 }
 
 .footer {
@@ -103,6 +120,14 @@ h4 {
 .copyrights {
 	text-align: center;
 	font-size: 0.8rem;
+}
+
+.copyrights::selection {
+	color: rgb(147, 147, 147);
+}
+
+.copyrights > a::selection {
+	color: rgb(147, 147, 147);
 }
 
 @media only screen and (max-width: 600px) {

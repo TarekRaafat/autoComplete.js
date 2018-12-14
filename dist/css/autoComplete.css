@@ -21,6 +21,10 @@
 	transition: all 0.3s ease;
 }
 
+#autoComplete::selection {
+	color: transparent;
+}
+
 #autoComplete:focus::selection {
 	color: #fff;
 	background-color: rgba(255, 122, 122, 1);
@@ -57,14 +61,6 @@
 	color: rgb(255, 122, 122, 0.3);
 	transition: all 0.3s ease;
 	-webkit-transition: all -webkit-transform 0.3s ease;
-}
-
-.autoComplete_results_list_container {
-	z-index: 1000;
-	position: absolute;
-	width: 99vw;
-	margin: 0 auto;
-	text-align: center;
 }
 
 .autoComplete_results_list {

@@ -197,6 +197,7 @@ it with [autoComplete.js][so tag].
 - [ ] Navigate results list with keyboard
 - [X] Different types/modes of Search Logic
 - [ ] Autocomplete query with nearest result in placeholder
+- [ ] Choose different results render location
 
 
 ### 6.2. Usability:
