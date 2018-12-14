@@ -22,9 +22,10 @@ Release flags:
 
 ## Release Notes
 
-* v1.4.2
-  * Optimizations
-  * Styles fixes
+* v1.5.0
+  * Change rendered results destination & position `renderResults`
+  * Optimizations for faster performance & lighter weight
+  * Styles fixes for cross browser compatibility
 
 * v1.4.1
   * Bug Fixes

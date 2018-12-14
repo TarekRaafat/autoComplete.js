@@ -13,7 +13,7 @@
 	-webkit-transition: all -webkit-transform 0.4s ease;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-  	overflow: hidden;
+  overflow: hidden;
 }
 
 #autoComplete::placeholder {
@@ -95,7 +95,7 @@
 
 .autoComplete_result:hover {
 	cursor: pointer;
-	background-color: rgba(255, 122, 122, .05);
+	background-color: rgba(255, 248, 248, 0.9);
 	border-left: 2px solid rgba(255, 122, 122, 1);
 	border-right: 2px solid rgba(255, 122, 122, 1);
 	border-top: 2px solid transparent;
@@ -131,7 +131,7 @@
 		width: 11rem;
 		background: url("./images/magnifier.svg") no-repeat left/25% 1.5rem;
 	}
-	
+
 	.autoComplete_result:first-child {
 		border-radius: 1rem 1rem 0 0;
 	}

@@ -34,6 +34,7 @@ export default [
 			format: "umd"
 		},
 		plugins: [
+			eslint(),
 			babel({
 				exclude: "node_modules/**",
 				presets: ["@babel/preset-env"],

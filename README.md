@@ -57,7 +57,7 @@ $ npm run build
 ```html
 <head>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.4.0/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.0/dist/css/autoComplete.min.css">
 
 </head>
 ```
@@ -65,7 +65,7 @@ $ npm run build
 ```html
 <body>
 	
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.4.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.0/dist/js/autoComplete.min.js"></script>
 
 </body>
 ```
@@ -117,6 +117,10 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 new autoComplete({
 	dataSrc: grocery,		  // Array data source
 	searchEngine: "loose",		  // Search Engine type
+	renderResults: {		  // Render results Destination & position
+		destination: document.querySelector("#autoComplete"),
+		position: "afterend"
+	},
 	placeHolder: "Try me...",  	  // Place Holder text
 	maxResults: 10,		    	  // Max number of results
 	highlight: true,	  	  // Highlight matching results	
@@ -129,16 +133,16 @@ new autoComplete({
 	}
 });
 ```
-| Features | Types | Values | Default
-|:-------:|------|:-----:|:-------:
-| `dataSrc` | Data Source | `Array` or <br> `Function` => `Array` | **No**
-| `SearchEngine` | Search Engine Type/Mode | `strict` or `loose` lowerCase string | `strict`
-| `placeHolder` | Place Holder text | `String` | Blank / Empty
-| `maxResults` | Maximum number of displayed results | `Number` | `10`
-| `highlight` | Highlight matching results | `Boolean` | `false`
-| `dataAttribute` | Data Attribute tag | `Object` | `{tag: "autoComplete", value: "" }`
-| `onSelection` | Action script onClick event | `Function` | **No**
-
+| Features        | Description                             | Values                                                                                                                                                          | Default                                                                        |
+|-----------------|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| `dataSrc`       | Data Source                             | `Array` or <br> `Function` => `Array`                                                                                                                           | **No**                                                                         |
+| `searchEngine`  | Search Engine Type/Mode                 | `strict` or `loose` lowerCase string                                                                                                                            | `strict`                                                                       |
+| `renderResults` | Rendered results destination & position | Object of two methods:<br> 1- html element selector: `document.querySelector("#div")`<br> 2- position:<br> `beforebegin`, `afterbegin`, `beforeend`, `afterend` | `{destination: document.querySelector("#autoComplete"), position: "afterend"}` |
+| `placeHolder`   | Place Holder text                       | `String`                                                                                                                                                        | Blank / Empty                                                                  |
+| `maxResults`    | Maximum number of displayed results     | `Number`                                                                                                                                                        | `10`                                                                           |
+| `highlight`     | Highlight matching results              | `Boolean`                                                                                                                                                       | `false`                                                                        |
+| `dataAttribute` | Data Attribute tag                      | `Object`                                                                                                                                                        | `{tag: "autoComplete", value: ""}`                                             |
+| `onSelection`   | Action script onClick event             | `Function`                                                                                                                                                      | **No**                                                                         |
 
 3. That's it, you're ready to go!
 
@@ -197,7 +201,7 @@ it with [autoComplete.js][so tag].
 - [ ] Navigate results list with keyboard
 - [X] Different types/modes of Search Logic
 - [ ] Autocomplete query with nearest result in placeholder
-- [ ] Choose different results render location
+- [X] Choose different results render destination & position
 
 
 ### 6.2. Usability:

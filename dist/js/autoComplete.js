@@ -29,10 +29,10 @@
   var getSearchInput = function getSearchInput() {
     return document.querySelector("#autoComplete");
   };
-  var createResultsList = function createResultsList(destination) {
+  var createResultsList = function createResultsList(renderResults) {
     var list = document.createElement("ul");
     list.setAttribute("id", "autoComplete_results_list");
-    destination.insertAdjacentElement("afterend", list);
+    renderResults.destination.insertAdjacentElement(renderResults.position, list);
   };
   var addResultsToList = function addResultsToList(results, cleanResults, dataAttribute) {
     var resultsList = document.querySelector("#autoComplete_results_list");
@@ -90,7 +90,13 @@
         }
       };
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
-      this.renderDest = renderResults.createResultsList(config.renderDest ? config.renderDest : renderResults.getSearchInput());
+      this.renderResults = renderResults.createResultsList(config.renderResults ? {
+        destination: config.renderResults.destination,
+        position: config.renderResults.position
+      } : {
+        destination: renderResults.getSearchInput(),
+        position: "afterend"
+      });
       this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
       this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
       this.highlight = config.highlight === true ? true : false;

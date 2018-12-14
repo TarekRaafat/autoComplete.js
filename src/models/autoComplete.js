@@ -14,8 +14,11 @@ export default class autoComplete {
 		};
 		// Search engine type
 		this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
-		// Render destination
-		this.renderDest = autoCompleteView.createResultsList(config.renderDest ? config.renderDest : autoCompleteView.getSearchInput());
+		// Rendered results destination
+		this.renderResults = autoCompleteView.createResultsList(
+			config.renderResults ?
+				{ destination: config.renderResults.destination, position: config.renderResults.position } :
+				{ destination: autoCompleteView.getSearchInput(), position: "afterend" });
 		// Placeholder text
 		this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
 		// Maximum number of results to show

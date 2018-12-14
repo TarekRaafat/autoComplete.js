@@ -110,10 +110,12 @@ h4::selection {
 }
 
 .footer {
-	width: 97.6vw;
+	display: flex;
+	width: 100vw;
 	position: absolute;
 	bottom: 2rem;
 	color: rgb(147, 147, 147);
+	justify-content: center;
 	transition: var(--transition-1);
 }
 
@@ -123,7 +125,6 @@ h4::selection {
 }
 
 .copyrights {
-	text-align: center;
 	font-size: 0.8rem;
 }
 
