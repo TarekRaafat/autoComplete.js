@@ -90,7 +90,7 @@
         }
       };
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
-      this.renderDist = renderResults.createResultsList(config.renderDist ? config.renderDist : renderResults.getSearchInput());
+      this.renderDest = renderResults.createResultsList(config.renderDest ? config.renderDest : renderResults.getSearchInput());
       this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
       this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
       this.highlight = config.highlight === true ? true : false;
