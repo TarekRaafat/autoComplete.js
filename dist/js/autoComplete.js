@@ -64,7 +64,7 @@
     });
   };
   var error = function error(_error) {
-    document.querySelector("body").innerHTML = "\n\t\t<div class=\"autoComplete_error\">\n\t\t\t<div class=\"autoComplete_message\">".concat(_error, "</div>\n\t\t</div>\n\t");
+    document.querySelector("body").innerHTML = "\n\t\t<div class=\"autoComplete_error\">\n\t\t\t<div class=\"autoComplete_message\"><strong>Error</strong>, ".concat(_error, "</div>\n\t\t</div>\n\t");
   };
   var renderResults = {
     getSearchInput: getSearchInput,
@@ -85,8 +85,6 @@
           return config.dataSrc;
         } else if (Array.isArray(config.dataSrc())) {
           return config.dataSrc();
-        } else {
-          renderResults.error("<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>.");
         }
       };
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
@@ -107,7 +105,7 @@
         tag: "autocomplete",
         value: ""
       };
-      this.onSelection = typeof config.onSelection === "function" ? config.onSelection : renderResults.error("<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>.");
+      this.onSelection = config.onSelection;
       this.init();
     }
     _createClass(autoComplete, [{
@@ -121,7 +119,7 @@
             var recordChar = record[number];
             if (searchPosition < query.length && recordChar.toLowerCase() === query[searchPosition]) {
               if (this.highlight) {
-                recordChar = "<span class=\"autoComplete_highlighted_result\">" + recordChar + "</span>";
+                recordChar = "<span class=\"autoComplete_highlighted_result\">".concat(recordChar, "</span>");
                 searchPosition++;
               } else {
                 searchPosition++;
@@ -161,7 +159,7 @@
             }
           });
         } catch (error) {
-          renderResults.error(error);
+          renderResults.error("data source is not an Array");
         }
         renderResults.addResultsToList(this.resList.slice(0, this.maxResults), this.cleanResList.slice(0, this.maxResults), this.dataAttribute);
       }
@@ -173,7 +171,9 @@
           if (selector.value.length > 0 && selector.value !== " ") {
             renderResults.clearResults();
             _this2.listMatchedResults();
-            renderResults.getSelection(_this2.onSelection);
+            if (_this2.onSelection) {
+              renderResults.getSelection(_this2.onSelection);
+            }
           } else {
             renderResults.clearResults();
           }
@@ -195,7 +195,7 @@
             this.searchInputValidation(renderResults.getSearchInput());
           }
         } catch (error) {
-          renderResults.error("<strong>error</strong>, autoComplete <strong>engine</strong> is not <strong>starting</strong>...");
+          renderResults.error(error);
         }
       }
     }]);

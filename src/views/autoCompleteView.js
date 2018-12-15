@@ -59,7 +59,7 @@ const getSelection = value => {
 const error = error => {
 	document.querySelector("body").innerHTML = `
 		<div class="autoComplete_error">
-			<div class="autoComplete_message">${error}</div>
+			<div class="autoComplete_message"><strong>Error</strong>, ${error}</div>
 		</div>
 	`;
 };

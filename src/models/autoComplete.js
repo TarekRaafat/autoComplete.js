@@ -8,10 +8,6 @@ export default class autoComplete {
 				return config.dataSrc;
 			} else if (Array.isArray(config.dataSrc())) {
 				return config.dataSrc();
-			} else {
-				autoCompleteView.error(
-					"<strong>Error</strong>, <strong>data source</strong> value is not an <strong>Array</string>."
-				);
 			}
 		};
 		// Search engine type
@@ -43,12 +39,7 @@ export default class autoComplete {
 				}
 				: { tag: "autocomplete", value: "" };
 		// Action function on result selection
-		this.onSelection =
-			typeof config.onSelection === "function"
-				? config.onSelection
-				: autoCompleteView.error(
-					"<strong>Error</strong>, <strong>onSelection</strong> value is not a <strong>Function</string>."
-				);
+		this.onSelection = config.onSelection;
 		// Starts the app Enigne
 		this.init();
 	}
@@ -74,10 +65,7 @@ export default class autoComplete {
 				) {
 					if (this.highlight) {
 						// Highlight matching character
-						recordChar =
-							"<span class=\"autoComplete_highlighted_result\">" +
-							recordChar +
-							"</span>";
+						recordChar = `<span class="autoComplete_highlighted_result">${recordChar}</span>`;
 						// Increment search position
 						searchPosition++;
 					} else {
@@ -129,9 +117,8 @@ export default class autoComplete {
 		this.cleanResList = [];
 		// Holds the input search value
 		let inputValue = autoCompleteView.getSearchInput().value;
-
 		try {
-			// Checks input matches in data source
+			// Checks input has matches in data source
 			this.dataSrc().filter(record => {
 				const match = this.search(inputValue, record);
 				if (match) {
@@ -140,7 +127,7 @@ export default class autoComplete {
 				}
 			});
 		} catch (error) {
-			autoCompleteView.error(error);
+			autoCompleteView.error("data source is not an Array");
 		}
 		// Rendering matching results to the UI list
 		autoCompleteView.addResultsToList(
@@ -162,7 +149,10 @@ export default class autoComplete {
 				// List matching results
 				this.listMatchedResults();
 				// Gets user's selection
-				autoCompleteView.getSelection(this.onSelection);
+				// If action configured
+				if (this.onSelection) {
+					autoCompleteView.getSelection(this.onSelection);
+				}
 			} else {
 				// clears all results list
 				autoCompleteView.clearResults();
@@ -188,9 +178,7 @@ export default class autoComplete {
 				this.searchInputValidation(autoCompleteView.getSearchInput());
 			}
 		} catch (error) {
-			autoCompleteView.error(
-				"<strong>error</strong>, autoComplete <strong>engine</strong> is not <strong>starting</strong>..."
-			);
+			autoCompleteView.error(error);
 		}
 	}
 }
