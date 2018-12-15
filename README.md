@@ -9,7 +9,17 @@
 ![\[Size\]()](https://img.shields.io/badge/Size-4%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
 
-[![autoComplete.js Design](./README/img/autoComplete.js.png "autoComplete.js Design")](http://www.tarekraafat.com/dev/projects/autoComplete/)
+<br>
+<br>
+<p align="center">
+	<a href="http://www.tarekraafat.com/dev/projects/autoComplete/">
+  		<img src="./README/img/autoComplete.js.svg" alt= "autoComplete.js Design" width="50%">
+	</a>
+</p>
+<br>
+<br>
+<br>
+<br>
 
 > Simple autocomplete pure vanilla Javascript library. <a href="http://www.tarekraafat.com/dev/projects/autoComplete/" target="\_blank">Live Demo</a>
 
@@ -24,7 +34,7 @@ autoComplete.js is a simple pure vanilla Javascript library that's built for spe
 -   [x] Lightning Fast
 -   [x] Versatile
 -   [x] Customizable
--   [x] First Class Error Reporting
+-   [x] First Class Error Handling & Reporting
 
 ## [![autoComplete.js Code Example](./README/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW)
 
@@ -62,9 +72,10 @@ $ npm run build
 
 ```html
 <head>
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.0/dist/css/autoComplete.min.css">
-
+	<link
+		rel="stylesheet"
+		href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.0/dist/css/autoComplete.min.css"
+	/>
 </head>
 ```
 
@@ -72,9 +83,7 @@ $ npm run build
 
 ```html
 <body>
-
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.0/dist/js/autoComplete.min.js"></script>
-
+	<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.0/dist/js/autoComplete.min.js"></script>
 </body>
 ```
 
@@ -113,10 +122,11 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ### 1.4. How to use:
 
 > HTML file
-> 1. Assign id="autoComplete" to the input filed
+>
+> 1.  Assign id="autoComplete" to the input filed
 
 ```html
-<input id="autoComplete" type="text">
+<input id="autoComplete" type="text" />
 ```
 
 > JS file
@@ -125,20 +135,22 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 
 ```js
 new autoComplete({
-	dataSrc: grocery,		  // Array data source
-	searchEngine: "loose",		  // Search Engine type
-	renderResults: {		  // Render results Destination & position
+	dataSrc: grocery, // Array data source
+	searchEngine: "loose", // Search Engine type
+	renderResults: {
+		// Render results Destination & position
 		destination: document.querySelector("#autoComplete"),
 		position: "afterend"
 	},
-	placeHolder: "Try me...",  	  // Place Holder text
-	maxResults: 10,		    	  // Max number of results
-	highlight: true,	  	  // Highlight matching results
+	placeHolder: "Try me...", // Place Holder text
+	maxResults: 10, // Max number of results
+	highlight: true, // Highlight matching results
 	dataAttribute: {
-		tag: "set",	    	  // Data attribute tag
-		value: "value"	    	  // Data attribute value
+		tag: "set", // Data attribute tag
+		value: "value" // Data attribute value
 	},
-	onSelection: value => {    	  // Action script onClick event
+	onSelection: value => {
+		// Action script onClick event
 		document.querySelector(".selection").innerHTML = value.id;
 	}
 });
@@ -228,7 +240,7 @@ it with [autoComplete.js][so tag].
 
 ## 7. Contribution
 
-> Contributions are always more than  welcome!
+> Contributions are always more than welcome!
 
 If you have any ideas, just [open an issue](https://github.com/TarekRaafat/autoComplete.js/issues) and tell me what you think.
 
