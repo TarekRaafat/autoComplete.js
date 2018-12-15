@@ -11,7 +11,7 @@
 
 [![autoComplete.js Design](./README/img/autoComplete.js.png "autoComplete.js Design")](http://www.tarekraafat.com/dev/projects/autoComplete/)
 
-> Simple autocomplete pure vanilla Javascript library. <a href="http://www.tarekraafat.com/dev/projects/autoComplete/" target="_blank">Live Demo</a>
+> Simple autocomplete pure vanilla Javascript library. <a href="http://www.tarekraafat.com/dev/projects/autoComplete/" target="\_blank">Live Demo</a>
 
 autoComplete.js is a simple pure vanilla Javascript library that's built for speed, high versatility and seamless integration with wide range of projects & systems.
 
@@ -153,7 +153,7 @@ new autoComplete({
 | `maxResults`    | Maximum number of displayed results     | `Number`                                                                                                                                                        | `10`                                                                           |
 | `highlight`     | Highlight matching results              | `Boolean`                                                                                                                                                       | `false`                                                                        |
 | `dataAttribute` | Data Attribute tag                      | `Object`                                                                                                                                                        | `{tag: "autoComplete", value: ""}`                                             |
-| `onSelection`   | Action script onClick event             | `Function`                                                                                                                                                      | **No**                                                                         |
+| `onSelection`   | Action script onClick event             | `Function`                                                                                                                                                      | No Action                                                                      |
 
 3.  That's it, you're ready to go!
 
@@ -221,7 +221,7 @@ it with [autoComplete.js][so tag].
 
 -   [ ] New designs for inspiration (Ongoing)
     -   [x] Styles
-    -   [ ] Interactions
+    -   [x] Interactions
 -   [ ] Number of results inside input field (Optional)
 
 * * *
