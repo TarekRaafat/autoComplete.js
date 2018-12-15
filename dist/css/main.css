@@ -20,6 +20,10 @@ body {
 
 .header {
     text-align: center;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 h1 {
@@ -78,6 +82,10 @@ h4::selection {
     align-content: center;
     align-self: flex-start;
     transition: var(--transition-1);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-touch-callout: none;
 }
 
 .toggeler:hover {
@@ -122,6 +130,10 @@ h4::selection {
 .footer>div>a {
     text-decoration: none;
     color: rgb(147, 147, 147);
+}
+
+.footer>div>a::selection {
+    color: rgba(255, 122, 122, 1);
 }
 
 .copyrights {
