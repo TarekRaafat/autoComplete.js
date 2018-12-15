@@ -1,7 +1,7 @@
 ## Versioning
 ----------
 
-For transparency and insight into the release cycle, releases will be numbered 
+For transparency and insight into the release cycle, releases will be numbered
 with the following format:
 
 `<major>.<minor>.<patch>`
@@ -32,12 +32,12 @@ Release flags:
 
 * v1.4.0
     * Added new type/mode of Search Engine `strict`
-    * Detached the results list style behaviour from code
-    * Depricated "~~Placeholder max. length~~" setting
+    * Detached the results list style behavior from code
+    * Deprecated "~~Placeholder max. length~~" setting
     * Optimizations for higher performance & lighter weight
 
 * v1.3.1
-	* Refactored for higher speed & smaller foorprint
+	* Refactored for higher speed & smaller footprint
 	* Bug fixes & Optimizations
 
 * v1.3.0
@@ -54,7 +54,7 @@ Release flags:
 
 * v1.1.0
 	* Reduced the library size 97% `(101KB -> 4KB)`
-	* Introducing 2 different verions of the library `(pure, minified)`
+	* Introducing 2 different versions of the library `(pure, minified)`
 	* Replaced webpack with Rollup for better bundling
 	* Fixed some bugs caused problems with node apps
 
@@ -66,7 +66,7 @@ Release flags:
 
 * v1.0.1
 	* Optimizations Reduced the library weight by 1KB
-  
+
 * v1.0.0
   * Add customized data attribute tag for generated results
   * Highlight matching results from the results list

@@ -1,13 +1,13 @@
 # autoComplete.js :sparkles:
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Build Status](https://travis-ci.com/TarekRaafat/autoComplete.js.svg?branch=master)](https://travis-ci.com/TarekRaafat/autoComplete.js)
 [![GitHub version](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js.svg)](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js)
 [![npm version](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js.svg)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
 [![](https://data.jsdelivr.com/v1/package/gh/TarekRaafat/autoComplete.js/badge)](https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js)
-![[Zero Dependencies]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
-![[Size]()](https://img.shields.io/badge/Size-4%20KB-green.svg)
+![\[Zero Dependencies\]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
+![\[Size\]()](https://img.shields.io/badge/Size-4%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
-
 
 [![autoComplete.js Design](./README/img/autoComplete.js.png "autoComplete.js Design")](http://www.tarekraafat.com/dev/projects/autoComplete/)
 
@@ -16,44 +16,50 @@
 autoComplete.js is a simple pure vanilla Javascript library that's built for speed, high versatility and seamless integration with wide range of projects & systems.
 
 ## Features
-- [x] Simple & Easy to use
-- [x] Pure Vanilla Javascript
-- [x] Zero Dependencies
-- [x] Lightweight
-- [x] Lightning Fast
-- [x] Versatile
-- [x] Customizable
-- [x] First Class Error Reporting
 
-[![autoComplete.js Code Example](./README/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW)
-----
+-   [x] Simple & Easy to use
+-   [x] Pure Vanilla Javascript
+-   [x] Zero Dependencies
+-   [x] Lightweight
+-   [x] Lightning Fast
+-   [x] Versatile
+-   [x] Customizable
+-   [x] First Class Error Reporting
+
+## [![autoComplete.js Code Example](./README/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW)
 
 ## 1. Get Started
 
 ### 1.1. Clone:
 
-* Clone autoComplete.js to your local machine using `https://github.com/TarekRaafat/autoComplete.js.git`
+-   Clone autoComplete.js to your local machine using `https://github.com/TarekRaafat/autoComplete.js.git`
 
 ### 1.2. Setup:
 
-1. Install Dependencies
+1.  Install Dependencies
+
 ```shell
 $ npm i
 ```
-2. For Development
+
+2.  For Development
+
 ```shell
 $ npm run dev
 ```
-3. Build Production Package
+
+3.  Build Production Package
+
 ```shell
 $ npm run build
 ```
 
-### 1.3. Installation: 
+### 1.3. Installation:
 
-* jsDelivr CDN (<a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection">Link</a>)
+-   jsDelivr CDN (<a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection">Link</a>)
 
 `CSS`
+
 ```html
 <head>
 
@@ -61,42 +67,44 @@ $ npm run build
 
 </head>
 ```
+
 `JS`
+
 ```html
 <body>
-	
+
 <script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.0/dist/js/autoComplete.min.js"></script>
 
 </body>
 ```
 
-* HTML Local load
-  
+-   HTML Local load
+
 ```html
 <script src="./autoComplete.js"></script>
 ```
 
-* HTML Local load - ES6 module `(Use with Import)`
-  
+-   HTML Local load - ES6 module `(Use with Import)`
+
 ```html
 <script src="./index.js" type="module"></script>
 ```
 
-* Import module ES6
+-   Import module ES6
 
 ```js
 import autoComplete from "./autoComplete";
 ```
 
-* npm install `(Node Package Manager)`
+-   npm install `(Node Package Manager)`
 
-https://www.npmjs.com/package/@tarekraafat/autocomplete.js
+<https://www.npmjs.com/package/@tarekraafat/autocomplete.js>
 
 ```shell
 $ npm i @tarekraafat/autocomplete.js
 ```
 
-* Node.js
+-   Node.js
 
 ```js
 const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete");
@@ -105,14 +113,16 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ### 1.4. How to use:
 
 > HTML file
-1. Assign id="autoComplete" to the input filed
+> 1. Assign id="autoComplete" to the input filed
 
 ```html
 <input id="autoComplete" type="text">
 ```
+
 > JS file
 
-2. Create new instance of autoComplete engine
+2.  Create new instance of autoComplete engine
+
 ```js
 new autoComplete({
 	dataSrc: grocery,		  // Array data source
@@ -123,7 +133,7 @@ new autoComplete({
 	},
 	placeHolder: "Try me...",  	  // Place Holder text
 	maxResults: 10,		    	  // Max number of results
-	highlight: true,	  	  // Highlight matching results	
+	highlight: true,	  	  // Highlight matching results
 	dataAttribute: {
 		tag: "set",	    	  // Data attribute tag
 		value: "value"	    	  // Data attribute value
@@ -133,8 +143,9 @@ new autoComplete({
 	}
 });
 ```
+
 | Features        | Description                             | Values                                                                                                                                                          | Default                                                                        |
-|-----------------|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| --------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | `dataSrc`       | Data Source                             | `Array` or <br> `Function` => `Array`                                                                                                                           | **No**                                                                         |
 | `searchEngine`  | Search Engine Type/Mode                 | `strict` or `loose` lowerCase string                                                                                                                            | `strict`                                                                       |
 | `renderResults` | Rendered results destination & position | Object of two methods:<br> 1- html element selector: `document.querySelector("#div")`<br> 2- position:<br> `beforebegin`, `afterbegin`, `beforeend`, `afterend` | `{destination: document.querySelector("#autoComplete"), position: "afterend"}` |
@@ -144,37 +155,39 @@ new autoComplete({
 | `dataAttribute` | Data Attribute tag                      | `Object`                                                                                                                                                        | `{tag: "autoComplete", value: ""}`                                             |
 | `onSelection`   | Action script onClick event             | `Function`                                                                                                                                                      | **No**                                                                         |
 
-3. That's it, you're ready to go!
+3.  That's it, you're ready to go!
 
-----
+* * *
 
 ## 2. Example
 
-  - Live working [Demo]
+-   Live working [Demo]
 
 
-  - Try it on [CodePen](https://codepen.io/tarekraafat/pen/rQopdW)
+-   Try it on [CodePen](https://codepen.io/tarekraafat/pen/rQopdW)
 
-[Demo]: http://www.tarekraafat.com/dev/projects/autoComplete/
+[demo]: http://www.tarekraafat.com/dev/projects/autoComplete/
 
-  - Download [Demo] files locally from <a href="./dist" target="_blank">`/dist`</a> folder
+-   Download [Demo] files locally from <a href="./dist" target="_blank">`/dist`</a> folder
 
-----
+* * *
 
 ## 3. Support
 
 For general questions about autoComplete.js, tweet at [@TarekRaafat].
 
-For technical questions, you should post a question on [Stack Overflow] and tag 
+For technical questions, you should post a question on [Stack Overflow] and tag
 it with [autoComplete.js][so tag].
 
 <!-- section links -->
 
-[Stack Overflow]: http://stackoverflow.com/
-[@TarekRaafat]: https://twitter.com/TarekRaafat
+[stack overflow]: http://stackoverflow.com/
+
+[@tarekraafat]: https://twitter.com/TarekRaafat
+
 [so tag]: http://stackoverflow.com/questions/tagged/autoComplete.js
 
-----
+* * *
 
 ## 4. Browsers Support
 
@@ -182,35 +195,36 @@ it with [autoComplete.js][so tag].
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Edge                                                                                                                                                                                                            | last version                                                                                                                                                                                                      | last version                                                                                                                                                                                                  | last version                                                                                                                                                                                                  | last version                                                                                                                                                                                                                  | last version                                                                                                                                                                                                                        | last version                                                                                                                                                                                              | last version                                                                                                                                                                                                                  | last version                                                                                                                                                                                                          |
 
-----
+* * *
 
 ## 5. What's New?
 
 <a href="./README/Releases.md">Releases</a> Information
 
-----
+* * *
 
 ## 6. Roadmap
 
 ### 6.1. Functionality:
-- [ ] Add support for different types of data source
-	- [X] Function
-	- [ ] External data source `(Plugin)`
-- [X] Multi-keyword Search
-- ~~Placeholder text maximum length option `[experimental]`~~ `[Depricated]`
-- [ ] Navigate results list with keyboard
-- [X] Different types/modes of Search Logic
-- [ ] Autocomplete query with nearest result in placeholder
-- [X] Choose different results render destination & position
 
+-   [ ] Add support for different types of data source
+    -   [x] Function
+    -   [ ] External data source `(Plugin)`
+-   [x] Multi-keyword Search
+-   ~~Placeholder text maximum length option `[experimental]`~~ `[Depricated]`
+-   [ ] Navigate results list with keyboard
+-   [x] Different types/modes of Search Logic
+-   [ ] Autocomplete query with nearest result in placeholder
+-   [x] Choose different results render destination & position
 
 ### 6.2. Usability:
-- [ ] New designs for inspiration (Ongoing)
-	- [X] Styles
-	- [ ] Interactions
-- [ ] Number of results inside input field (Optional)
 
-----
+-   [ ] New designs for inspiration (Ongoing)
+    -   [x] Styles
+    -   [ ] Interactions
+-   [ ] Number of results inside input field (Optional)
+
+* * *
 
 ## 7. Contribution
 
@@ -218,28 +232,29 @@ it with [autoComplete.js][so tag].
 
 If you have any ideas, just [open an issue](https://github.com/TarekRaafat/autoComplete.js/issues) and tell me what you think.
 
-- Please fork the repository and make changes as you'd like.
-Pull requests are warmly welcome.
+-   Please fork the repository and make changes as you'd like.
+    Pull requests are warmly welcome.
 
 > If you'd like to contribute:
 
-1. Fork it (<https://github.com/TarekRaafat/autoComplete.js.git>)
-2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`)
-4. Push to the branch (`git push origin feature/fooBar`)
-5. Create a new Pull Request
+1.  Fork it (<https://github.com/TarekRaafat/autoComplete.js.git>)
+2.  Create your feature branch (`git checkout -b feature/fooBar`)
+3.  Commit your changes (`git commit -am 'Add some fooBar'`)
+4.  Push to the branch (`git push origin feature/fooBar`)
+5.  Create a new Pull Request
 
-----
+* * *
 
 ## 8. Author
 
 Tarek Raafat - tarek.m.raafat@gmail.com
 
-Distributed under the Apache 2.0 license. See ``Apache 2.0`` for more information.
+Distributed under the Apache 2.0 license. See `Apache 2.0` for more information.
 
-https://github.com/TarekRaafat/
+<https://github.com/TarekRaafat/>
 
-----
+* * *
 
 ## 9. License
+
 Apache 2.0 © [Tarek Raafat](http://www.tarekraafat.com)
