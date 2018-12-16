@@ -14,7 +14,7 @@
 
 <h1>autoComplete.js</h1>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="http://www.tarekraafat.com/dev/projects/autoComplete/" target="\_blank">Live Demo</a>
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a>
 
 autoComplete.js is a simple pure vanilla Javascript library that's designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
 
@@ -168,7 +168,7 @@ new autoComplete({
 
 -   Try it on [CodePen](https://codepen.io/tarekraafat/pen/rQopdW)
 
-[demo]: http://www.tarekraafat.com/dev/projects/autoComplete/
+[demo]: https://tarekraafat.github.io/autoComplete.js/demo/
 
 -   Download [Demo] files locally from <a href="https://github.com/TarekRaafat/autoComplete.js/tree/master/dist" target="_blank">`/dist`</a> folder
 

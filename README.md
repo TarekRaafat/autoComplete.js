@@ -12,7 +12,7 @@
 <br>
 <br>
 <p align="center">
-	<a href="http://www.tarekraafat.com/dev/projects/autoComplete/">
+	<a href=https://tarekraafat.github.io/autoComplete.js/demo/">
   		<img src="./docs/img/autoComplete.js.svg" alt= "autoComplete.js Design" width="50%">
 	</a>
 </p>
@@ -21,7 +21,7 @@
 <br>
 <br>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="http://www.tarekraafat.com/dev/projects/autoComplete/" target="\_blank">Live Demo</a>
+> Simple autocomplete pure vanilla Javascript library. &lt;a href=<https://tarekraafat.github.io/autoComplete.js/demo/>" target="\_blank">Live Demo</a>
 
 autoComplete.js is a simple pure vanilla Javascript library that's designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
 
