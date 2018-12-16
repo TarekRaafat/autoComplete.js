@@ -50,7 +50,7 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 
 ### Installation:
 
-#### <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js?tab=collection">jsDelivr</a> CDN
+#### <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js">jsDelivr</a> CDN
 
 `CSS`
 
