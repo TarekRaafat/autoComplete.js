@@ -74,7 +74,7 @@ npm i @tarekraafat/autocomplete.js
 
 ## Documentation:
 
--   autoComplete.js <a href="./docs/index.html">docs</a>
+-   autoComplete.js <a href="https://tarekraafat.github.io/autoComplete.js/#/">docs</a>
 
 * * *
 
