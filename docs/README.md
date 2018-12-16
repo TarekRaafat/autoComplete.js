@@ -218,6 +218,7 @@ it with [autoComplete.js][so tag].
 -   [x] Different types/modes of Search Logic
 -   [ ] Autocomplete query with nearest result in placeholder
 -   [x] Choose different results render destination & position
+-   [ ] Minimum characters length before results start getting rendered
 
 ### Usability:
 
