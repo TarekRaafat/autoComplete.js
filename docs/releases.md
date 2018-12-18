@@ -25,13 +25,17 @@ Release flags:
 
 ## Release Notes
 
--   v1.5.1
+-   v1.5.2
 
     -   Fixed `onSelection` null action issue
     -   Placeholder keeps value of last selection `[Removed]`
     -   Fully isolated UI from Logic
     -   Some code cleanup & optimizations
     -   Reduced Weight
+
+-   v1.5.1
+
+    -   Bug fixes
 
 -   v1.5.0
 
