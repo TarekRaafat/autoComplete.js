@@ -13,11 +13,9 @@
 <br>
 <p align="center">
 	<a href="https://tarekraafat.github.io/autoComplete.js/">
-  		<img src="./docs/img/autoComplete.js.svg" alt= "autoComplete.js Design" width="50%">
+  		<img src="./docs/img/autoComplete.js.png" alt="autoComplete.js Design" width="50%">
 	</a>
 </p>
-<br>
-<br>
 <br>
 <br>
 
@@ -97,11 +95,13 @@ it with [autoComplete.js][so tag].
 
 ## Author
 
-Tarek Raafat - tarek.m.raafat@gmail.com
+**Tarek Raafat**
+
+-   Email: tarek.m.raafat@gmail.com
+-   Website: <http://www.tarekraafat.com/>
+-   Guthub: <https://github.com/TarekRaafat/>
 
 Distributed under the Apache 2.0 license. See `Apache 2.0` for more information.
-
-<https://github.com/TarekRaafat/>
 
 * * *
 

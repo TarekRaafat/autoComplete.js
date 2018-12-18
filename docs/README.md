@@ -68,13 +68,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.0/dist/css/autoComplete.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.1/dist/css/autoComplete.min.css"/>
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.1/dist/js/autoComplete.min.js"></script>
 ```
 
 -   HTML Local load
@@ -211,9 +211,8 @@ it with [autoComplete.js][so tag].
 
 -   [ ] Add support for different types of data source
     -   [x] Function
-    -   [ ] External data source `(Plugin)`
+    -   [ ] External data source
 -   [x] Multi-keyword Search
--   ~~Placeholder text maximum length option `[experimental]`~~ `[Depricated]`
 -   [ ] Navigate results list with keyboard
 -   [x] Different types/modes of Search Logic
 -   [ ] Autocomplete query with nearest result in placeholder
@@ -225,7 +224,7 @@ it with [autoComplete.js][so tag].
 -   [ ] New designs for inspiration (Ongoing)
     -   [x] Styles
     -   [x] Interactions
--   [ ] Number of results inside input field (Optional)
+-   [ ] Number of results displayed inside input field (Optional)
 
 * * *
 
@@ -250,11 +249,13 @@ If you have any ideas, just [open an issue](https://github.com/TarekRaafat/autoC
 
 ## 8. Author
 
-Tarek Raafat - tarek.m.raafat@gmail.com
+**Tarek Raafat**
+
+-   Email: tarek.m.raafat@gmail.com
+-   Website: <http://www.tarekraafat.com/>
+-   Github: <https://github.com/TarekRaafat/>
 
 Distributed under the Apache 2.0 license. See `Apache 2.0` for more information.
-
-<https://github.com/TarekRaafat/>
 
 * * *
 

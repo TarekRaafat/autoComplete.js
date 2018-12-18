@@ -8,6 +8,11 @@ const createResultsList = renderResults => {
 	renderResults.destination.insertAdjacentElement(renderResults.position, list);
 };
 
+// Hightlight matching values
+const highlight = value => {
+	return `<span class="autoComplete_highlighted_result">${value}</span>`;
+};
+
 // Adding matching results to the list
 const addResultsToList = (results, cleanResults, dataAttribute) => {
 	const resultsList = document.querySelector("#autoComplete_results_list");
@@ -38,37 +43,28 @@ const clearResults = () => {
 const getSelection = value => {
 	const results = document.querySelectorAll(".autoComplete_result");
 	results.forEach(selection => {
-		selection.addEventListener("click", event => {
+		selection.addEventListener("mousedown", event => {
 			// value(event.target.closest(".autoComplete_result"));
 			value(event.target.closest(".autoComplete_result"));
 			// Clear Input after selection is made
 			clearInput();
-			//Clear Results after selection is made
+			// Clear Results after selection is made
 			clearResults();
-			// Set placeholder with the selected value
-			// after checking the value length and validate it
-			getSearchInput().setAttribute(
-				"placeholder",
-				`${event.target.closest(".autoComplete_result").id}`
-			);
 		});
 	});
 };
 
 // Error message render to UI
 const error = error => {
-	document.querySelector("body").innerHTML = `
-		<div class="autoComplete_error">
-			<div class="autoComplete_message"><strong>Error</strong>, ${error}</div>
-		</div>
-	`;
+	document.querySelector("body").innerHTML = `<div class="autoComplete_error"><div class="autoComplete_message"><strong>Error</strong>, ${error}</div></div>`;
 };
 
 export const renderResults = {
 	getSearchInput,
 	createResultsList,
+	highlight,
 	addResultsToList,
 	getSelection,
 	clearResults,
-	error
+	error,
 };

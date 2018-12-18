@@ -1,4 +1,4 @@
-import { renderResults as autoCompleteView } from "../views/autoCompleteView";
+import { renderResults as autoCompleteView, } from "../views/autoCompleteView";
 
 export default class autoComplete {
 	constructor(config) {
@@ -17,11 +17,11 @@ export default class autoComplete {
 			config.renderResults
 				? {
 					destination: config.renderResults.destination,
-					position: config.renderResults.position
+					position: config.renderResults.position,
 				}
 				: {
 					destination: autoCompleteView.getSearchInput(),
-					position: "afterend"
+					position: "afterend",
 				}
 		);
 		// Placeholder text
@@ -35,9 +35,9 @@ export default class autoComplete {
 			config.dataAttribute === Object
 				? {
 					tag: config.dataAttribute.tag,
-					value: config.dataAttribute.value
+					value: config.dataAttribute.value,
 				}
-				: { tag: "autocomplete", value: "" };
+				: { tag: "autocomplete", value: "", };
 		// Action function on result selection
 		this.onSelection = config.onSelection;
 		// Starts the app Enigne
@@ -51,7 +51,7 @@ export default class autoComplete {
 			// Search query string sanitized & normalized
 			query = query.replace(/ /g, "").toLowerCase();
 			// Array of matching characters
-			let match = [];
+			const match = [];
 			// Query character position based on success
 			let searchPosition = 0;
 			// Iterate over record characters
@@ -65,7 +65,7 @@ export default class autoComplete {
 				) {
 					if (this.highlight) {
 						// Highlight matching character
-						recordChar = `<span class="autoComplete_highlighted_result">${recordChar}</span>`;
+						recordChar = autoCompleteView.highlight(recordChar);
 						// Increment search position
 						searchPosition++;
 					} else {
@@ -94,9 +94,9 @@ export default class autoComplete {
 							.toLowerCase()
 							.replace(
 								autoCompleteView.getSearchInput().value.toLowerCase(),
-								`<span class="autoComplete_highlighted_result">${autoCompleteView
-									.getSearchInput()
-									.value.toLowerCase()}</span>`
+								autoCompleteView.highlight(
+									autoCompleteView.getSearchInput().value.toLowerCase()
+								)
 							)
 					);
 					this.cleanResList.push(record);
@@ -116,7 +116,7 @@ export default class autoComplete {
 		// Final clean results list of array
 		this.cleanResList = [];
 		// Holds the input search value
-		let inputValue = autoCompleteView.getSearchInput().value;
+		const inputValue = autoCompleteView.getSearchInput().value;
 		try {
 			// Checks input has matches in data source
 			this.dataSrc().filter(record => {
@@ -127,7 +127,7 @@ export default class autoComplete {
 				}
 			});
 		} catch (error) {
-			autoCompleteView.error("data source is not an Array");
+			autoCompleteView.error(error);
 		}
 		// Rendering matching results to the UI list
 		autoCompleteView.addResultsToList(
@@ -141,7 +141,6 @@ export default class autoComplete {
 	searchInputValidation(selector) {
 		// Input field handler fires an event onKeyup action
 		selector.addEventListener("keyup", () => {
-			// event.preventDefault();
 			// Check if input is not empty or just have space before triggering the app
 			if (selector.value.length > 0 && selector.value !== " ") {
 				// clear results list

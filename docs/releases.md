@@ -17,11 +17,21 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 Release flags:
 
--   `[experimental]`: Under testing and might be deprecated at any point.
+-   `[Experimental]`: Under testing and might be deprecated at any point
+-   `[Deprecated]`: Not developed / supported anymore, might be removed at any point
+-   `[Removed]`: Removed
 
 * * *
 
 ## Release Notes
+
+-   v1.5.1
+
+    -   Fixed `onSelection` null action issue
+    -   Placeholder keeps value of last selection `[Removed]`
+    -   Fully isolated UI from Logic
+    -   Some code cleanup & optimizations
+    -   Reduced Weight
 
 -   v1.5.0
 

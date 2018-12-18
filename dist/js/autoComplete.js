@@ -34,6 +34,9 @@
     list.setAttribute("id", "autoComplete_results_list");
     renderResults.destination.insertAdjacentElement(renderResults.position, list);
   };
+  var highlight = function highlight(value) {
+    return "<span class=\"autoComplete_highlighted_result\">".concat(value, "</span>");
+  };
   var addResultsToList = function addResultsToList(results, cleanResults, dataAttribute) {
     var resultsList = document.querySelector("#autoComplete_results_list");
     results.forEach(function (event, record) {
@@ -55,20 +58,20 @@
   var getSelection = function getSelection(value) {
     var results = document.querySelectorAll(".autoComplete_result");
     results.forEach(function (selection) {
-      selection.addEventListener("click", function (event) {
+      selection.addEventListener("mousedown", function (event) {
         value(event.target.closest(".autoComplete_result"));
         clearInput();
         clearResults();
-        getSearchInput().setAttribute("placeholder", "".concat(event.target.closest(".autoComplete_result").id));
       });
     });
   };
   var error = function error(_error) {
-    document.querySelector("body").innerHTML = "\n\t\t<div class=\"autoComplete_error\">\n\t\t\t<div class=\"autoComplete_message\"><strong>Error</strong>, ".concat(_error, "</div>\n\t\t</div>\n\t");
+    document.querySelector("body").innerHTML = "<div class=\"autoComplete_error\"><div class=\"autoComplete_message\"><strong>Error</strong>, ".concat(_error, "</div></div>");
   };
   var renderResults = {
     getSearchInput: getSearchInput,
     createResultsList: createResultsList,
+    highlight: highlight,
     addResultsToList: addResultsToList,
     getSelection: getSelection,
     clearResults: clearResults,
@@ -118,7 +121,7 @@
             var recordChar = record[number];
             if (searchPosition < query.length && recordChar.toLowerCase() === query[searchPosition]) {
               if (this.highlight) {
-                recordChar = "<span class=\"autoComplete_highlighted_result\">".concat(recordChar, "</span>");
+                recordChar = renderResults.highlight(recordChar);
                 searchPosition++;
               } else {
                 searchPosition++;
@@ -133,7 +136,7 @@
         } else {
           if (record.toLowerCase().includes(query.toLowerCase())) {
             if (this.highlight) {
-              this.resList.push(record.toLowerCase().replace(renderResults.getSearchInput().value.toLowerCase(), "<span class=\"autoComplete_highlighted_result\">".concat(renderResults.getSearchInput().value.toLowerCase(), "</span>")));
+              this.resList.push(record.toLowerCase().replace(renderResults.getSearchInput().value.toLowerCase(), renderResults.highlight(renderResults.getSearchInput().value.toLowerCase())));
               this.cleanResList.push(record);
             } else {
               this.resList.push(record);
@@ -158,7 +161,7 @@
             }
           });
         } catch (error) {
-          renderResults.error("data source is not an Array");
+          renderResults.error(error);
         }
         renderResults.addResultsToList(this.resList.slice(0, this.maxResults), this.cleanResList.slice(0, this.maxResults), this.dataAttribute);
       }
