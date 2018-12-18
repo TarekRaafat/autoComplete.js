@@ -69,7 +69,6 @@ export const renderResults = {
 	createResultsList,
 	addResultsToList,
 	getSelection,
-	clearInput,
 	clearResults,
 	error
 };

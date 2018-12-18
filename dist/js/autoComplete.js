@@ -71,7 +71,6 @@
     createResultsList: createResultsList,
     addResultsToList: addResultsToList,
     getSelection: getSelection,
-    clearInput: clearInput,
     clearResults: clearResults,
     error: error
   };
