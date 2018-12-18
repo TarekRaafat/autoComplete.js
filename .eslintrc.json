@@ -25,7 +25,7 @@
         "no-unused-vars": 2,
         "no-use-before-define": 2,
         "comma-dangle": ["error", "always"],
-        "eol-last": 2,
+        "eol-last": ["error", "never"],
         "max-params": ["error", 3],
         "no-inline-comments": 2,
         "no-trailing-spaces": 2,
