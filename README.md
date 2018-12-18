@@ -12,7 +12,7 @@
 <br>
 <br>
 <p align="center">
-	<a href="https://tarekraafat.github.io/autoComplete.js/demo/">
+	<a href="https://tarekraafat.github.io/autoComplete.js/">
   		<img src="./docs/img/autoComplete.js.svg" alt= "autoComplete.js Design" width="50%">
 	</a>
 </p>
