@@ -11,74 +11,22 @@
 			}
 			gtag("js", new Date());
 
-			gtag("config", "UA-129399191-2"
-		);
+			gtag("config", "UA-129399191-2");
 		</script>
-		<script>
-			window["_fs_debug"] = false;
-			window["_fs_host"] = "fullstory.com";
-			window["_fs_org"] = "GXHE0";
-			window["_fs_namespace"] = "FS";
-			(function(m, n, e, t, l, o, g, y) {
-				if (e in m) {
-					if (m.console && m.console.log) {
-						m.console.log(
-							'FullStory namespace conflict. Please set window["_fs_namespace"].'
-						);
-					}
-					return;
-				}
-				g = m[e] = function(a, b, s) {
-					g.q ? g.q.push([a, b, s]) : g._api(a, b, s);
-				};
-				g.q = [];
-				o = n.createElement(t);
-				o.async = 1;
-				o.src = "https://" + _fs_host + "/s/fs.js";
-				y = n.getElementsByTagName(t)[0];
-				y.parentNode.insertBefore(o, y);
-				g.identify = function(i, v, s) {
-					g(l, { uid: i }, s);
-					if (v) g(l, v, s);
-				};
-				g.setUserVars = function(v, s) {
-					g(l, v, s);
-				};
-				g.event = function(i, v, s) {
-					g("event", { n: i, p: v }, s);
-				};
-				g.shutdown = function() {
-					g("rec", !1);
-				};
-				g.restart = function() {
-					g("rec", !0);
-				};
-				g.consent = function(a) {
-					g("consent", !arguments.length || a);
-				};
-				g.identifyAccount = function(i, v) {
-					o = "account";
-					v = v || {};
-					v.acctId = i;
-					g(o, v);
-				};
-				g.clearUserCookie = function() {};
-			})(window, document, window["_fs_namespace"], "script", "user");
-		</script>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>autoComplete.js - Vanilla Javascript</title>
-		<meta property="og:title" content="autoComplete.js - Simple autocomplete pure vanilla Javascript library.">
-		<meta property="og:type" content="demo">
-		<meta property="og:url" content="https://tarekraafat.github.io/autoComplete.js/demo/">
-		<meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js.svg">
+		<meta property="og:title" content="autoComplete.js - Simple autocomplete pure vanilla Javascript library." />
+		<meta property="og:type" content="demo" />
+		<meta property="og:url" content="https://tarekraafat.github.io/autoComplete.js/demo/" />
+		<meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js.svg" />
 		<meta name=”description" content=”autoComplete.js is an easy-to-use simple pure vanilla Javascript library thats built for speed, high versatility and seamless integration with wide range of projects and systems.">
-		<meta name="keywords" content="autoComplete.js, easy-to-use, simple, pure, vanilla, Javascript, JS, library, speed, Lightning, fast, Versatile, Customizable, hackable, developer friendly, zero, no, Dependencies, Lightweight, high, integration, scalable, scalability, open source, open, source, guthub">
-		<meta name="author" content="Tarek Raafat">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.2/dist/css/autoComplete.min.css">
-		<link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
-		<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+		<meta name="keywords" content="autoComplete.js, easy-to-use, simple, pure, vanilla, Javascript, JS, library, speed, Lightning, fast, Versatile, Customizable, hackable, developer friendly, zero, no, Dependencies, Lightweight, high, integration, scalable, scalability, open source, open, source, guthub" />
+		<meta name="author" content="Tarek Raafat" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" media="screen" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.2/dist/css/autoComplete.min.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
+		<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -124,7 +72,7 @@
 				</h1>
 			</header>
 			<div class="body" align="center">
-				<input id="autoComplete" type="text" placeholder="Loading..." tabindex="0">
+				<input id="autoComplete" type="text" placeholder="Loading..." tabindex="0" />
 				<div class="mode">
 					<h4>mode</h4>
 					<div class="toggele">
