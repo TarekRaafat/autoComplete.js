@@ -66,7 +66,7 @@
     });
   };
   var error = function error(_error) {
-    document.querySelector("body").innerHTML = "<div class=\"autoComplete_error\"><div class=\"autoComplete_message\"><strong>Error</strong>, ".concat(_error, "</div></div>");
+    document.querySelector("body").innerHTML = "<div class=\"autoComplete_error\"><strong>Error</strong>, ".concat(_error, "</div>");
   };
   var renderResults = {
     getSearchInput: getSearchInput,

@@ -17,11 +17,13 @@ const search = (async () => {
 			document.querySelector(".selection").innerHTML = value.id;
 			// Set placeholder with the selected value
 			// after checking the value length and validate it
-			document.querySelector("#autoComplete").setAttribute(
-				"placeholder",
-				`${event.target.closest(".autoComplete_result").id}`
-			);
-		}
+			document
+				.querySelector("#autoComplete")
+				.setAttribute(
+					"placeholder",
+					`${event.target.closest(".autoComplete_result").id}`
+				);
+		},
 	});
 
 	// Toggle Search Engine Type/Mode

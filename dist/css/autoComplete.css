@@ -109,16 +109,10 @@
 }
 
 .autoComplete_error {
-    height: 97vh;
-    line-height: 650px;
+    height: 100vh;
+    transform: translateY(45%);
     text-align: center;
     color: rgba(255, 122, 122, 1);
-}
-
-.autoComplete_message {
-    display: inline-block;
-    vertical-align: middle;
-    line-height: normal;
 }
 
 @media only screen and (max-width: 600px) {

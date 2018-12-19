@@ -5,10 +5,7 @@ const getSearchInput = () => document.querySelector("#autoComplete");
 const createResultsList = renderResults => {
 	const list = document.createElement("ul");
 	list.setAttribute("id", "autoComplete_results_list");
-	renderResults.destination.insertAdjacentElement(
-		renderResults.position,
-		list
-	);
+	renderResults.destination.insertAdjacentElement(renderResults.position, list);
 };
 
 // Hightlight matching values
@@ -61,7 +58,7 @@ const getSelection = value => {
 const error = error => {
 	document.querySelector(
 		"body"
-	).innerHTML = `<div class="autoComplete_error"><div class="autoComplete_message"><strong>Error</strong>, ${error}</div></div>`;
+	).innerHTML = `<div class="autoComplete_error"><strong>Error</strong>, ${error}</div>`;
 };
 
 export const renderResults = {
