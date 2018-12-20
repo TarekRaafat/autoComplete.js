@@ -221,6 +221,7 @@ it with [autoComplete.js][so tag].
 -   [ ] Sort rendered results
     -   [ ] Alphabet
     -   [ ] Distance
+-   [ ] Dynamic input field selector 
 
 ### Usability:
 
