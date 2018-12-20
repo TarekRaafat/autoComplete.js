@@ -1,4 +1,6 @@
 {
+    "dir": "ltr",
+    "lang": "en-US",
     "name": "autoComplete.js",
     "short_name": "autoComplete.js",
     "description": "autoComplete.js is a simple pure vanilla Javascript library that's designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.",
