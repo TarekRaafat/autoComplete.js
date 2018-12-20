@@ -3,6 +3,7 @@ import { eslint, } from "rollup-plugin-eslint";
 import cleanup from "rollup-plugin-cleanup";
 import { uglify, } from "rollup-plugin-uglify";
 import pkg from "./package.json";
+import gzipPlugin from "rollup-plugin-gzip";
 
 export default [
 	{
@@ -24,6 +25,7 @@ export default [
 					drop_console: true,
 				},
 			}),
+			gzipPlugin()
 		],
 	},
 	{
@@ -40,6 +42,7 @@ export default [
 				presets: ["@babel/preset-env",],
 			}),
 			cleanup(),
+			gzipPlugin()
 		],
 	},
 ];

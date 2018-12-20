@@ -53,13 +53,13 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.3/dist/css/autoComplete.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.4/dist/css/autoComplete.min.css"/>
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.3/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.4/dist/js/autoComplete.min.js"></script>
 ```
 
 #### <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js">npm</a> install `(Node Package Manager)`

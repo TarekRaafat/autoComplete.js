@@ -130,7 +130,7 @@
         border-radius: 1rem 1rem 0 0;
     }
 
-    .autoComplete_single_result:last-child {
+    .autoComplete_result:last-child {
         border-radius: 1rem;
     }
 }

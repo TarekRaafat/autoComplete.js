@@ -25,6 +25,11 @@ Release flags:
 
 ## Release Notes
 
+-   v1.5.4
+
+    -   Gzipped options for both builds are ready `(2KB) non-minified` & `(1KB) minified`
+    -   Fixed styling issue with selections last selection child on mobile devices
+
 -   v1.5.3
 
     -   Added `threshold` for minimum characters length before Engine starts rendering suggestions

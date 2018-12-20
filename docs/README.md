@@ -68,13 +68,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.3/dist/css/autoComplete.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.4/dist/css/autoComplete.min.css"/>
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.3/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.4/dist/js/autoComplete.min.js"></script>
 ```
 
 -   HTML Local load
@@ -221,7 +221,7 @@ it with [autoComplete.js][so tag].
 -   [ ] Sort rendered results
     -   [ ] Alphabet
     -   [ ] Distance
--   [ ] Dynamic input field selector 
+-   [ ] Dynamic input field selector
 
 ### Usability:
 
@@ -230,8 +230,9 @@ it with [autoComplete.js][so tag].
     -   [x] Interactions
 -   [ ] Number of results displayed
 -   [ ] Navigate results list with keyboard
--   [ ] Autocomplete query with nearest result in placeholder
+-   [ ] Inline autocomplete input with nearest result
 -   [ ] No matches found response & text
+-   [x] Avail Gzip file options
 
 * * *
 
