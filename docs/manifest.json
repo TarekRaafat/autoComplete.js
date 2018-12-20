@@ -6,6 +6,7 @@
     "theme_color": "#ffffff",
     "display": "standalone",
     "scope": "/demo/",
+    "start_url": "#/?utm_source=PWAv1.5.4",
     "icons": [{
             "src": "/img/icons/android-icon-36x36.png",
             "sizes": "36x36",

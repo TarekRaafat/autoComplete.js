@@ -131,7 +131,7 @@
     }
 
     .autoComplete_result:last-child {
-        border-radius: 1rem;
+        border-radius: 0 0 1rem 1rem;
     }
 }
 
