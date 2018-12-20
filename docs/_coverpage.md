@@ -10,10 +10,9 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 
 <br>
 
-<div class="fb-like" data-href="https://tarekraafat.github.io/autoComplete.js/" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="false"></div>
-<div class="fb-share-button" data-href="https://tarekraafat.github.io/autoComplete.js/" data-layout="box_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftarekraafat.github.io%2FautoComplete.js%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-<br>
-<br>
+<div class="fb-like" data-href="https://tarekraafat.github.io/autoComplete.js/" data-layout="button_count" data-action="recommend" data-size="large" data-show-faces="true" data-share="true"></div>
+
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Check out autoComplete.js library!" data-url="https://tarekraafat.github.io/autoComplete.js/" data-hashtags="#web #webdev #frontend #dev #html #css #javascript #autoComplete #autoCompletejs #frontenddev #code #coding #development #frontenddeveloperlove #webdevelopment #webdeveloper #webdevelopment #opensource #VanillaJS #js #github #programming #developers" data-show-count="false">Tweet</a>
 
 [GitHub](https://github.com/TarekRaafat/autoComplete.js)
 [Get Started](#_1-get-started)
