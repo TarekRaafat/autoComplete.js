@@ -232,7 +232,7 @@ it with [autoComplete.js][so tag].
 -   [ ] Navigate results list with keyboard
 -   [ ] Inline autocomplete input with nearest result
 -   [ ] No matches found response & text
--   [x] Avail Gzip file options
+-   [x] Avail Gzip files options
 
 * * *
 
