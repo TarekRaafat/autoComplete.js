@@ -9,7 +9,9 @@
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with wide range of projects & systems.
 
 <br>
-<br>
+
+<div class="fb-like" data-href="https://tarekraafat.github.io/autoComplete.js/" data-layout="box_count" data-action="like" data-size="large" data-show-faces="true" data-share="false"></div>
+<div class="fb-share-button" data-href="https://tarekraafat.github.io/autoComplete.js/" data-layout="box_count" data-size="large" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftarekraafat.github.io%2FautoComplete.js%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 <br>
 <br>
 
