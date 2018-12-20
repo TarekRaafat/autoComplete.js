@@ -14,7 +14,7 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 
 <br>
 
-<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Check out autoComplete.js library!" data-url="https://tarekraafat.github.io/autoComplete.js/" data-hashtags="web #webdev #frontend #dev #html #css #javascript #autoComplete #autoCompletejs #frontenddev #code #coding #development #webdevelopment #webdeveloper #webdevelopment #opensource #VanillaJS #js #github #programming" data-show-count="false">Tweet</a>
+<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="Check out autoComplete.js library!" data-url="https://tarekraafat.github.io/autoComplete.js/" data-hashtags="web #webdev #frontend #dev #html #css #javascript #autoComplete #autoCompletejs #frontenddev #code #coding #development #webdevelopment #webdeveloper #webdesign #opensource #VanillaJS #js #github #programming #tech" data-show-count="false">Tweet</a>
 
 [GitHub](https://github.com/TarekRaafat/autoComplete.js)
 [Get Started](#_1-get-started)
