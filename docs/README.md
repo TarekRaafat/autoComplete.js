@@ -16,7 +16,7 @@
 
 > Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a>
 
-autoComplete.js is a simple pure vanilla Javascript library that's designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
+autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
 
 ## Features
 
@@ -68,13 +68,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.2/dist/css/autoComplete.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.3/dist/css/autoComplete.min.css"/>
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.2/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.3/dist/js/autoComplete.min.js"></script>
 ```
 
 -   HTML Local load
@@ -125,6 +125,7 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 new autoComplete({
 	dataSrc: grocery, 		   // Array data source
 	searchEngine: "strict",	  // Search Engine type
+	threshold: 0,				// Min. Chars length before Engine starts
 	renderResults: {		     // Results Destination & position
 		destination: document.querySelector("#autoComplete"),
 		position: "afterend"
@@ -142,20 +143,21 @@ new autoComplete({
 });
 ```
 
-### Configurations:
+### API Configurations:
 
 <br>
 
-| Features        | Description                             | Values                                                                                                                                                          | Default                                                                        |
-|-----------------|-----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| `dataSrc`       | Data Source                             | `Array` or <br> `Function` => `Array`                                                                                                                           | **Required**                                                                   |
-| `searchEngine`  | Search Engine Type/Mode                 | `strict` or `loose` lowerCase string                                                                                                                            | `strict`                                                                       |
-| `renderResults` | Rendered results destination & position | Object of two methods:<br> 1- html element selector: `document.querySelector("#div")`<br> 2- position:<br> `beforebegin`, `afterbegin`, `beforeend`, `afterend` | `{destination: document.querySelector("#autoComplete"), position: "afterend"}` |
-| `placeHolder`   | Place Holder text                       | `String`                                                                                                                                                        | Blank / Empty                                                                  |
-| `maxResults`    | Maximum number of displayed results     | `Number`                                                                                                                                                        | `10`                                                                           |
-| `highlight`     | Highlight matching results              | `Boolean`                                                                                                                                                       | `false`                                                                        |
-| `dataAttribute` | Data Attribute tag                      | `Object`                                                                                                                                                        | `{tag: "autoComplete", value: ""}`                                             |
-| `onSelection`   | Action script onClick event             | `Function`                                                                                                                                                      | No Action                                                                      |
+| Features        | Description                                                      | Values                                                                                                                                                          | Default                                                                        |
+| --------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `dataSrc`       | Data Source                                                      | `Array` or <br> `Function` => `Array`                                                                                                                           | **Required**                                                                   |
+| `searchEngine`  | Search Engine Type/Mode                                          | `strict` or `loose` lowerCase string                                                                                                                            | `strict`                                                                       |
+| `threshold`     | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                        | `0`                                                                            |
+| `renderResults` | Rendered results destination & position                          | Object of two methods:<br> 1- html element selector: `document.querySelector("#div")`<br> 2- position:<br> `beforebegin`, `afterbegin`, `beforeend`, `afterend` | `{destination: document.querySelector("#autoComplete"), position: "afterend"}` |
+| `placeHolder`   | Place Holder text                                                | `String`                                                                                                                                                        | Blank / Empty                                                                  |
+| `maxResults`    | Maximum number of displayed results                              | `Number`                                                                                                                                                        | `5`                                                                            |
+| `highlight`     | Highlight matching results                                       | `Boolean`                                                                                                                                                       | `false`                                                                        |
+| `dataAttribute` | Data Attribute tag                                               | `Object`                                                                                                                                                        | `{tag: "autoComplete", value: ""}`                                             |
+| `onSelection`   | Action script onClick event                                      | `Function`                                                                                                                                                      | No Action                                                                      |
 
 3.  That's it, you're ready to go!
 
@@ -194,7 +196,7 @@ it with [autoComplete.js][so tag].
 ## 4. Browsers Support
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>iOS Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Samsung | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera-mini/opera-mini_48x48.png" alt="Opera Mini" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera Mini | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/electron/electron_48x48.png" alt="Electron" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Electron |
-|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Edge                                                                                                                                                                                                            | last version                                                                                                                                                                                                      | last version                                                                                                                                                                                                  | last version                                                                                                                                                                                                  | last version                                                                                                                                                                                                                  | last version                                                                                                                                                                                                                        | last version                                                                                                                                                                                              | last version                                                                                                                                                                                                                  | last version                                                                                                                                                                                                          |
 
 * * *
@@ -213,18 +215,22 @@ it with [autoComplete.js][so tag].
     -   [x] Function
     -   [ ] External data source
 -   [x] Multi-keyword Search
--   [ ] Navigate results list with keyboard
 -   [x] Different types/modes of Search Logic
--   [ ] Autocomplete query with nearest result in placeholder
 -   [x] Choose different results render destination & position
--   [ ] Minimum characters length before results start getting rendered
+-   [x] Minimum characters length before results start getting rendered for more focused results
+-   [ ] Sort rendered results
+    -   [ ] Alphabet
+    -   [ ] Distance
 
 ### Usability:
 
 -   [ ] New designs for inspiration (Ongoing)
     -   [x] Styles
     -   [x] Interactions
--   [ ] Number of results displayed inside input field (Optional)
+-   [ ] Number of results displayed
+-   [ ] Navigate results list with keyboard
+-   [ ] Autocomplete query with nearest result in placeholder
+-   [ ] No matches found response & text
 
 * * *
 

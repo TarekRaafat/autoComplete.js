@@ -24,7 +24,7 @@
         "wrap-iife": 2,
         "no-unused-vars": 2,
         "no-use-before-define": 2,
-        "comma-dangle": ["error", "always"],
+        "comma-dangle": 0,
         "eol-last": ["error", "never"],
         "max-params": ["error", 3],
         "no-inline-comments": 2,
@@ -33,6 +33,9 @@
         "spaced-comment": 2,
         "no-var": 2,
         "no-duplicate-imports": 2,
+        "max-len": ["error", {
+            "code": 95
+        }],
         "indent": [
             "error",
             "tab"

@@ -90,6 +90,7 @@
         }
       };
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
+      this.threshold = Number(config.threshold) || 0;
       this.renderResults = renderResults.createResultsList(config.renderResults ? {
         destination: config.renderResults.destination,
         position: config.renderResults.position
@@ -98,7 +99,7 @@
         position: "afterend"
       });
       this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
-      this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
+      this.maxResults = Number(config.maxResults) || 5;
       this.highlight = config.highlight === true ? true : false;
       this.dataAttribute = config.dataAttribute === Object ? {
         tag: config.dataAttribute.tag,
@@ -130,17 +131,15 @@
             match.push(recordChar);
           }
           if (searchPosition !== query.length) {
-            return "";
+            return false;
           }
           return match.join("");
         } else {
           if (record.toLowerCase().includes(query.toLowerCase())) {
             if (this.highlight) {
-              this.resList.push(record.toLowerCase().replace(renderResults.getSearchInput().value.toLowerCase(), renderResults.highlight(renderResults.getSearchInput().value.toLowerCase())));
-              this.cleanResList.push(record);
+              return record.toLowerCase().replace(renderResults.getSearchInput().value.toLowerCase(), renderResults.highlight(renderResults.getSearchInput().value.toLowerCase()));
             } else {
-              this.resList.push(record);
-              this.cleanResList.push(record);
+              return record;
             }
           }
         }
@@ -170,7 +169,7 @@
       value: function searchInputValidation(selector) {
         var _this2 = this;
         selector.addEventListener("keyup", function () {
-          if (selector.value.length > 0 && selector.value !== " ") {
+          if (selector.value.length > _this2.threshold && selector.value !== " ") {
             renderResults.clearResults();
             _this2.listMatchedResults();
             if (_this2.onSelection) {

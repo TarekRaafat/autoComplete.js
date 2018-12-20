@@ -19,11 +19,17 @@ Release flags:
 
 -   `[Experimental]`: Under testing and might be deprecated at any point
 -   `[Deprecated]`: Not developed / supported anymore, might be removed at any point
--   `[Removed]`: Removed
+-   `[Removed]`: Completely gone, no longer exists
 
 * * *
 
 ## Release Notes
+
+-   v1.5.3
+
+    -   Added `threshold` for minimum characters length before Engine starts rendering suggestions
+    -   Optimizations for better performance
+    -   Reduced Weight to `(3KB)` minified
 
 -   v1.5.2
 
@@ -53,7 +59,7 @@ Release flags:
 
     -   Added new type/mode of Search Engine `strict`
     -   Detached the results list style behavior from code
-    -   Deprecated "~~Placeholder max. length~~" setting
+    -   `Placeholder max. length` option `[Removed]`
     -   Optimizations for higher performance & lighter weight
 
 -   v1.3.1

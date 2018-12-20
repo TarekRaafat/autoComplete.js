@@ -1,5 +1,9 @@
 {
     "name": "autoComplete.js",
+    "short_name": "autoComplete.js",
+    "description": "autoComplete.js is a simple pure vanilla Javascript library that's designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
     "icons": [{
             "src": "/img/icons/android-icon-36x36.png",
             "sizes": "36x36",

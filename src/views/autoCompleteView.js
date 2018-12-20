@@ -68,5 +68,5 @@ export const renderResults = {
 	addResultsToList,
 	getSelection,
 	clearResults,
-	error,
+	error
 };

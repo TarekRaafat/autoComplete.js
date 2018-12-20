@@ -1,4 +1,4 @@
-import { renderResults as autoCompleteView, } from "../views/autoCompleteView";
+import { renderResults as autoCompleteView } from "../views/autoCompleteView";
 
 export default class autoComplete {
 	constructor(config) {
@@ -12,22 +12,24 @@ export default class autoComplete {
 		};
 		// Search engine type
 		this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
+		// Minimum characters length before engine starts rendering
+		this.threshold = Number(config.threshold) || 0;
 		// Rendered results destination
 		this.renderResults = autoCompleteView.createResultsList(
 			config.renderResults
 				? {
 					destination: config.renderResults.destination,
-					position: config.renderResults.position,
+					position: config.renderResults.position
 				}
 				: {
 					destination: autoCompleteView.getSearchInput(),
-					position: "afterend",
+					position: "afterend"
 				}
 		);
 		// Placeholder text
 		this.placeHolder = String(config.placeHolder) ? config.placeHolder : false;
 		// Maximum number of results to show
-		this.maxResults = Number(config.maxResults) ? config.maxResults : 10;
+		this.maxResults = Number(config.maxResults) || 5;
 		// Highlighting matching results
 		this.highlight = config.highlight === true ? true : false;
 		// Assign data attribute tag & value if set in object
@@ -35,9 +37,9 @@ export default class autoComplete {
 			config.dataAttribute === Object
 				? {
 					tag: config.dataAttribute.tag,
-					value: config.dataAttribute.value,
+					value: config.dataAttribute.value
 				}
-				: { tag: "autocomplete", value: "", };
+				: { tag: "autocomplete", value: "" };
 		// Action function on result selection
 		this.onSelection = config.onSelection;
 		// Starts the app Enigne
@@ -80,7 +82,7 @@ export default class autoComplete {
 			}
 			// Non-Matching case
 			if (searchPosition !== query.length) {
-				return "";
+				return false;
 			}
 			// Return the joined match
 			return match.join("");
@@ -89,21 +91,16 @@ export default class autoComplete {
 			if (record.toLowerCase().includes(query.toLowerCase())) {
 				// If Highlighted
 				if (this.highlight) {
-					this.resList.push(
-						record
-							.toLowerCase()
-							.replace(
-								autoCompleteView.getSearchInput().value.toLowerCase(),
-								autoCompleteView.highlight(
-									autoCompleteView.getSearchInput().value.toLowerCase()
-								)
+					return record.toLowerCase()
+						.replace(
+							autoCompleteView.getSearchInput().value.toLowerCase(),
+							autoCompleteView.highlight(
+								autoCompleteView.getSearchInput().value.toLowerCase()
 							)
-					);
-					this.cleanResList.push(record);
+						);
 					// If NOT Hightligthed
 				} else {
-					this.resList.push(record);
-					this.cleanResList.push(record);
+					return record;
 				}
 			}
 		}
@@ -142,7 +139,7 @@ export default class autoComplete {
 		// Input field handler fires an event onKeyup action
 		selector.addEventListener("keyup", () => {
 			// Check if input is not empty or just have space before triggering the app
-			if (selector.value.length > 0 && selector.value !== " ") {
+			if (selector.value.length > this.threshold && selector.value !== " ") {
 				// clear results list
 				autoCompleteView.clearResults();
 				// List matching results
@@ -171,12 +168,13 @@ export default class autoComplete {
 	// Starts the app Enigne
 	init() {
 		try {
-			// If the data source is valid run the app else error
+			// If the data source is valid run the app
 			if (this.dataSrc()) {
 				this.setPlaceHolder();
 				this.searchInputValidation(autoCompleteView.getSearchInput());
 			}
 		} catch (error) {
+			// Error in Engine failure
 			autoCompleteView.error(error);
 		}
 	}
