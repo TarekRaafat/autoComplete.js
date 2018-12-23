@@ -34,7 +34,7 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 
 ### Clone:
 
--   Clone autoComplete.js to your local machine using
+-   Clone autoComplete.js to your local machine
 
 ```shell
 git clone https://github.com/TarekRaafat/autoComplete.js.git
@@ -62,7 +62,7 @@ npm run build
 
 ### Installation:
 
--   <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="https://www.jsdelivr.com/img/logo@2x.png" width="100px"></a> CDN
+-   <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="https://www.jsdelivr.com/img/logo@2x.png" alt="jsDelivr" width="100px"></a> CDN
 
 `CSS`
 
@@ -76,31 +76,31 @@ npm run build
 <script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/js/autoComplete.min.js"></script>
 ```
 
--   HTML Local load
+-   <img src="https://cdn0.iconfinder.com/data/icons/HTML5/512/HTML_Logo.png" alt="HTML" width="40px"> HTML Local load
 
 ```html
 <script src="./autoComplete.js"></script>
 ```
 
--   HTML Local load - ES6 module `(Use with Import)`
+-   <img src="https://cdn0.iconfinder.com/data/icons/HTML5/512/HTML_Logo.png" alt="HTML" width="40px"> HTML Local load - ES6 module `(Use with Import)`
 
 ```html
 <script src="./index.js" type="module"></script>
 ```
 
--   Import module ES6
+-   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" alt="Javascript" width="40px"> Import module ES6
 
 ```js
 import autoComplete from "./autoComplete";
 ```
 
--   <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js">npm</a> install `(Node Package Manager)`
+-   <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js"><svg viewBox="0 0 18 7" alt="npm" width="50px"><path fill="#CB3837" d="M0 0v6h5v1h4V6h9V0"></path><path fill="#FFF" d="M1 1v4h2V2h1v3h1V1h1v5h2V2h1v2H8v1h2V1h1v4h2V2h1v3h1V2h1v3h1V1"></path></svg></a> install `(Node Package Manager)`
 
 ```shell
 npm i @tarekraafat/autocomplete.js
 ```
 
--   Node.js
+-   <img src="https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png" alt="Node.js" width="30px"> Node.js
 
 ```js
 const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete");
@@ -109,16 +109,24 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ### How to use:
 
 > HTML file
->
-> 1.  Assign id="autoComplete" to the input filed
+
+1.  Place the `CSS` stylesheet inside the `HEAD` tag
 
 ```html
-<input id="autoComplete" type="text">
+<link rel="stylesheet" href="./css/autoComplete.css">
+OR
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/css/autoComplete.min.css">
+```
+
+2.  Assign the default `id` value `"autoComplete"` to the desired input field or use custom `id/class` and configure the API selector accordingly in `Step 3`
+
+```html
+<input id="autoComplete">	// Default "id" value = "autoComplete"
 ```
 
 > JS file
 
-2.  Create new instance of autoComplete engine
+3.  Create new instance of autoComplete engine and configure it `NOT all API settings are required`
 
 ```js
 new autoComplete({
@@ -166,7 +174,7 @@ new autoComplete({
 -   Live working [Demo]
 
 
--   Try it on [<img src="http://cdn.freelogovectors.net/wp-content/uploads/2018/03/codepen-logo.png" width="70px" alt="CodePen">](https://codepen.io/tarekraafat/pen/rQopdW)
+-   Try it on [<img src="http://cdn.freelogovectors.net/wp-content/uploads/2018/03/codepen-logo.png" width="100px" alt="CodePen">](https://codepen.io/tarekraafat/pen/rQopdW)
 
 [demo]: https://tarekraafat.github.io/autoComplete.js/demo/
 
@@ -201,7 +209,7 @@ it with [autoComplete.js][so tag].
 
 ## 5. What's New in v2.0?
 
-Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
+Check out <a href="#/releases?id=versioning">Releases</a> Information :newspaper:
 
 * * *
 
@@ -236,6 +244,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [ ] More Results indicator if there are more than displayed
 -   [ ] No matches found response & text
 -   [ ] Inline autocomplete nearest result
+-   [ ] Search Engine type/mode included in data feedback
 
 * * *
 

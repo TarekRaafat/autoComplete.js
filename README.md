@@ -19,7 +19,7 @@
 <br>
 <br>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a> **v2.0**
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v2.0**
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
 
@@ -39,7 +39,7 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 
 ### Clone:
 
--   Clone autoComplete.js to your local machine using
+-   Clone autoComplete.js to your local machine
 
 ```shell
 git clone https://github.com/TarekRaafat/autoComplete.js.git
@@ -47,12 +47,12 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 
 ### Installation:
 
-#### <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js">jsDelivr</a> CDN
+-   <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="https://www.jsdelivr.com/img/logo@2x.png" alt="jsDelivr" width="100px"></a> CDN
 
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/css/autoComplete.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/css/autoComplete.min.css">
 ```
 
 `JS`
@@ -61,7 +61,7 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 <script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/js/autoComplete.min.js"></script>
 ```
 
-#### <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js">npm</a> install `(Node Package Manager)`
+-   <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js"><svg viewBox="0 0 18 7" alt="npm" width="50px"><path fill="#CB3837" d="M0 0v6h5v1h4V6h9V0"></path><path fill="#FFF" d="M1 1v4h2V2h1v3h1V1h1v5h2V2h1v2H8v1h2V1h1v4h2V2h1v3h1V2h1v3h1V1"></path></svg></a> install `(Node Package Manager)`
 
 ```shell
 npm i @tarekraafat/autocomplete.js
@@ -71,7 +71,7 @@ npm i @tarekraafat/autocomplete.js
 
 ## Documentation:
 
--   autoComplete.js <a href="https://tarekraafat.github.io/autoComplete.js/">docs</a>
+-   For more details check out **autoComplete.js** <a href="https://tarekraafat.github.io/autoComplete.js/">**docs**</a> :notebook_with_decorative_cover:
 
 * * *
 
