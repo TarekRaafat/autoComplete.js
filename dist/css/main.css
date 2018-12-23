@@ -26,6 +26,11 @@ body {
     -webkit-touch-callout: none;
 }
 
+#autoComplete_results_list {
+    height: 45vh;
+    overflow: auto;
+}
+
 h1 {
     color: rgba(255, 122, 122, 1);
     transition: var(--transition-1);
@@ -90,7 +95,7 @@ h4::selection {
 
 .toggeler:hover {
     width: 70px;
-    background-color: rgba(255, 122, 122, .7);
+    background-color: rgba(255, 122, 122, 0.7);
 }
 
 .toggeler::selection {
@@ -114,7 +119,7 @@ h4::selection {
 }
 
 .selection::selection {
-    color: #64CEAA;
+    color: #64ceaa;
 }
 
 .footer {

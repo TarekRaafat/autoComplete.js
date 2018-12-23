@@ -25,6 +25,16 @@ Release flags:
 
 ## Release Notes
 
+-   v2.0.0 :sparkles:
+
+    -   Added support for array of `Objects` & `JSON` as data source with `Key` selection
+    -   Added support for external data source via `Promises` & `Async/Await` function
+    -   Added more comprehensive and usable data feedback on user selection `(User Input, Results List, User Selection)` Object
+    -   `dataSrc` method `CHANGED` to object method `data` with two new methods `src` & `key` ([Check API Configurations](/?id=api-configurations))
+    -   Highlighted Results class name `CHANGED` from `.autoComplete_highlighted_result` to `autoComplete_highlighted`
+    -   Many Optimizations for better performance
+    -   Scroll Infinite results style in [Demo](https://tarekraafat.github.io/autoComplete.js/demo/)
+
 -   v1.5.4
 
     -   Gzipped options for both builds are ready `(2KB) non-minified` & `(1KB) minified`

@@ -12,6 +12,7 @@
         "curly": 2,
         "no-empty": 2,
         "new-cap": 2,
+        "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
         "no-mixed-operators": 2,
         "no-nested-ternary": 2,
         "no-console": 2,
@@ -26,7 +27,7 @@
         "no-use-before-define": 2,
         "comma-dangle": 0,
         "eol-last": ["error", "never"],
-        "max-params": ["error", 3],
+        "max-params": ["error", 4],
         "no-inline-comments": 2,
         "no-trailing-spaces": 2,
         "no-underscore-dangle": 2,
@@ -34,7 +35,7 @@
         "no-var": 2,
         "no-duplicate-imports": 2,
         "max-len": ["error", {
-            "code": 95
+            "code": 110
         }],
         "indent": [
             "error",

@@ -19,20 +19,19 @@
 <br>
 <br>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a>
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a> **v2.0**
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
 
 ## Features
 
--   Simple & Easy to use
 -   Pure Vanilla Javascript
 -   Zero Dependencies
+-   Simple & Easy to use
 -   Lightweight
--   Lightning Fast
+-   Blazing Fast
 -   Versatile
--   Customizable
--   First Class Error Handling & Reporting
+-   Hackable & highly customizable
 
 ## [![autoComplete.js Code Example](./docs/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW)
 
@@ -53,13 +52,13 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.4/dist/css/autoComplete.min.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/css/autoComplete.min.css"/>
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@1.5.4/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/js/autoComplete.min.js"></script>
 ```
 
 #### <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js">npm</a> install `(Node Package Manager)`

@@ -102,7 +102,7 @@
     border-bottom: 2px solid transparent;
 }
 
-.autoComplete_highlighted_result {
+.autoComplete_highlighted {
     opacity: 1;
     color: rgba(255, 122, 122, 1);
     font-weight: bold;
