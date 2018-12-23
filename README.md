@@ -98,7 +98,7 @@ it with [autoComplete.js][so tag].
 
 -   Email: tarek.m.raafat@gmail.com
 -   Website: <http://www.tarekraafat.com/>
--   Guthub: <https://github.com/TarekRaafat/>
+-   Github: <https://github.com/TarekRaafat/>
 
 Distributed under the Apache 2.0 license. See `Apache 2.0` for more information.
 
