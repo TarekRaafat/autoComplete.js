@@ -118,15 +118,25 @@ OR
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/css/autoComplete.min.css">
 ```
 
-2.  Assign the default `id` value `"autoComplete"` to the desired input field or use custom `id/class` and configure the API selector accordingly in `Step 3`
+2.  Assign the default `id` value `"autoComplete"` to the desired input field or use any custom `id/class` and configure the API selector accordingly in `Step 4`
 
 ```html
-<input id="autoComplete">	// Default "id" value = "autoComplete"
+<input id="autoComplete">	// Default "id" value = "autoComplete">
 ```
 
-> JS file
+3.  Place autoComplete `JS` file & the custom `JS` file at the bottom `BODY` tag
 
-3.  Create new instance of autoComplete engine and configure it `NOT all API settings are required`
+```html
+<script src="./js/autoComplete.min.js"></script>
+<script src="./js/index.js"></script>
+OR
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/js/autoComplete.min.js"></script>
+<script src="./js/index.js"></script>
+```
+
+> Custom JS file
+
+4.  Create new instance of autoComplete engine and configure it `NOT all API settings are required`
 
 ```js
 new autoComplete({

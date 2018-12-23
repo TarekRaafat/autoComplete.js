@@ -71,7 +71,7 @@ npm i @tarekraafat/autocomplete.js
 
 ## Documentation:
 
--   For more details check out **autoComplete.js** <a href="https://tarekraafat.github.io/autoComplete.js/">**docs**</a> :notebook_with_decorative_cover:
+-   For more details check out **autoComplete.js** <a href="https://tarekraafat.github.io/autoComplete.js/">**docs** :notebook_with_decorative_cover:</a>
 
 * * *
 
