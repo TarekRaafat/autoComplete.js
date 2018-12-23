@@ -5,7 +5,7 @@ const autoCompletejs = new autoComplete({
 			// Loading place holder text
 			document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
 			// Fetch External Data Source
-			const source = await fetch("https://www.jasonbase.com/things/WArk.json");
+			const source = await fetch("./db/generic.json");
 			const data = await source.json();
 			// Returns Fetched data
 			return data;
