@@ -209,7 +209,7 @@ it with [autoComplete.js][so tag].
 
 ## 5. What's New in v2.0?
 
-Check out <a href="#/releases?id=versioning">Releases</a> Information :newspaper:
+Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
 * * *
 

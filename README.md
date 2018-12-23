@@ -61,7 +61,7 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 <script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@2.0.0/dist/js/autoComplete.min.js"></script>
 ```
 
--   <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js"><svg viewBox="0 0 18 7" alt="npm" width="50px"><path fill="#CB3837" d="M0 0v6h5v1h4V6h9V0"></path><path fill="#FFF" d="M1 1v4h2V2h1v3h1V1h1v5h2V2h1v2H8v1h2V1h1v4h2V2h1v3h1V2h1v3h1V1"></path></svg></a> install `(Node Package Manager)`
+-   <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js">npm</a> install `(Node Package Manager)`
 
 ```shell
 npm i @tarekraafat/autocomplete.js
