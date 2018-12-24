@@ -39,6 +39,9 @@ export default class autoComplete {
 
 	// Search common characters within record
 	search(query, record) {
+		// Hightlight State value holder
+		const highlight = this.highlight;
+		// Current record value toLowerCase
 		const recordLowerCase = record.toLowerCase();
 		// Loose mode
 		if (this.searchEngine === "loose") {
@@ -55,7 +58,7 @@ export default class autoComplete {
 				// Matching case
 				if (searchPosition < query.length && recordChar === query[searchPosition]) {
 					// Highlight matching character
-					recordChar = this.highlight ? autoCompleteView.highlight(recordChar) : recordChar;
+					recordChar = highlight ? autoCompleteView.highlight(recordChar) : recordChar;
 					// Increment search position
 					searchPosition++;
 				}
@@ -72,12 +75,12 @@ export default class autoComplete {
 		} else {
 			if (recordLowerCase.includes(query)) {
 				// If Highlighted
-				if (this.highlight) {
+				if (highlight) {
 					const inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
 					return recordLowerCase.replace(inputValue, autoCompleteView.highlight(inputValue));
 					// If NOT Hightligthed
 				} else {
-					return recordLowerCase;
+					recordLowerCase;
 				}
 			}
 		}
@@ -86,17 +89,17 @@ export default class autoComplete {
 	// List all matching results
 	listMatchedResults(data) {
 		// Final highlighted results list of array
-		this.resList = [];
+		const resList = [];
 		// Holds the input search value
 		const inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
 		// Checks input has matches in data source
 		data.filter(record => {
 			const match = this.search(inputValue, record[this.data.key] || record);
 			if (match) {
-				this.resList.push({ match, source: record });
+				resList.push({ match, source: record });
 			}
 		});
-		const list = this.resList.slice(0, this.maxResults);
+		const list = resList.slice(0, this.maxResults);
 		// Rendering matching results to the UI list
 		autoCompleteView.addResultsToList(list, this.data.key, this.dataAttribute);
 		// Returns rendered list
@@ -104,44 +107,49 @@ export default class autoComplete {
 	}
 
 	ignite(data) {
-		// If the data source is valid run the app
-		if (this.data.src()) {
-			// Placeholder setter
-			autoCompleteView.getInput(this.selector).setAttribute("placeholder", this.placeHolder);
-			// Specified Input field selector
-			const input = autoCompleteView.getInput(this.selector);
-			// Input field handler fires an event onKeyup action
-			input.addEventListener("keyup", () => {
-				// Check if input is not empty or just have space before triggering the app
-				if (input.value.length > this.threshold && input.value !== " ") {
-					// clear results list
-					autoCompleteView.clearResults();
-					// List matching results
-					const list = this.listMatchedResults(data);
-					// Gets user's selection
-					// If action configured
-					if (this.onSelection) {
-						autoCompleteView.getSelection(this.selector, this.onSelection, list, this.data.key);
-					}
-				} else {
-					// clears all results list
-					autoCompleteView.clearResults();
+		// Selector value holder
+		const selector = this.selector;
+		// onSelection function holder
+		const onSelection = this.onSelection;
+		// Placeholder setter
+		autoCompleteView.getInput(selector).setAttribute("placeholder", this.placeHolder);
+		// Specified Input field selector
+		const input = autoCompleteView.getInput(selector);
+		// Input field handler fires an event onKeyup action
+		input.addEventListener("keyup", () => {
+			// Clear Results function holder
+			const clearResults = autoCompleteView.clearResults();
+			// Check if input is not empty or just have space before triggering the app
+			if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
+				// clear results list
+				clearResults;
+				// List matching results
+				const list = this.listMatchedResults(data);
+				// Gets user's selection
+				// If action configured
+				if (onSelection) {
+					autoCompleteView.getSelection(selector, onSelection, list, this.data.key);
 				}
-			});
-		}
+			} else {
+				// clears all results list
+				clearResults;
+			}
+		});
 	}
 
 	// Starts the app Enigne
 	init() {
 		try {
+			// Data Source holder
+			const dataSrc = this.data.src();
 			// Data source is Async
-			if (this.data.src() instanceof Promise) {
+			if (dataSrc instanceof Promise) {
 				// Return Data
-				return this.data.src().then(data => this.ignite(data));
+				dataSrc.then(data => this.ignite(data));
 				// Data source is Array/Function
 			} else {
 				// Return Data
-				return this.ignite(this.data.src());
+				this.ignite(dataSrc);
 			}
 		} catch (error) {
 			// Error in Engine failure

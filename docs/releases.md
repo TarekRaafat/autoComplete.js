@@ -25,7 +25,14 @@ Release flags:
 
 ## Release Notes
 
--   v2.0.0 :sparkles:
+-   v2.0.1 :sparkles:
+
+    -   Fixed multiple space input issue **(Thanks :+1: @DevOsamaMohamed)**
+    -   Fixed remote data source excessive requests **(Thanks :+1: @DevOsamaMohamed)**
+    -   Optimizations for performance enhancements
+    -   Reduced Weight
+
+-   v2.0.0
 
     -   Added support for array of `Objects` & `JSON` as data source with `Key` selection
     -   Added support for external data source via `Promises` & `Async/Await` function

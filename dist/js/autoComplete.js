@@ -117,6 +117,7 @@
     _createClass(autoComplete, [{
       key: "search",
       value: function search(query, record) {
+        var highlight = this.highlight;
         var recordLowerCase = record.toLowerCase();
         if (this.searchEngine === "loose") {
           query = query.replace(/ /g, "");
@@ -125,7 +126,7 @@
           for (var number = 0; number < recordLowerCase.length; number++) {
             var recordChar = recordLowerCase[number];
             if (searchPosition < query.length && recordChar === query[searchPosition]) {
-              recordChar = this.highlight ? autoCompleteView.highlight(recordChar) : recordChar;
+              recordChar = highlight ? autoCompleteView.highlight(recordChar) : recordChar;
               searchPosition++;
             }
             match.push(recordChar);
@@ -136,11 +137,9 @@
           return match.join("");
         } else {
           if (recordLowerCase.includes(query)) {
-            if (this.highlight) {
+            if (highlight) {
               var inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
               return recordLowerCase.replace(inputValue, autoCompleteView.highlight(inputValue));
-            } else {
-              return recordLowerCase;
             }
           }
         }
@@ -149,18 +148,18 @@
       key: "listMatchedResults",
       value: function listMatchedResults(data) {
         var _this = this;
-        this.resList = [];
+        var resList = [];
         var inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
         data.filter(function (record) {
           var match = _this.search(inputValue, record[_this.data.key] || record);
           if (match) {
-            _this.resList.push({
+            resList.push({
               match: match,
               source: record
             });
           }
         });
-        var list = this.resList.slice(0, this.maxResults);
+        var list = resList.slice(0, this.maxResults);
         autoCompleteView.addResultsToList(list, this.data.key, this.dataAttribute);
         return list;
       }
@@ -168,33 +167,32 @@
       key: "ignite",
       value: function ignite(data) {
         var _this2 = this;
-        if (this.data.src()) {
-          autoCompleteView.getInput(this.selector).setAttribute("placeholder", this.placeHolder);
-          var input = autoCompleteView.getInput(this.selector);
-          input.addEventListener("keyup", function () {
-            if (input.value.length > _this2.threshold && input.value !== " ") {
-              autoCompleteView.clearResults();
-              var list = _this2.listMatchedResults(data);
-              if (_this2.onSelection) {
-                autoCompleteView.getSelection(_this2.selector, _this2.onSelection, list, _this2.data.key);
-              }
-            } else {
-              autoCompleteView.clearResults();
+        var selector = this.selector;
+        var onSelection = this.onSelection;
+        autoCompleteView.getInput(selector).setAttribute("placeholder", this.placeHolder);
+        var input = autoCompleteView.getInput(selector);
+        input.addEventListener("keyup", function () {
+          var clearResults = autoCompleteView.clearResults();
+          if (input.value.length > _this2.threshold && input.value.replace(/ /g, "").length) {
+            var list = _this2.listMatchedResults(data);
+            if (onSelection) {
+              autoCompleteView.getSelection(selector, onSelection, list, _this2.data.key);
             }
-          });
-        }
+          }
+        });
       }
     }, {
       key: "init",
       value: function init() {
         var _this3 = this;
         try {
-          if (this.data.src() instanceof Promise) {
-            return this.data.src().then(function (data) {
+          var dataSrc = this.data.src();
+          if (dataSrc instanceof Promise) {
+            dataSrc.then(function (data) {
               return _this3.ignite(data);
             });
           } else {
-            return this.ignite(this.data.src());
+            this.ignite(dataSrc);
           }
         } catch (error) {
           autoCompleteView.error(error);

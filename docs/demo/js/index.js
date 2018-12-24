@@ -2,6 +2,8 @@
 const autoCompletejs = new autoComplete({
 	data: {
 		src: async () => {
+			// Hides the results list as soon as created
+			document.querySelector("#autoComplete_results_list").style.display = "none";
 			// Loading place holder text
 			document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
 			// Fetch External Data Source
@@ -37,6 +39,7 @@ const autoCompletejs = new autoComplete({
 
 // Toggle Search Engine Type/Mode
 document.querySelector(".toggeler").addEventListener("click", () => {
+	// Holdes the toggle buttin alignment
 	const toggele = document.querySelector(".toggele").style.justifyContent;
 
 	if (toggele === "flex-start" || toggele === "") {
@@ -74,6 +77,7 @@ document.querySelector(".toggeler").addEventListener("click", () => {
 			selection.style.opacity = 1;
 			footer.style.opacity = 1;
 			setTimeout(() => {
+				// Hides results list
 				resultsList.style = "display: none;";
 			}, 100);
 		} else {
@@ -86,6 +90,7 @@ document.querySelector(".toggeler").addEventListener("click", () => {
 			selection.style.opacity = 0.1;
 			footer.style.opacity = 0.1;
 			setTimeout(() => {
+				// Shows results list
 				resultsList.style = "display: block;";
 			}, 1);
 		}
