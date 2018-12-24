@@ -27,8 +27,8 @@ Release flags:
 
 -   v2.0.1 :sparkles:
 
-    -   Fixed multiple space input issue (Thanks :+1: @DevOsamaMohamed)
-    -   Fixed remote data source excessive requests (Thanks :+1: @DevOsamaMohamed)
+    -   Fixed multiple space input issue **(Thanks @DevOsamaMohamed)**
+    -   Fixed remote data source excessive requests **(Thanks @DevOsamaMohamed)**
     -   Optimizations for performance enhancements
     -   Reduced Weight
 
