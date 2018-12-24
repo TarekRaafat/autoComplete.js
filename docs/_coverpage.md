@@ -8,9 +8,8 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 
 <br>
 
-<div class="fb-like" data-href="https://tarekraafat.github.io/autoComplete.js/" data-layout="button_count" data-action="recommend" data-size="large" data-show-faces="true" data-share="true"></div>
+<div class="sharethis-inline-share-buttons"></div>
 
-<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="autoComplete.js - Simple vanilla javascript library!" data-url="https://tarekraafat.github.io/autoComplete.js/" data-hashtags="web #webdev #frontend #dev #html #css #javascript #autoComplete #autoCompletejs #frontenddev #coding #webdevelopment #webdeveloper #webdesign #opensource #VanillaJS #js #github #programming #tech" data-show-count="false">Tweet</a>
 <a class="github-button" href="https://github.com/TarekRaafat/autoComplete.js" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star tarekraafat/autoComplete.js on GitHub">Star</a>
 
 [GitHub](https://github.com/TarekRaafat/autoComplete.js)
