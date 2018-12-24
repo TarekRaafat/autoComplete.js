@@ -133,6 +133,10 @@
     .autoComplete_result:last-child {
         border-radius: 0 0 1rem 1rem;
     }
+
+    .autoComplete_result:only-child {
+        border-radius: 1rem;
+    }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {

@@ -28,7 +28,7 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 -   Pure Vanilla Javascript
 -   Zero Dependencies
 -   Simple & Easy to use
--   Lightweight
+-   Extremely Lightweight
 -   Blazing Fast
 -   Versatile
 -   Hackable & highly customizable
