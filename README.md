@@ -84,11 +84,11 @@ it with [autoComplete.js][so tag].
 
 <!-- section links -->
 
-[stack overflow]: http://stackoverflow.com/
+[stack overflow]: https://stackoverflow.com/
 
 [@tarekraafat]: https://twitter.com/TarekRaafat
 
-[so tag]: http://stackoverflow.com/questions/tagged/autoComplete.js
+[so tag]: https://stackoverflow.com/questions/tagged/autoComplete.js
 
 * * *
 

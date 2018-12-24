@@ -184,7 +184,7 @@ new autoComplete({
 -   Live working [Demo]
 
 
--   Try it on [<img src="http://cdn.freelogovectors.net/wp-content/uploads/2018/03/codepen-logo.png" width="100px" alt="CodePen">](https://codepen.io/tarekraafat/pen/rQopdW)
+-   Try it on [<img src="https://cdn.freelogovectors.net/wp-content/uploads/2018/03/codepen-logo.png" width="100px" alt="CodePen">](https://codepen.io/tarekraafat/pen/rQopdW)
 
 [demo]: https://tarekraafat.github.io/autoComplete.js/demo/
 
@@ -201,11 +201,11 @@ it with [autoComplete.js][so tag].
 
 <!-- section links -->
 
-[stack overflow]: http://stackoverflow.com/
+[stack overflow]: https://stackoverflow.com/
 
 [@tarekraafat]: https://twitter.com/TarekRaafat
 
-[so tag]: http://stackoverflow.com/questions/tagged/autoComplete.js
+[so tag]: https://stackoverflow.com/questions/tagged/autoComplete.js
 
 * * *
 
