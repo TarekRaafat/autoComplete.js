@@ -20,8 +20,6 @@ export default class autoComplete {
 				: autoCompleteView.getInput(this.selector),
 			position: config.renderResults ? config.renderResults.position : "afterend"
 		});
-		// Placeholder text
-		this.placeHolder = config.placeHolder || "";
 		// Maximum number of results to show
 		this.maxResults = config.maxResults || 5;
 		// Highlighting matching results
@@ -111,8 +109,6 @@ export default class autoComplete {
 		const selector = this.selector;
 		// onSelection function holder
 		const onSelection = this.onSelection;
-		// Placeholder setter
-		autoCompleteView.getInput(selector).setAttribute("placeholder", this.placeHolder);
 		// Specified Input field selector
 		const input = autoCompleteView.getInput(selector);
 		// Input field handler fires an event onKeyup action
