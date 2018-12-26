@@ -34,7 +34,7 @@ const clearResults = () => (resultsList.innerHTML = "");
 
 // Gets user selection
 const getSelection = (field, callback, resultsValues, dataKey) => {
-	const results = document.querySelectorAll(".autoComplete_result");
+	const results = resultsList.querySelectorAll(".autoComplete_result");
 	results.forEach(selection => {
 		selection.addEventListener("mousedown", event => {
 			// Callback function invoked on user selection
