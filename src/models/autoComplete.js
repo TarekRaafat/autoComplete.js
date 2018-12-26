@@ -139,21 +139,16 @@ export default class autoComplete {
 
 	// Starts the app Enigne
 	init() {
-		try {
-			// Data Source holder
-			const dataSrc = this.data.src();
-			// Data source is Async
-			if (dataSrc instanceof Promise) {
-				// Return Data
-				dataSrc.then(data => this.ignite(data));
-				// Data source is Array/Function
-			} else {
-				// Return Data
-				this.ignite(dataSrc);
-			}
-		} catch (error) {
-			// Error in Engine failure
-			autoCompleteView.error(error);
+		// Data Source holder
+		const dataSrc = this.data.src();
+		// Data source is Async
+		if (dataSrc instanceof Promise) {
+			// Return Data
+			dataSrc.then(data => this.ignite(data));
+			// Data source is Array/Function
+		} else {
+			// Return Data
+			this.ignite(dataSrc);
 		}
 	}
 }
