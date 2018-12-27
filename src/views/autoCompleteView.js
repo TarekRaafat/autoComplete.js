@@ -54,11 +54,6 @@ const getSelection = (field, callback, resultsValues, dataKey) => {
 	});
 };
 
-// Error message render to UI
-const error = error => {
-	document.querySelector("body").innerHTML = `<div class="autoComplete_error">${error}</div>`;
-};
-
 export const autoCompleteView = {
 	getInput,
 	createResultsList,
@@ -66,5 +61,4 @@ export const autoCompleteView = {
 	addResultsToList,
 	getSelection,
 	clearResults,
-	error
 };
