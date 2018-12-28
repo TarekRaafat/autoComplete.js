@@ -26,9 +26,6 @@ const addResultsToList = (dataSrc, dataKey, dataAttribute) => {
 	});
 };
 
-// Clears user input
-const clearInput = selector => (getInput(selector).value = "");
-
 // Clears the list of results
 const clearResults = () => (resultsList.innerHTML = "");
 
@@ -46,8 +43,6 @@ const getSelection = (field, callback, resultsValues, dataKey) => {
 					return resValue === event.target.closest(".autoComplete_result").id;
 				}).source
 			});
-			// Clear Input after selection is made
-			clearInput(field);
 			// Clear Results after selection is made
 			clearResults();
 		});
