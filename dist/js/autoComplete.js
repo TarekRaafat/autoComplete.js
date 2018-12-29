@@ -38,12 +38,11 @@
   var highlight = function highlight(value) {
     return "<span class=\"autoComplete_highlighted\">".concat(value, "</span>");
   };
-  var addResultsToList = function addResultsToList(dataSrc, dataKey, dataAttribute) {
+  var addResultsToList = function addResultsToList(dataSrc, dataKey) {
     dataSrc.forEach(function (event, record) {
       var result = document.createElement("li");
       var resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
-      result.setAttribute("data-".concat(dataAttribute.tag), dataAttribute.value || resultValue);
-      result.setAttribute("id", resultValue);
+      result.setAttribute("autoComplete-data", resultValue);
       result.setAttribute("class", "autoComplete_result");
       result.innerHTML = dataSrc[record].match || dataSrc[record];
       resultsList.appendChild(result);
@@ -63,7 +62,7 @@
           }),
           selection: resultsValues.find(function (value) {
             var resValue = value.source[dataKey] || value.source;
-            return resValue === event.target.closest(".autoComplete_result").id;
+            return resValue === event.target.closest(".autoComplete_result").getAttribute("autoComplete-data");
           }).source
         });
         clearResults();
@@ -99,10 +98,6 @@
       this.placeHolder = config.placeHolder || "";
       this.maxResults = config.maxResults || 5;
       this.highlight = config.highlight || false;
-      this.dataAttribute = {
-        tag: config.dataAttribute ? config.dataAttribute.tag : "autocomplete",
-        value: config.dataAttribute ? config.dataAttribute.value : ""
-      };
       this.onSelection = config.onSelection;
       this.init();
     }
@@ -152,7 +147,7 @@
           }
         });
         var list = resList.slice(0, this.maxResults);
-        autoCompleteView.addResultsToList(list, this.data.key, this.dataAttribute);
+        autoCompleteView.addResultsToList(list, this.data.key);
         return list;
       }
     }, {

@@ -19,7 +19,6 @@ const autoCompletejs = new autoComplete({
 	threshold: 0,
 	searchEngine: "strict",
 	highlight: true,
-	dataAttribute: { tag: "value", value: "" },
 	maxResults: Infinity,
 	renderResults: {
 		destination: document.querySelector("#autoComplete"),
