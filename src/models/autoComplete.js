@@ -123,7 +123,7 @@ export default class autoComplete {
 				// Gets user's selection
 				// If action configured
 				if (onSelection) {
-					autoCompleteView.getSelection(selector, onSelection, list, this.data.key, this.dataAttribute);
+					autoCompleteView.getSelection(selector, onSelection, list, this.data.key);
 				}
 			} else {
 				// clears all results list
