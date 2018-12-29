@@ -14,12 +14,11 @@ const createResultsList = renderResults => {
 const highlight = value => `<span class="autoComplete_highlighted">${value}</span>`;
 
 // Adding matching results to the list
-const addResultsToList = (dataSrc, dataKey, dataAttribute) => {
+const addResultsToList = (dataSrc, dataKey) => {
 	dataSrc.forEach((event, record) => {
 		const result = document.createElement("li");
 		const resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
-		result.setAttribute(`data-${dataAttribute.tag}`, dataAttribute.value || resultValue);
-		result.setAttribute("id", resultValue);
+		result.setAttribute("autoComplete-data", resultValue);
 		result.setAttribute("class", "autoComplete_result");
 		result.innerHTML = dataSrc[record].match || dataSrc[record];
 		resultsList.appendChild(result);
@@ -40,7 +39,8 @@ const getSelection = (field, callback, resultsValues, dataKey) => {
 				results: resultsValues.map(record => record.source),
 				selection: resultsValues.find(value => {
 					const resValue = value.source[dataKey] || value.source;
-					return resValue === event.target.closest(".autoComplete_result").id;
+					return resValue === event.target.closest(".autoComplete_result")
+						.getAttribute("autoComplete-data");
 				}).source
 			});
 			// Clear Results after selection is made

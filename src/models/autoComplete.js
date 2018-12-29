@@ -26,11 +26,6 @@ export default class autoComplete {
 		this.maxResults = config.maxResults || 5;
 		// Highlighting matching results
 		this.highlight = config.highlight || false;
-		// Assign data attribute tag & value if set in object
-		this.dataAttribute = {
-			tag: config.dataAttribute ? config.dataAttribute.tag : "autocomplete",
-			value: config.dataAttribute ? config.dataAttribute.value : ""
-		};
 		// Action function on result selection
 		this.onSelection = config.onSelection;
 		// Starts the app Enigne
@@ -101,7 +96,7 @@ export default class autoComplete {
 		});
 		const list = resList.slice(0, this.maxResults);
 		// Rendering matching results to the UI list
-		autoCompleteView.addResultsToList(list, this.data.key, this.dataAttribute);
+		autoCompleteView.addResultsToList(list, this.data.key);
 		// Returns rendered list
 		return list;
 	}
