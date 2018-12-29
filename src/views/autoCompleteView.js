@@ -1,7 +1,7 @@
 let resultsList;
 
 // Gets the user's input value
-const getInput = selector => typeof selector === "string" ? document.querySelector(selector) : selector();
+const getInput = selector => (typeof selector === "string" ? document.querySelector(selector) : selector());
 
 // Creats the results list HTML tag
 const createResultsList = renderResults => {
@@ -55,5 +55,5 @@ export const autoCompleteView = {
 	highlight,
 	addResultsToList,
 	getSelection,
-	clearResults,
+	clearResults
 };

@@ -49,9 +49,6 @@
       resultsList.appendChild(result);
     });
   };
-  var clearInput = function clearInput(selector) {
-    return getInput(selector).value = "";
-  };
   var clearResults = function clearResults() {
     return resultsList.innerHTML = "";
   };
@@ -69,7 +66,6 @@
             return resValue === event.target.closest(".autoComplete_result").id;
           }).source
         });
-        clearInput(field);
         clearResults();
       });
     });
