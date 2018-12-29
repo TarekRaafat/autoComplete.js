@@ -28,7 +28,7 @@
 
   var resultsList;
   var getInput = function getInput(selector) {
-    return document.querySelector(selector);
+    return typeof selector === "string" ? document.querySelector(selector) : selector();
   };
   var createResultsList = function createResultsList(renderResults) {
     resultsList = document.createElement("ul");
@@ -49,14 +49,11 @@
       resultsList.appendChild(result);
     });
   };
-  var clearInput = function clearInput(selector) {
-    return getInput(selector).value = "";
-  };
   var clearResults = function clearResults() {
     return resultsList.innerHTML = "";
   };
   var getSelection = function getSelection(field, callback, resultsValues, dataKey) {
-    var results = document.querySelectorAll(".autoComplete_result");
+    var results = resultsList.querySelectorAll(".autoComplete_result");
     results.forEach(function (selection) {
       selection.addEventListener("mousedown", function (event) {
         callback({
@@ -69,13 +66,9 @@
             return resValue === event.target.closest(".autoComplete_result").id;
           }).source
         });
-        clearInput(field);
         clearResults();
       });
     });
-  };
-  var error = function error(_error) {
-    document.querySelector("body").innerHTML = "<div class=\"autoComplete_error\">".concat(_error, "</div>");
   };
   var autoCompleteView = {
     getInput: getInput,
@@ -83,8 +76,7 @@
     highlight: highlight,
     addResultsToList: addResultsToList,
     getSelection: getSelection,
-    clearResults: clearResults,
-    error: error
+    clearResults: clearResults
   };
 
   var autoComplete =
@@ -185,17 +177,13 @@
       key: "init",
       value: function init() {
         var _this3 = this;
-        try {
-          var dataSrc = this.data.src();
-          if (dataSrc instanceof Promise) {
-            dataSrc.then(function (data) {
-              return _this3.ignite(data);
-            });
-          } else {
-            this.ignite(dataSrc);
-          }
-        } catch (error) {
-          autoCompleteView.error(error);
+        var dataSrc = this.data.src();
+        if (dataSrc instanceof Promise) {
+          dataSrc.then(function (data) {
+            return _this3.ignite(data);
+          });
+        } else {
+          this.ignite(dataSrc);
         }
       }
     }]);

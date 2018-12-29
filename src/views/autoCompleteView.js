@@ -1,7 +1,7 @@
 let resultsList;
 
 // Gets the user's input value
-const getInput = selector => typeof selector === 'string' ? document.querySelector(selector) : selector();
+const getInput = selector => (typeof selector === "string" ? document.querySelector(selector) : selector());
 
 // Creats the results list HTML tag
 const createResultsList = renderResults => {
@@ -14,26 +14,23 @@ const createResultsList = renderResults => {
 const highlight = value => `<span class="autoComplete_highlighted">${value}</span>`;
 
 // Adding matching results to the list
-const addResultsToList = (dataSrc, dataKey, dataAttribute) => {
+const addResultsToList = (dataSrc, dataKey) => {
 	dataSrc.forEach((event, record) => {
 		const result = document.createElement("li");
 		const resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
-		result.setAttribute(`data-${dataAttribute.tag}`, dataAttribute.value || resultValue);
+		result.setAttribute("autoComplete-data", resultValue);
 		result.setAttribute("class", "autoComplete_result");
 		result.innerHTML = dataSrc[record].match || dataSrc[record];
 		resultsList.appendChild(result);
 	});
 };
 
-// Clears user input
-const clearInput = selector => (getInput(selector).value = "");
-
 // Clears the list of results
 const clearResults = () => (resultsList.innerHTML = "");
 
 // Gets user selection
-const getSelection = (field, callback, resultsValues, dataKey, dataAttribute) => {
-	const results = document.querySelectorAll(".autoComplete_result");
+const getSelection = (field, callback, resultsValues, dataKey) => {
+	const results = resultsList.querySelectorAll(".autoComplete_result");
 	results.forEach(selection => {
 		selection.addEventListener("mousedown", event => {
 			// Callback function invoked on user selection
@@ -42,20 +39,14 @@ const getSelection = (field, callback, resultsValues, dataKey, dataAttribute) =>
 				results: resultsValues.map(record => record.source),
 				selection: resultsValues.find(value => {
 					const resValue = value.source[dataKey] || value.source;
-					return resValue === event.target.closest(".autoComplete_result").getAttribute(`data-${dataAttribute.tag}`);
+					return resValue === event.target.closest(".autoComplete_result")
+						.getAttribute("autoComplete-data");
 				}).source
 			});
-			// Clear Input after selection is made
-			clearInput(field);
 			// Clear Results after selection is made
 			clearResults();
 		});
 	});
-};
-
-// Error message render to UI
-const error = error => {
-	document.querySelector("body").innerHTML = `<div class="autoComplete_error">${error}</div>`;
 };
 
 export const autoCompleteView = {
@@ -64,6 +55,5 @@ export const autoCompleteView = {
 	highlight,
 	addResultsToList,
 	getSelection,
-	clearResults,
-	error
+	clearResults
 };
