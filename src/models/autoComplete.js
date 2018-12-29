@@ -96,7 +96,7 @@ export default class autoComplete {
 		});
 		const list = resList.slice(0, this.maxResults);
 		// Rendering matching results to the UI list
-		autoCompleteView.addResultsToList(list, this.data.key, this.dataAttribute);
+		autoCompleteView.addResultsToList(list, this.data.key);
 		// Returns rendered list
 		return list;
 	}
