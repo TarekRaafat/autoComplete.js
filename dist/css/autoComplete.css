@@ -1,4 +1,10 @@
+#autoComplete_wrapper {
+    position: relative;
+    display: inline-block;
+}
+
 #autoComplete {
+    position: relative;
     padding: 0 2rem 0 3.5rem;
     height: 2.1rem;
     width: 6rem;
@@ -7,18 +13,30 @@
     border-radius: 50rem;
     border: 0.05rem solid rgb(255, 122, 122);
     caret-color: rgb(255, 122, 122);
-    color: rgba(255, 255, 255, 1);
+    color: rgba(255, 255, 255, 0);
     background: url("./images/magnifier.svg") no-repeat center/10% 1.5rem;
     transition: all 0.4s ease;
     -webkit-transition: all -webkit-transform 0.4s ease;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
 }
 
 #autoComplete::placeholder {
     color: rgba(255, 122, 122, 0);
     transition: all 0.3s ease;
+}
+
+#autoComplete:hover::placeholder {
+    color: rgb(255, 122, 122, 0.3);
+    transition: all 0.3s ease;
+    -webkit-transition: all -webkit-transform 0.3s ease;
+}
+
+#autoComplete:focus::placeholder {
+    padding: 1rem 0.5rem;
+    font-size: 1rem;
+    color: rgb(255, 122, 122, 0.3);
+    transition: all 0.3s ease;
+    -webkit-transition: all -webkit-transform 0.3s ease;
 }
 
 #autoComplete::selection {
@@ -40,12 +58,6 @@
     -webkit-transition: all -webkit-transform 0.3s ease;
 }
 
-#autoComplete:hover::placeholder {
-    color: rgb(255, 122, 122, 0.3);
-    transition: all 0.3s ease;
-    -webkit-transition: all -webkit-transform 0.3s ease;
-}
-
 #autoComplete:focus {
     padding: 0 2rem 0 3.5rem;
     color: rgba(255, 122, 122, 1);
@@ -56,20 +68,19 @@
     box-shadow: rgba(255, 122, 122, 0.1) 0px 0px 20px 5px;
 }
 
-#autoComplete:focus::placeholder {
-    padding: 1rem 0.5rem;
-    font-size: 1rem;
-    color: rgb(255, 122, 122, 0.3);
-    transition: all 0.3s ease;
-    -webkit-transition: all -webkit-transform 0.3s ease;
-}
-
 #autoComplete_results_list {
+    position: fixed;
+    height: 45vh;
+    overflow: auto;
     z-index: 1000;
-    position: absolute;
-    margin: 0;
     padding: 0;
-    width: 100vw;
+    left: 0;
+    right: 0;
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 18rem;
+    overflow: hidden;
     transition: all 0.1s ease-in-out;
     -webkit-transition: all -webkit-transform 0.1s ease;
 }
@@ -77,16 +88,21 @@
 .autoComplete_result {
     margin: 0.15rem auto;
     padding: 0.6rem;
-    max-width: 15em;
-    min-width: 8rem;
+    max-width: 280px;
     border: 0.05rem solid #e3e3e3;
     list-style: none;
-    text-align: center;
+    text-align: left;
     font-size: 1.1rem;
     color: rgb(123, 123, 123);
     text-transform: capitalize;
     transition: all 0.1s ease-in-out;
     background-color: #fff;
+    /* white-space: normal; */
+}
+
+.autoComplete_result::selection {
+    color: rgba(#ffffff, 0);
+    background-color: rgba(#ffffff, 0);
 }
 
 .autoComplete_result:last-child {
@@ -102,17 +118,24 @@
     border-bottom: 2px solid transparent;
 }
 
+.autoComplete_result:focus {
+    outline: none;
+    background-color: rgba(255, 248, 248, 0.9);
+    border-left: 2px solid rgba(255, 122, 122, 1);
+    border-right: 2px solid rgba(255, 122, 122, 1);
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+}
+
 .autoComplete_highlighted {
     opacity: 1;
     color: rgba(255, 122, 122, 1);
     font-weight: bold;
 }
 
-.autoComplete_error {
-    height: 100vh;
-    transform: translateY(45%);
-    text-align: center;
-    color: rgba(255, 122, 122, 1);
+.autoComplete_highlighted::selection {
+    color: rgba(#ffffff, 0);
+    background-color: rgba(#ffffff, 0);
 }
 
 @media only screen and (max-width: 600px) {

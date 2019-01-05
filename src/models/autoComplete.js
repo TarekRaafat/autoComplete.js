@@ -21,7 +21,7 @@ export default class autoComplete {
 			position: config.renderResults ? config.renderResults.position : "afterend"
 		});
 		// Placeholder text
-		this.placeHolder = config.placeHolder || "";
+		this.placeHolder = config.placeHolder;
 		// Maximum number of results to show
 		this.maxResults = config.maxResults || 5;
 		// Highlighting matching results
@@ -97,6 +97,8 @@ export default class autoComplete {
 		const list = resList.slice(0, this.maxResults);
 		// Rendering matching results to the UI list
 		autoCompleteView.addResultsToList(list, this.data.key);
+		// Keyboard Arrow Navigation
+		autoCompleteView.navigation(this.selector);
 		// Returns rendered list
 		return list;
 	}
@@ -104,14 +106,20 @@ export default class autoComplete {
 	ignite(data) {
 		// Selector value holder
 		const selector = this.selector;
+		// Specified Input field selector
+		const input = autoCompleteView.getInput(selector);
+		// Placeholder value holder
+		const placeHolder = this.placeHolder;
 		// onSelection function holder
 		const onSelection = this.onSelection;
 		// Placeholder setter
-		autoCompleteView.getInput(selector).setAttribute("placeholder", this.placeHolder);
-		// Specified Input field selector
-		const input = autoCompleteView.getInput(selector);
+		if (placeHolder) {
+			input.setAttribute("placeholder", placeHolder);
+		}
+		// Creates Results List
+		// autoCompleteView.createResultsList(this.renderResults);
 		// Input field handler fires an event onKeyup action
-		input.addEventListener("keyup", () => {
+		input.onkeyup = () => {
 			// Clear Results function holder
 			const clearResults = autoCompleteView.clearResults();
 			// Check if input is not empty or just have space before triggering the app
@@ -129,7 +137,7 @@ export default class autoComplete {
 				// clears all results list
 				clearResults;
 			}
-		});
+		};
 	}
 
 	// Starts the app Enigne

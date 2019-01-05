@@ -27,45 +27,80 @@
   }
 
   var resultsList;
+  var dataAttribute = "data-result";
+  var select = {
+    resultsList: "autoComplete_results_list",
+    result: "autoComplete_result",
+    highlight: "autoComplete_highlighted"
+  };
   var getInput = function getInput(selector) {
     return typeof selector === "string" ? document.querySelector(selector) : selector();
   };
   var createResultsList = function createResultsList(renderResults) {
     resultsList = document.createElement("ul");
-    resultsList.setAttribute("id", "autoComplete_results_list");
+    resultsList.setAttribute("id", select.resultsList);
     renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
   };
   var highlight = function highlight(value) {
-    return "<span class=\"autoComplete_highlighted\">".concat(value, "</span>");
+    return "<span class=".concat(select.highlight, ">").concat(value, "</span>");
   };
   var addResultsToList = function addResultsToList(dataSrc, dataKey) {
     dataSrc.forEach(function (event, record) {
       var result = document.createElement("li");
       var resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
-      result.setAttribute("autoComplete-data", resultValue);
-      result.setAttribute("class", "autoComplete_result");
+      result.setAttribute(dataAttribute, resultValue);
+      result.setAttribute("class", select.result);
+      result.setAttribute("tabindex", "1");
       result.innerHTML = dataSrc[record].match || dataSrc[record];
       resultsList.appendChild(result);
     });
+  };
+  var navigation = function navigation(selector) {
+    var input = getInput(selector);
+    var first = resultsList.firstChild;
+    document.onkeydown = function (event) {
+      var active = document.activeElement;
+      switch (event.keyCode) {
+        case 38:
+          if (active !== first && active !== input) {
+            active.previousSibling.focus();
+          } else if (active === first) {
+            input.focus();
+          }
+          break;
+        case 40:
+          if (active === input && resultsList.childNodes.length > 0) {
+            first.focus();
+          } else if (active !== resultsList.lastChild) {
+            active.nextSibling.focus();
+          }
+          break;
+      }
+    };
   };
   var clearResults = function clearResults() {
     return resultsList.innerHTML = "";
   };
   var getSelection = function getSelection(field, callback, resultsValues, dataKey) {
-    var results = resultsList.querySelectorAll(".autoComplete_result");
+    var results = resultsList.querySelectorAll(".".concat(select.result));
     results.forEach(function (selection) {
-      selection.addEventListener("mousedown", function (event) {
-        callback({
-          query: getInput(field).value,
-          results: resultsValues.map(function (record) {
-            return record.source;
-          }),
-          selection: resultsValues.find(function (value) {
-            var resValue = value.source[dataKey] || value.source;
-            return resValue === event.target.closest(".autoComplete_result").getAttribute("autoComplete-data");
-          }).source
+      ["mousedown", "keydown"].forEach(function (eventType) {
+        selection.addEventListener(eventType, function (event) {
+          if (eventType === "mousedown" || event.keyCode === 13) {
+            callback({
+              event: event,
+              query: getInput(field).value,
+              results: resultsValues.map(function (record) {
+                return record.source;
+              }),
+              selection: resultsValues.find(function (value) {
+                var resValue = value.source[dataKey] || value.source;
+                return resValue === event.target.closest(".".concat(select.result)).getAttribute(dataAttribute);
+              }).source
+            });
+            clearResults();
+          }
         });
-        clearResults();
       });
     });
   };
@@ -74,8 +109,9 @@
     createResultsList: createResultsList,
     highlight: highlight,
     addResultsToList: addResultsToList,
-    getSelection: getSelection,
-    clearResults: clearResults
+    navigation: navigation,
+    clearResults: clearResults,
+    getSelection: getSelection
   };
 
   var autoComplete =
@@ -95,7 +131,7 @@
         destination: config.renderResults ? config.renderResults.destination : autoCompleteView.getInput(this.selector),
         position: config.renderResults ? config.renderResults.position : "afterend"
       });
-      this.placeHolder = config.placeHolder || "";
+      this.placeHolder = config.placeHolder;
       this.maxResults = config.maxResults || 5;
       this.highlight = config.highlight || false;
       this.onSelection = config.onSelection;
@@ -148,6 +184,7 @@
         });
         var list = resList.slice(0, this.maxResults);
         autoCompleteView.addResultsToList(list, this.data.key);
+        autoCompleteView.navigation(this.selector);
         return list;
       }
     }, {
@@ -155,10 +192,13 @@
       value: function ignite(data) {
         var _this2 = this;
         var selector = this.selector;
-        var onSelection = this.onSelection;
-        autoCompleteView.getInput(selector).setAttribute("placeholder", this.placeHolder);
         var input = autoCompleteView.getInput(selector);
-        input.addEventListener("keyup", function () {
+        var placeHolder = this.placeHolder;
+        var onSelection = this.onSelection;
+        if (placeHolder) {
+          input.setAttribute("placeholder", placeHolder);
+        }
+        input.onkeyup = function () {
           var clearResults = autoCompleteView.clearResults();
           if (input.value.length > _this2.threshold && input.value.replace(/ /g, "").length) {
             var list = _this2.listMatchedResults(data);
@@ -166,7 +206,7 @@
               autoCompleteView.getSelection(selector, onSelection, list, _this2.data.key);
             }
           }
-        });
+        };
       }
     }, {
       key: "init",

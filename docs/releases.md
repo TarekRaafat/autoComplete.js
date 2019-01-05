@@ -25,7 +25,22 @@ Release flags:
 
 ## Release Notes
 
--   v2.0.1 :sparkles:
+-   v2.1.0 :sparkles:
+
+    -   Added support for Keyboard `(Arrow)` & `(Tab)` Navigation
+    -   Selection event object returns in data feedback **(Thanks @alvaaz)**
+    -   Added `Function` support to `selector` for detached DOM rendering **(Thanks @mikob)**
+    -   Added `Function` support to `renderResults` for detached DOM rendering
+    -   Fixed Placeholder if not set doesn't overwrite external assigned values **(Thanks @mikob)**
+    -   Replaced `id` with `data-attribute` **(Thanks @mikob)**
+    -   Input doesn't clear automatically `onSelection` event **(Thanks @mikob)**
+    -   Place Holder doesn't assign selected value `onSelection` event automatically
+    -   Error message rendered on Engine failure in the body for End-User `[Removed]` **(Thanks @mikob)**
+    -   API `data-attribute` setting `[Removed]`
+    -   Optimizations
+    -   Style Enhancements
+
+-   v2.0.1
 
     -   Fixed multiple space input issue **(Thanks @DevOsamaMohamed)**
     -   Fixed remote data source excessive requests **(Thanks @DevOsamaMohamed)**

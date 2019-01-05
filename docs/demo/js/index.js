@@ -2,9 +2,7 @@
 const autoCompletejs = new autoComplete({
 	data: {
 		src: async () => {
-			// Hides the results list as soon as created
-			document.querySelector("#autoComplete_results_list").style.display = "none";
-			// Loading place holder text
+			// Loading placeholder text
 			document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
 			// Fetch External Data Source
 			const source = await fetch("./db/generic.json");
@@ -14,27 +12,35 @@ const autoCompletejs = new autoComplete({
 		},
 		key: "food"
 	},
+	placeHolder: "Food & Drinks",
 	selector: "#autoComplete",
-	placeHolder: "Food & Drinks...",
 	threshold: 0,
 	searchEngine: "strict",
 	highlight: true,
-	dataAttribute: { tag: "value", value: "" },
 	maxResults: Infinity,
 	renderResults: {
 		destination: document.querySelector("#autoComplete"),
 		position: "afterend"
 	},
 	onSelection: feedback => {
+		const selection = feedback.selection.food;
 		// Render selected choice to selection div
-		document.querySelector(".selection").innerHTML = feedback.selection.food;
+		document.querySelector(".selection").innerHTML = selection;
+		// Clear Input
+		document.querySelector("#autoComplete").value = "";
 		// Change placeholder with the selected value
-		document
-			.querySelector("#autoComplete")
-			.setAttribute("placeholder", `${event.target.closest(".autoComplete_result").id}`);
+		document.querySelector("#autoComplete").setAttribute("placeholder", selection);
 		// Concole log autoComplete data feedback
 		console.log(feedback);
 	}
+});
+
+// On page load add class to input field
+window.addEventListener("load", () => {
+	document.querySelector("#autoComplete").classList.add("out");
+	document.querySelector("#autoComplete_results_list").style.display = "none";
+	document.styleSheets[0].cssRules[1].style.height = "";
+	document.styleSheets[0].cssRules[1].style.width = "";
 });
 
 // Toggle Search Engine Type/Mode
@@ -55,44 +61,75 @@ document.querySelector(".toggeler").addEventListener("click", () => {
 	}
 });
 
-// Toggle event for search input
-// showing & hidding results list onfocus / blur
-["focus", "blur"].forEach(eventType => {
-	const resultsList = document.querySelector("#autoComplete_results_list");
+// Toggle results list and other elements
+const action = action => {
 	const github = document.querySelector(".github-corner");
 	const title = document.querySelector("h1");
-	const query = document.querySelector("#autoComplete");
 	const mode = document.querySelector(".mode");
 	const selection = document.querySelector(".selection");
 	const footer = document.querySelector(".footer");
 
-	document.querySelector("#autoComplete").addEventListener(eventType, () => {
+	if (action === "dim") {
+		github.style.opacity = 1;
+		title.style.opacity = 1;
+		mode.style.opacity = 1;
+		selection.style.opacity = 1;
+		footer.style.opacity = 1;
+	} else if ("light") {
+		github.style.opacity = 0.1;
+		title.style.opacity = 0.3;
+		mode.style.opacity = 0.2;
+		selection.style.opacity = 0.1;
+		footer.style.opacity = 0.1;
+	}
+};
+
+// Toggle event for search input
+// showing & hidding results list onfocus / blur
+// ["focus", "blur"].forEach(eventType => {
+["focus", "blur", "mousedown", "keydown"].forEach(eventType => {
+	const input = document.querySelector("#autoComplete");
+	const resultsList = document.querySelector("#autoComplete_results_list");
+
+	document.querySelector("#autoComplete").addEventListener(eventType, event => {
 		// Hide results list & show other elemennts
 		if (eventType === "blur") {
-			resultsList.style.opacity = 0;
-			github.style.opacity = 1;
-			query.style = "color: transparent;";
-			title.style.opacity = 1;
-			mode.style.opacity = 1;
-			selection.style.opacity = 1;
-			footer.style.opacity = 1;
-			setTimeout(() => {
-				// Hides results list
-				resultsList.style = "display: none;";
-			}, 100);
-		} else {
+			action("dim");
+		} else if (eventType === "focus") {
 			// Show results list & hide other elemennts
-			resultsList.style.opacity = 1;
-			github.style.opacity = 0.1;
-			query.style = "color: inheret;";
-			title.style.opacity = 0.3;
-			mode.style.opacity = 0.2;
-			selection.style.opacity = 0.1;
-			footer.style.opacity = 0.1;
-			setTimeout(() => {
-				// Shows results list
-				resultsList.style = "display: block;";
-			}, 1);
+			action("light");
+		}
+	});
+
+	// Hide Results list when not used
+	document.addEventListener(eventType, event => {
+		var current = event.target;
+		if (
+			current === input ||
+			current === resultsList ||
+			input.contains(current) ||
+			resultsList.contains(current)
+		) {
+			resultsList.style.display = "block";
+		} else {
+			resultsList.style.display = "none";
+		}
+	});
+});
+
+// Toggle Input Classes on results list focus to keep style
+["focusin", "focusout", "keydown"].forEach(eventType => {
+	document.querySelector("#autoComplete_results_list").addEventListener(eventType, event => {
+		if (eventType === "focusin") {
+			if (event.target && event.target.nodeName === "LI") {
+				action("light");
+				document.querySelector("#autoComplete").classList.remove("out");
+				document.querySelector("#autoComplete").classList.add("in");
+			}
+		} else if (eventType === "focusout" || event.keyCode === 13) {
+			action("dim");
+			document.querySelector("#autoComplete").classList.remove("in");
+			document.querySelector("#autoComplete").classList.add("out");
 		}
 	});
 });
