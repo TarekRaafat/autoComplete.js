@@ -39,8 +39,6 @@ const autoCompletejs = new autoComplete({
 window.addEventListener("load", () => {
 	document.querySelector("#autoComplete").classList.add("out");
 	document.querySelector("#autoComplete_results_list").style.display = "none";
-	document.styleSheets[0].cssRules[1].style.height = "";
-	document.styleSheets[0].cssRules[1].style.width = "";
 });
 
 // Toggle Search Engine Type/Mode
