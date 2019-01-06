@@ -262,8 +262,8 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [ ] Inline autocomplete nearest result
 -   [ ] Centralize Default values holder for easy access
 -   [x] API for Rendered result item customization
--   [x] API for Rendered result list customization
--   [ ] Added more use cases & examples to documentation
+-   [x] API for Rendered results list customization
+-   [ ] Add more use cases & examples to documentation
 
 * * *
 
