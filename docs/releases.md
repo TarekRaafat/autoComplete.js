@@ -28,7 +28,7 @@ Release flags:
 
 -   v3.0.0 :sparkles:
 
-    -   Added API for rendered result item `resultsItem` function
+    -   Added API for rendered result item `resultItem` function
     -   `renderResults` API name changed to `resultsList` `[Changed]`
 
 -   v2.1.0
