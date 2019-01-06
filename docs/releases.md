@@ -20,12 +20,18 @@ Release flags:
 -   `[Experimental]`: Under testing and might be deprecated at any point
 -   `[Deprecated]`: Not developed / supported anymore, might be removed at any point
 -   `[Removed]`: Completely gone, no longer exists
+-   `[Changed]`: A change in the API
 
 * * *
 
 ## Release Notes
 
--   v2.1.0 :sparkles:
+-   v3.0.0 :sparkles:
+
+    -   Added API for rendered result item `resultsItem` function
+    -   `renderResults` API name changed to `resultsList` `[Changed]`
+
+-   v2.1.0
 
     -   Added support for Keyboard `(Arrow)` & `(Tab)` Navigation
     -   Selection event object returns in data feedback **(Thanks @alvaaz)**

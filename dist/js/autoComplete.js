@@ -44,14 +44,14 @@
   var highlight = function highlight(value) {
     return "<span class=".concat(select.highlight, ">").concat(value, "</span>");
   };
-  var addResultsToList = function addResultsToList(dataSrc, dataKey) {
+  var addResultsToList = function addResultsToList(dataSrc, dataKey, callback) {
     dataSrc.forEach(function (event, record) {
       var result = document.createElement("li");
       var resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
       result.setAttribute(dataAttribute, resultValue);
       result.setAttribute("class", select.result);
       result.setAttribute("tabindex", "1");
-      result.innerHTML = dataSrc[record].match || dataSrc[record];
+      result.innerHTML = callback ? callback(event, result) : event.match || event;
       resultsList.appendChild(result);
     });
   };
@@ -127,12 +127,13 @@
       };
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.threshold = config.threshold || 0;
-      this.renderResults = autoCompleteView.createResultsList({
-        destination: config.renderResults ? config.renderResults.destination : autoCompleteView.getInput(this.selector),
-        position: config.renderResults ? config.renderResults.position : "afterend"
+      this.resultsList = autoCompleteView.createResultsList({
+        destination: config.resultsList ? config.resultsList.destination : autoCompleteView.getInput(this.selector),
+        position: config.resultsList ? config.resultsList.position : "afterend"
       });
       this.placeHolder = config.placeHolder;
       this.maxResults = config.maxResults || 5;
+      this.resultItem = config.resultItem;
       this.highlight = config.highlight || false;
       this.onSelection = config.onSelection;
       this.init();
@@ -183,7 +184,7 @@
           }
         });
         var list = resList.slice(0, this.maxResults);
-        autoCompleteView.addResultsToList(list, this.data.key);
+        autoCompleteView.addResultsToList(list, this.data.key, this.resultItem);
         autoCompleteView.navigation(this.selector);
         return list;
       }

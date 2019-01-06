@@ -18,9 +18,12 @@ const autoCompletejs = new autoComplete({
 	searchEngine: "strict",
 	highlight: true,
 	maxResults: Infinity,
-	renderResults: {
+	resultsList: {
 		destination: document.querySelector("#autoComplete"),
 		position: "afterend"
+	},
+	resultItem: (data, source) => {
+		return `${data.match}`;
 	},
 	onSelection: feedback => {
 		const selection = feedback.selection.food;

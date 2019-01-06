@@ -20,14 +20,14 @@ const createResultsList = renderResults => {
 const highlight = value => `<span class=${select.highlight}>${value}</span>`;
 
 // Adding matching results to the list
-const addResultsToList = (dataSrc, dataKey) => {
+const addResultsToList = (dataSrc, dataKey, callback) => {
 	dataSrc.forEach((event, record) => {
 		const result = document.createElement("li");
 		const resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
 		result.setAttribute(dataAttribute, resultValue);
 		result.setAttribute("class", select.result);
 		result.setAttribute("tabindex", "1");
-		result.innerHTML = dataSrc[record].match || dataSrc[record];
+		result.innerHTML = callback ? callback(event, result) : event.match || event;
 		resultsList.appendChild(result);
 	});
 };
@@ -76,10 +76,8 @@ const getSelection = (field, callback, resultsValues, dataKey) => {
 						results: resultsValues.map(record => record.source),
 						selection: resultsValues.find(value => {
 							const resValue = value.source[dataKey] || value.source;
-							return (
-								resValue === event.target.closest(`.${select.result}`)
-									.getAttribute(dataAttribute)
-							);
+							return resValue === event.target.closest(`.${select.result}`)
+								.getAttribute(dataAttribute);
 						}).source
 					});
 					// Clear Results after selection is made
@@ -97,5 +95,5 @@ export const autoCompleteView = {
 	addResultsToList,
 	navigation,
 	clearResults,
-	getSelection,
+	getSelection
 };

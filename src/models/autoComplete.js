@@ -14,16 +14,18 @@ export default class autoComplete {
 		// Minimum characters length before engine starts rendering
 		this.threshold = config.threshold || 0;
 		// Rendered results destination
-		this.renderResults = autoCompleteView.createResultsList({
-			destination: config.renderResults
-				? config.renderResults.destination
+		this.resultsList = autoCompleteView.createResultsList({
+			destination: config.resultsList
+				? config.resultsList.destination
 				: autoCompleteView.getInput(this.selector),
-			position: config.renderResults ? config.renderResults.position : "afterend"
+			position: config.resultsList ? config.resultsList.position : "afterend"
 		});
 		// Placeholder text
 		this.placeHolder = config.placeHolder;
 		// Maximum number of results to show
 		this.maxResults = config.maxResults || 5;
+		//
+		this.resultItem = config.resultItem;
 		// Highlighting matching results
 		this.highlight = config.highlight || false;
 		// Action function on result selection
@@ -96,7 +98,7 @@ export default class autoComplete {
 		});
 		const list = resList.slice(0, this.maxResults);
 		// Rendering matching results to the UI list
-		autoCompleteView.addResultsToList(list, this.data.key);
+		autoCompleteView.addResultsToList(list, this.data.key, this.resultItem);
 		// Keyboard Arrow Navigation
 		autoCompleteView.navigation(this.selector);
 		// Returns rendered list
@@ -116,8 +118,6 @@ export default class autoComplete {
 		if (placeHolder) {
 			input.setAttribute("placeholder", placeHolder);
 		}
-		// Creates Results List
-		// autoCompleteView.createResultsList(this.renderResults);
 		// Input field handler fires an event onKeyup action
 		input.onkeyup = () => {
 			// Clear Results function holder
