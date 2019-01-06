@@ -13,6 +13,9 @@ const getInput = selector => (typeof selector === "string" ? document.querySelec
 const createResultsList = renderResults => {
 	resultsList = document.createElement("ul");
 	resultsList.setAttribute("id", select.resultsList);
+	if (renderResults.container) {
+		renderResults.container(resultsList);
+	}
 	renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
 };
 

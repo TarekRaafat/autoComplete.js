@@ -39,6 +39,9 @@
   var createResultsList = function createResultsList(renderResults) {
     resultsList = document.createElement("ul");
     resultsList.setAttribute("id", select.resultsList);
+    if (renderResults.container) {
+      renderResults.container(resultsList);
+    }
     renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
   };
   var highlight = function highlight(value) {
@@ -128,8 +131,9 @@
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.threshold = config.threshold || 0;
       this.resultsList = autoCompleteView.createResultsList({
-        destination: config.resultsList ? config.resultsList.destination : autoCompleteView.getInput(this.selector),
-        position: config.resultsList ? config.resultsList.position : "afterend"
+        container: config.resultsList.container,
+        destination: config.resultsList.destination ? config.resultsList.destination : autoCompleteView.getInput(this.selector),
+        position: config.resultsList.position ? config.resultsList.position : "afterend"
       });
       this.placeHolder = config.placeHolder;
       this.maxResults = config.maxResults || 5;

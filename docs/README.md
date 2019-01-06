@@ -14,7 +14,7 @@
 
 <h1>autoComplete.js</h1>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v3.0**
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v3.1**
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
 
@@ -67,13 +67,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.0.0/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.1.0/dist/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.0.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.1.0/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="https://cdn0.iconfinder.com/data/icons/HTML5/512/HTML_Logo.png" alt="HTML" width="40px"> HTML Local load
@@ -115,7 +115,7 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ```html
 <link rel="stylesheet" href="./css/autoComplete.css">
 OR
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.0.0/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.1.0/dist/css/autoComplete.min.css">
 ```
 
 2.  Assign the default `id` value `"autoComplete"` to the desired input field or use any custom `id/class` and configure the API selector accordingly in `Step 4`
@@ -130,7 +130,7 @@ OR
 <script src="./js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 OR
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.0.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.1.0/dist/js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 ```
 
@@ -145,7 +145,10 @@ new autoComplete({
 	selector: "#autoComplete",					  // Input field selector
 	threshold: 0,								   // Min. Chars length to start
 	searchEngine: "strict",						 // Search Engine type/mode
-	resultsList: {							  	// Rendered results Destination & position
+	resultsList: {							  	// Rendered results Container, Destination & Position
+		container: (source) => {
+			source.classList.add("foodList");
+		},
 		destination: document.querySelector("#autoComplete"),
 		position: "afterend"
 	},
@@ -164,18 +167,18 @@ new autoComplete({
 
 <br>
 
-| Features       | Description                                                      | Values                                                                                                                                                                                                                                                              | Default                                                                        |
-| -------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `data`         | Data Source & Data Key                                           | **1- src**: <br> - `Array` of `Strings` / `Objects`<br>**OR**<br> - `Function` => `Array` of `Strings` / `Objects` <br> **2- key**: <br> **Required** if `src` is `Object`, it will point to `key` in the object for the search                                     | **REQUIRED** any NOT both                                                      |
-| `placeHolder`  | Place Holder text                                                | `String`                                                                                                                                                                                                                                                            | Blank / Empty                                                                  |
-| `selector`     | Input field selector                                             | **-** `String` `id`/`class` <br>**OR**<br> **-** `Function` ( ) =>  `document.querySelector("")`                                                                                                                                                                    | `"#autoComplete"`                                                              |
-| `threshold`    | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                                                                                                                            | `0`                                                                            |
-| `searchEngine` | Search Engine Type/Mode                                          | **-** `"strict"` lowerCase string<br>**OR**<br>**-** `"loose"` lowerCase string                                                                                                                                                                                     | `"strict"`                                                                     |
-| `resultsList`  | Rendered results list destination & position                     | **-** `Object` with 2 methods<br> 1- destination: `document.querySelector("#div")`<br> 2- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` | `{destination: document.querySelector("#autoComplete"), position: "afterend"}` |
-| `resultItem`   | Rendered result Item                                             | **-** `Function` (data, source) => `String` <br> **-** `data.match` has to be used for **Highlighted** result                                                                                                                                                       | `data.match`                                                                   |
-| `highlight`    | Highlight matching results                                       | `Boolean`                                                                                                                                                                                                                                                           | `false`                                                                        |
-| `maxResults`   | Maximum number of displayed results                              | `Number`                                                                                                                                                                                                                                                            | `5`                                                                            |
-| `onSelection`  | Action script onSelection event                                  | `Function`                                                                                                                                                                                                                                                          | No Action                                                                      |
+| Features       | Description                                                      | Values                                                                                                                                                                                                                                                                                                                 | Default                                                                                                    |
+| -------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `data`         | Data Source & Data Key                                           | **1- src**: <br> - `Array` of `Strings` / `Objects`<br>**OR**<br> - `Function` => `Array` of `Strings` / `Objects` <br> **2- key**: <br> **Required** if `src` is `Object`, it will point to `key` in the object for the search                                                                                        | **REQUIRED** any NOT both                                                                                  |
+| `placeHolder`  | Place Holder text                                                | `String`                                                                                                                                                                                                                                                                                                               | Blank / Empty                                                                                              |
+| `selector`     | Input field selector                                             | **-** `String` `id`/`class` <br>**OR**<br> **-** `Function` ( ) =>  `document.querySelector("")`                                                                                                                                                                                                                       | `"#autoComplete"`                                                                                          |
+| `threshold`    | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                                                                                                                                                                               | `0`                                                                                                        |
+| `searchEngine` | Search Engine Type/Mode                                          | **-** `"strict"` lowerCase string<br>**OR**<br>**-** `"loose"` lowerCase string                                                                                                                                                                                                                                        | `"strict"`                                                                                                 |
+| `resultsList`  | Rendered results list destination & position                     | **-** `Object` with 3 methods<br> 1- Container: <br> `Function` (source) => `{}`<br> 2- destination: `document.querySelector("#div")`<br> 3- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` | `{container: (source) => { }, destination: document.querySelector("#autoComplete"), position: "afterend"}` |
+| `resultItem`   | Rendered result Item                                             | **-** `Function` (data, source) => `String` <br> **-** `data.match` has to be used for **Highlighted** result                                                                                                                                                                                                          | `data.match`                                                                                               |
+| `highlight`    | Highlight matching results                                       | `Boolean`                                                                                                                                                                                                                                                                                                              | `false`                                                                                                    |
+| `maxResults`   | Maximum number of displayed results                              | `Number`                                                                                                                                                                                                                                                                                                               | `5`                                                                                                        |
+| `onSelection`  | Action script onSelection event                                  | `Function`                                                                                                                                                                                                                                                                                                             | No Action                                                                                                  |
 
 3.  That's it, you're ready to go!
 
@@ -259,6 +262,8 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [ ] Inline autocomplete nearest result
 -   [ ] Centralize Default values holder for easy access
 -   [x] API for Rendered result item customization
+-   [x] API for Rendered result list customization
+-   [ ] Added more use cases & examples to documentation
 
 * * *
 

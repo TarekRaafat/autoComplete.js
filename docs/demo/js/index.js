@@ -19,6 +19,9 @@ const autoCompletejs = new autoComplete({
 	highlight: true,
 	maxResults: Infinity,
 	resultsList: {
+		container: source => {
+			source.classList.add("foodList");
+		},
 		destination: document.querySelector("#autoComplete"),
 		position: "afterend"
 	},

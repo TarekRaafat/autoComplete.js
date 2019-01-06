@@ -15,10 +15,11 @@ export default class autoComplete {
 		this.threshold = config.threshold || 0;
 		// Rendered results destination
 		this.resultsList = autoCompleteView.createResultsList({
-			destination: config.resultsList
+			container: config.resultsList.container,
+			destination: config.resultsList.destination
 				? config.resultsList.destination
 				: autoCompleteView.getInput(this.selector),
-			position: config.resultsList ? config.resultsList.position : "afterend"
+			position: config.resultsList.position ? config.resultsList.position : "afterend"
 		});
 		// Placeholder text
 		this.placeHolder = config.placeHolder;
