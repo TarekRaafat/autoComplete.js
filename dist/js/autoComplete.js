@@ -38,10 +38,10 @@
   };
   var createResultsList = function createResultsList(renderResults) {
     resultsList = document.createElement("ul");
-    resultsList.setAttribute("id", select.resultsList);
     if (renderResults.container) {
-      renderResults.container(resultsList);
+      select.resultsList = renderResults.container(resultsList) || select.resultsList;
     }
+    resultsList.setAttribute("id", select.resultsList);
     renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
   };
   var highlight = function highlight(value) {

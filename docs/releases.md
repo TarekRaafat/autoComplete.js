@@ -26,9 +26,13 @@ Release flags:
 
 ## Release Notes
 
--   v3.1.0 :sparkles:
+-   v3.2.0 :sparkles:
 
-    -   Added API for rendered results list `resultsList > container` function
+    -   API Enhancements over rendered results list container `resultsList > container` function **(Thanks @albu77)**
+
+-   v3.1.0
+
+    -   Added API for rendered results list container `resultsList > container` function **(Thanks @albu77)**
     -   API Enhancements
 
 -   v3.0.0

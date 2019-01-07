@@ -12,10 +12,10 @@ const getInput = selector => (typeof selector === "string" ? document.querySelec
 // Creats the results list HTML tag
 const createResultsList = renderResults => {
 	resultsList = document.createElement("ul");
-	resultsList.setAttribute("id", select.resultsList);
 	if (renderResults.container) {
-		renderResults.container(resultsList);
+		select.resultsList = renderResults.container(resultsList) || select.resultsList;
 	}
+	resultsList.setAttribute("id", select.resultsList);
 	renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
 };
 
@@ -79,8 +79,7 @@ const getSelection = (field, callback, resultsValues, dataKey) => {
 						results: resultsValues.map(record => record.source),
 						selection: resultsValues.find(value => {
 							const resValue = value.source[dataKey] || value.source;
-							return resValue === event.target.closest(`.${select.result}`)
-								.getAttribute(dataAttribute);
+							return resValue === event.target.closest(`.${select.result}`).getAttribute(dataAttribute);
 						}).source
 					});
 					// Clear Results after selection is made
