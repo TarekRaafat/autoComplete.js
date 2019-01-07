@@ -20,7 +20,8 @@ const autoCompletejs = new autoComplete({
 	maxResults: Infinity,
 	resultsList: {
 		container: source => {
-			source.classList.add("foodList");
+			resultsListID = "autoComplete_results_list";
+			return resultsListID;
 		},
 		destination: document.querySelector("#autoComplete"),
 		position: "afterend"
