@@ -1,4 +1,4 @@
-let resultsList;
+// let resultsList;
 const dataAttribute = "data-result";
 const select = {
 	resultsList: "autoComplete_results_list",
@@ -11,19 +11,20 @@ const getInput = selector => (typeof selector === "string" ? document.querySelec
 
 // Creats the results list HTML tag
 const createResultsList = renderResults => {
-	resultsList = document.createElement("ul");
+	const resultsList = document.createElement("ul");
 	if (renderResults.container) {
 		select.resultsList = renderResults.container(resultsList) || select.resultsList;
 	}
 	resultsList.setAttribute("id", select.resultsList);
 	renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
+	return resultsList;
 };
 
 // Hightlight matching values
 const highlight = value => `<span class=${select.highlight}>${value}</span>`;
 
 // Adding matching results to the list
-const addResultsToList = (dataSrc, dataKey, callback) => {
+const addResultsToList = (resultsList, dataSrc, dataKey, callback) => {
 	dataSrc.forEach((event, record) => {
 		const result = document.createElement("li");
 		const resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
@@ -36,7 +37,7 @@ const addResultsToList = (dataSrc, dataKey, callback) => {
 };
 
 // Keyboard Arrow Navigation
-const navigation = selector => {
+const navigation = (selector, resultsList) => {
 	const input = getInput(selector);
 	const first = resultsList.firstChild;
 	document.onkeydown = event => {
@@ -63,10 +64,10 @@ const navigation = selector => {
 };
 
 // Clears the list of results
-const clearResults = () => (resultsList.innerHTML = "");
+const clearResults = resultsList => (resultsList.innerHTML = "");
 
 // Gets user selection
-const getSelection = (field, callback, resultsValues, dataKey) => {
+const getSelection = (field, resultsList, callback, resultsValues, dataKey) => {
 	const results = resultsList.querySelectorAll(`.${select.result}`);
 	results.forEach(selection => {
 		["mousedown", "keydown"].forEach(eventType => {
@@ -84,7 +85,7 @@ const getSelection = (field, callback, resultsValues, dataKey) => {
 						}).source
 					});
 					// Clear Results after selection is made
-					clearResults();
+					clearResults(resultsList);
 				}
 			});
 		});

@@ -27,7 +27,7 @@
         "no-use-before-define": 2,
         "comma-dangle": 0,
         "eol-last": ["error", "never"],
-        "max-params": ["error", 4],
+        "max-params": ["error", 5],
         "no-inline-comments": 2,
         "no-trailing-spaces": 2,
         "no-underscore-dangle": 2,

@@ -99,9 +99,9 @@ export default class autoComplete {
 		});
 		const list = resList.slice(0, this.maxResults);
 		// Rendering matching results to the UI list
-		autoCompleteView.addResultsToList(list, this.data.key, this.resultItem);
+		autoCompleteView.addResultsToList(this.resultsList, list, this.data.key, this.resultItem);
 		// Keyboard Arrow Navigation
-		autoCompleteView.navigation(this.selector);
+		autoCompleteView.navigation(this.selector, this.resultsList);
 		// Returns rendered list
 		return list;
 	}
@@ -121,8 +121,10 @@ export default class autoComplete {
 		}
 		// Input field handler fires an event onKeyup action
 		input.onkeyup = () => {
+			// Get results list value
+			const resultsList = this.resultsList;
 			// Clear Results function holder
-			const clearResults = autoCompleteView.clearResults();
+			const clearResults = autoCompleteView.clearResults(resultsList);
 			// Check if input is not empty or just have space before triggering the app
 			if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
 				// clear results list
@@ -132,7 +134,7 @@ export default class autoComplete {
 				// Gets user's selection
 				// If action configured
 				if (onSelection) {
-					autoCompleteView.getSelection(selector, onSelection, list, this.data.key);
+					autoCompleteView.getSelection(selector, resultsList, onSelection, list, this.data.key);
 				}
 			} else {
 				// clears all results list

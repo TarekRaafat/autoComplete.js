@@ -26,7 +26,6 @@
     return Constructor;
   }
 
-  var resultsList;
   var dataAttribute = "data-result";
   var select = {
     resultsList: "autoComplete_results_list",
@@ -37,17 +36,18 @@
     return typeof selector === "string" ? document.querySelector(selector) : selector();
   };
   var createResultsList = function createResultsList(renderResults) {
-    resultsList = document.createElement("ul");
+    var resultsList = document.createElement("ul");
     if (renderResults.container) {
       select.resultsList = renderResults.container(resultsList) || select.resultsList;
     }
     resultsList.setAttribute("id", select.resultsList);
     renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
+    return resultsList;
   };
   var highlight = function highlight(value) {
     return "<span class=".concat(select.highlight, ">").concat(value, "</span>");
   };
-  var addResultsToList = function addResultsToList(dataSrc, dataKey, callback) {
+  var addResultsToList = function addResultsToList(resultsList, dataSrc, dataKey, callback) {
     dataSrc.forEach(function (event, record) {
       var result = document.createElement("li");
       var resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
@@ -58,7 +58,7 @@
       resultsList.appendChild(result);
     });
   };
-  var navigation = function navigation(selector) {
+  var navigation = function navigation(selector, resultsList) {
     var input = getInput(selector);
     var first = resultsList.firstChild;
     document.onkeydown = function (event) {
@@ -81,10 +81,10 @@
       }
     };
   };
-  var clearResults = function clearResults() {
+  var clearResults = function clearResults(resultsList) {
     return resultsList.innerHTML = "";
   };
-  var getSelection = function getSelection(field, callback, resultsValues, dataKey) {
+  var getSelection = function getSelection(field, resultsList, callback, resultsValues, dataKey) {
     var results = resultsList.querySelectorAll(".".concat(select.result));
     results.forEach(function (selection) {
       ["mousedown", "keydown"].forEach(function (eventType) {
@@ -101,7 +101,7 @@
                 return resValue === event.target.closest(".".concat(select.result)).getAttribute(dataAttribute);
               }).source
             });
-            clearResults();
+            clearResults(resultsList);
           }
         });
       });
@@ -188,8 +188,8 @@
           }
         });
         var list = resList.slice(0, this.maxResults);
-        autoCompleteView.addResultsToList(list, this.data.key, this.resultItem);
-        autoCompleteView.navigation(this.selector);
+        autoCompleteView.addResultsToList(this.resultsList, list, this.data.key, this.resultItem);
+        autoCompleteView.navigation(this.selector, this.resultsList);
         return list;
       }
     }, {
@@ -204,11 +204,12 @@
           input.setAttribute("placeholder", placeHolder);
         }
         input.onkeyup = function () {
-          var clearResults = autoCompleteView.clearResults();
+          var resultsList = _this2.resultsList;
+          var clearResults = autoCompleteView.clearResults(resultsList);
           if (input.value.length > _this2.threshold && input.value.replace(/ /g, "").length) {
             var list = _this2.listMatchedResults(data);
             if (onSelection) {
-              autoCompleteView.getSelection(selector, onSelection, list, _this2.data.key);
+              autoCompleteView.getSelection(selector, resultsList, onSelection, list, _this2.data.key);
             }
           }
         };

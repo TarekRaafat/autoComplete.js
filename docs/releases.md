@@ -26,7 +26,11 @@ Release flags:
 
 ## Release Notes
 
--   v3.2.0 :sparkles:
+-   v3.2.1 :sparkles:
+
+    -   Isolated `resultsList` value for multiple instances **(Thanks @albu77)**
+
+-   v3.2.0
 
     -   API Enhancements over rendered results list container `resultsList > container` function **(Thanks @albu77)**
 
