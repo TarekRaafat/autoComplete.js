@@ -26,7 +26,12 @@ Release flags:
 
 ## Release Notes
 
--   v3.2.1 :sparkles:
+-   v3.2.2 :sparkles:
+
+    -   Fixed bug with `hightlight` API default value during `strict` engine mode
+    -   Fixed bug with `resultsList` API default value when not configured
+
+-   v3.2.1
 
     -   Isolated `resultsList` value for multiple instances **(Thanks @albu77)**
 

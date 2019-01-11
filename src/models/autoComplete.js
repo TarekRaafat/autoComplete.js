@@ -15,11 +15,12 @@ export default class autoComplete {
 		this.threshold = config.threshold || 0;
 		// Rendered results destination
 		this.resultsList = autoCompleteView.createResultsList({
-			container: config.resultsList.container,
-			destination: config.resultsList.destination
-				? config.resultsList.destination
-				: autoCompleteView.getInput(this.selector),
-			position: config.resultsList.position ? config.resultsList.position : "afterend"
+			container: config.resultsList && config.resultsList.container
+				? config.resultsList.container : false,
+			destination: config.resultsList && config.resultsList.destination
+				? config.resultsList.destination : autoCompleteView.getInput(this.selector),
+			position: config.resultsList && config.resultsList.position
+				? config.resultsList.position : "afterend"
 		});
 		// Placeholder text
 		this.placeHolder = config.placeHolder;
@@ -78,7 +79,7 @@ export default class autoComplete {
 					return recordLowerCase.replace(inputValue, autoCompleteView.highlight(inputValue));
 					// If NOT Hightligthed
 				} else {
-					recordLowerCase;
+					return recordLowerCase;
 				}
 			}
 		}

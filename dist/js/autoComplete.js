@@ -131,9 +131,9 @@
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.threshold = config.threshold || 0;
       this.resultsList = autoCompleteView.createResultsList({
-        container: config.resultsList.container,
-        destination: config.resultsList.destination ? config.resultsList.destination : autoCompleteView.getInput(this.selector),
-        position: config.resultsList.position ? config.resultsList.position : "afterend"
+        container: config.resultsList && config.resultsList.container ? config.resultsList.container : false,
+        destination: config.resultsList && config.resultsList.destination ? config.resultsList.destination : autoCompleteView.getInput(this.selector),
+        position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend"
       });
       this.placeHolder = config.placeHolder;
       this.maxResults = config.maxResults || 5;
@@ -168,6 +168,8 @@
             if (highlight) {
               var inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
               return recordLowerCase.replace(inputValue, autoCompleteView.highlight(inputValue));
+            } else {
+              return recordLowerCase;
             }
           }
         }

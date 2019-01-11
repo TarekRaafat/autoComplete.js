@@ -26,7 +26,7 @@
 }
 
 #autoComplete:hover::placeholder {
-    color: rgb(255, 122, 122, 0.3);
+    color: rgba(255, 122, 122, 0.3);
     transition: all 0.3s ease;
     -webkit-transition: all -webkit-transform 0.3s ease;
 }
@@ -34,7 +34,7 @@
 #autoComplete:focus::placeholder {
     padding: 1rem 0.5rem;
     font-size: 1rem;
-    color: rgb(255, 122, 122, 0.3);
+    color: rgba(255, 122, 122, 0.3);
     transition: all 0.3s ease;
     -webkit-transition: all -webkit-transform 0.3s ease;
 }

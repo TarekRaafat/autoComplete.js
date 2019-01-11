@@ -67,13 +67,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.2.1/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.2.2/dist/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.2.1/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.2.2/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="https://cdn0.iconfinder.com/data/icons/HTML5/512/HTML_Logo.png" alt="HTML" width="40px"> HTML Local load
@@ -115,7 +115,7 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ```html
 <link rel="stylesheet" href="./css/autoComplete.css">
 OR
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.2.1/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.2.2/dist/css/autoComplete.min.css">
 ```
 
 2.  Assign the default `id` value `"autoComplete"` to the desired input field or use any custom `id/class` and configure the API selector accordingly in `Step 4`
@@ -130,7 +130,7 @@ OR
 <script src="./js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 OR
-<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.2.1/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/TarekRaafat/autoComplete.js@3.2.2/dist/js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 ```
 
@@ -140,25 +140,25 @@ OR
 
 ```js
 new autoComplete({
-	data: { src: data, key: "food" },			   // (Array, Object, Function, Async)
-	placeHolder: "Food & Drinks...",				// Place Holder text
-	selector: "#autoComplete",					  // Input field selector
-	threshold: 0,								   // Min. Chars length to start
-	searchEngine: "strict",						 // Search Engine type/mode
-	resultsList: {							  	// Rendered results Container, Destination & Position
-		container: (source) => {
+	data: { src: data, key: "food" },	// Data src [Array, Function, Async] | (REQUIRED)
+	placeHolder: "Food & Drinks...",	 // Place Holder text 				| (Optional)
+	selector: "#autoComplete",		   // Input field selector 			 | (Optional)
+	threshold: 0,						// Min. Chars length to start Engine | (Optional)
+	searchEngine: "strict",			  // Search Engine type/mode 		  | (Optional)
+	resultsList: {					   // Rendered results list object 	 | (Optional)
+		container: source => {
 			resultsListID = "food_List";
 			return resultsListID;
 		},
 		destination: document.querySelector("#autoComplete"),
 		position: "afterend"
 	},
-	resultItem: (data, source) => {				 // Rendered result item
+	resultItem: (data, source) => {		// Rendered result item 		   | (Optional)
 		return `${data.match}`;
 	},
-	highlight: true,								// Highlight matching results
-	maxResults: 5,								  // Max. number of rendered results
-	onSelection: feedback => {					  // Action script onSelection event
+	highlight: true,					   // Highlight matching results 	 | (Optional)
+	maxResults: 5,						 // Max. number of rendered results | (Optional)
+	onSelection: feedback => {			 // Action script onSelection event | (Optional)
 		console.log(feedback);
 	}
 });
@@ -170,7 +170,7 @@ new autoComplete({
 
 | Features       | Description                                                      | Values                                                                                                                                                                                                                                                                                                                 | Default                                                                                                    |
 | -------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `data`         | Data Source & Data Key                                           | **1- src**: <br> - `Array` of `Strings` / `Objects`<br>**OR**<br> - `Function` => `Array` of `Strings` / `Objects` <br> **2- key**: <br> **Required** if `src` is `Object`, it will point to `key` in the object for the search                                                                                        | **REQUIRED** any NOT both                                                                                  |
+| `data`         | Data Source & Data Key                                           | **1- src**: <br> - `Array` of `Strings` / `Objects`<br>**OR**<br> - `Function` => `Array` of `Strings` / `Objects` <br> **2- key**: <br> **Required** if `src` is `Object`, it will point to `key` in the object for the search                                                                                        | `data src` **REQUIRED** any NOT both                                                                       |
 | `placeHolder`  | Place Holder text                                                | `String`                                                                                                                                                                                                                                                                                                               | Blank / Empty                                                                                              |
 | `selector`     | Input field selector                                             | **-** `String` `id`/`class` <br>**OR**<br> **-** `Function` ( ) =>  `document.querySelector("")`                                                                                                                                                                                                                       | `"#autoComplete"`                                                                                          |
 | `threshold`    | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                                                                                                                                                                               | `0`                                                                                                        |
