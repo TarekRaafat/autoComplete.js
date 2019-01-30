@@ -1,57 +1,68 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true
-    },
-    "extends": "eslint:recommended",
-    "parserOptions": {
-        "ecmaVersion": 6,
-        "sourceType": "module"
-    },
-    "rules": {
-        "curly": 2,
-        "no-empty": 2,
-        "new-cap": 2,
-        "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
-        "no-mixed-operators": 2,
-        "no-nested-ternary": 2,
-        "no-console": 2,
-        "prefer-const": 2,
-        "no-useless-escape": 2,
-        "eqeqeq": 2,
-        "no-alert": 2,
-        "no-empty-function": 2,
-        "no-multi-spaces": 2,
-        "wrap-iife": 2,
-        "no-unused-vars": 2,
-        "no-use-before-define": 2,
-        "comma-dangle": 0,
-        "eol-last": ["error", "never"],
-        "max-params": ["error", 5],
-        "no-inline-comments": 2,
-        "no-trailing-spaces": 2,
-        "no-underscore-dangle": 2,
-        "spaced-comment": 2,
-        "no-var": 2,
-        "no-duplicate-imports": 2,
-        "max-len": ["error", {
-            "code": 110
-        }],
-        "indent": [
-            "error",
-            "tab"
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "error",
-            "double"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
-    }
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "curly": 2,
+    "no-empty": 2,
+    "new-cap": 2,
+    "no-mixed-spaces-and-tabs": [
+      "error",
+      "smart-tabs"
+    ],
+    "no-mixed-operators": 2,
+    "no-nested-ternary": 2,
+    "no-console": 2,
+    "prefer-const": 2,
+    "no-useless-escape": 2,
+    "eqeqeq": 2,
+    "no-alert": 2,
+    "no-empty-function": 2,
+    "no-multi-spaces": 2,
+    "wrap-iife": 2,
+    "no-unused-vars": 2,
+    "no-use-before-define": 2,
+    "comma-dangle": 0,
+    "max-params": [
+      "error",
+      5
+    ],
+    "no-inline-comments": 2,
+    "no-trailing-spaces": 2,
+    "no-underscore-dangle": 2,
+    "spaced-comment": 2,
+    "no-var": 2,
+    "no-duplicate-imports": 2,
+    "max-len": [
+      "error",
+      {
+        "code": 110
+      }
+    ],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ]
+  }
 }
