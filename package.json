@@ -1,61 +1,62 @@
 {
-    "name": "autocomplete.js",
-    "version": "3.2.2",
-    "description": "Simple autocomplete pure vanilla Javascript library.",
-    "main": "dist/js/autoComplete.js",
-    "browser": "dist/js/autoComplete.min.js",
-    "scripts": {
-        "build": "rollup -c",
-        "dev": "rollup -c -w"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/TarekRaafat/autoComplete.js.git"
-    },
-    "keywords": [
-        "simple",
-        "autocomplete",
-        "autocompletion",
-        "javascript",
-        "light",
-        "blazing",
-        "fast",
-        "speed",
-        "lightning",
-        "lightweight",
-        "modern",
-        "versitle",
-        "customizable",
-        "hackable",
-        "easy",
-        "intuitive",
-        "scalable",
-        "extensible",
-        "autoCompletejs",
-        "autosuggestion",
-        "autosuggest",
-        "search",
-        "dropdown"
-    ],
-    "author": {
-        "name": "Tarek Raafat",
-        "email": "tarek.m.raafat@gmail.com",
-        "url": "http://www.tarekraafat.com"
-    },
-    "license": "Apache-2.0",
-    "bugs": {
-        "url": "https://github.com/TarekRaafat/autoComplete.js/issues"
-    },
-    "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
-    "devDependencies": {
-        "@babel/core": "^7.2.2",
-        "@babel/preset-env": "^7.2.3",
-        "acorn": "^6.0.5",
-        "rollup": "^0.67.4",
-        "rollup-plugin-babel": "^4.3.0",
-        "rollup-plugin-cleanup": "^3.1.0",
-        "rollup-plugin-eslint": "^5.0.0",
-        "rollup-plugin-gzip": "^2.2.0",
-        "rollup-plugin-uglify": "^6.0.0"
-    }
+  "name": "autocomplete.js",
+  "version": "3.2.2",
+  "description": "Simple autocomplete pure vanilla Javascript library.",
+  "main": "dist/js/autoComplete.js",
+  "browser": "dist/js/autoComplete.min.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w & ./node_modules/.bin/ws --rewrite '/* -> /dist/$1'  --spa ./dist/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TarekRaafat/autoComplete.js.git"
+  },
+  "keywords": [
+    "simple",
+    "autocomplete",
+    "autocompletion",
+    "javascript",
+    "light",
+    "blazing",
+    "fast",
+    "speed",
+    "lightning",
+    "lightweight",
+    "modern",
+    "versitle",
+    "customizable",
+    "hackable",
+    "easy",
+    "intuitive",
+    "scalable",
+    "extensible",
+    "autoCompletejs",
+    "autosuggestion",
+    "autosuggest",
+    "search",
+    "dropdown"
+  ],
+  "author": {
+    "name": "Tarek Raafat",
+    "email": "tarek.m.raafat@gmail.com",
+    "url": "http://www.tarekraafat.com"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/TarekRaafat/autoComplete.js/issues"
+  },
+  "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "acorn": "^6.0.5",
+    "local-web-server": "^2.6.1",
+    "rollup": "^0.67.4",
+    "rollup-plugin-babel": "^4.3.0",
+    "rollup-plugin-cleanup": "^3.1.0",
+    "rollup-plugin-eslint": "^5.0.0",
+    "rollup-plugin-gzip": "^2.2.0",
+    "rollup-plugin-uglify": "^6.0.0"
+  }
 }

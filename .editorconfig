@@ -1,0 +1,15 @@
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending every file
+[*]
+charset = utf-8
+tab_width = 2
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+
+# Indentation override for all JS under lib directory
+[*.js]
+max_line_length = 120
+trim_trailing_whitespace = true
