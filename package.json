@@ -6,7 +6,7 @@
   "browser": "dist/js/autoComplete.min.js",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w & ./node_modules/.bin/ws --rewrite '/* -> /dist/$1'  --spa ./dist/index.html"
+    "dev": "rollup -c -w & ws --rewrite '/* -> /dist/$1'  --spa ./dist/index.html"
   },
   "repository": {
     "type": "git",
@@ -50,7 +50,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
-    "acorn": "^6.0.5",
+    "acorn": "^6.0.7",
     "local-web-server": "^2.6.1",
     "rollup": "^0.67.4",
     "rollup-plugin-babel": "^4.3.0",

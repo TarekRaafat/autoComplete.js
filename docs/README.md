@@ -243,11 +243,13 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Choose different results render destination & position
 -   [ ] Sort rendered results
     -   [ ] Alphabet
-    -   [ ] Distance
+    -   [ ] Weight
 -   [x] Results list Keyboard `ARROW` or `TAB` Navigation
 -   [x] Enhance error Handling (Ongoing)
 -   [ ] Number of returned results value
 -   [ ] Results Lazy Load/Pagination for External data source
+-   [ ] Multiple searchable `keys` for data `src`
+-   [ ] Reload data `src` on data change
 
 ### Usability:
 
@@ -266,6 +268,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] API for Rendered results list customization
 -   [ ] Add more use cases & examples to documentation
 -   [x] Capability for multiple instances
+-   [ ] Render `results` in default case
 
 * * *
 

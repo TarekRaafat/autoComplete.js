@@ -1,4 +1,4 @@
-import {autoCompleteView} from "../views/autoCompleteView";
+import { autoCompleteView } from "../views/autoCompleteView";
 
 export default class autoComplete {
   constructor(config) {
@@ -15,12 +15,12 @@ export default class autoComplete {
     this.threshold = config.threshold || 0;
     // Rendered results destination
     this.resultsList = autoCompleteView.createResultsList({
-      container: config.resultsList && config.resultsList.container
-        ? config.resultsList.container : false,
-      destination: config.resultsList && config.resultsList.destination
-        ? config.resultsList.destination : autoCompleteView.getInput(this.selector),
-      position: config.resultsList && config.resultsList.position
-        ? config.resultsList.position : "afterend"
+      container: config.resultsList && config.resultsList.container ? config.resultsList.container : false,
+      destination:
+        config.resultsList && config.resultsList.destination
+          ? config.resultsList.destination
+          : autoCompleteView.getInput(this.selector),
+      position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend"
     });
     // Placeholder text
     this.placeHolder = config.placeHolder;
@@ -108,7 +108,7 @@ export default class autoComplete {
     data.filter(record => {
       const match = this.search(inputValue, record[this.data.key] || record);
       if (match) {
-        resList.push({match, source: record});
+        resList.push({ match, source: record });
       }
     });
     const list = resList.slice(0, this.maxResults);
@@ -141,8 +141,6 @@ export default class autoComplete {
       const clearResults = autoCompleteView.clearResults(resultsList);
       // Check if input is not empty or just have space before triggering the app
       if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
-        // clear results list
-        clearResults;
         // List matching results
         const list = this.listMatchedResults(data);
         // Gets user's selection

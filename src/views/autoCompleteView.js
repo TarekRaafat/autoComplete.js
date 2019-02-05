@@ -126,8 +126,7 @@ const getSelection = (field, resultsList, callback, resultsValues, dataKey) => {
             results: resultsValues.map(record => record.source),
             selection: resultsValues.find(value => {
               const resValue = value.source[dataKey] || value.source;
-              return resValue === event.target.closest(`.${select.result}`)
-                .getAttribute(dataAttribute);
+              return resValue === event.target.closest(`.${select.result}`).getAttribute(dataAttribute);
             }).source
           });
           // Clear Results after selection is made
