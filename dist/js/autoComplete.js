@@ -86,9 +86,9 @@
   };
   var getSelection = function getSelection(field, resultsList, callback, resultsValues, dataKey) {
     var results = resultsList.querySelectorAll(".".concat(select.result));
-    results.forEach(function (selection) {
+    Object.keys(results).forEach(function (selection) {
       ["mousedown", "keydown"].forEach(function (eventType) {
-        selection.addEventListener(eventType, function (event) {
+        results[selection].addEventListener(eventType, function (event) {
           if (eventType === "mousedown" || event.keyCode === 13) {
             callback({
               event: event,
