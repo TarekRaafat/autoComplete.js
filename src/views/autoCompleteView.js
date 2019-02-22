@@ -115,9 +115,9 @@ const clearResults = resultsList => (resultsList.innerHTML = "");
  */
 const getSelection = (field, resultsList, callback, resultsValues, dataKey) => {
   const results = resultsList.querySelectorAll(`.${select.result}`);
-  results.forEach(selection => {
+  Object.keys(results).forEach(selection => {
     ["mousedown", "keydown"].forEach(eventType => {
-      selection.addEventListener(eventType, event => {
+      results[selection].addEventListener(eventType, event => {
         if (eventType === "mousedown" || event.keyCode === 13) {
           // Callback function invoked on user selection
           callback({
@@ -126,7 +126,8 @@ const getSelection = (field, resultsList, callback, resultsValues, dataKey) => {
             results: resultsValues.map(record => record.source),
             selection: resultsValues.find(value => {
               const resValue = value.source[dataKey] || value.source;
-              return resValue === event.target.closest(`.${select.result}`).getAttribute(dataAttribute);
+              return resValue === event.target.closest(`.${select.result}`)
+                .getAttribute(dataAttribute);
             }).source
           });
           // Clear Results after selection is made
