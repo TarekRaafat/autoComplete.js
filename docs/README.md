@@ -140,7 +140,15 @@ OR
 
 ```js
 new autoComplete({
-	data: { src: data, key: "food" },	// Data src [Array, Function, Async] | (REQUIRED)
+	data: {							  // Data src [Array, Function, Async] | (REQUIRED)
+		src: data,
+		key: ["food", "cities", "animals"]
+	},
+	sort: (a, b) => {				    // Sort rendered results ascendingly | (Optional)
+		if (a.match < b.match) return -1;
+	    if (a.match > b.match) return 1;
+	    return 0;
+    },
 	placeHolder: "Food & Drinks...",	 // Place Holder text 				| (Optional)
 	selector: "#autoComplete",		   // Input field selector 			 | (Optional)
 	threshold: 0,						// Min. Chars length to start Engine | (Optional)
@@ -170,7 +178,8 @@ new autoComplete({
 
 | Features       | Description                                                      | Values                                                                                                                                                                                                                                                                                                                 | Default                                                                                                    |
 | -------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `data`         | Data Source & Data Key                                           | **1- src**: <br> - `Array` of `Strings` / `Objects`<br>**OR**<br> - `Function` => `Array` of `Strings` / `Objects` <br> **2- key**: <br> **Required** if `src` is `Object`, it will point to `key` in the object for the search                                                                                        | Data `src` **REQUIRED** any **NOT** both                                                                   |
+| `data`         | Data Source & Data Key                                           | **1- src**: <br> - `Array` of `Strings` / `Objects`<br>**OR**<br> - `Function` => `Array` of `Strings` / `Objects` <br> **2- key**: <br>- `Array` of `Strings`<br>**Required** if `src` is `Object`, it will point to `key` in the object for the search                                                               | Data `src` **REQUIRED** any **NOT** both                                                                   |
+| `sort`         | Sort rendered results                                            | `Function`                                                                                                                                                                                                                                                                                                             | Blank / Empty **(Random Results)**                                                                         |
 | `placeHolder`  | Place Holder text                                                | `String`                                                                                                                                                                                                                                                                                                               | Blank / Empty                                                                                              |
 | `selector`     | Input field selector                                             | **-** `String` `id`/`class` <br>**OR**<br> **-** `Function` ( ) =>  `document.querySelector("")`                                                                                                                                                                                                                       | `"#autoComplete"`                                                                                          |
 | `threshold`    | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                                                                                                                                                                               | `0`                                                                                                        |
@@ -241,14 +250,12 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Multi-keyword Search
 -   [x] Different types/modes of Search Logic
 -   [x] Choose different results render destination & position
--   [ ] Sort rendered results
-    -   [ ] Alphabet
-    -   [ ] Weight
+-   [x] Sort rendered results
 -   [x] Results list Keyboard `ARROW` or `TAB` Navigation
 -   [x] Enhance error Handling (Ongoing)
--   [ ] Number of returned results value
+-   [x] Number of matching results
 -   [ ] Results Lazy Load/Pagination for External data source
--   [ ] Multiple searchable `keys` for data `src`
+-   [x] Multiple searchable `keys` for data `src`
 -   [ ] Reload data `src` on data change
 
 ### Usability:
@@ -268,7 +275,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] API for Rendered results list customization
 -   [ ] Add more use cases & examples to documentation
 -   [x] Capability for multiple instances
--   [ ] Render `results` in default case
+-   [x] Render `results` in default case
 
 * * *
 
