@@ -31,7 +31,7 @@
     "comma-dangle": 0,
     "max-params": [
       "error",
-      5
+      4
     ],
     "no-inline-comments": 2,
     "no-trailing-spaces": 2,

@@ -22,11 +22,13 @@ export default class autoComplete {
           : autoCompleteView.getInput(this.selector),
       position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend"
     });
+    // Sorting results list
+    this.sort = config.sort || false;
     // Placeholder text
     this.placeHolder = config.placeHolder;
     // Maximum number of results to show
     this.maxResults = config.maxResults || 5;
-    //
+    // Rendered results item
     this.resultItem = config.resultItem;
     // Highlighting matching results
     this.highlight = config.highlight || false;
@@ -60,9 +62,9 @@ export default class autoComplete {
       // Iterate over record characters
       for (let number = 0; number < recordLowerCase.length; number++) {
         // Holds current record character
-        let recordChar = recordLowerCase[number];
+        let recordChar = record[number];
         // Matching case
-        if (searchPosition < query.length && recordChar === query[searchPosition]) {
+        if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
           // Highlight matching character
           recordChar = highlight ? autoCompleteView.highlight(recordChar) : recordChar;
           // Increment search position
@@ -80,14 +82,12 @@ export default class autoComplete {
       // Strict mode
     } else {
       if (recordLowerCase.includes(query)) {
-        // If Highlighted
-        if (highlight) {
-          const inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
-          return recordLowerCase.replace(inputValue, autoCompleteView.highlight(inputValue));
-          // If NOT Hightligthed
-        } else {
-          return recordLowerCase;
-        }
+        // Regular Expression Query Pattern Ignores caseSensetive
+        const pattern = new RegExp(`${query}`, "i");
+        // Search for a match Query in Record
+        query = pattern.exec(record);
+        // Returns the match
+        return highlight ? record.replace(query, autoCompleteView.highlight(query)) : record;
       }
     }
   }
@@ -105,19 +105,42 @@ export default class autoComplete {
     // Holds the input search value
     const inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
     // Checks input has matches in data source
-    data.filter(record => {
-      const match = this.search(inputValue, record[this.data.key] || record);
-      if (match) {
-        resList.push({ match, source: record });
+    data.filter((record, index) => {
+      // Search/Matching function
+      const search = key => {
+        // Holds match value
+        const match = this.search(inputValue, record[key] || record);
+        // Push match to results list with key if set
+        if (match && key) {
+          resList.push({ key, index, match, value: record });
+          // Push match to results list without key if not set
+        } else if (match && !key) {
+          resList.push({ index, match, value: record });
+        }
+      };
+      // Checks if data key is set
+      if(this.data.key) {
+        // Iterates over all set data keys
+        for (const key of this.data.key) {
+          search(key);
+        }
+        // If no data key not set
+      } else {
+        search();
       }
     });
-    const list = resList.slice(0, this.maxResults);
+    // Sorting / Slicing final results list
+    const list = this.sort ? resList.sort(this.sort)
+      .slice(0, this.maxResults) : resList.slice(0, this.maxResults);
     // Rendering matching results to the UI list
     autoCompleteView.addResultsToList(this.resultsList, list, this.data.key, this.resultItem);
     // Keyboard Arrow Navigation
     autoCompleteView.navigation(this.selector, this.resultsList);
     // Returns rendered list
-    return list;
+    return {
+      matches: resList.length,
+      list
+    };
   }
 
   ignite(data) {
@@ -134,7 +157,7 @@ export default class autoComplete {
       input.setAttribute("placeholder", placeHolder);
     }
     // Input field handler fires an event onKeyup action
-    input.onkeyup = () => {
+    input.onkeyup = (event) => {
       // Get results list value
       const resultsList = this.resultsList;
       // Clear Results function holder
@@ -143,10 +166,21 @@ export default class autoComplete {
       if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
         // List matching results
         const list = this.listMatchedResults(data);
+        // Event emitter on input field
+        input.dispatchEvent(new CustomEvent("type", {
+          bubbles: true,
+          detail: {
+            event,
+            query: input.value,
+            matches: list.matches,
+            results: list.list
+          },
+          cancelable: true
+        }));
         // Gets user's selection
         // If action configured
         if (onSelection) {
-          autoCompleteView.getSelection(selector, resultsList, onSelection, list, this.data.key);
+          autoCompleteView.getSelection(selector, resultsList, onSelection, list);
         }
       } else {
         // clears all results list

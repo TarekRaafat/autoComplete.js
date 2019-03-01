@@ -1,6 +1,6 @@
 {
   "name": "autocomplete.js",
-  "version": "3.2.2",
+  "version": "4.0.0",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "main": "dist/js/autoComplete.js",
   "browser": "dist/js/autoComplete.min.js",
@@ -48,9 +48,9 @@
   },
   "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "acorn": "^6.0.7",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "acorn": "^6.1.1",
     "local-web-server": "^2.6.1",
     "rollup": "^0.67.4",
     "rollup-plugin-babel": "^4.3.0",

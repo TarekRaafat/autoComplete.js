@@ -53,7 +53,7 @@ const highlight = value => `<span class=${select.highlight}>${value}</span>`;
 const addResultsToList = (resultsList, dataSrc, dataKey, callback) => {
   dataSrc.forEach((event, record) => {
     const result = document.createElement("li");
-    const resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
+    const resultValue = dataSrc[record].value[event.key] || dataSrc[record].value;
     result.setAttribute(dataAttribute, resultValue);
     result.setAttribute("class", select.result);
     result.setAttribute("tabindex", "1");
@@ -111,24 +111,23 @@ const clearResults = resultsList => (resultsList.innerHTML = "");
  * @param resultsList
  * @param callback
  * @param resultsValues
- * @param dataKey
  */
-const getSelection = (field, resultsList, callback, resultsValues, dataKey) => {
+const getSelection = (field, resultsList, callback, resultsValues) => {
   const results = resultsList.querySelectorAll(`.${select.result}`);
   Object.keys(results).forEach(selection => {
     ["mousedown", "keydown"].forEach(eventType => {
       results[selection].addEventListener(eventType, event => {
-        if (eventType === "mousedown" || event.keyCode === 13) {
+        if (eventType === "mousedown" || event.keyCode === 13 || event.keyCode === 39) {
           // Callback function invoked on user selection
           callback({
             event,
             query: getInput(field).value,
-            results: resultsValues.map(record => record.source),
-            selection: resultsValues.find(value => {
-              const resValue = value.source[dataKey] || value.source;
-              return resValue === event.target.closest(`.${select.result}`)
-                .getAttribute(dataAttribute);
-            }).source
+            matches: resultsValues.matches,
+            results: resultsValues.list.map(record => record.value),
+            selection: resultsValues.list.find(value => {
+              const resValue = value.value[value.key] || value.value;
+              return resValue === event.target.closest(`.${select.result}`).getAttribute(dataAttribute);
+            })
           });
           // Clear Results after selection is made
           clearResults(resultsList);

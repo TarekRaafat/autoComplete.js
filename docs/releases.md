@@ -26,7 +26,27 @@ Release flags:
 
 ## Release Notes
 
--   v3.2.2 :sparkles:
+-   v4.0.0 :sparkles:
+
+    -   Multiple searchable `keys` for data `src` (Thanks @Johann-S)
+    -   Rendered `results` in original case (Thanks @nickbp12)
+    -   Improved Development Environment (Thanks @ziishaned)
+    -   IE 11 fix (Thanks @maciekgrzybek)
+    -   Improved returned data object `onSelection`
+        -   Index of result data value
+        -   Total number of matching results
+        -   Key of result data value (If multiple keys)
+        -   HTML element of selected result
+    -   Sort rendered `results` API
+    -   Enhanced `results` navigation adding `ArrowRight` key for selection
+    -   Added `event` emitter on input field type name `type` returns
+        -   Query
+        -   Number of matching results
+        -   Rendered results
+        -   Keyboard event
+    -   Code Clean Up
+
+-   v3.2.2
 
     -   Fixed bug with `hightlight` API default value during `strict` engine mode
     -   Fixed bug with `resultsList` API default value when not configured

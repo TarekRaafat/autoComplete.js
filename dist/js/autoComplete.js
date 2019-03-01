@@ -50,7 +50,7 @@
   var addResultsToList = function addResultsToList(resultsList, dataSrc, dataKey, callback) {
     dataSrc.forEach(function (event, record) {
       var result = document.createElement("li");
-      var resultValue = dataSrc[record].source[dataKey] || dataSrc[record].source;
+      var resultValue = dataSrc[record].value[event.key] || dataSrc[record].value;
       result.setAttribute(dataAttribute, resultValue);
       result.setAttribute("class", select.result);
       result.setAttribute("tabindex", "1");
@@ -84,22 +84,23 @@
   var clearResults = function clearResults(resultsList) {
     return resultsList.innerHTML = "";
   };
-  var getSelection = function getSelection(field, resultsList, callback, resultsValues, dataKey) {
+  var getSelection = function getSelection(field, resultsList, callback, resultsValues) {
     var results = resultsList.querySelectorAll(".".concat(select.result));
     Object.keys(results).forEach(function (selection) {
       ["mousedown", "keydown"].forEach(function (eventType) {
         results[selection].addEventListener(eventType, function (event) {
-          if (eventType === "mousedown" || event.keyCode === 13) {
+          if (eventType === "mousedown" || event.keyCode === 13 || event.keyCode === 39) {
             callback({
               event: event,
               query: getInput(field).value,
-              results: resultsValues.map(function (record) {
-                return record.source;
+              matches: resultsValues.matches,
+              results: resultsValues.list.map(function (record) {
+                return record.value;
               }),
-              selection: resultsValues.find(function (value) {
-                var resValue = value.source[dataKey] || value.source;
+              selection: resultsValues.list.find(function (value) {
+                var resValue = value.value[value.key] || value.value;
                 return resValue === event.target.closest(".".concat(select.result)).getAttribute(dataAttribute);
-              }).source
+              })
             });
             clearResults(resultsList);
           }
@@ -135,6 +136,7 @@
         destination: config.resultsList && config.resultsList.destination ? config.resultsList.destination : autoCompleteView.getInput(this.selector),
         position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend"
       });
+      this.sort = config.sort || false;
       this.placeHolder = config.placeHolder;
       this.maxResults = config.maxResults || 5;
       this.resultItem = config.resultItem;
@@ -152,8 +154,8 @@
           var match = [];
           var searchPosition = 0;
           for (var number = 0; number < recordLowerCase.length; number++) {
-            var recordChar = recordLowerCase[number];
-            if (searchPosition < query.length && recordChar === query[searchPosition]) {
+            var recordChar = record[number];
+            if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
               recordChar = highlight ? autoCompleteView.highlight(recordChar) : recordChar;
               searchPosition++;
             }
@@ -165,12 +167,9 @@
           return match.join("");
         } else {
           if (recordLowerCase.includes(query)) {
-            if (highlight) {
-              var inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
-              return recordLowerCase.replace(inputValue, autoCompleteView.highlight(inputValue));
-            } else {
-              return recordLowerCase;
-            }
+            var pattern = new RegExp("".concat(query), "i");
+            query = pattern.exec(record);
+            return highlight ? record.replace(query, autoCompleteView.highlight(query)) : record;
           }
         }
       }
@@ -180,19 +179,58 @@
         var _this = this;
         var resList = [];
         var inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
-        data.filter(function (record) {
-          var match = _this.search(inputValue, record[_this.data.key] || record);
-          if (match) {
-            resList.push({
-              match: match,
-              source: record
-            });
+        data.filter(function (record, index) {
+          var search = function search(key) {
+            var match = _this.search(inputValue, record[key] || record);
+            if (match && key) {
+              resList.push({
+                key: key,
+                index: index,
+                match: match,
+                value: record
+              });
+            } else if (match && !key) {
+              resList.push({
+                index: index,
+                match: match,
+                value: record
+              });
+            }
+          };
+          if (_this.data.key) {
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+            try {
+              for (var _iterator = _this.data.key[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var key = _step.value;
+                search(key);
+              }
+            } catch (err) {
+              _didIteratorError = true;
+              _iteratorError = err;
+            } finally {
+              try {
+                if (!_iteratorNormalCompletion && _iterator.return != null) {
+                  _iterator.return();
+                }
+              } finally {
+                if (_didIteratorError) {
+                  throw _iteratorError;
+                }
+              }
+            }
+          } else {
+            search();
           }
         });
-        var list = resList.slice(0, this.maxResults);
+        var list = this.sort ? resList.sort(this.sort).slice(0, this.maxResults) : resList.slice(0, this.maxResults);
         autoCompleteView.addResultsToList(this.resultsList, list, this.data.key, this.resultItem);
         autoCompleteView.navigation(this.selector, this.resultsList);
-        return list;
+        return {
+          matches: resList.length,
+          list: list
+        };
       }
     }, {
       key: "ignite",
@@ -205,13 +243,23 @@
         if (placeHolder) {
           input.setAttribute("placeholder", placeHolder);
         }
-        input.onkeyup = function () {
+        input.onkeyup = function (event) {
           var resultsList = _this2.resultsList;
           var clearResults = autoCompleteView.clearResults(resultsList);
           if (input.value.length > _this2.threshold && input.value.replace(/ /g, "").length) {
             var list = _this2.listMatchedResults(data);
+            input.dispatchEvent(new CustomEvent("type", {
+              bubbles: true,
+              detail: {
+                event: event,
+                query: input.value,
+                matches: list.matches,
+                results: list.list
+              },
+              cancelable: true
+            }));
             if (onSelection) {
-              autoCompleteView.getSelection(selector, resultsList, onSelection, list, _this2.data.key);
+              autoCompleteView.getSelection(selector, resultsList, onSelection, list);
             }
           }
         };
