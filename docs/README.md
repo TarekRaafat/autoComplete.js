@@ -257,6 +257,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [ ] Results Lazy Load/Pagination for External data source
 -   [x] Multiple searchable `keys` for data `src`
 -   [ ] Reload data `src` on data change
+-   [x] Event emitter on input field events
 
 ### Usability:
 
