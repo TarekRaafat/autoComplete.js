@@ -70,27 +70,50 @@
 				</svg></a>
 			<style>
 				.github-corner:hover .octo-arm {
+					-webkit-animation: octocat-wave 560ms ease-in-out;
 					animation: octocat-wave 560ms ease-in-out;
 				}
-				@keyframes octocat-wave {
+				@-webkit-keyframes octocat-wave {
 					0%,
 					100% {
+						-webkit-transform: rotate(0);
 						transform: rotate(0);
 					}
 					20%,
 					60% {
+						-webkit-transform: rotate(-25deg);
 						transform: rotate(-25deg);
 					}
 					40%,
 					80% {
+						-webkit-transform: rotate(10deg);
+						transform: rotate(10deg);
+					}
+				}
+				@keyframes octocat-wave {
+					0%,
+					100% {
+						-webkit-transform: rotate(0);
+						transform: rotate(0);
+					}
+					20%,
+					60% {
+						-webkit-transform: rotate(-25deg);
+						transform: rotate(-25deg);
+					}
+					40%,
+					80% {
+						-webkit-transform: rotate(10deg);
 						transform: rotate(10deg);
 					}
 				}
 				@media (max-width: 500px) {
 					.github-corner:hover .octo-arm {
+						-webkit-animation: none;
 						animation: none;
 					}
 					.github-corner .octo-arm {
+						-webkit-animation: octocat-wave 560ms ease-in-out;
 						animation: octocat-wave 560ms ease-in-out;
 					}
 				}

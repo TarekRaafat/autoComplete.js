@@ -21,6 +21,7 @@ body {
 .header {
     text-align: center;
     user-select: none;
+    -ms-user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -webkit-touch-callout: none;
@@ -41,12 +42,20 @@ h1>a {
     color: rgba(255, 122, 122, 1);
 }
 
+h1>a::-moz-selection {
+    color: rgb(255, 122, 122);
+}
+
 h1>a::selection {
     color: rgb(255, 122, 122);
 }
 
 h4 {
     margin-bottom: 5px;
+    color: #ffc6c6;
+}
+
+h4::-moz-selection {
     color: #ffc6c6;
 }
 
@@ -63,13 +72,16 @@ h4::selection {
 }
 
 .toggele {
+    display: -ms-flexbox;
     display: flex;
     position: abolute;
     border: 1px solid #ffc6c6;
     height: 35px;
     width: 120px;
     border-radius: 50px;
+    -ms-flex-pack: start;
     justify-content: flex-start;
+    -ms-flex-line-pack: center;
     align-content: center;
     transition: var(--transition-1);
 }
@@ -84,10 +96,12 @@ h4::selection {
     border-radius: 50px;
     margin: 5px;
     text-align: center;
+    -ms-flex-line-pack: center;
     align-content: center;
     align-self: flex-start;
     transition: var(--transition-1);
     user-select: none;
+    -ms-user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
     -webkit-touch-callout: none;
@@ -96,6 +110,10 @@ h4::selection {
 .toggeler:hover {
     width: 70px;
     background-color: rgba(255, 122, 122, 0.7);
+}
+
+.toggeler::-moz-selection {
+    color: #fff;
 }
 
 .toggeler::selection {
@@ -118,16 +136,22 @@ h4::selection {
     transition: var(--transition-1);
 }
 
+.selection::-moz-selection {
+    color: #64ceaa;
+}
+
 .selection::selection {
     color: #64ceaa;
 }
 
 .footer {
+    display: -ms-flexbox;
     display: flex;
     width: 100vw;
     position: absolute;
     bottom: 2rem;
     color: rgb(147, 147, 147);
+    -ms-flex-pack: center;
     justify-content: center;
     transition: var(--transition-1);
 }
@@ -135,6 +159,10 @@ h4::selection {
 .footer>div>a {
     text-decoration: none;
     color: rgb(147, 147, 147);
+}
+
+.footer>div>a::-moz-selection {
+    color: rgba(255, 122, 122, 1);
 }
 
 .footer>div>a::selection {
@@ -145,7 +173,15 @@ h4::selection {
     font-size: 0.8rem;
 }
 
+.copyrights::-moz-selection {
+    color: rgb(147, 147, 147);
+}
+
 .copyrights::selection {
+    color: rgb(147, 147, 147);
+}
+
+.copyrights>a::-moz-selection {
     color: rgb(147, 147, 147);
 }
 
