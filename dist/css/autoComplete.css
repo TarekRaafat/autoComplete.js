@@ -32,7 +32,7 @@
 }
 
 #autoComplete:focus::placeholder {
-  padding: 1rem 0.5rem;
+  padding: 0.1rem 0.6rem;
   font-size: 1rem;
   color: rgba(255, 122, 122, 0.3);
   transition: all 0.3s ease;
