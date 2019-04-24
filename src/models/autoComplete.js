@@ -100,47 +100,49 @@ export default class autoComplete {
    * @return array
    */
   listMatchedResults(data) {
-    // Final highlighted results list of array
-    const resList = [];
-    // Holds the input search value
-    const inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
-    // Checks input has matches in data source
-    data.filter((record, index) => {
-      // Search/Matching function
-      const search = key => {
-        // Holds match value
-        const match = this.search(inputValue, record[key] || record);
-        // Push match to results list with key if set
-        if (match && key) {
-          resList.push({ key, index, match, value: record });
-          // Push match to results list without key if not set
-        } else if (match && !key) {
-          resList.push({ index, match, value: record });
+    return new Promise(resolve => {
+      // Final highlighted results list of array
+      const resList = [];
+      // Holds the input search value
+      const inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
+      // Checks input has matches in data source
+      data.filter((record, index) => {
+        // Search/Matching function
+        const search = key => {
+          // Holds match value
+          const match = this.search(inputValue, record[key] || record);
+          // Push match to results list with key if set
+          if (match && key) {
+            resList.push({ key, index, match, value: record });
+            // Push match to results list without key if not set
+          } else if (match && !key) {
+            resList.push({ index, match, value: record });
+          }
+        };
+        // Checks if data key is set
+        if(this.data.key) {
+          // Iterates over all set data keys
+          for (const key of this.data.key) {
+            search(key);
+          }
+          // If no data key not set
+        } else {
+          search();
         }
-      };
-      // Checks if data key is set
-      if(this.data.key) {
-        // Iterates over all set data keys
-        for (const key of this.data.key) {
-          search(key);
-        }
-        // If no data key not set
-      } else {
-        search();
-      }
+      });
+      // Sorting / Slicing final results list
+      const list = this.sort ? resList.sort(this.sort)
+        .slice(0, this.maxResults) : resList.slice(0, this.maxResults);
+      // Rendering matching results to the UI list
+      autoCompleteView.addResultsToList(this.resultsList, list, this.data.key, this.resultItem);
+      // Keyboard Arrow Navigation
+      autoCompleteView.navigation(this.selector, this.resultsList);
+      // Returns rendered list
+      return resolve({
+        matches: resList.length,
+        list
+      });
     });
-    // Sorting / Slicing final results list
-    const list = this.sort ? resList.sort(this.sort)
-      .slice(0, this.maxResults) : resList.slice(0, this.maxResults);
-    // Rendering matching results to the UI list
-    autoCompleteView.addResultsToList(this.resultsList, list, this.data.key, this.resultItem);
-    // Keyboard Arrow Navigation
-    autoCompleteView.navigation(this.selector, this.resultsList);
-    // Returns rendered list
-    return {
-      matches: resList.length,
-      list
-    };
   }
 
   ignite(data) {
@@ -165,23 +167,25 @@ export default class autoComplete {
       // Check if input is not empty or just have space before triggering the app
       if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
         // List matching results
-        const list = this.listMatchedResults(data);
-        // Event emitter on input field
-        input.dispatchEvent(new CustomEvent("type", {
-          bubbles: true,
-          detail: {
-            event,
-            query: input.value,
-            matches: list.matches,
-            results: list.list
-          },
-          cancelable: true
-        }));
-        // Gets user's selection
-        // If action configured
-        if (onSelection) {
-          autoCompleteView.getSelection(selector, resultsList, onSelection, list);
-        }
+        this.listMatchedResults(data)
+          .then(list => {
+            // Event emitter on input field
+            input.dispatchEvent(new CustomEvent("type", {
+              bubbles: true,
+              detail: {
+                event,
+                query: input.value,
+                matches: list.matches,
+                results: list.list
+              },
+              cancelable: true
+            }));
+            // Gets user's selection
+            // If action configured
+            if (onSelection) {
+              autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+            }
+          });
       } else {
         // clears all results list
         clearResults;
