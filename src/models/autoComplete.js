@@ -34,6 +34,9 @@ export default class autoComplete {
     this.highlight = config.highlight || false;
     // Action function on result selection
     this.onSelection = config.onSelection;
+    // should cache data.src
+    this.shouldCacheSrc = typeof config.shouldCacheSrc === "undefined" ? true : config.shouldCacheSrc;
+    this.dataSrc;
     // Starts the app Enigne
     this.init();
   }
@@ -145,7 +148,7 @@ export default class autoComplete {
     });
   }
 
-  ignite(data) {
+  ignite() {
     // Selector value holder
     const selector = this.selector;
     // Specified Input field selector
@@ -160,6 +163,18 @@ export default class autoComplete {
     }
     // Input field handler fires an event onKeyup action
     input.onkeyup = (event) => {
+      // if we should NOT cache src then we should invoke its function again
+      if (!this.shouldCacheSrc) {
+        const data = this.data.src();
+        // check if it was a promise and resolve it before setting the data
+        if (data instanceof Promise) {
+          data.then(response => {
+            this.dataSrc = response;
+          });
+        } else {
+          this.dataSrc = data;
+        }
+      }
       // Get results list value
       const resultsList = this.resultsList;
       // Clear Results function holder
@@ -167,7 +182,7 @@ export default class autoComplete {
       // Check if input is not empty or just have space before triggering the app
       if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
         // List matching results
-        this.listMatchedResults(data)
+        this.listMatchedResults(this.dataSrc)
           .then(list => {
             // Event emitter on input field
             input.dispatchEvent(new CustomEvent("type", {
@@ -204,11 +219,14 @@ export default class autoComplete {
     // Data source is Async
     if (dataSrc instanceof Promise) {
       // Return Data
-      dataSrc.then(data => this.ignite(data));
+      dataSrc.then(response => {
+        this.dataSrc = response;
+        this.ignite();
+      });
       // Data source is Array/Function
     } else {
-      // Return Data
-      this.ignite(dataSrc);
+      this.dataSrc = dataSrc;
+      this.ignite();
     }
   }
 }

@@ -142,6 +142,8 @@
       this.resultItem = config.resultItem;
       this.highlight = config.highlight || false;
       this.onSelection = config.onSelection;
+      this.shouldCacheSrc = typeof config.shouldCacheSrc === "undefined" ? true : config.shouldCacheSrc;
+      this.dataSrc;
       this.init();
     }
     _createClass(autoComplete, [{
@@ -177,64 +179,66 @@
       key: "listMatchedResults",
       value: function listMatchedResults(data) {
         var _this = this;
-        var resList = [];
-        var inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
-        data.filter(function (record, index) {
-          var search = function search(key) {
-            var match = _this.search(inputValue, record[key] || record);
-            if (match && key) {
-              resList.push({
-                key: key,
-                index: index,
-                match: match,
-                value: record
-              });
-            } else if (match && !key) {
-              resList.push({
-                index: index,
-                match: match,
-                value: record
-              });
-            }
-          };
-          if (_this.data.key) {
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-            try {
-              for (var _iterator = _this.data.key[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var key = _step.value;
-                search(key);
+        return new Promise(function (resolve) {
+          var resList = [];
+          var inputValue = autoCompleteView.getInput(_this.selector).value.toLowerCase();
+          data.filter(function (record, index) {
+            var search = function search(key) {
+              var match = _this.search(inputValue, record[key] || record);
+              if (match && key) {
+                resList.push({
+                  key: key,
+                  index: index,
+                  match: match,
+                  value: record
+                });
+              } else if (match && !key) {
+                resList.push({
+                  index: index,
+                  match: match,
+                  value: record
+                });
               }
-            } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
-            } finally {
+            };
+            if (_this.data.key) {
+              var _iteratorNormalCompletion = true;
+              var _didIteratorError = false;
+              var _iteratorError = undefined;
               try {
-                if (!_iteratorNormalCompletion && _iterator.return != null) {
-                  _iterator.return();
+                for (var _iterator = _this.data.key[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                  var key = _step.value;
+                  search(key);
                 }
+              } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
               } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
+                try {
+                  if (!_iteratorNormalCompletion && _iterator.return != null) {
+                    _iterator.return();
+                  }
+                } finally {
+                  if (_didIteratorError) {
+                    throw _iteratorError;
+                  }
                 }
               }
+            } else {
+              search();
             }
-          } else {
-            search();
-          }
+          });
+          var list = _this.sort ? resList.sort(_this.sort).slice(0, _this.maxResults) : resList.slice(0, _this.maxResults);
+          autoCompleteView.addResultsToList(_this.resultsList, list, _this.data.key, _this.resultItem);
+          autoCompleteView.navigation(_this.selector, _this.resultsList);
+          return resolve({
+            matches: resList.length,
+            list: list
+          });
         });
-        var list = this.sort ? resList.sort(this.sort).slice(0, this.maxResults) : resList.slice(0, this.maxResults);
-        autoCompleteView.addResultsToList(this.resultsList, list, this.data.key, this.resultItem);
-        autoCompleteView.navigation(this.selector, this.resultsList);
-        return {
-          matches: resList.length,
-          list: list
-        };
       }
     }, {
       key: "ignite",
-      value: function ignite(data) {
+      value: function ignite() {
         var _this2 = this;
         var selector = this.selector;
         var input = autoCompleteView.getInput(selector);
@@ -244,23 +248,34 @@
           input.setAttribute("placeholder", placeHolder);
         }
         input.onkeyup = function (event) {
+          if (!_this2.shouldCacheSrc) {
+            var data = _this2.data.src();
+            if (data instanceof Promise) {
+              data.then(function (response) {
+                _this2.dataSrc = response;
+              });
+            } else {
+              _this2.dataSrc = data;
+            }
+          }
           var resultsList = _this2.resultsList;
           var clearResults = autoCompleteView.clearResults(resultsList);
           if (input.value.length > _this2.threshold && input.value.replace(/ /g, "").length) {
-            var list = _this2.listMatchedResults(data);
-            input.dispatchEvent(new CustomEvent("type", {
-              bubbles: true,
-              detail: {
-                event: event,
-                query: input.value,
-                matches: list.matches,
-                results: list.list
-              },
-              cancelable: true
-            }));
-            if (onSelection) {
-              autoCompleteView.getSelection(selector, resultsList, onSelection, list);
-            }
+            _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
+              input.dispatchEvent(new CustomEvent("type", {
+                bubbles: true,
+                detail: {
+                  event: event,
+                  query: input.value,
+                  matches: list.matches,
+                  results: list.list
+                },
+                cancelable: true
+              }));
+              if (onSelection) {
+                autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+              }
+            });
           }
         };
       }
@@ -270,11 +285,13 @@
         var _this3 = this;
         var dataSrc = this.data.src();
         if (dataSrc instanceof Promise) {
-          dataSrc.then(function (data) {
-            return _this3.ignite(data);
+          dataSrc.then(function (response) {
+            _this3.dataSrc = response;
+            _this3.ignite();
           });
         } else {
-          this.ignite(dataSrc);
+          this.dataSrc = dataSrc;
+          this.ignite();
         }
       }
     }]);
