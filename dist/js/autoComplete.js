@@ -36,7 +36,7 @@
     return typeof selector === "string" ? document.querySelector(selector) : selector();
   };
   var createResultsList = function createResultsList(renderResults) {
-    var resultsList = document.createElement("ul");
+    var resultsList = document.createElement(renderResults.element);
     if (renderResults.container) {
       select.resultsList = renderResults.container(resultsList) || select.resultsList;
     }
@@ -47,14 +47,14 @@
   var highlight = function highlight(value) {
     return "<span class=".concat(select.highlight, ">").concat(value, "</span>");
   };
-  var addResultsToList = function addResultsToList(resultsList, dataSrc, dataKey, callback) {
+  var addResultsToList = function addResultsToList(resultsList, dataSrc, dataKey, resultItem) {
     dataSrc.forEach(function (event, record) {
-      var result = document.createElement("li");
+      var result = document.createElement(resultItem.element);
       var resultValue = dataSrc[record].value[event.key] || dataSrc[record].value;
       result.setAttribute(dataAttribute, resultValue);
       result.setAttribute("class", select.result);
       result.setAttribute("tabindex", "1");
-      result.innerHTML = callback ? callback(event, result) : event.match || event;
+      result.innerHTML = resultItem.content ? resultItem.content(event, result) : event.match || event;
       resultsList.appendChild(result);
     });
   };
@@ -127,22 +127,27 @@
         src: function src() {
           return typeof config.data.src === "function" ? config.data.src() : config.data.src;
         },
-        key: config.data.key
+        key: config.data.key,
+        cache: typeof config.data.cache === "undefined" ? true : config.data.cache
       };
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.threshold = config.threshold || 0;
+      this.debounce = config.debounce || 0;
       this.resultsList = autoCompleteView.createResultsList({
         container: config.resultsList && config.resultsList.container ? config.resultsList.container : false,
         destination: config.resultsList && config.resultsList.destination ? config.resultsList.destination : autoCompleteView.getInput(this.selector),
-        position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend"
+        position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend",
+        element: config.resultsList.element || "ul"
       });
       this.sort = config.sort || false;
       this.placeHolder = config.placeHolder;
       this.maxResults = config.maxResults || 5;
-      this.resultItem = config.resultItem;
+      this.resultItem = {
+        content: config.resultItem.content,
+        element: config.resultItem.element || "li"
+      };
       this.highlight = config.highlight || false;
       this.onSelection = config.onSelection;
-      this.shouldCacheSrc = typeof config.shouldCacheSrc === "undefined" ? true : config.shouldCacheSrc;
       this.dataSrc;
       this.init();
     }
@@ -247,17 +252,18 @@
         if (placeHolder) {
           input.setAttribute("placeholder", placeHolder);
         }
-        input.onkeyup = function (event) {
-          if (!_this2.shouldCacheSrc) {
-            var data = _this2.data.src();
-            if (data instanceof Promise) {
-              data.then(function (response) {
-                _this2.dataSrc = response;
-              });
-            } else {
-              _this2.dataSrc = data;
-            }
-          }
+        var debounce = function debounce(func, delay) {
+          var inDebounce;
+          return function () {
+            var context = this;
+            var args = arguments;
+            clearTimeout(inDebounce);
+            inDebounce = setTimeout(function () {
+              return func.apply(context, args);
+            }, delay);
+          };
+        };
+        var exec = function exec(event) {
           var resultsList = _this2.resultsList;
           var clearResults = autoCompleteView.clearResults(resultsList);
           if (input.value.length > _this2.threshold && input.value.replace(/ /g, "").length) {
@@ -278,6 +284,22 @@
             });
           }
         };
+        input.addEventListener("keyup", debounce(function (event) {
+          if (!_this2.data.cache) {
+            var data = _this2.data.src();
+            if (data instanceof Promise) {
+              data.then(function (response) {
+                _this2.dataSrc = response;
+                exec(event);
+              });
+            } else {
+              _this2.dataSrc = data;
+              exec(event);
+            }
+          } else {
+            exec(event);
+          }
+        }, this.debounce));
       }
     }, {
       key: "init",

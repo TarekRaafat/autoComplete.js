@@ -22,7 +22,7 @@ const getInput = selector => (typeof selector === "string" ? document.querySelec
  * @return HTMLElement
  */
 const createResultsList = renderResults => {
-  const resultsList = document.createElement("ul");
+  const resultsList = document.createElement(renderResults.element);
   if (renderResults.container) {
     select.resultsList = renderResults.container(resultsList) || select.resultsList;
   }
@@ -46,18 +46,18 @@ const highlight = value => `<span class=${select.highlight}>${value}</span>`;
  * @param resultsList
  * @param dataSrc
  * @param dataKey
- * @param callback
+ * @param resultItem
  *
  * @return void
  */
-const addResultsToList = (resultsList, dataSrc, dataKey, callback) => {
+const addResultsToList = (resultsList, dataSrc, dataKey, resultItem) => {
   dataSrc.forEach((event, record) => {
-    const result = document.createElement("li");
+    const result = document.createElement(resultItem.element);
     const resultValue = dataSrc[record].value[event.key] || dataSrc[record].value;
     result.setAttribute(dataAttribute, resultValue);
     result.setAttribute("class", select.result);
     result.setAttribute("tabindex", "1");
-    result.innerHTML = callback ? callback(event, result) : event.match || event;
+    result.innerHTML = resultItem.content ? resultItem.content(event, result) : event.match || event;
     resultsList.appendChild(result);
   });
 };
@@ -66,7 +66,6 @@ const addResultsToList = (resultsList, dataSrc, dataKey, callback) => {
  * Keyboard Arrow Navigation
  *
  * @param selector
- *
  * @param resultsList
  */
 const navigation = (selector, resultsList) => {

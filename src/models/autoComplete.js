@@ -7,20 +7,28 @@ export default class autoComplete {
     // Source of data list
     this.data = {
       src: () => (typeof config.data.src === "function" ? config.data.src() : config.data.src),
-      key: config.data.key
+      key: config.data.key,
+      cache: typeof config.data.cache === "undefined" ? true : config.data.cache,
     };
     // Search engine type
     this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
     // Minimum characters length before engine starts rendering
     this.threshold = config.threshold || 0;
+    // Minimum duration for API calls debouncing
+    this.debounce = config.debounce || 0;
     // Rendered results destination
     this.resultsList = autoCompleteView.createResultsList({
+      // Results List function
       container: config.resultsList && config.resultsList.container ? config.resultsList.container : false,
+      // Results List selector
       destination:
         config.resultsList && config.resultsList.destination
           ? config.resultsList.destination
           : autoCompleteView.getInput(this.selector),
-      position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend"
+      // Results List position
+      position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend",
+      // Results List element tag
+      element: config.resultsList.element || "ul",
     });
     // Sorting results list
     this.sort = config.sort || false;
@@ -29,13 +37,17 @@ export default class autoComplete {
     // Maximum number of results to show
     this.maxResults = config.maxResults || 5;
     // Rendered results item
-    this.resultItem = config.resultItem;
+    this.resultItem = {
+      // Result Item function
+      content: config.resultItem.content,
+      // Result Item element tag
+      element: config.resultItem.element || "li"
+    };
     // Highlighting matching results
     this.highlight = config.highlight || false;
     // Action function on result selection
     this.onSelection = config.onSelection;
-    // should cache data.src
-    this.shouldCacheSrc = typeof config.shouldCacheSrc === "undefined" ? true : config.shouldCacheSrc;
+    // Data source
     this.dataSrc;
     // Starts the app Enigne
     this.init();
@@ -54,6 +66,7 @@ export default class autoComplete {
     const highlight = this.highlight;
     // Current record value toLowerCase
     const recordLowerCase = record.toLowerCase();
+
     // Loose mode
     if (this.searchEngine === "loose") {
       // Search query string sanitized & normalized
@@ -62,10 +75,12 @@ export default class autoComplete {
       const match = [];
       // Query character position based on success
       let searchPosition = 0;
+
       // Iterate over record characters
       for (let number = 0; number < recordLowerCase.length; number++) {
         // Holds current record character
         let recordChar = record[number];
+
         // Matching case
         if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
           // Highlight matching character
@@ -76,6 +91,7 @@ export default class autoComplete {
         // Adds matching character to the matching list
         match.push(recordChar);
       }
+
       // Non-Matching case
       if (searchPosition !== query.length) {
         return false;
@@ -108,6 +124,7 @@ export default class autoComplete {
       const resList = [];
       // Holds the input search value
       const inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
+
       // Checks input has matches in data source
       data.filter((record, index) => {
         // Search/Matching function
@@ -122,8 +139,9 @@ export default class autoComplete {
             resList.push({ index, match, value: record });
           }
         };
+
         // Checks if data key is set
-        if(this.data.key) {
+        if (this.data.key) {
           // Iterates over all set data keys
           for (const key of this.data.key) {
             search(key);
@@ -133,17 +151,20 @@ export default class autoComplete {
           search();
         }
       });
+
       // Sorting / Slicing final results list
-      const list = this.sort ? resList.sort(this.sort)
-        .slice(0, this.maxResults) : resList.slice(0, this.maxResults);
+      const list = this.sort
+        ? resList.sort(this.sort).slice(0, this.maxResults)
+        : resList.slice(0, this.maxResults);
       // Rendering matching results to the UI list
       autoCompleteView.addResultsToList(this.resultsList, list, this.data.key, this.resultItem);
       // Keyboard Arrow Navigation
       autoCompleteView.navigation(this.selector, this.resultsList);
+
       // Returns rendered list
       return resolve({
         matches: resList.length,
-        list
+        list,
       });
     });
   }
@@ -157,55 +178,84 @@ export default class autoComplete {
     const placeHolder = this.placeHolder;
     // onSelection function holder
     const onSelection = this.onSelection;
+
     // Placeholder setter
     if (placeHolder) {
       input.setAttribute("placeholder", placeHolder);
     }
-    // Input field handler fires an event onKeyup action
-    input.onkeyup = (event) => {
-      // if we should NOT cache src then we should invoke its function again
-      if (!this.shouldCacheSrc) {
-        const data = this.data.src();
-        // check if it was a promise and resolve it before setting the data
-        if (data instanceof Promise) {
-          data.then(response => {
-            this.dataSrc = response;
-          });
-        } else {
-          this.dataSrc = data;
-        }
-      }
+
+    // Debouncer
+    const debounce = (func, delay) => {
+      let inDebounce;
+      return function() {
+        const context = this;
+        const args = arguments;
+        clearTimeout(inDebounce);
+        inDebounce = setTimeout(() =>
+          func.apply(context, args)
+        , delay);
+      };
+    };
+
+    // Excute autoComplete processes
+    const exec = (event) => {
       // Get results list value
       const resultsList = this.resultsList;
       // Clear Results function holder
       const clearResults = autoCompleteView.clearResults(resultsList);
+
       // Check if input is not empty or just have space before triggering the app
       if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
         // List matching results
-        this.listMatchedResults(this.dataSrc)
-          .then(list => {
-            // Event emitter on input field
-            input.dispatchEvent(new CustomEvent("type", {
+        this.listMatchedResults(this.dataSrc).then(list => {
+          // Event emitter on input field
+          input.dispatchEvent(
+            new CustomEvent("type", {
               bubbles: true,
               detail: {
                 event,
                 query: input.value,
                 matches: list.matches,
-                results: list.list
+                results: list.list,
               },
-              cancelable: true
+              cancelable: true,
             }));
-            // Gets user's selection
-            // If action configured
-            if (onSelection) {
-              autoCompleteView.getSelection(selector, resultsList, onSelection, list);
-            }
-          });
+          // Gets user's selection
+          // If action configured
+          if (onSelection) {
+            autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+          }
+        });
       } else {
         // clears all results list
         clearResults;
       }
     };
+
+    // Input field handler fires an event onKeyup action
+    input.addEventListener("keyup", debounce((event) => {
+      // If data src NOT to be cached
+      // then we should invoke its function again
+      if (!this.data.cache) {
+        const data = this.data.src();
+        // Check if data src is a Promise
+        // and resolve it before setting data src
+        if (data instanceof Promise) {
+          data.then(response => {
+            this.dataSrc = response;
+            exec(event);
+          });
+        // Else if not Promise
+        } else {
+          this.dataSrc = data;
+          exec(event);
+        }
+      // Else if data src is local
+      // not external src
+      } else {
+        exec(event);
+      }
+    }, this.debounce));
   }
 
   /**
