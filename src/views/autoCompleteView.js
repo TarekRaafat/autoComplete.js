@@ -45,12 +45,11 @@ const highlight = value => `<span class=${select.highlight}>${value}</span>`;
  *
  * @param resultsList
  * @param dataSrc
- * @param dataKey
  * @param resultItem
  *
  * @return void
  */
-const addResultsToList = (resultsList, dataSrc, dataKey, resultItem) => {
+const addResultsToList = (resultsList, dataSrc, resultItem) => {
   dataSrc.forEach((event, record) => {
     const result = document.createElement(resultItem.element);
     const resultValue = dataSrc[record].value[event.key] || dataSrc[record].value;

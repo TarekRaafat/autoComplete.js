@@ -47,7 +47,7 @@
   var highlight = function highlight(value) {
     return "<span class=".concat(select.highlight, ">").concat(value, "</span>");
   };
-  var addResultsToList = function addResultsToList(resultsList, dataSrc, dataKey, resultItem) {
+  var addResultsToList = function addResultsToList(resultsList, dataSrc, resultItem) {
     dataSrc.forEach(function (event, record) {
       var result = document.createElement(resultItem.element);
       var resultValue = dataSrc[record].value[event.key] || dataSrc[record].value;
@@ -134,17 +134,26 @@
       this.threshold = config.threshold || 0;
       this.debounce = config.debounce || 0;
       this.resultsList = autoCompleteView.createResultsList({
-        container: config.resultsList && config.resultsList.container ? config.resultsList.container : false,
-        destination: config.resultsList && config.resultsList.destination ? config.resultsList.destination : autoCompleteView.getInput(this.selector),
-        position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend",
-        element: config.resultsList.element || "ul"
+        container:
+        config.resultsList && config.resultsList.container
+        ? config.resultsList.container
+        : false,
+        destination:
+        config.resultsList && config.resultsList.destination
+        ? config.resultsList.destination
+        : autoCompleteView.getInput(this.selector),
+        position:
+        config.resultsList && config.resultsList.position
+        ? config.resultsList.position
+        : "afterend",
+        element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul"
       });
       this.sort = config.sort || false;
       this.placeHolder = config.placeHolder;
       this.maxResults = config.maxResults || 5;
       this.resultItem = {
-        content: config.resultItem.content,
-        element: config.resultItem.element || "li"
+        content: config.resultItem && config.resultItem.content ? config.resultItem.content : false,
+        element: config.resultItem && config.resultItem.element ? config.resultItem.element : "li"
       };
       this.highlight = config.highlight || false;
       this.onSelection = config.onSelection;
@@ -233,7 +242,7 @@
             }
           });
           var list = _this.sort ? resList.sort(_this.sort).slice(0, _this.maxResults) : resList.slice(0, _this.maxResults);
-          autoCompleteView.addResultsToList(_this.resultsList, list, _this.data.key, _this.resultItem);
+          autoCompleteView.addResultsToList(_this.resultsList, list, _this.resultItem);
           autoCompleteView.navigation(_this.selector, _this.resultsList);
           return resolve({
             matches: resList.length,

@@ -6,8 +6,11 @@ export default class autoComplete {
     this.selector = config.selector || "#autoComplete";
     // Source of data list
     this.data = {
+      // Data src selection
       src: () => (typeof config.data.src === "function" ? config.data.src() : config.data.src),
+      // Data src key selection
       key: config.data.key,
+      // Cache Data src or NOT
       cache: typeof config.data.cache === "undefined" ? true : config.data.cache,
     };
     // Search engine type
@@ -19,16 +22,32 @@ export default class autoComplete {
     // Rendered results destination
     this.resultsList = autoCompleteView.createResultsList({
       // Results List function
-      container: config.resultsList && config.resultsList.container ? config.resultsList.container : false,
+      container:
+        // If resultsList and container are set
+        config.resultsList && config.resultsList.container
+          // Then set resultsList container
+          ? config.resultsList.container
+          // Else set default false
+          : false,
       // Results List selector
       destination:
+        // If resultsList and destination are set
         config.resultsList && config.resultsList.destination
+          // Then set resultList destination
           ? config.resultsList.destination
+          // Else set Default
           : autoCompleteView.getInput(this.selector),
       // Results List position
-      position: config.resultsList && config.resultsList.position ? config.resultsList.position : "afterend",
+      position:
+        // If resultsList and position are set
+        config.resultsList && config.resultsList.position
+          // Then resultsList position
+          ? config.resultsList.position
+          // Else set default "afterend"
+          : "afterend",
       // Results List element tag
-      element: config.resultsList.element || "ul",
+      element: config.resultsList && config.resultsList.element
+        ? config.resultsList.element : "ul"
     });
     // Sorting results list
     this.sort = config.sort || false;
@@ -39,9 +58,11 @@ export default class autoComplete {
     // Rendered results item
     this.resultItem = {
       // Result Item function
-      content: config.resultItem.content,
+      content: config.resultItem && config.resultItem.content
+        ? config.resultItem.content : false,
       // Result Item element tag
-      element: config.resultItem.element || "li"
+      element: config.resultItem && config.resultItem.element
+        ? config.resultItem.element : "li"
     };
     // Highlighting matching results
     this.highlight = config.highlight || false;
@@ -116,7 +137,7 @@ export default class autoComplete {
    *
    * @param data
    *
-   * @return array
+   * @return {*}
    */
   listMatchedResults(data) {
     return new Promise(resolve => {
@@ -157,7 +178,7 @@ export default class autoComplete {
         ? resList.sort(this.sort).slice(0, this.maxResults)
         : resList.slice(0, this.maxResults);
       // Rendering matching results to the UI list
-      autoCompleteView.addResultsToList(this.resultsList, list, this.data.key, this.resultItem);
+      autoCompleteView.addResultsToList(this.resultsList, list, this.resultItem);
       // Keyboard Arrow Navigation
       autoCompleteView.navigation(this.selector, this.resultsList);
 
@@ -169,6 +190,11 @@ export default class autoComplete {
     });
   }
 
+  /**
+   * App Engine Ignition.
+   *
+   * @return void
+   */
   ignite() {
     // Selector value holder
     const selector = this.selector;
