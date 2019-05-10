@@ -26,7 +26,16 @@ Release flags:
 
 ## Release Notes
 
--   v4.0.0 :sparkles:
+- v5.0.0 :sparkles:
+
+  - Large datasets handeling (Thanks @Johann-S)
+  - API Data fetching & Dynamic Data reloading (Thanks @Brostafa)
+  - Debouncing API Calls
+  - Custom `resultsList` & `resultItem` Elements (Thanks @Johann-S)
+  - Bug fixes
+  - Code Clean Up
+
+-   v4.0.0
 
     -   Multiple searchable `keys` for data `src` (Thanks @Johann-S)
     -   Rendered `results` in original case (Thanks @nickbp12)
