@@ -2,53 +2,68 @@
 document.querySelector("#autoComplete").addEventListener("type", event => {
   console.log(event);
 });
+
 // The autoComplete.js Engine instance creator
 const autoCompletejs = new autoComplete({
   data: {
     src: async () => {
       // Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
+      // API key token
+      const token = "5c2d4273b2930ee4b53f4e84a7c4440d";
+      // User search query
+      const query = document.querySelector("#autoComplete").value;
       // Fetch External Data Source
-      const source = await fetch("./db/generic.json");
+      const source = await fetch(`https://www.food2fork.com/api/search?key=${token}&q=${query}`);
       const data = await source.json();
-      // Returns Fetched data
-      return data;
+      // Post loading placeholder text
+      document.querySelector("#autoComplete").setAttribute("placeholder", "Food & Drinks");
+      // Return Fetched data
+      return data.recipes;
     },
-    key: ["food", "cities", "animals"]
+    key: ["title"],
+    cache: false,
   },
   sort: (a, b) => {
     if (a.match < b.match) return -1;
     if (a.match > b.match) return 1;
     return 0;
   },
-  placeHolder: "Food & Drinks",
   selector: "#autoComplete",
-  threshold: 0,
+  threshold: 3,
+  debounce: 300,
   searchEngine: "strict",
   highlight: true,
-  maxResults: 10,
+  maxResults: Infinity,
   resultsList: {
     container: source => {
       resultsListID = "autoComplete_results_list";
       return resultsListID;
     },
     destination: document.querySelector("#autoComplete"),
-    position: "afterend"
+    position: "afterend",
+    element: "ul",
   },
-  resultItem: (data, source) => {
-    return `${data.match}`;
+  resultItem: {
+    content: (data, source) => {
+      return `${data.match}`;
+    },
+    element: "li",
   },
   onSelection: feedback => {
-    const selection = feedback.selection.value.food;
+    const title = feedback.selection.value.title;
+    const image = feedback.selection.value.image_url;
     // Render selected choice to selection div
-    document.querySelector(".selection").innerHTML = selection;
+    document.querySelector(
+      ".selection",
+    ).innerHTML = `<span style="display: block; font-size: 25px; width: 90vw; max-width: 400px; margin-bottom: 20px;">${title}</span><img src="${image}" style="height: 30vh; border-radius: 8px; box-shadow: 0 0 80px rgba(255, 122, 122,0.2), 0 4px 10px -3px rgba(255, 122, 122,0.4), inset 0 -10px 30px -5px rgba(255, 122, 122,0.1);"></img>`;
     // Clear Input
     document.querySelector("#autoComplete").value = "";
     // Change placeholder with the selected value
-    document.querySelector("#autoComplete").setAttribute("placeholder", selection);
+    document.querySelector("#autoComplete").setAttribute("placeholder", title);
     // Concole log autoComplete data feedback
     console.log(feedback);
-  }
+  },
 });
 
 // On page load add class to input field
