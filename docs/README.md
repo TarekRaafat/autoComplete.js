@@ -28,7 +28,7 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 -   Versatile
 -   Hackable & highly customizable
 
-## [![autoComplete.js Code Example](./img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW)
+## [![autoComplete.js Code Example](./img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW?editors=0010)
 
 ## 1. Get Started
 
@@ -213,7 +213,7 @@ new autoComplete({
 -   Live working [Demo]
 
 
--   Try it on [<img src="https://cdn.freelogovectors.net/wp-content/uploads/2018/03/codepen-logo.png" width="100px" alt="CodePen">](https://codepen.io/tarekraafat/pen/rQopdW)
+-   Try it on [<img src="https://cdn.freelogovectors.net/wp-content/uploads/2018/03/codepen-logo.png" width="100px" alt="CodePen">](https://codepen.io/tarekraafat/pen/rQopdW?editors=0010)
 
 [demo]: https://tarekraafat.github.io/autoComplete.js/demo/
 
