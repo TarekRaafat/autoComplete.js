@@ -31,6 +31,33 @@ body {
     overflow: auto;
 }
 
+.no_result {
+    margin: 0.15rem auto;
+    padding: 0.6rem;
+    max-width: 280px;
+    border: 0.05rem solid #e3e3e3;
+    list-style: none;
+    text-align: left;
+    font-size: 1.1rem;
+    color: rgb(123, 123, 123);
+    transition: all 0.1s ease-in-out;
+    background-color: #fff;
+    border-radius: 0 0 1rem 1rem;
+    outline: none;
+  }
+
+.no_result:hover {
+    cursor: default;
+    background-color: #fff;
+    border: 0.05rem solid #e3e3e3;
+}
+
+.no_result:focus {
+    cursor: default;
+    background-color: #fff;
+    border: 0.05rem solid #e3e3e3;
+}
+
 h1 {
     color: rgba(255, 122, 122, 1);
     transition: var(--transition-1);

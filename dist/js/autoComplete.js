@@ -92,7 +92,7 @@
           if (eventType === "mousedown" || event.keyCode === 13 || event.keyCode === 39) {
             callback({
               event: event,
-              query: getInput(field).value,
+              query: getInput(field) instanceof HTMLInputElement ? getInput(field).value : getInput(field).innerHTML,
               matches: resultsValues.matches,
               results: resultsValues.list.map(function (record) {
                 return record.value;
@@ -155,6 +155,7 @@
         content: config.resultItem && config.resultItem.content ? config.resultItem.content : false,
         element: config.resultItem && config.resultItem.element ? config.resultItem.element : "li"
       };
+      this.noResults = config.noResults;
       this.highlight = config.highlight || false;
       this.onSelection = config.onSelection;
       this.dataSrc;
@@ -195,10 +196,9 @@
         var _this = this;
         return new Promise(function (resolve) {
           var resList = [];
-          var inputValue = autoCompleteView.getInput(_this.selector).value.toLowerCase();
           data.filter(function (record, index) {
             var search = function search(key) {
-              var match = _this.search(inputValue, record[key] || record);
+              var match = _this.search(_this.inputValue, record[key] || record);
               if (match && key) {
                 resList.push({
                   key: key,
@@ -273,22 +273,27 @@
           };
         };
         var exec = function exec(event) {
+          _this2.inputValue = input instanceof HTMLInputElement ? input.value : input.innerHTML;
           var resultsList = _this2.resultsList;
           var clearResults = autoCompleteView.clearResults(resultsList);
-          if (input.value.length > _this2.threshold && input.value.replace(/ /g, "").length) {
+          if (_this2.inputValue.length > _this2.threshold && _this2.inputValue.replace(/ /g, "").length) {
             _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
-              input.dispatchEvent(new CustomEvent("type", {
-                bubbles: true,
-                detail: {
-                  event: event,
-                  query: input.value,
-                  matches: list.matches,
-                  results: list.list
-                },
-                cancelable: true
-              }));
-              if (onSelection) {
-                autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+              if (list.list.length === 0) {
+                _this2.noResults();
+              } else {
+                input.dispatchEvent(new CustomEvent("type", {
+                  bubbles: true,
+                  detail: {
+                    event: event,
+                    query: _this2.inputValue,
+                    matches: list.matches,
+                    results: list.list
+                  },
+                  cancelable: true
+                }));
+                if (onSelection) {
+                  autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+                }
               }
             });
           }

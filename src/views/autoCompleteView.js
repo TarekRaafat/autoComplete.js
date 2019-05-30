@@ -119,7 +119,9 @@ const getSelection = (field, resultsList, callback, resultsValues) => {
           // Callback function invoked on user selection
           callback({
             event,
-            query: getInput(field).value,
+            query: getInput(field) instanceof HTMLInputElement
+              ? getInput(field).value
+              : getInput(field).innerHTML,
             matches: resultsValues.matches,
             results: resultsValues.list.map(record => record.value),
             selection: resultsValues.list.find(value => {

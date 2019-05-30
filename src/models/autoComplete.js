@@ -64,6 +64,8 @@ export default class autoComplete {
       element: config.resultItem && config.resultItem.element
         ? config.resultItem.element : "li"
     };
+    // No Results action
+    this.noResults = config.noResults;
     // Highlighting matching results
     this.highlight = config.highlight || false;
     // Action function on result selection
@@ -143,15 +145,13 @@ export default class autoComplete {
     return new Promise(resolve => {
       // Final highlighted results list of array
       const resList = [];
-      // Holds the input search value
-      const inputValue = autoCompleteView.getInput(this.selector).value.toLowerCase();
 
       // Checks input has matches in data source
       data.filter((record, index) => {
         // Search/Matching function
         const search = key => {
           // Holds match value
-          const match = this.search(inputValue, record[key] || record);
+          const match = this.search(this.inputValue, record[key] || record);
           // Push match to results list with key if set
           if (match && key) {
             resList.push({ key, index, match, value: record });
@@ -225,31 +225,39 @@ export default class autoComplete {
 
     // Excute autoComplete processes
     const exec = (event) => {
+      // Gets the input search value
+      this.inputValue = input instanceof HTMLInputElement
+        ? input.value
+        : input.innerHTML;
       // Get results list value
       const resultsList = this.resultsList;
       // Clear Results function holder
       const clearResults = autoCompleteView.clearResults(resultsList);
 
       // Check if input is not empty or just have space before triggering the app
-      if (input.value.length > this.threshold && input.value.replace(/ /g, "").length) {
+      if (this.inputValue.length > this.threshold && this.inputValue.replace(/ /g, "").length) {
         // List matching results
         this.listMatchedResults(this.dataSrc).then(list => {
+          if (list.list.length === 0) {
+            this.noResults();
+          } else {
           // Event emitter on input field
-          input.dispatchEvent(
-            new CustomEvent("type", {
-              bubbles: true,
-              detail: {
-                event,
-                query: input.value,
-                matches: list.matches,
-                results: list.list,
-              },
-              cancelable: true,
-            }));
-          // Gets user's selection
-          // If action configured
-          if (onSelection) {
-            autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+            input.dispatchEvent(
+              new CustomEvent("type", {
+                bubbles: true,
+                detail: {
+                  event,
+                  query: this.inputValue,
+                  matches: list.matches,
+                  results: list.list,
+                },
+                cancelable: true,
+              }));
+            // Gets user's selection
+            // If action configured
+            if (onSelection) {
+              autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+            }
           }
         });
       } else {

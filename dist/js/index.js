@@ -43,6 +43,13 @@ const autoCompletejs = new autoComplete({
     },
     element: "li",
   },
+  noResults: () => {
+    const result = document.createElement("li");
+    result.setAttribute("class", "no_result");
+    result.setAttribute("tabindex", "1");
+    result.innerHTML = "No Results";
+    document.querySelector("#autoComplete_results_list").appendChild(result);
+  },
   onSelection: feedback => {
     const selection = feedback.selection.value.food;
     // Render selected choice to selection div
