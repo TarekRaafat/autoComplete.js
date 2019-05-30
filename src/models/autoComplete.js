@@ -227,8 +227,8 @@ export default class autoComplete {
     const exec = (event) => {
       // Gets the input search value
       this.inputValue = input instanceof HTMLInputElement
-        ? input.value
-        : input.innerHTML;
+        ? input.value.toLowerCase()
+        : input.innerHTML.toLowerCase();
       // Get results list value
       const resultsList = this.resultsList;
       // Clear Results function holder

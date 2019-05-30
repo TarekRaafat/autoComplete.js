@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v5.1.0 :sparkles:
+- v5.1.1 :sparkles:
+  - `UpperCase` query bug fix
+
+- v5.1.0
   - Added `noResults` open API for No Results (Thanks @chabri)
   - HTML elements `ContentEditable` Input Support(Thanks @philippejadin)
 

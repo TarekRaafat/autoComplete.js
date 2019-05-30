@@ -1,6 +1,6 @@
 {
   "name": "@tarekraafat/autocomplete.js",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "main": "dist/js/autoComplete.js",
   "browser": "dist/js/autoComplete.min.js",
@@ -48,8 +48,8 @@
   },
   "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "acorn": "^6.1.1",
     "local-web-server": "^2.6.1",
     "rollup": "^0.67.4",

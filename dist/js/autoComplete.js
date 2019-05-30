@@ -273,7 +273,7 @@
           };
         };
         var exec = function exec(event) {
-          _this2.inputValue = input instanceof HTMLInputElement ? input.value : input.innerHTML;
+          _this2.inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
           var resultsList = _this2.resultsList;
           var clearResults = autoCompleteView.clearResults(resultsList);
           if (_this2.inputValue.length > _this2.threshold && _this2.inputValue.replace(/ /g, "").length) {
