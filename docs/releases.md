@@ -26,7 +26,11 @@ Release flags:
 
 ## Release Notes
 
-- v5.0.0 :sparkles:
+- v5.1.0 :sparkles:
+  - Added `noResults` open API for No Results (Thanks @chabri)
+  - HTML elements `ContentEditable` Input Support(Thanks @philippejadin)
+
+- v5.0.0
 
   - Large datasets handeling (Thanks @Johann-S)
   - API Data fetching & Dynamic Data reloading (Thanks @Brostafa)

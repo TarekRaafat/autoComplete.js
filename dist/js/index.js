@@ -14,7 +14,7 @@ const autoCompletejs = new autoComplete({
       // Returns Fetched data
       return data;
     },
-    key: ["food", "cities", "animals"],
+    key: ["food", "cities", "animals"]
   },
   sort: (a, b) => {
     if (a.match < b.match) return -1;

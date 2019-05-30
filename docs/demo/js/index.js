@@ -50,6 +50,13 @@ const autoCompletejs = new autoComplete({
     },
     element: "li",
   },
+  noResults: () => {
+    const result = document.createElement("li");
+    result.setAttribute("class", "no_result");
+    result.setAttribute("tabindex", "1");
+    result.innerHTML = "No Results";
+    document.querySelector("#autoComplete_results_list").appendChild(result);
+  },
   onSelection: feedback => {
     const title = feedback.selection.value.title;
     const image = feedback.selection.value.image_url;
