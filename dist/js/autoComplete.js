@@ -278,9 +278,7 @@
           var clearResults = autoCompleteView.clearResults(resultsList);
           if (_this2.inputValue.length > _this2.threshold && _this2.inputValue.replace(/ /g, "").length) {
             _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
-              if (list.list.length === 0 && _this2.noResults) {
-                _this2.noResults();
-              } else {
+              var eventEmitter = function eventEmitter() {
                 input.dispatchEvent(new CustomEvent("type", {
                   bubbles: true,
                   detail: {
@@ -291,6 +289,12 @@
                   },
                   cancelable: true
                 }));
+              };
+              if (list.list.length === 0 && _this2.noResults) {
+                _this2.noResults();
+                eventEmitter();
+              } else {
+                eventEmitter();
                 if (onSelection) {
                   autoCompleteView.getSelection(selector, resultsList, onSelection, list);
                 }

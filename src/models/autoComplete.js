@@ -238,10 +238,8 @@ export default class autoComplete {
       if (this.inputValue.length > this.threshold && this.inputValue.replace(/ /g, "").length) {
         // List matching results
         this.listMatchedResults(this.dataSrc).then(list => {
-          if (list.list.length === 0 && this.noResults) {
-            this.noResults();
-          } else {
           // Event emitter on input field
+          const eventEmitter = () => {
             input.dispatchEvent(
               new CustomEvent("type", {
                 bubbles: true,
@@ -253,6 +251,12 @@ export default class autoComplete {
                 },
                 cancelable: true,
               }));
+          };
+          if (list.list.length === 0 && this.noResults) {
+            this.noResults();
+            eventEmitter();
+          } else {
+            eventEmitter();
             // Gets user's selection
             // If action configured
             if (onSelection) {

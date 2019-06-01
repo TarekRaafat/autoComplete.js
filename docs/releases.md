@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v5.1.2 :sparkles:
+- v5.2.0 :sparkles:
+  - Added Event Emitter on `noResults` event
+
+- v5.1.2
   - `noResults` API unset error bug fix
 
 - v5.1.1
