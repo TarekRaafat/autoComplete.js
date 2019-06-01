@@ -276,25 +276,24 @@
           _this2.inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
           var resultsList = _this2.resultsList;
           var clearResults = autoCompleteView.clearResults(resultsList);
+          var eventEmitter = function eventEmitter(event, results) {
+            input.dispatchEvent(new CustomEvent("type", {
+              bubbles: true,
+              detail: {
+                event: event,
+                query: _this2.inputValue,
+                matches: results.matches,
+                results: results.list
+              },
+              cancelable: true
+            }));
+          };
           if (_this2.inputValue.length > _this2.threshold && _this2.inputValue.replace(/ /g, "").length) {
             _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
-              var eventEmitter = function eventEmitter() {
-                input.dispatchEvent(new CustomEvent("type", {
-                  bubbles: true,
-                  detail: {
-                    event: event,
-                    query: _this2.inputValue,
-                    matches: list.matches,
-                    results: list.list
-                  },
-                  cancelable: true
-                }));
-              };
+              eventEmitter(event, list);
               if (list.list.length === 0 && _this2.noResults) {
                 _this2.noResults();
-                eventEmitter();
               } else {
-                eventEmitter();
                 if (onSelection) {
                   autoCompleteView.getSelection(selector, resultsList, onSelection, list);
                 }

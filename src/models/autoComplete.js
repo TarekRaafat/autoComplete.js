@@ -233,30 +233,33 @@ export default class autoComplete {
       const resultsList = this.resultsList;
       // Clear Results function holder
       const clearResults = autoCompleteView.clearResults(resultsList);
+      // Event emitter on input field
+      const eventEmitter = (event, results) => {
+        // Dispatch event on input
+        input.dispatchEvent(
+          new CustomEvent("type", {
+            bubbles: true,
+            detail: {
+              event,
+              query: this.inputValue,
+              matches: results.matches,
+              results: results.list,
+            },
+            cancelable: true,
+          }));
+      };
 
       // Check if input is not empty or just have space before triggering the app
       if (this.inputValue.length > this.threshold && this.inputValue.replace(/ /g, "").length) {
         // List matching results
         this.listMatchedResults(this.dataSrc).then(list => {
           // Event emitter on input field
-          const eventEmitter = () => {
-            input.dispatchEvent(
-              new CustomEvent("type", {
-                bubbles: true,
-                detail: {
-                  event,
-                  query: this.inputValue,
-                  matches: list.matches,
-                  results: list.list,
-                },
-                cancelable: true,
-              }));
-          };
+          eventEmitter(event, list);
+          // Checks if there's results
           if (list.list.length === 0 && this.noResults) {
+            // Runs noResults action function
             this.noResults();
-            eventEmitter();
           } else {
-            eventEmitter();
             // Gets user's selection
             // If action configured
             if (onSelection) {
