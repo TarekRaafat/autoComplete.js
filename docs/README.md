@@ -291,7 +291,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Dynamic input field selector
 -   [x] Minimum characters length before results start getting rendered for more focused results
 -   [ ] More Results indicator if there are more than displayed
--   [ ] No matches found response & text
+-   [x] No matches found response & text
 -   [ ] Inline autocomplete nearest result
 -   [ ] Centralize Default values holder for easy access
 -   [x] API for Rendered result item customization
@@ -300,6 +300,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Capability for multiple instances
 -   [x] Render `results` in default case
 -   [x] Render `resultsList` & `resultItem` in different/custom elements
+-   [x] HTML elements `ContentEditable` Input Support
 
 * * *
 

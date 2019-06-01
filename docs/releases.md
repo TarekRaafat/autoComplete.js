@@ -31,7 +31,7 @@ Release flags:
 
 - v5.1.0
   - Added `noResults` open API for No Results (Thanks @chabri)
-  - HTML elements `ContentEditable` Input Support(Thanks @philippejadin)
+  - HTML elements `ContentEditable` Input Support (Thanks @philippejadin)
 
 - v5.0.0
 
