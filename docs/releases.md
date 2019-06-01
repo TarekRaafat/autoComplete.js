@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v5.1.1 :sparkles:
+- v5.1.2 :sparkles:
+  - `noResults` API unset error bug fix
+
+- v5.1.1
   - `UpperCase` query bug fix
 
 - v5.1.0

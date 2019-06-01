@@ -278,7 +278,7 @@
           var clearResults = autoCompleteView.clearResults(resultsList);
           if (_this2.inputValue.length > _this2.threshold && _this2.inputValue.replace(/ /g, "").length) {
             _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
-              if (list.list.length === 0) {
+              if (list.list.length === 0 && _this2.noResults) {
                 _this2.noResults();
               } else {
                 input.dispatchEvent(new CustomEvent("type", {

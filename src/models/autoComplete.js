@@ -238,7 +238,7 @@ export default class autoComplete {
       if (this.inputValue.length > this.threshold && this.inputValue.replace(/ /g, "").length) {
         // List matching results
         this.listMatchedResults(this.dataSrc).then(list => {
-          if (list.list.length === 0) {
+          if (list.list.length === 0 && this.noResults) {
             this.noResults();
           } else {
           // Event emitter on input field
