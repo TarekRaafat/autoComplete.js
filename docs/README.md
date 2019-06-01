@@ -101,6 +101,12 @@ import autoComplete from "./autoComplete";
 npm i @tarekraafat/autocomplete.js
 ```
 
+-   <a href="https://yarn.pm/@tarekraafat/autocomplete.js"><img src="https://yarnpkg.com/assets/og_image.png" alt="Yarn" width="80px"></a> install `(Javascript Package Manager)`
+
+```shell
+yarn add @tarekraafat/autocomplete.js
+```
+
 -   <img src="https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png" alt="Node.js" width="30px"> Node.js
 
 ```js

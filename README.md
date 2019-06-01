@@ -68,6 +68,12 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 npm i @tarekraafat/autocomplete.js
 ```
 
+-   <a href="https://yarn.pm/@tarekraafat/autocomplete.js">Yarn</a> install `(Javascript Package Manager)`
+
+```shell
+yarn add @tarekraafat/autocomplete.js
+```
+
 <!-- * * * -->
 
 ## Documentation:
