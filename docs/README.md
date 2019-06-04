@@ -313,7 +313,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Render `resultsList` & `resultItem` in different/custom elements
 -   [x] HTML elements `ContentEditable` Input Support
 -   [x] Added API for `keyBoardEvent`
--   [x] Get results without rendering list through `resultsList.render` API
+-   [x] Serve results without rendering list through `resultsList.render` API
 
 * * *
 
