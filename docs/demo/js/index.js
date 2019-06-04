@@ -30,7 +30,6 @@ const autoCompletejs = new autoComplete({
     return 0;
   },
   selector: "#autoComplete",
-  keyEvent: "keydown",
   threshold: 0,
   debounce: 300,
   searchEngine: "strict",

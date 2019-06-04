@@ -29,7 +29,6 @@ Release flags:
 - v6.0.0 :sparkles:
   - Get results from `eventEmitter` without rendering list through `resultsList.render` API
   - EventEmitter name `type` changed to `autoComplete` `[Changed]`
-  - Added API for `keyBoardEvent`
 
 - v5.2.0
   - Added Event Emitter on `noResults` event

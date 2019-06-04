@@ -61,7 +61,7 @@
   var navigation = function navigation(selector, resultsList) {
     var input = getInput(selector);
     var first = resultsList.firstChild;
-    document.onkeydown = function (event) {
+    document.onkeypress = function (event) {
       var active = document.activeElement;
       switch (event.keyCode) {
         case 38:
@@ -133,7 +133,6 @@
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.threshold = config.threshold || 0;
       this.debounce = config.debounce || 0;
-      this.keyBoardEvent = config.keyBoardEvent || "keyup";
       this.resultsList = {
         render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
         view: config.resultsList && config.resultsList.render ? autoCompleteView.createResultsList({
@@ -315,7 +314,7 @@
             });
           }
         };
-        input.addEventListener(this.keyBoardEvent, debounce(function (event) {
+        input.addEventListener("keyup", debounce(function (event) {
           if (!_this2.data.cache) {
             var data = _this2.data.src();
             if (data instanceof Promise) {

@@ -166,7 +166,6 @@ new autoComplete({
     },
 	placeHolder: "Food & Drinks...",	 // Place Holder text 				| (Optional)
     selector: "#autoComplete",		   // Input field selector 			 | (Optional)
-    keyEvent: "keydown",				 // Keyboard event type			   | (Optional)
 	threshold: 3,						// Min. Chars length to start Engine | (Optional)
 	debounce: 300,					   // Post duration for engine to start | (Optional)
 	searchEngine: "strict",			  // Search Engine type/mode 		  | (Optional)
@@ -211,7 +210,6 @@ new autoComplete({
 | `sort`         | Sort rendered results                                            | `Function`                                                                                                                                                                                                                                                                                                             | Blank / Empty **(Random Results)**                                                                         |
 | `placeHolder`  | Place Holder text                                                | `String`                                                                                                                                                                                                                                                                                                               | Blank / Empty                                                                                              |
 | `selector`     | Input field selector                                             | **-** `String` `id`/`class` <br>**OR**<br> **-** `Function` ( ) =>  `document.querySelector("")`                                                                                                                                                                                                                       | `"#autoComplete"`                                                                                          |
-| `keyEvent`     | Keyboard event type | **-** `String` <br> <br> `"keydown"` or `"keypress"` or `"keyup"` | `"keydown"` |
 | `threshold`    | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                                                                                                                                                                               | `0`                                                                                                        |
 | `debounce`    | Minimum duration after typing idle state for engine to kick in | `Number` <br> Milliseconds value <br> debounce: `300`         | `0`                                                                                                        |
 | `searchEngine` | Search Engine Type/Mode                                          | **-** `"strict"` lowerCase string<br>**OR**<br>**-** `"loose"` lowerCase string                                                                                                                                                                                                                                        | `"strict"`                                                                                                 |
@@ -312,7 +310,6 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Render `results` in default case
 -   [x] Render `resultsList` & `resultItem` in different/custom elements
 -   [x] HTML elements `ContentEditable` Input Support
--   [x] Added API for `keyBoardEvent`
 -   [x] Serve results without rendering list through `resultsList.render` API
 
 * * *
