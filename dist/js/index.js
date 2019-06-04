@@ -14,7 +14,7 @@ const autoCompletejs = new autoComplete({
       // Returns Fetched data
       return data;
     },
-    key: ["food", "cities", "animals"]
+    key: ["food", "cities", "animals"],
   },
   sort: (a, b) => {
     if (a.match < b.match) return -1;
@@ -23,7 +23,7 @@ const autoCompletejs = new autoComplete({
   },
   placeHolder: "Food & Drinks",
   selector: "#autoComplete",
-  keyBoardEvent: "keydown",
+  keyEvent: "keydown",
   threshold: 0,
   debounce: 0,
   searchEngine: "strict",

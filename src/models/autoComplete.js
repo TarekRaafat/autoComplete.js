@@ -20,7 +20,7 @@ export default class autoComplete {
     // Minimum duration for API calls debouncing
     this.debounce = config.debounce || 0;
     // Keyboard event type
-    this.keyBoardEvent = config.keyBoardEvent || "keyup";
+    this.keyEvent = config.keyEvent || "keydown";
     // Rendered results destination
     this.resultsList = {
       render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
@@ -299,7 +299,7 @@ export default class autoComplete {
     };
 
     // Input field handler fires an event onKeyup action
-    input.addEventListener(this.keyBoardEvent, debounce((event) => {
+    input.addEventListener(this.keyEvent, debounce((event) => {
       // If data src NOT to be cached
       // then we should invoke its function again
       if (!this.data.cache) {

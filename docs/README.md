@@ -7,7 +7,7 @@
 [![](https://data.jsdelivr.com/v1/package/gh/TarekRaafat/autoComplete.js/badge)](https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js)
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 ![\[Zero Dependencies\]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
-![\[Size\]()](https://img.shields.io/badge/Size-5%20KB-green.svg)
+![\[Size\]()](https://img.shields.io/badge/Size-6%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
 
 <br>
@@ -15,7 +15,7 @@
 
 <h1>autoComplete.js</h1>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v5.2**
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v6.0**
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
 
@@ -68,13 +68,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@5.2.0/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@6.0.0/dist/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@5.2.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@6.0.0/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="https://cdn0.iconfinder.com/data/icons/HTML5/512/HTML_Logo.png" alt="HTML" width="40px"> HTML Local load
@@ -122,7 +122,7 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ```html
 <link rel="stylesheet" href="./css/autoComplete.css">
 OR
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@5.2.0/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@6.0.0/dist/css/autoComplete.min.css">
 ```
 
 2.  Assign the default `id` value `"autoComplete"` to the desired input field or use any custom `id/class` and configure the API selector accordingly in `Step 4`
@@ -137,7 +137,7 @@ OR
 <script src="./js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 OR
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@5.2.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@6.0.0/dist/js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 ```
 
@@ -165,11 +165,13 @@ new autoComplete({
 	    return 0;
     },
 	placeHolder: "Food & Drinks...",	 // Place Holder text 				| (Optional)
-	selector: "#autoComplete",		   // Input field selector 			 | (Optional)
+    selector: "#autoComplete",		   // Input field selector 			 | (Optional)
+    keyEvent: "keydown",				 // Keyboard event type			   | (Optional)
 	threshold: 3,						// Min. Chars length to start Engine | (Optional)
 	debounce: 300,					   // Post duration for engine to start | (Optional)
 	searchEngine: "strict",			  // Search Engine type/mode 		  | (Optional)
-	resultsList: {					   // Rendered results list object 	 | (Optional)
+    resultsList: {					   // Rendered results list object 	 | (Optional)
+        render: true,
 		container: source => {
 			resultsListID = "food_List";
 			return resultsListID;
@@ -178,14 +180,21 @@ new autoComplete({
 		position: "afterend",
 		element: "ul"
 	},
+	maxResults: 5,						 // Max. number of rendered results | (Optional)
+	highlight: true,					   // Highlight matching results 	 | (Optional)
 	resultItem: {	  					// Rendered result item 		   | (Optional)
 		content: (data, source) => {
 			return `${data.match}`;
 		},
 		element: "li"
-	},
-	highlight: true,					   // Highlight matching results 	 | (Optional)
-	maxResults: 5,						 // Max. number of rendered results | (Optional)
+    },
+    noResults: () => {					 // Action script on noResults 	 | (Optional)
+        const result = document.createElement("li");
+        result.setAttribute("class", "no_result");
+        result.setAttribute("tabindex", "1");
+        result.innerHTML = "No Results";
+        document.querySelector("#autoComplete_results_list").appendChild(result);
+    },
 	onSelection: feedback => {			 // Action script onSelection event | (Optional)
 		console.log(feedback.selection.value.image_url);
 	}
@@ -202,10 +211,11 @@ new autoComplete({
 | `sort`         | Sort rendered results                                            | `Function`                                                                                                                                                                                                                                                                                                             | Blank / Empty **(Random Results)**                                                                         |
 | `placeHolder`  | Place Holder text                                                | `String`                                                                                                                                                                                                                                                                                                               | Blank / Empty                                                                                              |
 | `selector`     | Input field selector                                             | **-** `String` `id`/`class` <br>**OR**<br> **-** `Function` ( ) =>  `document.querySelector("")`                                                                                                                                                                                                                       | `"#autoComplete"`                                                                                          |
+| `keyEvent`     | Keyboard event type | **-** `String` <br> <br> `"keydown"` or `"keypress"` or `"keyup"` | `"keydown"` |
 | `threshold`    | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                                                                                                                                                                               | `0`                                                                                                        |
 | `debounce`    | Minimum duration after typing idle state for engine to kick in | `Number` <br> Milliseconds value <br> debounce: `300`         | `0`                                                                                                        |
 | `searchEngine` | Search Engine Type/Mode                                          | **-** `"strict"` lowerCase string<br>**OR**<br>**-** `"loose"` lowerCase string                                                                                                                                                                                                                                        | `"strict"`                                                                                                 |
-| `resultsList`  | Rendered results list destination,  position & element                    | **-** `Object` with 4 methods<br> 1- container: <br> `Function` (source) => `id`<br> 2- destination: `document.querySelector("#div")`<br> 3- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` <br> 4- element: <br> `"ul", "span", "div" or Custom`| `{container: (source) => { }, destination: document.querySelector("#autoComplete"), position: "afterend", element: "ul"}` |
+| `resultsList`  | Rendered results list destination,  position & element                    | **-** `Object` with 5 methods<br> 1- render: `Boolean` <br> 2- container: <br> `Function` (source) => `id`<br> 3- destination: `document.querySelector("#div")`<br> 4- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` <br> 5- element: <br> `"ul", "span", "div" or Custom`| `{container: (source) => { }, destination: document.querySelector("#autoComplete"), position: "afterend", element: "ul"}` |
 | `resultItem`   | Rendered result Item content & element                                          | **-** `Object` with 2 methods<br> 1- content: <br>**-** `Function` (data, source) => `String` <br> **-** `data.match` has to be used for **Highlighted** result <br> 2- element: <br> `"li", "span", "div" or Custom`                | `{content: (data, source) => data.match, element: "li"}`                                                                                               |
 | `noResults`   | Action script on noResults found | `Function` | No Action |
 | `highlight`    | Highlight matching results                                       | `Boolean`                                                                                                                                                                                                                                                                                                              | `false`                                                                                                    |
@@ -254,7 +264,7 @@ it with [autoComplete.js][so tag].
 
 * * *
 
-## 5. What's New in v5.2?
+## 5. What's New in v6.0?
 
 Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
