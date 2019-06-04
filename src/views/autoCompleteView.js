@@ -70,7 +70,7 @@ const addResultsToList = (resultsList, dataSrc, resultItem) => {
 const navigation = (selector, resultsList) => {
   const input = getInput(selector);
   const first = resultsList.firstChild;
-  document.onkeypress = event => {
+  document.onkeydown = event => {
     const active = document.activeElement;
     switch (event.keyCode) {
       // Arrow Up

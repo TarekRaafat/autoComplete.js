@@ -61,7 +61,7 @@
   var navigation = function navigation(selector, resultsList) {
     var input = getInput(selector);
     var first = resultsList.firstChild;
-    document.onkeypress = function (event) {
+    document.onkeydown = function (event) {
       var active = document.activeElement;
       switch (event.keyCode) {
         case 38:
