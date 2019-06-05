@@ -26,7 +26,7 @@ Release flags:
 
 ## Release Notes
 
-- v6.0.0 :sparkles:
+- v5.3.0 :sparkles:
   - Get results from `eventEmitter` without rendering list through `resultsList.render` API
   - EventEmitter name `type` changed to `autoComplete` `[Changed]`
 
