@@ -1,6 +1,6 @@
 {
   "name": "@tarekraafat/autocomplete.js",
-  "version": "5.2.0",
+  "version": "5.3.0",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "main": "dist/js/autoComplete.js",
   "browser": "dist/js/autoComplete.min.js",

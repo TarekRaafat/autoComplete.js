@@ -21,35 +21,38 @@ export default class autoComplete {
     // Minimum duration for API calls debouncing
     this.debounce = config.debounce || 0;
     // Rendered results destination
-    this.resultsList = autoCompleteView.createResultsList({
+    this.resultsList = {
+      render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
+      view: config.resultsList && config.resultsList.render ? autoCompleteView.createResultsList({
       // Results List function
-      container:
+        container:
         // If resultsList and container are set
         config.resultsList && config.resultsList.container
           // Then set resultsList container
           ? config.resultsList.container
           // Else set default false
           : false,
-      // Results List selector
-      destination:
+        // Results List selector
+        destination:
         // If resultsList and destination are set
         config.resultsList && config.resultsList.destination
           // Then set resultList destination
           ? config.resultsList.destination
           // Else set Default
           : autoCompleteView.getInput(this.selector),
-      // Results List position
-      position:
+        // Results List position
+        position:
         // If resultsList and position are set
         config.resultsList && config.resultsList.position
           // Then resultsList position
           ? config.resultsList.position
           // Else set default "afterend"
           : "afterend",
-      // Results List element tag
-      element: config.resultsList && config.resultsList.element
-        ? config.resultsList.element : "ul"
-    });
+        // Results List element tag
+        element: config.resultsList && config.resultsList.element
+          ? config.resultsList.element : "ul"
+      }) : null
+    };
     // Sorting results list
     this.sort = config.sort || false;
     // Placeholder text
@@ -178,10 +181,14 @@ export default class autoComplete {
       const list = this.sort
         ? resList.sort(this.sort).slice(0, this.maxResults)
         : resList.slice(0, this.maxResults);
+
+      // If resultsList set NOT to render
+      if (this.resultsList.render) {
       // Rendering matching results to the UI list
-      autoCompleteView.addResultsToList(this.resultsList, list, this.resultItem);
-      // Keyboard Arrow Navigation
-      autoCompleteView.navigation(this.selector, this.resultsList);
+        autoCompleteView.addResultsToList(this.resultsList.view, list, this.resultItem);
+        // Keyboard Arrow Navigation
+        autoCompleteView.navigation(this.selector, this.resultsList.view);
+      }
 
       // Returns rendered list
       return resolve({
@@ -203,8 +210,6 @@ export default class autoComplete {
     const input = autoCompleteView.getInput(selector);
     // Placeholder value holder
     const placeHolder = this.placeHolder;
-    // onSelection function holder
-    const onSelection = this.onSelection;
 
     // Placeholder setter
     if (placeHolder) {
@@ -230,15 +235,16 @@ export default class autoComplete {
       this.inputValue = input instanceof HTMLInputElement
         ? input.value.toLowerCase()
         : input.innerHTML.toLowerCase();
-      // Get results list value
-      const resultsList = this.resultsList;
-      // Clear Results function holder
-      const clearResults = autoCompleteView.clearResults(resultsList);
+      // resultsList Render Switch
+      const renderResultsList = this.resultsList.render;
+      // App triggering condition
+      const triggerCondition =
+      (this.inputValue.length > this.threshold && this.inputValue.replace(/ /g, "").length);
       // Event emitter on input field
       const eventEmitter = (event, results) => {
         // Dispatch event on input
         input.dispatchEvent(
-          new Polyfill.CustomEventWrapper("type", {
+          new Polyfill.CustomEventWrapper("autoComplete", {
             bubbles: true,
             detail: {
               event,
@@ -250,27 +256,44 @@ export default class autoComplete {
           }));
       };
 
-      // Check if input is not empty or just have space before triggering the app
-      if (this.inputValue.length > this.threshold && this.inputValue.replace(/ /g, "").length) {
+      // Checks if results will be rendered or NOT
+      if(renderResultsList){
+        // onSelection function holder
+        const onSelection = this.onSelection;
+        // Get results list value
+        const resultsList = this.resultsList.view;
+        // Clear Results function holder
+        const clearResults = autoCompleteView.clearResults(resultsList);
+
+        // Check if input is not empty
+        // or just have space before triggering the app
+        if (triggerCondition) {
         // List matching results
-        this.listMatchedResults(this.dataSrc).then(list => {
+          this.listMatchedResults(this.dataSrc).then(list => {
           // Event emitter on input field
-          eventEmitter(event, list);
-          // Checks if there's results
-          if (list.list.length === 0 && this.noResults) {
+            eventEmitter(event, list);
+            // Checks if there's results
+            if (list.list.length === 0 && this.noResults && this.resultsList.render) {
             // Runs noResults action function
-            this.noResults();
-          } else {
+              this.noResults();
+            } else {
             // Gets user's selection
             // If action configured
-            if (onSelection) {
-              autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+              if (onSelection) {
+                autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+              }
             }
-          }
-        });
-      } else {
+          });
+        } else {
         // clears all results list
-        clearResults;
+          clearResults;
+        }
+      // If results will NOT be rendered
+      } else if (!renderResultsList && triggerCondition) {
+        this.listMatchedResults(this.dataSrc).then(list => {
+        // Event emitter on input field
+          eventEmitter(event, list);
+        });
       }
     };
 

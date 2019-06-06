@@ -30,12 +30,13 @@ const autoCompletejs = new autoComplete({
     return 0;
   },
   selector: "#autoComplete",
-  threshold: 3,
+  threshold: 0,
   debounce: 300,
   searchEngine: "strict",
   highlight: true,
   maxResults: Infinity,
   resultsList: {
+    render: true,
     container: source => {
       resultsListID = "autoComplete_results_list";
       return resultsListID;

@@ -1,5 +1,5 @@
 // autoComplete.js on type event emitter
-document.querySelector("#autoComplete").addEventListener("type", event => {
+document.querySelector("#autoComplete").addEventListener("autoComplete", event => {
   console.log(event);
 });
 // The autoComplete.js Engine instance creator
@@ -14,7 +14,7 @@ const autoCompletejs = new autoComplete({
       // Returns Fetched data
       return data;
     },
-    key: ["food", "cities", "animals"]
+    key: ["food", "cities", "animals"],
   },
   sort: (a, b) => {
     if (a.match < b.match) return -1;
@@ -29,6 +29,7 @@ const autoCompletejs = new autoComplete({
   highlight: true,
   maxResults: 10,
   resultsList: {
+    render: true,
     container: source => {
       resultsListID = "autoComplete_results_list";
       return resultsListID;
@@ -66,7 +67,7 @@ const autoCompletejs = new autoComplete({
 // On page load add class to input field
 window.addEventListener("load", () => {
   document.querySelector("#autoComplete").classList.add("out");
-  document.querySelector("#autoComplete_results_list").style.display = "none";
+  // document.querySelector("#autoComplete_results_list").style.display = "none";
 });
 
 // Toggle Search Engine Type/Mode

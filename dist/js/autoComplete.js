@@ -133,21 +133,24 @@
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.threshold = config.threshold || 0;
       this.debounce = config.debounce || 0;
-      this.resultsList = autoCompleteView.createResultsList({
-        container:
-        config.resultsList && config.resultsList.container
-        ? config.resultsList.container
-        : false,
-        destination:
-        config.resultsList && config.resultsList.destination
-        ? config.resultsList.destination
-        : autoCompleteView.getInput(this.selector),
-        position:
-        config.resultsList && config.resultsList.position
-        ? config.resultsList.position
-        : "afterend",
-        element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul"
-      });
+      this.resultsList = {
+        render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
+        view: config.resultsList && config.resultsList.render ? autoCompleteView.createResultsList({
+          container:
+          config.resultsList && config.resultsList.container
+          ? config.resultsList.container
+          : false,
+          destination:
+          config.resultsList && config.resultsList.destination
+          ? config.resultsList.destination
+          : autoCompleteView.getInput(this.selector),
+          position:
+          config.resultsList && config.resultsList.position
+          ? config.resultsList.position
+          : "afterend",
+          element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul"
+        }) : null
+      };
       this.sort = config.sort || false;
       this.placeHolder = config.placeHolder;
       this.maxResults = config.maxResults || 5;
@@ -242,8 +245,10 @@
             }
           });
           var list = _this.sort ? resList.sort(_this.sort).slice(0, _this.maxResults) : resList.slice(0, _this.maxResults);
-          autoCompleteView.addResultsToList(_this.resultsList, list, _this.resultItem);
-          autoCompleteView.navigation(_this.selector, _this.resultsList);
+          if (_this.resultsList.render) {
+            autoCompleteView.addResultsToList(_this.resultsList.view, list, _this.resultItem);
+            autoCompleteView.navigation(_this.selector, _this.resultsList.view);
+          }
           return resolve({
             matches: resList.length,
             list: list
@@ -257,7 +262,6 @@
         var selector = this.selector;
         var input = autoCompleteView.getInput(selector);
         var placeHolder = this.placeHolder;
-        var onSelection = this.onSelection;
         if (placeHolder) {
           input.setAttribute("placeholder", placeHolder);
         }
@@ -274,10 +278,10 @@
         };
         var exec = function exec(event) {
           _this2.inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
-          var resultsList = _this2.resultsList;
-          var clearResults = autoCompleteView.clearResults(resultsList);
+          var renderResultsList = _this2.resultsList.render;
+          var triggerCondition = _this2.inputValue.length > _this2.threshold && _this2.inputValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
-            input.dispatchEvent(new CustomEvent("type", {
+            input.dispatchEvent(new CustomEvent("autoComplete", {
               bubbles: true,
               detail: {
                 event: event,
@@ -288,16 +292,25 @@
               cancelable: true
             }));
           };
-          if (_this2.inputValue.length > _this2.threshold && _this2.inputValue.replace(/ /g, "").length) {
+          if (renderResultsList) {
+            var onSelection = _this2.onSelection;
+            var resultsList = _this2.resultsList.view;
+            var clearResults = autoCompleteView.clearResults(resultsList);
+            if (triggerCondition) {
+              _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
+                eventEmitter(event, list);
+                if (list.list.length === 0 && _this2.noResults && _this2.resultsList.render) {
+                  _this2.noResults();
+                } else {
+                  if (onSelection) {
+                    autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+                  }
+                }
+              });
+            }
+          } else if (!renderResultsList && triggerCondition) {
             _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
               eventEmitter(event, list);
-              if (list.list.length === 0 && _this2.noResults) {
-                _this2.noResults();
-              } else {
-                if (onSelection) {
-                  autoCompleteView.getSelection(selector, resultsList, onSelection, list);
-                }
-              }
             });
           }
         };
