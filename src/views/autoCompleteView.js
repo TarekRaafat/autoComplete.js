@@ -23,10 +23,10 @@ const getInput = selector => (typeof selector === "string" ? document.querySelec
  */
 const createResultsList = renderResults => {
   const resultsList = document.createElement(renderResults.element);
+  resultsList.setAttribute("id", select.resultsList);
   if (renderResults.container) {
     renderResults.container(resultsList);
   }
-  resultsList.setAttribute("id", select.resultsList);
   renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
   return resultsList;
 };
