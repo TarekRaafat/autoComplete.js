@@ -63,7 +63,7 @@ npm run build
 
 ### Installation:
 
--   <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="https://www.jsdelivr.com/img/logo@2x.png" alt="jsDelivr" width="100px"></a> CDN
+-   <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="./img/logos/jsdeliver_logo.png" alt="jsDelivr Logo" width="100px"></a> CDN
 
 `CSS`
 
@@ -77,19 +77,19 @@ npm run build
 <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@5.3.0/dist/js/autoComplete.min.js"></script>
 ```
 
--   <img src="https://cdn0.iconfinder.com/data/icons/HTML5/512/HTML_Logo.png" alt="HTML" width="40px"> HTML Local load
+-   <img src="./img/logos/html_logo.png" alt="HTML Logo" width="40px"> HTML Local load
 
 ```html
 <script src="./autoComplete.js"></script>
 ```
 
--   <img src="https://cdn0.iconfinder.com/data/icons/HTML5/512/HTML_Logo.png" alt="HTML" width="40px"> HTML Local load - ES6 module `(Use with Import)`
+-   <img src="./img/logos/html_logo.png" alt="HTML Logo" width="40px"> HTML Local load - ES6 module `(Use with Import)`
 
 ```html
 <script src="./index.js" type="module"></script>
 ```
 
--   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" alt="Javascript" width="40px"> Import module ES6
+-   <img src="./img/logos/javascript_logo.png" alt="Javascript Logo" width="40px"> Import module ES6
 
 ```js
 import autoComplete from "./autoComplete";
@@ -101,13 +101,13 @@ import autoComplete from "./autoComplete";
 npm i @tarekraafat/autocomplete.js
 ```
 
--   <a href="https://yarn.pm/@tarekraafat/autocomplete.js"><img src="https://yarnpkg.com/assets/og_image.png" alt="Yarn" width="80px"></a> install `(Javascript Package Manager)`
+-   <a href="https://yarn.pm/@tarekraafat/autocomplete.js"><img src="./img/logos/yarn_logo.png" alt="Yarn Logo" width="80px"></a> install `(Javascript Package Manager)`
 
 ```shell
 yarn add @tarekraafat/autocomplete.js
 ```
 
--   <img src="https://seeklogo.com/images/N/nodejs-logo-FBE122E377-seeklogo.com.png" alt="Node.js" width="30px"> Node.js
+-   <img src="./img/logos/nodejs_logo.png" alt="Node.js" width="30px"> Node.js
 
 ```js
 const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete");
@@ -229,7 +229,7 @@ new autoComplete({
 -   Live working [Demo]
 
 
--   Try it on [<img src="https://cdn.freelogovectors.net/wp-content/uploads/2018/03/codepen-logo.png" width="100px" alt="CodePen">](https://codepen.io/tarekraafat/pen/rQopdW?editors=0010)
+-   Try it on [<img src="./img/logos/codepen_logo.png" width="100px" alt="CodePen Logo">](https://codepen.io/tarekraafat/pen/rQopdW?editors=0010)
 
 [demo]: https://tarekraafat.github.io/autoComplete.js/demo/
 
