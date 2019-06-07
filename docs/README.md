@@ -286,9 +286,9 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Number of matching results
 -   [x] Fetching dynamically External API data source
 -   [x] Multiple searchable `keys` for data `src`
--   [ ] Reload data `src` on data change
 -   [x] Event emitter on input field events
 -   [x] Handling large data sets
+-   [ ] Event emitter fires on cleared empty input field state
 
 ### Usability:
 
@@ -299,18 +299,21 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Comprehensive data feedback on user selection
 -   [x] Dynamic input field selector
 -   [x] Minimum characters length before results start getting rendered for more focused results
--   [ ] More Results indicator if there are more than displayed
 -   [x] No matches found response & text
--   [ ] Inline autocomplete nearest result
--   [ ] Centralize Default values holder for easy access
 -   [x] API for Rendered result item customization
 -   [x] API for Rendered results list customization
--   [ ] Add more use cases & examples to documentation
 -   [x] Capability for multiple instances
 -   [x] Render `results` in default case
 -   [x] Render `resultsList` & `resultItem` in different/custom elements
 -   [x] HTML elements `ContentEditable` Input Support
 -   [x] Serve results without rendering list through `resultsList.render` API
+-   [ ] Inline autocomplete to the nearest result value
+-   [ ] Add more use examples & cases of the library to the documentation
+-   [ ] Better compression / Code optimization for the library to squeeze it under `[5kb]`
+
+### Reported Issues:
+
+- [ ] Random duplicate results
 
 * * *
 
