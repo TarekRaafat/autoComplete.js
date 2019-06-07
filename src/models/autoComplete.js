@@ -1,4 +1,5 @@
 import { autoCompleteView } from "../views/autoCompleteView";
+import { Polyfill } from "../helpers/polyfill";
 
 export default class autoComplete {
   constructor(config) {
@@ -243,7 +244,7 @@ export default class autoComplete {
       const eventEmitter = (event, results) => {
         // Dispatch event on input
         input.dispatchEvent(
-          new CustomEvent("autoComplete", {
+          new Polyfill.CustomEventWrapper("autoComplete", {
             bubbles: true,
             detail: {
               event,
@@ -342,5 +343,8 @@ export default class autoComplete {
       this.dataSrc = dataSrc;
       this.ignite();
     }
+
+    // Polyfilling for IE11
+    Polyfill.initElementClosestPolyfill();
   }
 }
