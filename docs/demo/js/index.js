@@ -1,5 +1,5 @@
 // autoComplete.js on type event emitter
-document.querySelector("#autoComplete").addEventListener("type", event => {
+document.querySelector("#autoComplete").addEventListener("autoComplete", function(event) {
   console.log(event);
 });
 
@@ -25,8 +25,12 @@ const autoCompletejs = new autoComplete({
     cache: false,
   },
   sort: (a, b) => {
-    if (a.match < b.match) return -1;
-    if (a.match > b.match) return 1;
+    if (a.match < b.match) {
+      return -1;
+    }
+    if (a.match > b.match) {
+      return 1;
+    }
     return 0;
   },
   selector: "#autoComplete",
@@ -37,21 +41,20 @@ const autoCompletejs = new autoComplete({
   maxResults: Infinity,
   resultsList: {
     render: true,
-    container: source => {
-      resultsListID = "autoComplete_results_list";
-      return resultsListID;
+    container: function(source) {
+      source.setAttribute("id", "autoComplete_results_list");
     },
     destination: document.querySelector("#autoComplete"),
     position: "afterend",
     element: "ul",
   },
   resultItem: {
-    content: (data, source) => {
-      return `${data.match}`;
+    content: function(data, source) {
+      source.innerHTML = data.match;
     },
     element: "li",
   },
-  noResults: () => {
+  noResults: function() {
     const result = document.createElement("li");
     result.setAttribute("class", "no_result");
     result.setAttribute("tabindex", "1");
@@ -75,13 +78,12 @@ const autoCompletejs = new autoComplete({
 });
 
 // On page load add class to input field
-window.addEventListener("load", () => {
+window.addEventListener("load", function() {
   document.querySelector("#autoComplete").classList.add("out");
-  document.querySelector("#autoComplete_results_list").style.display = "none";
 });
 
 // Toggle Search Engine Type/Mode
-document.querySelector(".toggeler").addEventListener("click", () => {
+document.querySelector(".toggeler").addEventListener("click", function() {
   // Holdes the toggle buttin alignment
   const toggele = document.querySelector(".toggele").style.justifyContent;
 
@@ -99,7 +101,7 @@ document.querySelector(".toggeler").addEventListener("click", () => {
 });
 
 // Toggle results list and other elements
-const action = action => {
+const action = function(action) {
   const github = document.querySelector(".github-corner");
   const title = document.querySelector("h1");
   const mode = document.querySelector(".mode");
@@ -123,12 +125,11 @@ const action = action => {
 
 // Toggle event for search input
 // showing & hidding results list onfocus / blur
-// ["focus", "blur"].forEach(eventType => {
-["focus", "blur", "mousedown", "keydown"].forEach(eventType => {
+["focus", "blur", "mousedown", "keydown"].forEach(function(eventType) {
   const input = document.querySelector("#autoComplete");
   const resultsList = document.querySelector("#autoComplete_results_list");
 
-  document.querySelector("#autoComplete").addEventListener(eventType, event => {
+  document.querySelector("#autoComplete").addEventListener(eventType, function() {
     // Hide results list & show other elemennts
     if (eventType === "blur") {
       action("dim");
@@ -139,8 +140,8 @@ const action = action => {
   });
 
   // Hide Results list when not used
-  document.addEventListener(eventType, event => {
-    var current = event.target;
+  document.addEventListener(eventType, function(event) {
+    const current = event.target;
     if (
       current === input ||
       current === resultsList ||
@@ -155,8 +156,8 @@ const action = action => {
 });
 
 // Toggle Input Classes on results list focus to keep style
-["focusin", "focusout", "keydown"].forEach(eventType => {
-  document.querySelector("#autoComplete_results_list").addEventListener(eventType, event => {
+["focusin", "focusout", "keydown"].forEach(function(eventType) {
+  document.querySelector("#autoComplete_results_list").addEventListener(eventType, function(event) {
     if (eventType === "focusin") {
       if (event.target && event.target.nodeName === "LI") {
         action("light");

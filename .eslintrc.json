@@ -4,6 +4,7 @@
     "es6": true
   },
   "extends": "eslint:recommended",
+  "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
@@ -11,7 +12,8 @@
   "rules": {
     "curly": 2,
     "no-empty": 2,
-    "new-cap": 2,
+    "new-cap":1,
+    "no-constant-condition": 1,
     "no-mixed-spaces-and-tabs": [
       "error",
       "smart-tabs"
@@ -33,7 +35,7 @@
       "error",
       4
     ],
-    "no-inline-comments": 2,
+    "no-inline-comments": 0,
     "no-trailing-spaces": 2,
     "no-underscore-dangle": 2,
     "spaced-comment": 2,

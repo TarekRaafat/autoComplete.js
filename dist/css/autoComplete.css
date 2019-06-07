@@ -14,7 +14,11 @@
   border: 0.05rem solid rgb(255, 122, 122);
   caret-color: rgb(255, 122, 122);
   color: rgba(255, 255, 255, 0);
-  background: url("./images/magnifier.svg") no-repeat center/10% 1.5rem;
+  background-image: url(./images/magnifier.svg);
+  background-repeat: no-repeat;
+  background-size: 1.2rem;
+  background-origin: border-box;
+  background-position: center;
   transition: all 0.4s ease;
   -webkit-transition: all -webkit-transform 0.4s ease;
   text-overflow: ellipsis;
@@ -53,7 +57,9 @@
   color: rgba(255, 122, 122, 1);
   height: 3rem;
   width: 16.5rem;
-  background: url("./images/magnifier.svg") no-repeat left/15% 1.7rem;
+  background-image: url(./images/magnifier.svg);
+  background-size: 1.7rem;
+  background-position: left 1.05rem top 0.7rem;
   transition: all 0.3s ease;
   -webkit-transition: all -webkit-transform 0.3s ease;
 }
@@ -64,7 +70,9 @@
   height: 3rem;
   width: 16.5rem;
   border: 0.05rem solid rgb(255, 122, 122);
-  background: url("./images/magnifier.svg") no-repeat left/15% 1.5rem;
+  background-image: url(./images/magnifier.svg);
+  background-size: 1.5rem;
+  background-position: left 1.05rem top 0.8rem;
   box-shadow: rgba(255, 122, 122, 0.1) 0px 0px 20px 5px;
 }
 
@@ -139,12 +147,12 @@
 @media only screen and (max-width: 600px) {
   #autoComplete {
     width: 5rem;
-    background: url("./images/magnifier.svg") no-repeat center/25% 1.5rem;
   }
 
   #autoComplete:focus {
     width: 11rem;
-    background: url("./images/magnifier.svg") no-repeat left/25% 1.5rem;
+    background-size: 1.6rem;
+    background-position: left 1.1rem top 0.75rem;
   }
 
   .autoComplete_result:first-child {
@@ -177,21 +185,17 @@
 @-moz-document url-prefix() {
   #autoComplete {
     border-width: 1px;
-    background: url("./images/magnifier.svg") no-repeat center;
-    background-size: 10%;
+    background-size: 1.2rem;
+    background-origin: border-box;
+    background-position: center;
   }
 
   #autoComplete:hover {
     border-width: 1px;
-    background: url("./images/magnifier.svg") no-repeat left;
-    background-position: 4%;
-    background-size: 7.5%;
   }
 
   #autoComplete:focus {
     border-width: 1px;
-    background: url("./images/magnifier.svg") no-repeat left/10% 2rem;
-    background-position: 4%;
-    background-size: 6.5%;
+    background-position: left 1.1rem top 0.8rem;
   }
 }

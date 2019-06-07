@@ -2,7 +2,7 @@ const dataAttribute = "data-result";
 const select = {
   resultsList: "autoComplete_results_list",
   result: "autoComplete_result",
-  highlight: "autoComplete_highlighted"
+  highlight: "autoComplete_highlighted",
 };
 
 /**
@@ -24,7 +24,7 @@ const getInput = selector => (typeof selector === "string" ? document.querySelec
 const createResultsList = renderResults => {
   const resultsList = document.createElement(renderResults.element);
   if (renderResults.container) {
-    select.resultsList = renderResults.container(resultsList) || select.resultsList;
+    renderResults.container(resultsList);
   }
   resultsList.setAttribute("id", select.resultsList);
   renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
@@ -56,7 +56,7 @@ const addResultsToList = (resultsList, dataSrc, resultItem) => {
     result.setAttribute(dataAttribute, resultValue);
     result.setAttribute("class", select.result);
     result.setAttribute("tabindex", "1");
-    result.innerHTML = resultItem.content ? resultItem.content(event, result) : event.match || event;
+    resultItem.content ? resultItem.content(event, result) : (result.innerHTML = event.match || event);
     resultsList.appendChild(result);
   });
 };
@@ -119,15 +119,14 @@ const getSelection = (field, resultsList, callback, resultsValues) => {
           // Callback function invoked on user selection
           callback({
             event,
-            query: getInput(field) instanceof HTMLInputElement
-              ? getInput(field).value
-              : getInput(field).innerHTML,
+            query:
+              getInput(field) instanceof HTMLInputElement ? getInput(field).value : getInput(field).innerHTML,
             matches: resultsValues.matches,
             results: resultsValues.list.map(record => record.value),
             selection: resultsValues.list.find(value => {
               const resValue = value.value[value.key] || value.value;
               return resValue === event.target.closest(`.${select.result}`).getAttribute(dataAttribute);
-            })
+            }),
           });
           // Clear Results after selection is made
           clearResults(resultsList);
@@ -144,5 +143,5 @@ export const autoCompleteView = {
   addResultsToList,
   navigation,
   clearResults,
-  getSelection
+  getSelection,
 };

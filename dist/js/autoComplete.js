@@ -38,7 +38,7 @@
   var createResultsList = function createResultsList(renderResults) {
     var resultsList = document.createElement(renderResults.element);
     if (renderResults.container) {
-      select.resultsList = renderResults.container(resultsList) || select.resultsList;
+      renderResults.container(resultsList);
     }
     resultsList.setAttribute("id", select.resultsList);
     renderResults.destination.insertAdjacentElement(renderResults.position, resultsList);
@@ -54,7 +54,7 @@
       result.setAttribute(dataAttribute, resultValue);
       result.setAttribute("class", select.result);
       result.setAttribute("tabindex", "1");
-      result.innerHTML = resultItem.content ? resultItem.content(event, result) : event.match || event;
+      resultItem.content ? resultItem.content(event, result) : result.innerHTML = event.match || event;
       resultsList.appendChild(result);
     });
   };
@@ -171,17 +171,17 @@
         render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
         view: config.resultsList && config.resultsList.render ? autoCompleteView.createResultsList({
           container:
-          config.resultsList && config.resultsList.container
-          ? config.resultsList.container
-          : false,
+          config.resultsList && config.resultsList.container ?
+          config.resultsList.container :
+          false,
           destination:
-          config.resultsList && config.resultsList.destination
-          ? config.resultsList.destination
-          : autoCompleteView.getInput(this.selector),
+          config.resultsList && config.resultsList.destination ?
+          config.resultsList.destination :
+          autoCompleteView.getInput(this.selector),
           position:
-          config.resultsList && config.resultsList.position
-          ? config.resultsList.position
-          : "afterend",
+          config.resultsList && config.resultsList.position ?
+          config.resultsList.position :
+          "afterend",
           element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul"
         }) : null
       };
