@@ -316,7 +316,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
 ### Reported Issues:
 
-- [ ] Random duplicate results
+- [ ] Results duplicate because of mulitple data source key
 
 * * *
 
