@@ -289,7 +289,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Event emitter on input field events
 -   [x] Handling large data sets
 -   [ ] Event emitter fires on cleared empty input field state
--   [ ] Automatic deep search over multiple nested object data source
+-   [ ] Automatic deep search over all keys in multiple nested object data source
 -   [ ] Improve `FETCH` usage for external data source handling
 -   [ ] Add `IndexedDB` for large data sets handling & offline usage
 
@@ -316,7 +316,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
 ### Reported Issues:
 
-- [ ] Duplicate results because of mulitple data source keys
+- [ ] Duplicate results because of mulitple data source `keys`
 
 * * *
 

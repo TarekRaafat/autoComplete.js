@@ -39,21 +39,6 @@ const autoCompletejs = new autoComplete({
   searchEngine: "strict",
   highlight: true,
   maxResults: Infinity,
-  resultsList: {
-    render: true,
-    container: function(source) {
-      source.setAttribute("id", "autoComplete_results_list");
-    },
-    destination: document.querySelector("#autoComplete"),
-    position: "afterend",
-    element: "ul",
-  },
-  resultItem: {
-    content: function(data, source) {
-      source.innerHTML = data.match;
-    },
-    element: "li",
-  },
   noResults: function() {
     const result = document.createElement("li");
     result.setAttribute("class", "no_result");
