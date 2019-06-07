@@ -312,11 +312,11 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Serve results without rendering list through `resultsList.render` API
 -   [ ] Inline autocomplete to the nearest result value
 -   [ ] Add more use examples & cases of the library to the documentation
--   [ ] Better compression / Code optimization for the library to squeeze it under `[5kb]`
+-   [ ] Better code compression / optimization for the library to squeeze it under `[5kb]`
 
 ### Reported Issues:
 
-- [ ] Results duplicate because of mulitple data source key
+- [ ] Duplicate results because of mulitple data source keys
 
 * * *
 
