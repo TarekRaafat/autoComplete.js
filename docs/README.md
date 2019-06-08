@@ -290,8 +290,9 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Handling large data sets
 -   [ ] Event emitter fires on cleared empty input field state
 -   [ ] Automatic deep search over all keys in multiple nested object data source
--   [ ] Improve `FETCH` usage for external data source handling
+-   [ ] Improve `Promise` usage for external data source handling
 -   [ ] Add `IndexedDB` for large data sets handling & offline usage
+-   [ ] Add `weights` on nearest possible results
 
 ### Usability:
 
@@ -310,7 +311,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Render `resultsList` & `resultItem` in different/custom elements
 -   [x] HTML elements `ContentEditable` Input Support
 -   [x] Serve results without rendering list through `resultsList.render` API
--   [ ] Inline autocomplete to the nearest result value
+-   [ ] `Inline` autoComplete to the nearest result value
 -   [ ] Add more use examples & cases of the library to the documentation
 -   [ ] Better code compression / optimization for the library to squeeze it under `[5kb]`
 

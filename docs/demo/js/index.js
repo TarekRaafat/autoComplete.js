@@ -6,7 +6,7 @@ document.querySelector("#autoComplete").addEventListener("autoComplete", functio
 // The autoComplete.js Engine instance creator
 const autoCompletejs = new autoComplete({
   data: {
-    src: async () => {
+    src: async function() {
       // Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
       // API key token
@@ -24,7 +24,7 @@ const autoCompletejs = new autoComplete({
     key: ["title"],
     cache: false,
   },
-  sort: (a, b) => {
+  sort: function(a, b) {
     if (a.match < b.match) {
       return -1;
     }
@@ -41,7 +41,7 @@ const autoCompletejs = new autoComplete({
   maxResults: Infinity,
   resultsList: {
     render: true,
-    container: function(source) {
+    container: function() {
       const resultsListID = "autoComplete_results_list";
       return resultsListID;
     },
@@ -50,7 +50,7 @@ const autoCompletejs = new autoComplete({
     element: "ul",
   },
   resultItem: {
-    content: function(data, source) {
+    content: function(data) {
       return `${data.match}`;
     },
     element: "li",
@@ -62,13 +62,13 @@ const autoCompletejs = new autoComplete({
     result.innerHTML = "No Results";
     document.querySelector("#autoComplete_results_list").appendChild(result);
   },
-  onSelection: feedback => {
+  onSelection: function(feedback) {
     const title = feedback.selection.value.title;
     const image = feedback.selection.value.image_url;
     // Render selected choice to selection div
-    document.querySelector(
-      ".selection",
-    ).innerHTML = `<span style="display: block; font-size: 25px; width: 90vw; max-width: 400px; margin-bottom: 20px;">${title}</span><img src="${image}" style="height: 30vh; border-radius: 8px; box-shadow: 0 0 80px rgba(255, 122, 122,0.2), 0 4px 10px -3px rgba(255, 122, 122,0.4), inset 0 -10px 30px -5px rgba(255, 122, 122,0.1);"></img>`;
+    document.querySelector(".selection").innerHTML = `
+    <span style="display: block; font-size: 25px; width: 90vw; max-width: 400px; margin-bottom: 20px;">${title}</span>
+    <img src="${image}" style="height: 30vh; border-radius: 8px; box-shadow: 0 0 80px rgba(255, 122, 122,0.2), 0 4px 10px -3px rgba(255, 122, 122,0.4), inset 0 -10px 30px -5px rgba(255, 122, 122,0.1);"></img>`;
     // Clear Input
     document.querySelector("#autoComplete").value = "";
     // Change placeholder with the selected value
