@@ -25,6 +25,13 @@ const autoCompletejs = new autoComplete({
     }
     return 0;
   },
+  query: function(query) {
+    if (query.includes("pizza")) {
+      return query.replace("pizza", "");
+    } else {
+      return query;
+    }
+  },
   placeHolder: "Food & Drinks",
   selector: "#autoComplete",
   threshold: 0,

@@ -14,6 +14,8 @@ export default class autoComplete {
       // Cache Data src or NOT
       cache: typeof config.data.cache === "undefined" ? true : config.data.cache,
     };
+    // Query Interceptor function
+    this.query = config.query;
     // Search engine type
     this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
     // Minimum characters length before engine starts rendering
@@ -155,7 +157,7 @@ export default class autoComplete {
         // Search/Matching function
         const search = key => {
           // Holds match value
-          const match = this.search(this.inputValue, record[key] || record);
+          const match = this.search(this.queryValue, record[key] || record);
           // Push match to results list with key if set
           if (match && key) {
             resList.push({ key, index, match, value: record });
@@ -208,6 +210,8 @@ export default class autoComplete {
     const selector = this.selector;
     // Specified Input field selector
     const input = autoCompleteView.getInput(selector);
+    // Query Interceptor function
+    const queryInterceptor = this.query;
     // Placeholder value holder
     const placeHolder = this.placeHolder;
 
@@ -230,13 +234,15 @@ export default class autoComplete {
     // Excute autoComplete processes
     const exec = event => {
       // Gets the input search value
-      this.inputValue =
+      const inputValue =
         input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
+      // Intercept query value
+      this.queryValue = queryInterceptor ? queryInterceptor(inputValue) : inputValue;
       // resultsList Render Switch
       const renderResultsList = this.resultsList.render;
       // App triggering condition
       const triggerCondition =
-        this.inputValue.length > this.threshold && this.inputValue.replace(/ /g, "").length;
+        inputValue.length > this.threshold && inputValue.replace(/ /g, "").length;
       // Event emitter on input field
       const eventEmitter = (event, results) => {
         // Dispatch event on input
@@ -245,7 +251,7 @@ export default class autoComplete {
             bubbles: true,
             detail: {
               event,
-              query: this.inputValue,
+              query: inputValue,
               matches: results.matches,
               results: results.list,
             },

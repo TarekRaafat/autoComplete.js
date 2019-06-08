@@ -164,6 +164,7 @@
         key: config.data.key,
         cache: typeof config.data.cache === "undefined" ? true : config.data.cache
       };
+      this.query = config.query;
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.threshold = config.threshold || 0;
       this.debounce = config.debounce || 0;
@@ -235,7 +236,7 @@
           var resList = [];
           data.filter(function (record, index) {
             var search = function search(key) {
-              var match = _this.search(_this.inputValue, record[key] || record);
+              var match = _this.search(_this.queryValue, record[key] || record);
               if (match && key) {
                 resList.push({
                   key: key,
@@ -295,6 +296,7 @@
         var _this2 = this;
         var selector = this.selector;
         var input = autoCompleteView.getInput(selector);
+        var queryInterceptor = this.query;
         var placeHolder = this.placeHolder;
         if (placeHolder) {
           input.setAttribute("placeholder", placeHolder);
@@ -311,15 +313,16 @@
           };
         };
         var exec = function exec(event) {
-          _this2.inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
+          var inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
+          _this2.queryValue = queryInterceptor ? queryInterceptor(inputValue) : inputValue;
           var renderResultsList = _this2.resultsList.render;
-          var triggerCondition = _this2.inputValue.length > _this2.threshold && _this2.inputValue.replace(/ /g, "").length;
+          var triggerCondition = inputValue.length > _this2.threshold && inputValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
             input.dispatchEvent(new Polyfill.CustomEventWrapper("autoComplete", {
               bubbles: true,
               detail: {
                 event: event,
-                query: _this2.inputValue,
+                query: inputValue,
                 matches: results.matches,
                 results: results.list
               },
