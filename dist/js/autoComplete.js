@@ -314,9 +314,9 @@
         };
         var exec = function exec(event) {
           var inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
-          _this2.queryValue = queryInterceptor ? queryInterceptor(inputValue) : inputValue;
+          var queryValue = _this2.queryValue = queryInterceptor ? queryInterceptor(inputValue) : inputValue;
           var renderResultsList = _this2.resultsList.render;
-          var triggerCondition = inputValue.length > _this2.threshold && inputValue.replace(/ /g, "").length;
+          var triggerCondition = queryValue.length > _this2.threshold && queryValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
             input.dispatchEvent(new Polyfill.CustomEventWrapper("autoComplete", {
               bubbles: true,

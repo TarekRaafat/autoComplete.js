@@ -237,12 +237,12 @@ export default class autoComplete {
       const inputValue =
         input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
       // Intercept query value
-      this.queryValue = queryInterceptor ? queryInterceptor(inputValue) : inputValue;
+      const queryValue = this.queryValue = queryInterceptor ? queryInterceptor(inputValue) : inputValue;
       // resultsList Render Switch
       const renderResultsList = this.resultsList.render;
       // App triggering condition
       const triggerCondition =
-        inputValue.length > this.threshold && inputValue.replace(/ /g, "").length;
+      queryValue.length > this.threshold && queryValue.replace(/ /g, "").length;
       // Event emitter on input field
       const eventEmitter = (event, results) => {
         // Dispatch event on input
