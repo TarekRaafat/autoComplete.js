@@ -323,8 +323,8 @@
               detail: {
                 event: event,
                 query: inputValue,
-                matches: results.matches,
-                results: results.list
+                matches: results ? results.matches : null,
+                results: results ? results.list : null
               },
               cancelable: true
             }));
@@ -344,11 +344,15 @@
                   }
                 }
               });
+            } else {
+              eventEmitter(event);
             }
           } else if (!renderResultsList && triggerCondition) {
             _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
               eventEmitter(event, list);
             });
+          } else {
+            eventEmitter(event);
           }
         };
         input.addEventListener("keyup", debounce(function (event) {

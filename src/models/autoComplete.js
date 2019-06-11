@@ -252,8 +252,8 @@ export default class autoComplete {
             detail: {
               event,
               query: inputValue,
-              matches: results.matches,
-              results: results.list,
+              matches: results ? results.matches : null,
+              results: results? results.list : null,
             },
             cancelable: true,
           }),
@@ -289,6 +289,8 @@ export default class autoComplete {
             }
           });
         } else {
+          // Event emitter on input field
+          eventEmitter(event);
           // clears all results list
           clearResults;
         }
@@ -298,6 +300,9 @@ export default class autoComplete {
           // Event emitter on input field
           eventEmitter(event, list);
         });
+      } else {
+        // Event emitter on input field
+        eventEmitter(event);
       }
     };
 
