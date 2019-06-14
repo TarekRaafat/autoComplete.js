@@ -41,17 +41,16 @@ const autoCompletejs = new autoComplete({
   maxResults: Infinity,
   resultsList: {
     render: true,
-    container: function() {
-      const resultsListID = "autoComplete_results_list";
-      return resultsListID;
+    container: function(source) {
+      source.setAttribute("id", "autoComplete_results_list");
     },
     destination: document.querySelector("#autoComplete"),
     position: "afterend",
     element: "ul",
   },
   resultItem: {
-    content: function(data) {
-      return `${data.match}`;
+    content: function(data, source) {
+      source.innerHTML = data.match;
     },
     element: "li",
   },
