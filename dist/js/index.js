@@ -1,6 +1,6 @@
 // autoComplete.js on type event emitter
 document.querySelector("#autoComplete").addEventListener("autoComplete", function(event) {
-  console.log(event.detail.results);
+  console.log(event.detail);
 });
 // The autoComplete.js Engine instance creator
 const autoCompletejs = new autoComplete({
@@ -25,11 +25,9 @@ const autoCompletejs = new autoComplete({
     }
     return 0;
   },
-  query: function(query) {
-    if (query.includes("pizza")) {
-      return query.replace("pizza", "");
-    } else {
-      return query;
+  query: {
+    manipulate: function(query) {
+      return query.replace("pizza", "burger");
     }
   },
   placeHolder: "Food & Drinks",

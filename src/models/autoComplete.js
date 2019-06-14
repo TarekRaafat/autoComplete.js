@@ -237,7 +237,8 @@ export default class autoComplete {
       const inputValue =
         input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
       // Intercept query value
-      const queryValue = this.queryValue = queryInterceptor ? queryInterceptor(inputValue) : inputValue;
+      const queryValue = this.queryValue = queryInterceptor && queryInterceptor.manipulate
+        ? queryInterceptor.manipulate(inputValue) : inputValue;
       // resultsList Render Switch
       const renderResultsList = this.resultsList.render;
       // App triggering condition
@@ -251,7 +252,8 @@ export default class autoComplete {
             bubbles: true,
             detail: {
               event,
-              query: inputValue,
+              input: inputValue,
+              query: queryValue,
               matches: results ? results.matches : null,
               results: results? results.list : null,
             },

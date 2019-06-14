@@ -26,7 +26,15 @@ Release flags:
 
 ## Release Notes
 
-- v5.3.0 :sparkles:
+- v6.0.0 :sparkles:
+  - `CustomEvent` & `Closest` method IE compatibility (Thanks @g-viet)
+  - Query interception (Thanks @barns101)
+  - Simplified `resultsList` & `resultItem`
+  - `EventEmitter` fires on clearing input field
+  - `EventEmitter` now has `input` method for row user’s input
+  - `EventEmitter` now has `query` method for intercepted user’s input
+
+- v5.3.0
   - Get results from `eventEmitter` without rendering list through `resultsList.render` API
   - EventEmitter name `type` changed to `autoComplete` `[Changed]`
 

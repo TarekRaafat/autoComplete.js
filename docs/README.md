@@ -7,7 +7,7 @@
 [![](https://data.jsdelivr.com/v1/package/gh/TarekRaafat/autoComplete.js/badge)](https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js)
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 ![\[Zero Dependencies\]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
-![\[Size\]()](https://img.shields.io/badge/Size-5%20KB-green.svg)
+![\[Size\]()](https://img.shields.io/badge/Size-6%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
 
 <br>
@@ -15,7 +15,7 @@
 
 <h1>autoComplete.js</h1>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v5.3**
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v6.0**
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
 
@@ -68,13 +68,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@5.3.0/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@6.0.0/dist/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@5.3.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@6.0.0/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="./img/logos/html_logo.png" alt="HTML Logo" width="40px"> HTML Local load
@@ -122,7 +122,7 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ```html
 <link rel="stylesheet" href="./css/autoComplete.css">
 OR
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@5.3.0/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@6.0.0/dist/css/autoComplete.min.css">
 ```
 
 2.  Assign the default `id` value `"autoComplete"` to the desired input field or use any custom `id/class` and configure the API selector accordingly in `Step 4`
@@ -137,7 +137,7 @@ OR
 <script src="./js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 OR
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@5.3.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@6.0.0/dist/js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 ```
 
@@ -158,7 +158,12 @@ new autoComplete({
 		},
 		key: ["title"],
 		cache: false
-	},
+  },
+  query: {                               // Query Interceptor                 | (Optional)
+        manipulate: (query) => {
+          return query.replace("pizza", "burger");
+        }
+  },
 	sort: (a, b) => {				    // Sort rendered results ascendingly | (Optional)
 		if (a.match < b.match) return -1;
 	    if (a.match > b.match) return 1;
@@ -207,6 +212,7 @@ new autoComplete({
 | Keys       | Description                                                      | Values                                                                                                                                                                                                                                                                                                                 | Default                                                                                                    |
 | -------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `data`         | Data Source, Data Key & Data Caching                                          | **1- src**: <br> - `Array` of `Strings` / `Objects`<br>**OR**<br> - `Function` => `Array` of `Strings` / `Objects` <br> **2- key**: <br>- `Array` of `Strings`<br>**Required** if `src` is `Object`, for search to point to desired `keys` <br> **3- Cache**: <br> - `True` for static data `src` <br> - `False` for dynamic data `src` "API"                                              | Data `src` **REQUIRED**                                                                   |
+| `query`         |  Query Interceptor  | **-** `Object` with 1 method<br> 1- manipulate: `Function` with (query) argument | Raw `Input` |
 | `sort`         | Sort rendered results                                            | `Function`                                                                                                                                                                                                                                                                                                             | Blank / Empty **(Random Results)**                                                                         |
 | `placeHolder`  | Place Holder text                                                | `String`                                                                                                                                                                                                                                                                                                               | Blank / Empty                                                                                              |
 | `selector`     | Input field selector                                             | **-** `String` `id`/`class` <br>**OR**<br> **-** `Function` ( ) =>  `document.querySelector("")`                                                                                                                                                                                                                       | `"#autoComplete"`                                                                                          |
@@ -262,7 +268,7 @@ it with [autoComplete.js][so tag].
 
 * * *
 
-## 5. What's New in v5.3?
+## 5. What's New in v6.0?
 
 Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
@@ -288,7 +294,8 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Multiple searchable `keys` for data `src`
 -   [x] Event emitter on input field events
 -   [x] Handling large data sets
--   [ ] Event emitter fires on cleared empty input field state
+-   [x] Event emitter fires on cleared empty input field state
+-   [x] `Query` Interception & Manipulation
 -   [ ] Automatic deep search over all keys in multiple nested object data source
 -   [ ] Improve `Promise` usage for external data source handling
 -   [ ] Add `IndexedDB` for large data sets handling & offline usage

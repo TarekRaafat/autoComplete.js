@@ -314,7 +314,7 @@
         };
         var exec = function exec(event) {
           var inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
-          var queryValue = _this2.queryValue = queryInterceptor ? queryInterceptor(inputValue) : inputValue;
+          var queryValue = _this2.queryValue = queryInterceptor && queryInterceptor.manipulate ? queryInterceptor.manipulate(inputValue) : inputValue;
           var renderResultsList = _this2.resultsList.render;
           var triggerCondition = queryValue.length > _this2.threshold && queryValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
@@ -322,7 +322,8 @@
               bubbles: true,
               detail: {
                 event: event,
-                query: inputValue,
+                input: inputValue,
+                query: queryValue,
                 matches: results ? results.matches : null,
                 results: results ? results.list : null
               },
