@@ -188,7 +188,7 @@ new autoComplete({
 	highlight: true,					   // Highlight matching results 	 | (Optional)
 	resultItem: {	  					// Rendered result item 		   | (Optional)
 		content: (data, source) => {
-			return `${data.match}`;
+			source.innerHTML = data.match;
 		},
 		element: "li"
     },
