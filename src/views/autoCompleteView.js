@@ -71,6 +71,7 @@ const navigation = (selector, resultsList) => {
   const input = getInput(selector);
   const first = resultsList.firstChild;
   document.onkeydown = event => {
+    if (!event.target.matches(selector)) return;
     const active = document.activeElement;
     switch (event.keyCode) {
       // Arrow Up
