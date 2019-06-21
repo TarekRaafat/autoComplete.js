@@ -91,8 +91,6 @@ export default class autoComplete {
    * @return {*}
    */
   search(query, record) {
-    // Hightlight State value holder
-    const highlight = this.highlight;
     // Current record value toLowerCase
     const recordLowerCase = record.toLowerCase();
 
@@ -113,7 +111,7 @@ export default class autoComplete {
         // Matching case
         if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
           // Highlight matching character
-          recordChar = highlight ? autoCompleteView.highlight(recordChar) : recordChar;
+          recordChar = this.highlight ? autoCompleteView.highlight(recordChar) : recordChar;
           // Increment search position
           searchPosition++;
         }
@@ -135,7 +133,7 @@ export default class autoComplete {
         // Search for a match Query in Record
         query = pattern.exec(record);
         // Returns the match
-        return highlight ? record.replace(query, autoCompleteView.highlight(query)) : record;
+        return this.highlight ? record.replace(query, autoCompleteView.highlight(query)) : record;
       }
     }
   }
@@ -206,18 +204,12 @@ export default class autoComplete {
    * @return void
    */
   ignite() {
-    // Selector value holder
-    const selector = this.selector;
     // Specified Input field selector
-    const input = autoCompleteView.getInput(selector);
-    // Query Interceptor function
-    const queryInterceptor = this.query;
-    // Placeholder value holder
-    const placeHolder = this.placeHolder;
+    const input = autoCompleteView.getInput(this.selector);
 
     // Placeholder setter
-    if (placeHolder) {
-      input.setAttribute("placeholder", placeHolder);
+    if (this.placeHolder) {
+      input.setAttribute("placeholder", this.placeHolder);
     }
 
     // Debouncer
@@ -237,8 +229,8 @@ export default class autoComplete {
       const inputValue =
         input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
       // Intercept query value
-      const queryValue = this.queryValue = queryInterceptor && queryInterceptor.manipulate
-        ? queryInterceptor.manipulate(inputValue) : inputValue;
+      const queryValue = this.queryValue = this.query && this.query.manipulate
+        ? this.query.manipulate(inputValue) : inputValue;
       // resultsList Render Switch
       const renderResultsList = this.resultsList.render;
       // App triggering condition
@@ -286,7 +278,7 @@ export default class autoComplete {
               // Gets user's selection
               // If action configured
               if (onSelection) {
-                autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+                autoCompleteView.getSelection(this.selector, resultsList, onSelection, list);
               }
             }
           });

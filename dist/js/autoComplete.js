@@ -202,7 +202,6 @@
     _createClass(autoComplete, [{
       key: "search",
       value: function search(query, record) {
-        var highlight = this.highlight;
         var recordLowerCase = record.toLowerCase();
         if (this.searchEngine === "loose") {
           query = query.replace(/ /g, "");
@@ -211,7 +210,7 @@
           for (var number = 0; number < recordLowerCase.length; number++) {
             var recordChar = record[number];
             if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-              recordChar = highlight ? autoCompleteView.highlight(recordChar) : recordChar;
+              recordChar = this.highlight ? autoCompleteView.highlight(recordChar) : recordChar;
               searchPosition++;
             }
             match.push(recordChar);
@@ -224,7 +223,7 @@
           if (recordLowerCase.includes(query)) {
             var pattern = new RegExp("".concat(query), "i");
             query = pattern.exec(record);
-            return highlight ? record.replace(query, autoCompleteView.highlight(query)) : record;
+            return this.highlight ? record.replace(query, autoCompleteView.highlight(query)) : record;
           }
         }
       }
@@ -294,12 +293,9 @@
       key: "ignite",
       value: function ignite() {
         var _this2 = this;
-        var selector = this.selector;
-        var input = autoCompleteView.getInput(selector);
-        var queryInterceptor = this.query;
-        var placeHolder = this.placeHolder;
-        if (placeHolder) {
-          input.setAttribute("placeholder", placeHolder);
+        var input = autoCompleteView.getInput(this.selector);
+        if (this.placeHolder) {
+          input.setAttribute("placeholder", this.placeHolder);
         }
         var debounce = function debounce(func, delay) {
           var inDebounce;
@@ -314,7 +310,7 @@
         };
         var exec = function exec(event) {
           var inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
-          var queryValue = _this2.queryValue = queryInterceptor && queryInterceptor.manipulate ? queryInterceptor.manipulate(inputValue) : inputValue;
+          var queryValue = _this2.queryValue = _this2.query && _this2.query.manipulate ? _this2.query.manipulate(inputValue) : inputValue;
           var renderResultsList = _this2.resultsList.render;
           var triggerCondition = queryValue.length > _this2.threshold && queryValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
@@ -341,7 +337,7 @@
                   _this2.noResults();
                 } else {
                   if (onSelection) {
-                    autoCompleteView.getSelection(selector, resultsList, onSelection, list);
+                    autoCompleteView.getSelection(_this2.selector, resultsList, onSelection, list);
                   }
                 }
               });
