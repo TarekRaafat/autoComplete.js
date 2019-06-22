@@ -1,28 +1,20 @@
 // autoComplete.js on type event emitter
 document.querySelector("#autoComplete").addEventListener("autoComplete", function(event) {
-  console.log(event);
+  console.log(event.detail);
 });
-
 // The autoComplete.js Engine instance creator
 const autoCompletejs = new autoComplete({
   data: {
     src: async function() {
       // Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
-      // API key token
-      const token = "5c2d4273b2930ee4b53f4e84a7c4440d";
-      // User search query
-      const query = document.querySelector("#autoComplete").value;
       // Fetch External Data Source
-      const source = await fetch(`https://www.food2fork.com/api/search?key=${token}&q=${query}`);
+      const source = await fetch("../demo/db/generic.json");
       const data = await source.json();
-      // Post loading placeholder text
-      document.querySelector("#autoComplete").setAttribute("placeholder", "Food & Drinks");
-      // Return Fetched data
-      return data.recipes;
+      // Returns Fetched data
+      return data;
     },
-    key: ["title"],
-    cache: false,
+    key: ["food", "cities", "animals"],
   },
   sort: function(a, b) {
     if (a.match < b.match) {
@@ -33,12 +25,18 @@ const autoCompletejs = new autoComplete({
     }
     return 0;
   },
+  query: {
+    manipulate: function(query) {
+      return query.replace("pizza", "burger");
+    }
+  },
+  placeHolder: "Food & Drinks",
   selector: "#autoComplete",
   threshold: 0,
-  debounce: 300,
+  debounce: 0,
   searchEngine: "strict",
   highlight: true,
-  maxResults: Infinity,
+  maxResults: 10,
   resultsList: {
     render: true,
     container: function(source) {
@@ -62,16 +60,13 @@ const autoCompletejs = new autoComplete({
     document.querySelector("#autoComplete_results_list").appendChild(result);
   },
   onSelection: function(feedback) {
-    const title = feedback.selection.value.title;
-    const image = feedback.selection.value.image_url;
+    const selection = feedback.selection.value.food;
     // Render selected choice to selection div
-    document.querySelector(".selection").innerHTML = `
-    <span style="display: block; font-size: 25px; width: 90vw; max-width: 400px; margin-bottom: 20px;">${title}</span>
-    <img src="${image}" style="height: 30vh; border-radius: 8px; box-shadow: 0 0 80px rgba(255, 122, 122,0.2), 0 4px 10px -3px rgba(255, 122, 122,0.4), inset 0 -10px 30px -5px rgba(255, 122, 122,0.1);"></img>`;
+    document.querySelector(".selection").innerHTML = selection;
     // Clear Input
     document.querySelector("#autoComplete").value = "";
     // Change placeholder with the selected value
-    document.querySelector("#autoComplete").setAttribute("placeholder", title);
+    document.querySelector("#autoComplete").setAttribute("placeholder", selection);
     // Concole log autoComplete data feedback
     console.log(feedback);
   },
@@ -80,6 +75,7 @@ const autoCompletejs = new autoComplete({
 // On page load add class to input field
 window.addEventListener("load", function() {
   document.querySelector("#autoComplete").classList.add("out");
+  // document.querySelector("#autoComplete_results_list").style.display = "none";
 });
 
 // Toggle Search Engine Type/Mode
@@ -129,7 +125,7 @@ const action = function(action) {
   const input = document.querySelector("#autoComplete");
   const resultsList = document.querySelector("#autoComplete_results_list");
 
-  document.querySelector("#autoComplete").addEventListener(eventType, function() {
+  document.querySelector("#autoComplete").addEventListener(eventType, function(event) {
     // Hide results list & show other elemennts
     if (eventType === "blur") {
       action("dim");
