@@ -18,6 +18,8 @@ export default class autoComplete {
     this.query = config.query;
     // Search engine type
     this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
+    // Custom Search Engine function
+    this.customEngine = config.customEngine ? config.customEngine : false;
     // Minimum characters length before engine starts rendering
     this.threshold = config.threshold || 0;
     // Minimum duration for API calls debouncing
@@ -155,7 +157,9 @@ export default class autoComplete {
         // Search/Matching function
         const search = key => {
           // Holds match value
-          const match = this.search(this.queryValue, record[key] || record);
+          const match = this.customEngine
+            ? this.customEngine(this.queryValue, record[key] || record)
+            : this.search(this.queryValue, record[key] || record);
           // Push match to results list with key if set
           if (match && key) {
             resList.push({ key, index, match, value: record });
@@ -229,13 +233,12 @@ export default class autoComplete {
       const inputValue =
         input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
       // Intercept query value
-      const queryValue = this.queryValue = this.query && this.query.manipulate
-        ? this.query.manipulate(inputValue) : inputValue;
+      const queryValue = (this.queryValue =
+        this.query && this.query.manipulate ? this.query.manipulate(inputValue) : inputValue);
       // resultsList Render Switch
       const renderResultsList = this.resultsList.render;
       // App triggering condition
-      const triggerCondition =
-      queryValue.length > this.threshold && queryValue.replace(/ /g, "").length;
+      const triggerCondition = queryValue.length > this.threshold && queryValue.replace(/ /g, "").length;
       // Event emitter on input field
       const eventEmitter = (event, results) => {
         // Dispatch event on input
@@ -247,7 +250,7 @@ export default class autoComplete {
               input: inputValue,
               query: queryValue,
               matches: results ? results.matches : null,
-              results: results? results.list : null,
+              results: results ? results.list : null,
             },
             cancelable: true,
           }),

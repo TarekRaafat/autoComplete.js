@@ -166,6 +166,7 @@
       };
       this.query = config.query;
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
+      this.customEngine = config.customEngine ? config.customEngine : false;
       this.threshold = config.threshold || 0;
       this.debounce = config.debounce || 0;
       this.resultsList = {
@@ -235,7 +236,7 @@
           var resList = [];
           data.filter(function (record, index) {
             var search = function search(key) {
-              var match = _this.search(_this.queryValue, record[key] || record);
+              var match = _this.customEngine ? _this.customEngine(_this.queryValue, record[key] || record) : _this.search(_this.queryValue, record[key] || record);
               if (match && key) {
                 resList.push({
                   key: key,

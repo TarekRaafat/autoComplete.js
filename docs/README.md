@@ -4,7 +4,6 @@
 [![Build Status](https://travis-ci.com/TarekRaafat/autoComplete.js.svg?branch=master)](https://travis-ci.com/TarekRaafat/autoComplete.js)
 [![GitHub version](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js.svg)](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js)
 [![npm version](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js.svg)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
-[![](https://data.jsdelivr.com/v1/package/gh/TarekRaafat/autoComplete.js/badge)](https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js)
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 ![\[Zero Dependencies\]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
 ![\[Size\]()](https://img.shields.io/badge/Size-6%20KB-green.svg)
@@ -321,6 +320,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [ ] `Inline` autoComplete to the nearest result value
 -   [ ] Add more use examples & cases of the library to the documentation
 -   [ ] Better code compression / optimization for the library to squeeze it under `[5kb]`
+-   [ ] Custom Search Engine Capability
 
 ### Reported Issues:
 

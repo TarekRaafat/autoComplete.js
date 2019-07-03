@@ -35,6 +35,18 @@ const autoCompletejs = new autoComplete({
   threshold: 0,
   debounce: 0,
   searchEngine: "strict",
+  customEngine: (query, record) => {
+    // Current record value toLowerCase
+    const recordLowerCase = record.toLowerCase();
+    if (recordLowerCase.includes(query)) {
+      // Regular Expression Query Pattern Ignores caseSensetive
+      const pattern = new RegExp(`${query}`, "i");
+      // Search for a match Query in Record
+      query = pattern.exec(record);
+      // Returns the match
+      return record;
+    }
+  },
   highlight: true,
   maxResults: 10,
   resultsList: {
