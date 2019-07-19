@@ -326,7 +326,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
 ### Plugins:
 
--   [ ] Recent Searches
+-   [ ] Recent / Most Searches
 -   [ ] Inline Suggestions
 -   [ ] Input Tags
 -   [ ] Themes / Styles & Interactions
