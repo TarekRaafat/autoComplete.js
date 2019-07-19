@@ -6,8 +6,6 @@
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed,<br>high versatility and seamless integration with wide range of projects & systems.
 
-<br>
-
 <a href="https://www.producthunt.com/posts/autocomplete-js?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-autocomplete-js" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=141833&theme=light&period=weekly" alt="autoComplete.js - Simple autocomplete pure vanilla Javascript library. | Product Hunt Embed" style="width: 250px; height: 54px;" width="250px" height="54px" /></a>
 
 <br>
