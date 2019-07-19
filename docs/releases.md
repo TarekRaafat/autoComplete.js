@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v6.0.0 :sparkles:
+- v6.1.0 :sparkles:
+  - Use Custom Search Algorithm via `customEngine` method (Thanks @hwangm)
+
+- v6.0.0
   - `CustomEvent` & `Closest` method IE compatibility (Thanks @g-viet)
   - Query interception (Thanks @barns101)
   - Simplified `resultsList` & `resultItem`
