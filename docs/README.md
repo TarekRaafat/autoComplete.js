@@ -172,7 +172,10 @@ new autoComplete({
     selector: "#autoComplete",		   // Input field selector 			 | (Optional)
 	threshold: 3,						// Min. Chars length to start Engine | (Optional)
 	debounce: 300,					   // Post duration for engine to start | (Optional)
-	searchEngine: "strict",			  // Search Engine type/mode 		  | (Optional)
+    searchEngine: "strict",			  // Search Engine type/mode 		  | (Optional)
+    customEngine: (query, record) => {   // Custom Search Engine Algorithm    | (Optional)
+      // Custom Search Engine Algorithm..
+    },
     resultsList: {					   // Rendered results list object 	 | (Optional)
         render: true,
 		container: source => {
@@ -218,8 +221,9 @@ new autoComplete({
 | `threshold`    | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                                                                                                                                                                               | `0`                                                                                                        |
 | `debounce`    | Minimum duration after typing idle state for engine to kick in | `Number` <br> Milliseconds value <br> debounce: `300`         | `0`                                                                                                        |
 | `searchEngine` | Search Engine Type/Mode                                          | **-** `"strict"` lowerCase string<br>**OR**<br>**-** `"loose"` lowerCase string                                                                                                                                                                                                                                        | `"strict"`                                                                                                 |
-| `resultsList`  | Rendered results list destination,  position & element                    | **-** `Object` with 5 methods<br> 1- render: `Boolean` <br> 2- container: <br> `Function` with (source) argument<br> 3- destination: `document.querySelector("#div")`<br> 4- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` <br> 5- element: <br> `"ul", "span", "div" or Custom`| `{render: false, container: (source) => { ... }, destination: document.querySelector("#autoComplete"), position: "afterend", element: "ul"}` |
-| `resultItem`   | Rendered result Item content & element                                          | **-** `Object` with 2 methods<br> 1- content: <br>**-** `Function` with (data, source) arguments <br> **-** `data.match` has to be used for **Highlighted** result <br> 2- element: <br> `"li", "span", "div" or Custom` | `{content: (data, source) => { ... }, element: "li"}`                                                                                               |
+| `customEngine` | Custom Search Engine Algorithm | `Function` with (query, record) parameters | `"strict"` Search Engine Algorithm |
+| `resultsList`  | Rendered results list destination,  position & element                    | **-** `Object` with 5 methods<br> 1- render: `Boolean` <br> 2- container: <br> `Function` with (source) parameter<br> 3- destination: `document.querySelector("#div")`<br> 4- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` <br> 5- element: <br> `"ul", "span", "div" or Custom`| `{render: false, container: (source) => { ... }, destination: document.querySelector("#autoComplete"), position: "afterend", element: "ul"}` |
+| `resultItem`   | Rendered result Item content & element                                          | **-** `Object` with 2 methods<br> 1- content: <br>**-** `Function` with (data, source) parameters <br> **-** `data.match` has to be used for **Highlighted** result <br> 2- element: <br> `"li", "span", "div" or Custom` | `{content: (data, source) => { ... }, element: "li"}`                                                                                               |
 | `noResults`   | Action script on noResults found | `Function` | No Action |
 | `highlight`    | Highlight matching results                                       | `Boolean`                                                                                                                                                                                                                                                                                                              | `false`                                                                                                    |
 | `maxResults`   | Maximum number of displayed results                              | `Number`                                                                                                                                                                                                                                                                                                               | `5`                                                                                                        |
@@ -302,9 +306,6 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
 ### Usability:
 
--   [x] New designs for inspiration (Ongoing)
-    -   [x] Styles
-    -   [x] Interactions
 -   [x] Avail Gzip files options
 -   [x] Comprehensive data feedback on user selection
 -   [x] Dynamic input field selector
@@ -317,14 +318,20 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Render `resultsList` & `resultItem` in different/custom elements
 -   [x] HTML elements `ContentEditable` Input Support
 -   [x] Serve results without rendering list through `resultsList.render` API
--   [ ] `Inline` autoComplete to the nearest result value
+-   [x] Custom Search Engine Capability
 -   [ ] Add more use examples & cases of the library to the documentation
 -   [ ] Better code compression / optimization for the library to squeeze it under `[5kb]`
--   [ ] Custom Search Engine Capability
+
+### Plugins:
+
+-   [ ] Recent Searches
+-   [ ] Inline Suggestions
+-   [ ] Input Tags
+-   [ ] Themes / Styles & Interactions
 
 ### Reported Issues:
 
-- [ ] Duplicate results because of mulitple data source `keys`
+- [ ] Duplicated results when using mulitple data source `keys`
 
 * * *
 
