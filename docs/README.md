@@ -146,23 +146,23 @@ OR
 
 ```js
 new autoComplete({
-	data: {							  // Data src [Array, Function, Async] | (REQUIRED)
-		src: async () => {
-			// Fetch External Data Source
-			const source = await fetch(`https://www.food2fork.com/api/search?key=${token}&q=${query}`);
-			// Format data into JSON
-			const data = await source.json();
-			// Return Fetched data
-			return data.recipes;
-		},
-		key: ["title"],
-		cache: false
-  },
-  query: {                               // Query Interceptor                 | (Optional)
-        manipulate: (query) => {
-          return query.replace("pizza", "burger");
-        }
-  },
+    data: {							  // Data src [Array, Function, Async] | (REQUIRED)
+      src: async () => {
+        // Fetch External Data Source
+        const source = await fetch(`https://www.food2fork.com/api/search?key=${token}&q=${query}`);
+        // Format data into JSON
+        const data = await source.json();
+        // Return Fetched data
+        return data.recipes;
+      },
+      key: ["title"],
+      cache: false
+    },
+    query: {                               // Query Interceptor               | (Optional)
+          manipulate: (query) => {
+            return query.replace("pizza", "burger");
+          }
+    },
 	sort: (a, b) => {				    // Sort rendered results ascendingly | (Optional)
 		if (a.match < b.match) return -1;
 	    if (a.match > b.match) return 1;
@@ -174,7 +174,9 @@ new autoComplete({
 	debounce: 300,					   // Post duration for engine to start | (Optional)
     searchEngine: "strict",			  // Search Engine type/mode 		  | (Optional)
     customEngine: (query, record) => {   // Custom Search Engine Algorithm    | (Optional)
+
       // Custom Search Engine Algorithm..
+
     },
     resultsList: {					   // Rendered results list object 	 | (Optional)
         render: true,
@@ -221,7 +223,7 @@ new autoComplete({
 | `threshold`    | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                                                                                                                                                                               | `0`                                                                                                        |
 | `debounce`    | Minimum duration after typing idle state for engine to kick in | `Number` <br> Milliseconds value <br> debounce: `300`         | `0`                                                                                                        |
 | `searchEngine` | Search Engine Type/Mode                                          | **-** `"strict"` lowerCase string<br>**OR**<br>**-** `"loose"` lowerCase string                                                                                                                                                                                                                                        | `"strict"`                                                                                                 |
-| `customEngine` | Custom Search Engine Algorithm | `Function` with (query, record) parameters | `"strict"` Search Engine Algorithm |
+| `customEngine` | Custom Search Engine Algorithm | `Function` with (query, record) parameters, returns each match individually | `"strict"` Search Engine Algorithm |
 | `resultsList`  | Rendered results list destination,  position & element                    | **-** `Object` with 5 methods<br> 1- render: `Boolean` <br> 2- container: <br> `Function` with (source) parameter<br> 3- destination: `document.querySelector("#div")`<br> 4- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` <br> 5- element: <br> `"ul", "span", "div" or Custom`| `{render: false, container: (source) => { ... }, destination: document.querySelector("#autoComplete"), position: "afterend", element: "ul"}` |
 | `resultItem`   | Rendered result Item content & element                                          | **-** `Object` with 2 methods<br> 1- content: <br>**-** `Function` with (data, source) parameters <br> **-** `data.match` has to be used for **Highlighted** result <br> 2- element: <br> `"li", "span", "div" or Custom` | `{content: (data, source) => { ... }, element: "li"}`                                                                                               |
 | `noResults`   | Action script on noResults found | `Function` | No Action |
