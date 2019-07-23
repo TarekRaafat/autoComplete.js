@@ -59,10 +59,11 @@
     });
   };
   var navigation = function navigation(selector, resultsList) {
+    var documentOrShadowRoot = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : document;
     var input = getInput(selector);
     var first = resultsList.firstChild;
     document.onkeydown = function (event) {
-      var active = document.activeElement;
+      var active = documentOrShadowRoot.activeElement;
       switch (event.keyCode) {
         case 38:
           if (active !== first && active !== input) {
@@ -156,6 +157,7 @@
   function () {
     function autoComplete(config) {
       _classCallCheck(this, autoComplete);
+      this.shadowRoot = config.shadowRoot;
       this.selector = config.selector || "#autoComplete";
       this.data = {
         src: function src() {
@@ -282,7 +284,7 @@
           var list = _this.sort ? resList.sort(_this.sort).slice(0, _this.maxResults) : resList.slice(0, _this.maxResults);
           if (_this.resultsList.render) {
             autoCompleteView.addResultsToList(_this.resultsList.view, list, _this.resultItem);
-            autoCompleteView.navigation(_this.selector, _this.resultsList.view);
+            autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.shadowRoot);
           }
           return resolve({
             matches: resList.length,
