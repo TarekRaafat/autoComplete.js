@@ -27,7 +27,7 @@ const autoCompletejs = new autoComplete({
   },
   query: {
     manipulate: function(query) {
-      return query.replace("pizza", "burger");
+      return query.replace("@pizza", "burger");
     }
   },
   placeHolder: "Food & Drinks",
@@ -35,7 +35,7 @@ const autoCompletejs = new autoComplete({
   threshold: 0,
   debounce: 0,
   searchEngine: "strict",
-  customEngine: (query, record) => {
+  customEngine: function (query, record) {
     // Current record value toLowerCase
     const recordLowerCase = record.toLowerCase();
     if (recordLowerCase.includes(query)) {
@@ -44,7 +44,7 @@ const autoCompletejs = new autoComplete({
       // Search for a match Query in Record
       query = pattern.exec(record);
       // Returns the match
-      return record;
+      return record.replace(query, `<strong style="color: rgba(255, 122, 122, 1);">${query}</strong>`);
     }
   },
   highlight: true,
