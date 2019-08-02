@@ -58,8 +58,7 @@
       resultsList.appendChild(result);
     });
   };
-  var navigation = function navigation(selector, resultsList) {
-    var documentOrShadowRoot = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : document;
+  var navigation = function navigation(selector, resultsList, documentOrShadowRoot) {
     var input = getInput(selector);
     var first = resultsList.firstChild;
     document.onkeydown = function (event) {
@@ -157,7 +156,7 @@
   function () {
     function autoComplete(config) {
       _classCallCheck(this, autoComplete);
-      this.shadowRoot = config.shadowRoot;
+      this.shadowRoot = config.shadowRoot || document;
       this.selector = config.selector || "#autoComplete";
       this.data = {
         src: function src() {

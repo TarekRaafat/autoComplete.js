@@ -66,13 +66,12 @@ const addResultsToList = (resultsList, dataSrc, resultItem) => {
  *
  * @param selector
  * @param resultsList
- * @param [documentOrShadowRoot=document]
+ * @param [documentOrShadowRoot]
  */
-const navigation = (selector, resultsList, documentOrShadowRoot = document) => {
+const navigation = (selector, resultsList, documentOrShadowRoot) => {
   const input = getInput(selector);
   const first = resultsList.firstChild;
   document.onkeydown = event => {
-    // if (!event.target.matches(selector)) {return;}
     const active = documentOrShadowRoot.activeElement;
     switch (event.keyCode) {
       // Arrow Up

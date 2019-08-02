@@ -4,7 +4,7 @@ import { Polyfill } from "../helpers/polyfill";
 export default class autoComplete {
   constructor(config) {
     // Allowing shadow dom components to pass its root document
-    this.shadowRoot = config.shadowRoot;
+    this.shadowRoot = config.shadowRoot || document;
     // User input Selector
     this.selector = config.selector || "#autoComplete";
     // Source of data list
