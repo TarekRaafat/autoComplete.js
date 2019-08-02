@@ -3,6 +3,8 @@ import { Polyfill } from "../helpers/polyfill";
 
 export default class autoComplete {
   constructor(config) {
+    // Allowing shadow dom components to pass its root document
+    this.shadowRoot = config.shadowRoot;
     // User input Selector
     this.selector = config.selector || "#autoComplete";
     // Source of data list
@@ -191,7 +193,7 @@ export default class autoComplete {
         // Rendering matching results to the UI list
         autoCompleteView.addResultsToList(this.resultsList.view, list, this.resultItem);
         // Keyboard Arrow Navigation
-        autoCompleteView.navigation(this.selector, this.resultsList.view);
+        autoCompleteView.navigation(this.selector, this.resultsList.view, this.shadowRoot);
       }
 
       // Returns rendered list
