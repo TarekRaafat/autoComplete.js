@@ -325,6 +325,8 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] HTML elements `ContentEditable` Input Support
 -   [x] Serve results without rendering list through `resultsList.render` API
 -   [x] Custom Search Engine Capability
+-   [ ] `ShadowDom` Support
+-   [ ] Better `resultsList` navigation [No loosing cursor]
 -   [ ] Add more use examples & cases of the library to the documentation
 -   [ ] Better code compression / optimization for the library to squeeze it under `[5kb]`
 
@@ -333,6 +335,8 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [ ] Recent / Most Searches
 -   [ ] Inline Suggestions
 -   [ ] Input Tags
+-   [ ] Virtual Scrolling
+-   [ ] Results List Category Separator
 -   [ ] Themes / Styles & Interactions
 
 ### Reported Issues:

@@ -66,7 +66,7 @@ const addResultsToList = (resultsList, dataSrc, resultItem) => {
  *
  * @param selector
  * @param resultsList
- * @param [documentOrShadowRoot]
+ * @param documentOrShadowRoot
  */
 const navigation = (selector, resultsList, documentOrShadowRoot) => {
   const input = getInput(selector);
