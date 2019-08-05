@@ -198,6 +198,11 @@
       this.noResults = config.noResults;
       this.highlight = config.highlight || false;
       this.onSelection = config.onSelection;
+      this.navigation = {
+        customMethod: config.navigation && config.navigation.customMethod ? config.navigation.customMethod : false,
+        updateResults: config.navigation && config.navigation.updateResults ? config.navigation.updateResults : false,
+      };
+      this.initialResults = config.initialResults ? config.initialResults : false;
       this.dataSrc;
       this.init();
     }
@@ -283,7 +288,7 @@
           var list = _this.sort ? resList.sort(_this.sort).slice(0, _this.maxResults) : resList.slice(0, _this.maxResults);
           if (_this.resultsList.render) {
             autoCompleteView.addResultsToList(_this.resultsList.view, list, _this.resultItem);
-            autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.shadowRoot);
+            _this.navigation.customMethod ? _this.navigation.customMethod(_this.selector, _this.resultsList.view) : autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.shadowRoot);
           }
           return resolve({
             matches: resList.length,
@@ -354,7 +359,7 @@
             eventEmitter(event);
           }
         };
-        input.addEventListener("keyup", debounce(function (event) {
+        input.addEventListener(_this2.navigation.updateResults ? "input" : "keyup", debounce(function (event) {
           if (!_this2.data.cache) {
             var data = _this2.data.src();
             if (data instanceof Promise) {
@@ -368,6 +373,22 @@
             }
           } else {
             exec(event);
+          }
+        }, this.debounce));
+        _this2.initialResults && input.addEventListener("focus", debounce(function (event) {
+          if (!_this2.data.cache) {
+              var data = _this2.data.src();
+              if (data instanceof Promise) {
+                  data.then(function (response) {
+                      _this2.dataSrc = response;
+                      exec(event);
+                  });
+              } else {
+                  _this2.dataSrc = data;
+                  exec(event);
+              }
+          } else {
+              exec(event);
           }
         }, this.debounce));
       }
