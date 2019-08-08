@@ -317,40 +317,63 @@ export default class autoComplete {
     };
 
     // Updates results on keyup by default or input if navigation should be excluded
-    input.addEventListener(_this2.navigation.updateResults ? "keyup" : "input", debounce(function (event) {
-      if (!_this2.data.cache) {
-          var data = _this2.data.src();
+    input.addEventListener(
+      this.navigation.updateResults
+      ? "keyup"
+      : "input",
+      debounce(event => {
+        // If data src NOT to be cached
+        // then we should invoke its function again
+        if (!this.data.cache) {
+          const data = this.data.src();
+          // Check if data src is a Promise
+          // and resolve it before setting data src
           if (data instanceof Promise) {
-              data.then(function (response) {
-                  _this2.dataSrc = response;
-                  exec(event);
-              });
-          } else {
-              _this2.dataSrc = data;
+            data.then(response => {
+              this.dataSrc = response;
               exec(event);
-          }
-      } else {
-          exec(event);
-      }
-    }, this.debounce));
-
-    // If input has initial text, results will be shown on focus if option is provided as true
-    _this2.initialResults && input.addEventListener("focus", debounce(function (event) {
-        if (!_this2.data.cache) {
-            var data = _this2.data.src();
-            if (data instanceof Promise) {
-                data.then(function (response) {
-                    _this2.dataSrc = response;
-                    exec(event);
-                });
-            } else {
-                _this2.dataSrc = data;
-                exec(event);
-            }
-        } else {
+            });
+            // Else if not Promise
+          } else {
+            this.dataSrc = data;
             exec(event);
+          }
+          // Else if data src is local
+          // not external src
+        } else {
+          exec(event);
         }
-    }, this.debounce));
+      }, this.debounce),
+    );
+
+    // If option is provided as true, results will be shown on focus if input has initial text
+    this.initialResults && 
+    input.addEventListener(
+      "focus",
+      debounce(event => {
+        // If data src NOT to be cached
+        // then we should invoke its function again
+        if (!this.data.cache) {
+          const data = this.data.src();
+          // Check if data src is a Promise
+          // and resolve it before setting data src
+          if (data instanceof Promise) {
+            data.then(response => {
+              this.dataSrc = response;
+              exec(event);
+            });
+            // Else if not Promise
+          } else {
+            this.dataSrc = data;
+            exec(event);
+          }
+          // Else if data src is local
+          // not external src
+        } else {
+          exec(event);
+        }
+      }, this.debounce),
+    );
   }
 
   /**
