@@ -85,7 +85,7 @@ export default class autoComplete {
       // Custom navigation method
       customMethod: config.navigation && config.navigation.customMethod ? config.navigation.customMethod : false,
       // Update results as you navigate
-      updateResults: config.navigation && config.navigation.updateResults ? config.navigation.updateResults : false,
+      updateResults: config.navigation && config.navigation.updateResults ? config.navigation.updateResults : true,
     };
     // Show results for initial text on focus
     this.initialResults = config.initialResults || false;
