@@ -80,6 +80,15 @@ export default class autoComplete {
     this.highlight = config.highlight || false;
     // Action function on result selection
     this.onSelection = config.onSelection;
+    // Suggestion navigation
+    this.navigation = {
+      // Custom navigation method
+      customMethod: config.navigation && config.navigation.customMethod ? config.navigation.customMethod : false,
+      // Update results as you navigate
+      updateResults: config.navigation && config.navigation.updateResults ? config.navigation.updateResults : false,
+    };
+    // Show results for initial text on focus
+    this.initialResults = config.initialResults || false;
     // Data source
     this.dataSrc;
     // Starts the app Enigne
@@ -193,7 +202,9 @@ export default class autoComplete {
         // Rendering matching results to the UI list
         autoCompleteView.addResultsToList(this.resultsList.view, list, this.resultItem);
         // Keyboard Arrow Navigation
-        autoCompleteView.navigation(this.selector, this.resultsList.view, this.shadowRoot);
+        _this.navigation.customMethod 
+          ? _this.navigation.customMethod(autoCompleteView.getInput(_this.selector), _this.resultsList.view) 
+          : autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.shadowRoot);
       }
 
       // Returns rendered list
@@ -305,33 +316,41 @@ export default class autoComplete {
       }
     };
 
-    // Input field handler fires an event onKeyup action
-    input.addEventListener(
-      "keyup",
-      debounce(event => {
-        // If data src NOT to be cached
-        // then we should invoke its function again
-        if (!this.data.cache) {
-          const data = this.data.src();
-          // Check if data src is a Promise
-          // and resolve it before setting data src
+    // Updates results on keyup by default or input if navigation should be excluded
+    input.addEventListener(_this2.navigation.updateResults ? "keyup" : "input", debounce(function (event) {
+      if (!_this2.data.cache) {
+          var data = _this2.data.src();
           if (data instanceof Promise) {
-            data.then(response => {
-              this.dataSrc = response;
-              exec(event);
-            });
-            // Else if not Promise
+              data.then(function (response) {
+                  _this2.dataSrc = response;
+                  exec(event);
+              });
           } else {
-            this.dataSrc = data;
-            exec(event);
+              _this2.dataSrc = data;
+              exec(event);
           }
-          // Else if data src is local
-          // not external src
-        } else {
+      } else {
           exec(event);
+      }
+    }, this.debounce));
+
+    // If input has initial text, results will be shown on focus if option is provided as true
+    _this2.initialResults && input.addEventListener("focus", debounce(function (event) {
+        if (!_this2.data.cache) {
+            var data = _this2.data.src();
+            if (data instanceof Promise) {
+                data.then(function (response) {
+                    _this2.dataSrc = response;
+                    exec(event);
+                });
+            } else {
+                _this2.dataSrc = data;
+                exec(event);
+            }
+        } else {
+            exec(event);
         }
-      }, this.debounce),
-    );
+    }, this.debounce));
   }
 
   /**
