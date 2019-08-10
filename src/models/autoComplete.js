@@ -202,9 +202,9 @@ export default class autoComplete {
         // Rendering matching results to the UI list
         autoCompleteView.addResultsToList(this.resultsList.view, list, this.resultItem);
         // Keyboard Arrow Navigation
-        _this.navigation.customMethod 
-          ? _this.navigation.customMethod(autoCompleteView.getInput(_this.selector), _this.resultsList.view) 
-          : autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.shadowRoot);
+        this.navigation.customMethod
+          ? this.navigation.customMethod(autoCompleteView.getInput(this.selector), this.resultsList.view) 
+          : autoCompleteView.navigation(this.selector, this.resultsList.view, this.shadowRoot);
       }
 
       // Returns rendered list
