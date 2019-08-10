@@ -80,6 +80,15 @@ export default class autoComplete {
     this.highlight = config.highlight || false;
     // Action function on result selection
     this.onSelection = config.onSelection;
+    // Suggestion navigation
+    this.navigation = {
+      // Custom navigation method
+      customMethod: config.navigation && config.navigation.customMethod ? config.navigation.customMethod : false,
+      // Update results as you navigate
+      updateResults: typeof config.navigation.updateResults === "undefined" ? true : config.navigation.updateResults
+    };
+    // Show results for initial text on focus
+    this.initialResults = config.initialResults || false;
     // Data source
     this.dataSrc;
     // Starts the app Enigne
@@ -193,7 +202,9 @@ export default class autoComplete {
         // Rendering matching results to the UI list
         autoCompleteView.addResultsToList(this.resultsList.view, list, this.resultItem);
         // Keyboard Arrow Navigation
-        autoCompleteView.navigation(this.selector, this.resultsList.view, this.shadowRoot);
+        _this.navigation.customMethod 
+          ? _this.navigation.customMethod(autoCompleteView.getInput(_this.selector), _this.resultsList.view) 
+          : autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.shadowRoot);
       }
 
       // Returns rendered list
@@ -305,9 +316,40 @@ export default class autoComplete {
       }
     };
 
-    // Input field handler fires an event onKeyup action
+    // Updates results on keyup by default or input if navigation should be excluded
     input.addEventListener(
-      "keyup",
+      this.navigation.updateResults
+      ? "keyup"
+      : "input",
+      debounce(event => {
+        // If data src NOT to be cached
+        // then we should invoke its function again
+        if (!this.data.cache) {
+          const data = this.data.src();
+          // Check if data src is a Promise
+          // and resolve it before setting data src
+          if (data instanceof Promise) {
+            data.then(response => {
+              this.dataSrc = response;
+              exec(event);
+            });
+            // Else if not Promise
+          } else {
+            this.dataSrc = data;
+            exec(event);
+          }
+          // Else if data src is local
+          // not external src
+        } else {
+          exec(event);
+        }
+      }, this.debounce),
+    );
+
+    // If option is provided as true, results will be shown on focus if input has initial text
+    this.initialResults && 
+    input.addEventListener(
+      "focus",
       debounce(event => {
         // If data src NOT to be cached
         // then we should invoke its function again
