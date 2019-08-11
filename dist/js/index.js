@@ -35,6 +35,7 @@ const autoCompletejs = new autoComplete({
   selector: "#autoComplete",
   threshold: 0,
   debounce: 0,
+  triggerEvent: ["input"],
   searchEngine: "strict",
   customEngine: function (query, record) {
     // Current record value toLowerCase
@@ -58,34 +59,32 @@ const autoCompletejs = new autoComplete({
     element: "ul",
     destination: document.querySelector("#autoComplete"),
     position: "afterend",
-    navigation: {
-      event: ["keyup"],
-    },
     resultItem: {
       content: function (data, source) {
         source.innerHTML = data.match;
       },
       element: "li",
     },
-    noResults: function () {
-      const result = document.createElement("li");
-      result.setAttribute("class", "no_result");
-      result.setAttribute("tabindex", "1");
-      result.innerHTML = "No Results";
-      document.querySelector("#autoComplete_results_list").appendChild(result);
-    },
-    onSelection: function (feedback) {
-      const selection = feedback.selection.value.food;
-      // Render selected choice to selection div
-      document.querySelector(".selection").innerHTML = selection;
-      // Clear Input
-      document.querySelector("#autoComplete").value = "";
-      // Change placeholder with the selected value
-      document.querySelector("#autoComplete").setAttribute("placeholder", selection);
-      // Concole log autoComplete data feedback
-      console.log(feedback);
-    },
-  });
+  },
+  noResults: function () {
+    const result = document.createElement("li");
+    result.setAttribute("class", "no_result");
+    result.setAttribute("tabindex", "1");
+    result.innerHTML = "No Results";
+    document.querySelector("#autoComplete_results_list").appendChild(result);
+  },
+  onSelection: function (feedback) {
+    const selection = feedback.selection.value.food;
+    // Render selected choice to selection div
+    document.querySelector(".selection").innerHTML = selection;
+    // Clear Input
+    document.querySelector("#autoComplete").value = "";
+    // Change placeholder with the selected value
+    document.querySelector("#autoComplete").setAttribute("placeholder", selection);
+    // Concole log autoComplete data feedback
+    console.log(feedback);
+  },
+});
 
 // On page load add class to input field
 window.addEventListener("load", function () {

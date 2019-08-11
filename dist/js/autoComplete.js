@@ -165,6 +165,7 @@
         cache: typeof config.data.cache === "undefined" ? true : config.data.cache
       };
       this.query = config.query;
+      this.triggerEvent = config.triggerEvent || ["input"],
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.customEngine = config.customEngine ? config.customEngine : false;
       this.threshold = config.threshold || 0;
@@ -188,7 +189,6 @@
           element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul"
         }) : null,
         navigation: {
-          event: config.resultsList.navigation && config.resultsList.navigation.event ? config.resultsList.navigation.event : false,
           customMethod: config.resultsList.navigation && config.resultsList.navigation.customMethod ? config.resultsList.navigation.customMethod : false
         }
       };
@@ -358,7 +358,6 @@
             eventEmitter(event);
           }
         };
-        this.triggerEvent = this.resultsList.navigation.event || ["input"];
         var run = function run(event) {
           if (!_this2.data.cache) {
             var data = _this2.data.src();

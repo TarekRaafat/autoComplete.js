@@ -16,6 +16,8 @@ export default class autoComplete {
     };
     // Query Interceptor function
     this.query = config.query;
+    // autoCompleteJS event trigger
+    this.triggerEvent = config.triggerEvent || ["input"],
     // Search engine type
     this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
     // Custom Search Engine function
@@ -56,11 +58,6 @@ export default class autoComplete {
           : null,
       // Suggestion navigation
       navigation: {
-        // Navigation event
-        event:
-          config.resultsList.navigation && config.resultsList.navigation.event
-            ? config.resultsList.navigation.event
-            : false,
         // Custom navigation method
         customMethod:
           config.resultsList.navigation && config.resultsList.navigation.customMethod
@@ -328,8 +325,6 @@ export default class autoComplete {
       }
     };
 
-    // autoCompleteJS trigger event type
-    this.triggerEvent = this.resultsList.navigation.event || ["input"];
     // autoComplete.js run processes
     const run = event => {
       // If data src NOT to be cached
