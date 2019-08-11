@@ -162,25 +162,30 @@ export default class autoComplete {
       data.filter((record, index) => {
         // Search/Matching function
         const search = key => {
+          // This Record value
+          const recordValue = key ? record[key] : record;
+          // Check if record isValid or NOT
+          if(recordValue) {
           // Holds match value
-          const match = this.customEngine
-            ? this.customEngine(this.queryValue, record[key] || record)
-            : this.search(this.queryValue, record[key] || record);
-          // Push match to results list with key if set
-          if (match && key) {
-            resList.push({
-              key,
-              index,
-              match,
-              value: record,
-            });
+            const match = this.customEngine
+              ? this.customEngine(this.queryValue, record[key] || record)
+              : this.search(this.queryValue, record[key] || record);
+            // Push match to results list with key if set
+            if (match && key) {
+              resList.push({
+                key,
+                index,
+                match,
+                value: record,
+              });
             // Push match to results list without key if not set
-          } else if (match && !key) {
-            resList.push({
-              index,
-              match,
-              value: record,
-            });
+            } else if (match && !key) {
+              resList.push({
+                index,
+                match,
+                value: record,
+              });
+            }
           }
         };
 

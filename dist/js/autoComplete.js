@@ -241,20 +241,23 @@
           var resList = [];
           data.filter(function (record, index) {
             var search = function search(key) {
-              var match = _this.customEngine ? _this.customEngine(_this.queryValue, record[key] || record) : _this.search(_this.queryValue, record[key] || record);
-              if (match && key) {
-                resList.push({
-                  key: key,
-                  index: index,
-                  match: match,
-                  value: record
-                });
-              } else if (match && !key) {
-                resList.push({
-                  index: index,
-                  match: match,
-                  value: record
-                });
+              var recordValue = key ? record[key] : record;
+              if (recordValue) {
+                var match = _this.customEngine ? _this.customEngine(_this.queryValue, record[key] || record) : _this.search(_this.queryValue, record[key] || record);
+                if (match && key) {
+                  resList.push({
+                    key: key,
+                    index: index,
+                    match: match,
+                    value: record
+                  });
+                } else if (match && !key) {
+                  resList.push({
+                    index: index,
+                    match: match,
+                    value: record
+                  });
+                }
               }
             };
             if (_this.data.key) {
