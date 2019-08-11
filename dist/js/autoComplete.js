@@ -156,7 +156,6 @@
   function () {
     function autoComplete(config) {
       _classCallCheck(this, autoComplete);
-      this.shadowRoot = config.shadowRoot || document;
       this.selector = config.selector || "#autoComplete";
       this.data = {
         src: function src() {
@@ -172,21 +171,26 @@
       this.debounce = config.debounce || 0;
       this.resultsList = {
         render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
+        shadowRoot: config.resultsList.shadowRoot || document,
         view: config.resultsList && config.resultsList.render ? autoCompleteView.createResultsList({
           container:
-          config.resultsList && config.resultsList.container ?
-          config.resultsList.container :
-          false,
+          config.resultsList && config.resultsList.container
+          ? config.resultsList.container
+          : false,
           destination:
-          config.resultsList && config.resultsList.destination ?
-          config.resultsList.destination :
-          autoCompleteView.getInput(this.selector),
+          config.resultsList && config.resultsList.destination
+          ? config.resultsList.destination
+          : autoCompleteView.getInput(this.selector),
           position:
-          config.resultsList && config.resultsList.position ?
-          config.resultsList.position :
-          "afterend",
+          config.resultsList && config.resultsList.position
+          ? config.resultsList.position
+          : "afterend",
           element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul"
-        }) : null
+        }) : null,
+        navigation: {
+          event: config.resultsList.navigation && config.resultsList.navigation.event ? config.resultsList.navigation.event : false,
+          customMethod: config.resultsList.navigation && config.resultsList.navigation.customMethod ? config.resultsList.navigation.customMethod : false
+        }
       };
       this.sort = config.sort || false;
       this.placeHolder = config.placeHolder;
@@ -231,7 +235,7 @@
       }
     }, {
       key: "listMatchedResults",
-      value: function listMatchedResults(data) {
+      value: function listMatchedResults(data, event) {
         var _this = this;
         return new Promise(function (resolve) {
           var resList = [];
@@ -283,7 +287,7 @@
           var list = _this.sort ? resList.sort(_this.sort).slice(0, _this.maxResults) : resList.slice(0, _this.maxResults);
           if (_this.resultsList.render) {
             autoCompleteView.addResultsToList(_this.resultsList.view, list, _this.resultItem);
-            autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.shadowRoot);
+            _this.resultsList.navigation.customMethod ? _this.resultsList.navigation.customMethod(event, _this.resultsList.view, autoCompleteView.getInput(_this.selector)) : autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.resultsList.shadowRoot);
           }
           return resolve({
             matches: resList.length,
@@ -333,7 +337,7 @@
             var resultsList = _this2.resultsList.view;
             var clearResults = autoCompleteView.clearResults(resultsList);
             if (triggerCondition) {
-              _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
+              _this2.listMatchedResults(_this2.dataSrc, event).then(function (list) {
                 eventEmitter(event, list);
                 if (list.list.length === 0 && _this2.noResults && _this2.resultsList.render) {
                   _this2.noResults();
@@ -347,14 +351,15 @@
               eventEmitter(event);
             }
           } else if (!renderResultsList && triggerCondition) {
-            _this2.listMatchedResults(_this2.dataSrc).then(function (list) {
+            _this2.listMatchedResults(_this2.dataSrc, event).then(function (list) {
               eventEmitter(event, list);
             });
           } else {
             eventEmitter(event);
           }
         };
-        input.addEventListener("keyup", debounce(function (event) {
+        this.triggerEvent = this.resultsList.navigation.event || ["input"];
+        var run = function run(event) {
           if (!_this2.data.cache) {
             var data = _this2.data.src();
             if (data instanceof Promise) {
@@ -369,7 +374,12 @@
           } else {
             exec(event);
           }
-        }, this.debounce));
+        };
+        this.triggerEvent.forEach(function (eventType) {
+          input.addEventListener(eventType, debounce(function (event) {
+            return run(event);
+          }, _this2.debounce));
+        });
       }
     }, {
       key: "init",

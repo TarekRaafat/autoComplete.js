@@ -144,6 +144,15 @@
   background-color: rgba(#ffffff, 0);
 }
 
+.autoComplete_selected_result {
+  cursor: pointer;
+  background-color: rgba(255, 248, 248, 0.9);
+  border-left: 2px solid rgba(255, 122, 122, 1);
+  border-right: 2px solid rgba(255, 122, 122, 1);
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+}
+
 @media only screen and (max-width: 600px) {
   #autoComplete {
     width: 5rem;

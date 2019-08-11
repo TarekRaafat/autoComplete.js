@@ -1,11 +1,12 @@
 // autoComplete.js on type event emitter
-document.querySelector("#autoComplete").addEventListener("autoComplete", function(event) {
+document.querySelector("#autoComplete").addEventListener("autoComplete", function (event) {
   console.log(event.detail);
 });
+
 // The autoComplete.js Engine instance creator
 const autoCompletejs = new autoComplete({
   data: {
-    src: async function() {
+    src: async function () {
       // Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
       // Fetch External Data Source
@@ -16,7 +17,7 @@ const autoCompletejs = new autoComplete({
     },
     key: ["food", "cities", "animals"],
   },
-  sort: function(a, b) {
+  sort: function (a, b) {
     if (a.match < b.match) {
       return -1;
     }
@@ -26,9 +27,9 @@ const autoCompletejs = new autoComplete({
     return 0;
   },
   query: {
-    manipulate: function(query) {
+    manipulate: function (query) {
       return query.replace("@pizza", "burger");
-    }
+    },
   },
   placeHolder: "Food & Drinks",
   selector: "#autoComplete",
@@ -51,47 +52,49 @@ const autoCompletejs = new autoComplete({
   maxResults: 10,
   resultsList: {
     render: true,
-    container: function(source) {
+    container: function (source) {
       source.setAttribute("id", "autoComplete_results_list");
     },
+    element: "ul",
     destination: document.querySelector("#autoComplete"),
     position: "afterend",
-    element: "ul",
-  },
-  resultItem: {
-    content: function(data, source) {
-      source.innerHTML = data.match;
+    navigation: {
+      event: ["keyup"],
     },
-    element: "li",
-  },
-  noResults: function() {
-    const result = document.createElement("li");
-    result.setAttribute("class", "no_result");
-    result.setAttribute("tabindex", "1");
-    result.innerHTML = "No Results";
-    document.querySelector("#autoComplete_results_list").appendChild(result);
-  },
-  onSelection: function(feedback) {
-    const selection = feedback.selection.value.food;
-    // Render selected choice to selection div
-    document.querySelector(".selection").innerHTML = selection;
-    // Clear Input
-    document.querySelector("#autoComplete").value = "";
-    // Change placeholder with the selected value
-    document.querySelector("#autoComplete").setAttribute("placeholder", selection);
-    // Concole log autoComplete data feedback
-    console.log(feedback);
-  },
-});
+    resultItem: {
+      content: function (data, source) {
+        source.innerHTML = data.match;
+      },
+      element: "li",
+    },
+    noResults: function () {
+      const result = document.createElement("li");
+      result.setAttribute("class", "no_result");
+      result.setAttribute("tabindex", "1");
+      result.innerHTML = "No Results";
+      document.querySelector("#autoComplete_results_list").appendChild(result);
+    },
+    onSelection: function (feedback) {
+      const selection = feedback.selection.value.food;
+      // Render selected choice to selection div
+      document.querySelector(".selection").innerHTML = selection;
+      // Clear Input
+      document.querySelector("#autoComplete").value = "";
+      // Change placeholder with the selected value
+      document.querySelector("#autoComplete").setAttribute("placeholder", selection);
+      // Concole log autoComplete data feedback
+      console.log(feedback);
+    },
+  });
 
 // On page load add class to input field
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   document.querySelector("#autoComplete").classList.add("out");
   // document.querySelector("#autoComplete_results_list").style.display = "none";
 });
 
 // Toggle Search Engine Type/Mode
-document.querySelector(".toggeler").addEventListener("click", function() {
+document.querySelector(".toggeler").addEventListener("click", function () {
   // Holdes the toggle buttin alignment
   const toggele = document.querySelector(".toggele").style.justifyContent;
 
@@ -109,7 +112,7 @@ document.querySelector(".toggeler").addEventListener("click", function() {
 });
 
 // Toggle results list and other elements
-const action = function(action) {
+const action = function (action) {
   const github = document.querySelector(".github-corner");
   const title = document.querySelector("h1");
   const mode = document.querySelector(".mode");
@@ -133,11 +136,11 @@ const action = function(action) {
 
 // Toggle event for search input
 // showing & hidding results list onfocus / blur
-["focus", "blur", "mousedown", "keydown"].forEach(function(eventType) {
+["focus", "blur", "mousedown", "keydown"].forEach(function (eventType) {
   const input = document.querySelector("#autoComplete");
   const resultsList = document.querySelector("#autoComplete_results_list");
 
-  document.querySelector("#autoComplete").addEventListener(eventType, function(event) {
+  document.querySelector("#autoComplete").addEventListener(eventType, function (event) {
     // Hide results list & show other elemennts
     if (eventType === "blur") {
       action("dim");
@@ -148,7 +151,7 @@ const action = function(action) {
   });
 
   // Hide Results list when not used
-  document.addEventListener(eventType, function(event) {
+  document.addEventListener(eventType, function (event) {
     const current = event.target;
     if (
       current === input ||
@@ -164,8 +167,8 @@ const action = function(action) {
 });
 
 // Toggle Input Classes on results list focus to keep style
-["focusin", "focusout", "keydown"].forEach(function(eventType) {
-  document.querySelector("#autoComplete_results_list").addEventListener(eventType, function(event) {
+["focusin", "focusout", "keydown"].forEach(function (eventType) {
+  document.querySelector("#autoComplete_results_list").addEventListener(eventType, function (event) {
     if (eventType === "focusin") {
       if (event.target && event.target.nodeName === "LI") {
         action("light");

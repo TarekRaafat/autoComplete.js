@@ -3,8 +3,6 @@ import { Polyfill } from "../helpers/polyfill";
 
 export default class autoComplete {
   constructor(config) {
-    // Allowing shadow dom components to pass its root document
-    this.shadowRoot = config.shadowRoot || document;
     // User input Selector
     this.selector = config.selector || "#autoComplete";
     // Source of data list
@@ -29,37 +27,46 @@ export default class autoComplete {
     // Rendered results destination
     this.resultsList = {
       render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
+      // Allowing shadow dom components to pass its root document
+      shadowRoot: config.resultsList.shadowRoot || document,
       view:
         config.resultsList && config.resultsList.render
           ? autoCompleteView.createResultsList({
             // Results List function
             container:
                 // If resultsList and container are set
-                config.resultsList && config.resultsList.container
-                  ? // Then set resultsList container
-                  config.resultsList.container
-                  : // Else set default false
-                  false,
+                config.resultsList && config.resultsList.container // Then set resultsList container
+                  ? config.resultsList.container // Else set default false
+                  : false,
             // Results List selector
             destination:
                 // If resultsList and destination are set
-                config.resultsList && config.resultsList.destination
-                  ? // Then set resultList destination
-                  config.resultsList.destination
-                  : // Else set Default
-                  autoCompleteView.getInput(this.selector),
+                config.resultsList && config.resultsList.destination // Then set resultList destination
+                  ? config.resultsList.destination // Else set Default
+                  : autoCompleteView.getInput(this.selector),
             // Results List position
             position:
                 // If resultsList and position are set
-                config.resultsList && config.resultsList.position
-                  ? // Then resultsList position
-                  config.resultsList.position
-                  : // Else set default "afterend"
-                  "afterend",
+                config.resultsList && config.resultsList.position // Then resultsList position
+                  ? config.resultsList.position // Else set default "afterend"
+                  : "afterend",
             // Results List element tag
             element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul",
           })
           : null,
+      // Suggestion navigation
+      navigation: {
+        // Navigation event
+        event:
+          config.resultsList.navigation && config.resultsList.navigation.event
+            ? config.resultsList.navigation.event
+            : false,
+        // Custom navigation method
+        customMethod:
+          config.resultsList.navigation && config.resultsList.navigation.customMethod
+            ? config.resultsList.navigation.customMethod
+            : false,
+      },
     };
     // Sorting results list
     this.sort = config.sort || false;
@@ -80,15 +87,6 @@ export default class autoComplete {
     this.highlight = config.highlight || false;
     // Action function on result selection
     this.onSelection = config.onSelection;
-    // Suggestion navigation
-    this.navigation = {
-      // Custom navigation method
-      customMethod: config.navigation && config.navigation.customMethod ? config.navigation.customMethod : false,
-      // Update results as you navigate
-      updateResults: typeof config.navigation.updateResults === "undefined" ? true : config.navigation.updateResults
-    };
-    // Show results for initial text on focus
-    this.initialResults = config.initialResults || false;
     // Data source
     this.dataSrc;
     // Starts the app Enigne
@@ -158,7 +156,7 @@ export default class autoComplete {
    *
    * @return {*}
    */
-  listMatchedResults(data) {
+  listMatchedResults(data, event) {
     return new Promise(resolve => {
       // Final highlighted results list of array
       const resList = [];
@@ -173,10 +171,19 @@ export default class autoComplete {
             : this.search(this.queryValue, record[key] || record);
           // Push match to results list with key if set
           if (match && key) {
-            resList.push({ key, index, match, value: record });
+            resList.push({
+              key,
+              index,
+              match,
+              value: record,
+            });
             // Push match to results list without key if not set
           } else if (match && !key) {
-            resList.push({ index, match, value: record });
+            resList.push({
+              index,
+              match,
+              value: record,
+            });
           }
         };
 
@@ -201,10 +208,15 @@ export default class autoComplete {
       if (this.resultsList.render) {
         // Rendering matching results to the UI list
         autoCompleteView.addResultsToList(this.resultsList.view, list, this.resultItem);
-        // Keyboard Arrow Navigation
-        this.navigation.customMethod
-          ? this.navigation.customMethod(autoCompleteView.getInput(this.selector), this.resultsList.view) 
-          : autoCompleteView.navigation(this.selector, this.resultsList.view, this.shadowRoot);
+        // Keyboard Navigation
+        // If Navigation customMethod is set or default
+        this.resultsList.navigation.customMethod
+          ? this.resultsList.navigation.customMethod(
+            event,
+            this.resultsList.view,
+            autoCompleteView.getInput(this.selector),
+          )
+          : autoCompleteView.navigation(this.selector, this.resultsList.view, this.resultsList.shadowRoot);
       }
 
       // Returns rendered list
@@ -283,7 +295,7 @@ export default class autoComplete {
         // or just have space before triggering the app
         if (triggerCondition) {
           // List matching results
-          this.listMatchedResults(this.dataSrc).then(list => {
+          this.listMatchedResults(this.dataSrc, event).then(list => {
             // Event emitter on input field
             eventEmitter(event, list);
             // Checks if there's results
@@ -306,7 +318,7 @@ export default class autoComplete {
         }
         // If results will NOT be rendered
       } else if (!renderResultsList && triggerCondition) {
-        this.listMatchedResults(this.dataSrc).then(list => {
+        this.listMatchedResults(this.dataSrc, event).then(list => {
           // Event emitter on input field
           eventEmitter(event, list);
         });
@@ -316,64 +328,37 @@ export default class autoComplete {
       }
     };
 
-    // Updates results on keyup by default or input if navigation should be excluded
-    input.addEventListener(
-      this.navigation.updateResults
-      ? "keyup"
-      : "input",
-      debounce(event => {
-        // If data src NOT to be cached
-        // then we should invoke its function again
-        if (!this.data.cache) {
-          const data = this.data.src();
-          // Check if data src is a Promise
-          // and resolve it before setting data src
-          if (data instanceof Promise) {
-            data.then(response => {
-              this.dataSrc = response;
-              exec(event);
-            });
-            // Else if not Promise
-          } else {
-            this.dataSrc = data;
+    // autoCompleteJS trigger event type
+    this.triggerEvent = this.resultsList.navigation.event || ["input"];
+    // autoComplete.js run processes
+    const run = event => {
+      // If data src NOT to be cached
+      // then we should invoke its function again
+      if (!this.data.cache) {
+        const data = this.data.src();
+        // Check if data src is a Promise
+        // and resolve it before setting data src
+        if (data instanceof Promise) {
+          data.then(response => {
+            this.dataSrc = response;
             exec(event);
-          }
-          // Else if data src is local
-          // not external src
+          });
+          // Else if not Promise
         } else {
+          this.dataSrc = data;
           exec(event);
         }
-      }, this.debounce),
-    );
-
+        // Else if data src is local
+        // not external src
+      } else {
+        exec(event);
+      }
+    };
+    // Updates results on input by default if navigation should be excluded
     // If option is provided as true, results will be shown on focus if input has initial text
-    this.initialResults && 
-    input.addEventListener(
-      "focus",
-      debounce(event => {
-        // If data src NOT to be cached
-        // then we should invoke its function again
-        if (!this.data.cache) {
-          const data = this.data.src();
-          // Check if data src is a Promise
-          // and resolve it before setting data src
-          if (data instanceof Promise) {
-            data.then(response => {
-              this.dataSrc = response;
-              exec(event);
-            });
-            // Else if not Promise
-          } else {
-            this.dataSrc = data;
-            exec(event);
-          }
-          // Else if data src is local
-          // not external src
-        } else {
-          exec(event);
-        }
-      }, this.debounce),
-    );
+    this.triggerEvent.forEach(eventType => {
+      input.addEventListener(eventType, debounce(event => run(event), this.debounce));
+    });
   }
 
   /**
