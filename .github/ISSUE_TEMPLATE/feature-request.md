@@ -1,6 +1,6 @@
 ---
-name: Feature request
-about: Suggest an idea (or improvement for an existing feature) for this project
+name: Feature Request
+about: Suggest an idea (or improvement for an existing feature)
 title: ''
 labels: enhancement
 assignees: ''
@@ -22,7 +22,7 @@ A clear and concise description of what the problem is. Ex. I'm always frustrate
 A clear and concise description of what you want to happen.
 
 **Please provide a few use cases for this feature**
-1. ....
+1. ...
 2. ...
 
 **Please Describe alternatives you've considered**
