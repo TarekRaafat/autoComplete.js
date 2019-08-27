@@ -17,7 +17,10 @@ export default class autoComplete {
     // Query Interceptor function
     this.query = config.query;
     // autoCompleteJS event trigger
-    this.triggerEvent = config.triggerEvent || ["input"],
+    this.trigger = {
+      event: config.trigger && config.trigger.event ? config.trigger.event : ["input"],
+      condition: config.trigger && config.trigger.condition ? config.trigger.condition : false,
+    };
     // Search engine type
     this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
     // Custom Search Engine function
@@ -155,7 +158,7 @@ export default class autoComplete {
    */
   listMatchedResults(data, event) {
     return new Promise(resolve => {
-      // Final highlighted results list of array
+      // Final highlighted results list
       const resList = [];
 
       // Checks input has matches in data source
@@ -165,8 +168,8 @@ export default class autoComplete {
           // This Record value
           const recordValue = key ? record[key] : record;
           // Check if record isValid or NOT
-          if(recordValue) {
-          // Holds match value
+          if (recordValue) {
+            // Holds match value
             const match = this.customEngine
               ? this.customEngine(this.queryValue, record[key] || record)
               : this.search(this.queryValue, record[key] || record);
@@ -178,7 +181,7 @@ export default class autoComplete {
                 match,
                 value: record,
               });
-            // Push match to results list without key if not set
+              // Push match to results list without key if not set
             } else if (match && !key) {
               resList.push({
                 index,
@@ -265,7 +268,8 @@ export default class autoComplete {
       // resultsList Render Switch
       const renderResultsList = this.resultsList.render;
       // App triggering condition
-      const triggerCondition = queryValue.length > this.threshold && queryValue.replace(/ /g, "").length;
+      const triggerCondition =
+        this.trigger.condition || (queryValue.length > this.threshold && queryValue.replace(/ /g, "").length);
       // Event emitter on input field
       const eventEmitter = (event, results) => {
         // Dispatch event on input
@@ -286,12 +290,8 @@ export default class autoComplete {
 
       // Checks if results will be rendered or NOT
       if (renderResultsList) {
-        // onSelection function holder
-        const onSelection = this.onSelection;
-        // Get results list value
-        const resultsList = this.resultsList.view;
         // Clear Results function holder
-        const clearResults = autoCompleteView.clearResults(resultsList);
+        const clearResults = autoCompleteView.clearResults(this.resultsList.view);
 
         // Check if input is not empty
         // or just have space before triggering the app
@@ -307,8 +307,8 @@ export default class autoComplete {
             } else {
               // Gets user's selection
               // If action configured
-              if (onSelection) {
-                autoCompleteView.getSelection(this.selector, resultsList, onSelection, list);
+              if (this.onSelection) {
+                autoCompleteView.getSelection(this.selector, this.resultsList.view, this.onSelection, list);
               }
             }
           });
@@ -335,17 +335,16 @@ export default class autoComplete {
       // If data src NOT to be cached
       // then we should invoke its function again
       if (!this.data.cache) {
-        const data = this.data.src();
         // Check if data src is a Promise
         // and resolve it before setting data src
-        if (data instanceof Promise) {
-          data.then(response => {
+        if (this.data.src() instanceof Promise) {
+          this.data.src().then(response => {
             this.dataSrc = response;
             exec(event);
           });
           // Else if not Promise
         } else {
-          this.dataSrc = data;
+          this.dataSrc = this.data.src();
           exec(event);
         }
         // Else if data src is local
@@ -356,7 +355,7 @@ export default class autoComplete {
     };
     // Updates results on input by default if navigation should be excluded
     // If option is provided as true, results will be shown on focus if input has initial text
-    this.triggerEvent.forEach(eventType => {
+    this.trigger.event.forEach(eventType => {
       input.addEventListener(eventType, debounce(event => run(event), this.debounce));
     });
   }
@@ -368,17 +367,17 @@ export default class autoComplete {
    */
   init() {
     // Data Source holder
-    const dataSrc = this.data.src();
+    // const dataSrc = this.data.src();
     // Data source is Async
-    if (dataSrc instanceof Promise) {
+    if (this.data.src() instanceof Promise) {
       // Return Data
-      dataSrc.then(response => {
+      this.data.src().then(response => {
         this.dataSrc = response;
         this.ignite();
       });
       // Data source is Array/Function
     } else {
-      this.dataSrc = dataSrc;
+      this.dataSrc = this.data.src();
       this.ignite();
     }
 

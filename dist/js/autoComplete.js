@@ -165,7 +165,10 @@
         cache: typeof config.data.cache === "undefined" ? true : config.data.cache
       };
       this.query = config.query;
-      this.triggerEvent = config.triggerEvent || ["input"],
+      this.trigger = {
+        event: config.trigger && config.trigger.event ? config.trigger.event : ["input"],
+        condition: config.trigger && config.trigger.condition ? config.trigger.condition : false
+      };
       this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
       this.customEngine = config.customEngine ? config.customEngine : false;
       this.threshold = config.threshold || 0;
@@ -321,7 +324,7 @@
           var inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
           var queryValue = _this2.queryValue = _this2.query && _this2.query.manipulate ? _this2.query.manipulate(inputValue) : inputValue;
           var renderResultsList = _this2.resultsList.render;
-          var triggerCondition = queryValue.length > _this2.threshold && queryValue.replace(/ /g, "").length;
+          var triggerCondition = _this2.trigger.condition || queryValue.length > _this2.threshold && queryValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
             input.dispatchEvent(new Polyfill.CustomEventWrapper("autoComplete", {
               bubbles: true,
@@ -336,17 +339,15 @@
             }));
           };
           if (renderResultsList) {
-            var onSelection = _this2.onSelection;
-            var resultsList = _this2.resultsList.view;
-            var clearResults = autoCompleteView.clearResults(resultsList);
+            var clearResults = autoCompleteView.clearResults(_this2.resultsList.view);
             if (triggerCondition) {
               _this2.listMatchedResults(_this2.dataSrc, event).then(function (list) {
                 eventEmitter(event, list);
                 if (list.list.length === 0 && _this2.noResults && _this2.resultsList.render) {
                   _this2.noResults();
                 } else {
-                  if (onSelection) {
-                    autoCompleteView.getSelection(_this2.selector, resultsList, onSelection, list);
+                  if (_this2.onSelection) {
+                    autoCompleteView.getSelection(_this2.selector, _this2.resultsList.view, _this2.onSelection, list);
                   }
                 }
               });
@@ -363,21 +364,20 @@
         };
         var run = function run(event) {
           if (!_this2.data.cache) {
-            var data = _this2.data.src();
-            if (data instanceof Promise) {
-              data.then(function (response) {
+            if (_this2.data.src() instanceof Promise) {
+              _this2.data.src().then(function (response) {
                 _this2.dataSrc = response;
                 exec(event);
               });
             } else {
-              _this2.dataSrc = data;
+              _this2.dataSrc = _this2.data.src();
               exec(event);
             }
           } else {
             exec(event);
           }
         };
-        this.triggerEvent.forEach(function (eventType) {
+        this.trigger.event.forEach(function (eventType) {
           input.addEventListener(eventType, debounce(function (event) {
             return run(event);
           }, _this2.debounce));
@@ -387,14 +387,13 @@
       key: "init",
       value: function init() {
         var _this3 = this;
-        var dataSrc = this.data.src();
-        if (dataSrc instanceof Promise) {
-          dataSrc.then(function (response) {
+        if (this.data.src() instanceof Promise) {
+          this.data.src().then(function (response) {
             _this3.dataSrc = response;
             _this3.ignite();
           });
         } else {
-          this.dataSrc = dataSrc;
+          this.dataSrc = this.data.src();
           this.ignite();
         }
         Polyfill.initElementClosestPolyfill();

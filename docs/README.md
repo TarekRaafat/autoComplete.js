@@ -307,7 +307,6 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] `Query` Interception & Manipulation
 -   [ ] Automatic deep search over all keys in multiple nested object data source
 -   [ ] Improve `Promise` usage for external data source handling
--   [ ] Add `IndexedDB` for large data sets handling & offline usage
 -   [ ] Add `weights` on nearest possible results
 
 ### Usability:
@@ -326,7 +325,9 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Serve results without rendering list through `resultsList.render` API
 -   [x] Custom Search Engine Capability
 -   [ ] `ShadowDom` Support
--   [ ] Better `resultsList` navigation [No loosing cursor]
+-   [ ] API support for `customNavigation`
+-   [ ] API support for `customEventTriggers` & `customTriggerConditions`
+-   [ ] Better `resultsList` navigation [Without loosing cursor]
 -   [ ] Add more use examples & cases of the library to the documentation
 -   [ ] Better code compression / optimization for the library to squeeze it under `[5kb]`
 
@@ -337,6 +338,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [ ] Input Tags
 -   [ ] Virtual Scrolling
 -   [ ] Results List Category Separator
+-   [ ] `IndexedDB` for large data sets handling & offline usage
 -   [ ] Themes / Styles & Interactions
 
 ### Reported Issues:

@@ -1,6 +1,7 @@
 // autoComplete.js on type event emitter
 document.querySelector("#autoComplete").addEventListener("autoComplete", function (event) {
   console.log(event.detail);
+  console.log(autoCompletejs);
 });
 
 // The autoComplete.js Engine instance creator
@@ -35,7 +36,10 @@ const autoCompletejs = new autoComplete({
   selector: "#autoComplete",
   threshold: 0,
   debounce: 0,
-  triggerEvent: ["input"],
+  trigger: {
+    event: ["input"],
+    condition: document.querySelector("#autoComplete").value > 3,
+  },
   searchEngine: "strict",
   customEngine: function (query, record) {
     // Current record value toLowerCase
