@@ -185,7 +185,7 @@ new autoComplete({
     resultsList: {					   // Rendered results list object 	 | (Optional)
         render: true,
 		container: source => {
-			resultsListID = "food_List";
+			var resultsListID = "food_List";
 			return resultsListID;
 		},
 		destination: document.querySelector("#autoComplete"),
