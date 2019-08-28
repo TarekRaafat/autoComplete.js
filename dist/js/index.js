@@ -63,12 +63,12 @@ const autoCompletejs = new autoComplete({
     element: "ul",
     destination: document.querySelector("#autoComplete"),
     position: "afterend",
-    resultItem: {
-      content: function (data, source) {
-        source.innerHTML = data.match;
-      },
-      element: "li",
+  },
+  resultItem: {
+    content: function (data, source) {
+      source.innerHTML = data.match;
     },
+    element: "li",
   },
   noResults: function () {
     const result = document.createElement("li");
