@@ -246,7 +246,7 @@
             var search = function search(key) {
               var recordValue = key ? record[key] : record;
               if (recordValue) {
-                var match = _this.customEngine ? _this.customEngine(_this.queryValue, record[key] || record) : _this.search(_this.queryValue, record[key] || record);
+                var match = _this.customEngine ? _this.customEngine(_this.queryValue, recordValue) : _this.search(_this.queryValue, recordValue);
                 if (match && key) {
                   resList.push({
                     key: key,

@@ -171,8 +171,8 @@ export default class autoComplete {
           if (recordValue) {
             // Holds match value
             const match = this.customEngine
-              ? this.customEngine(this.queryValue, record[key] || record)
-              : this.search(this.queryValue, record[key] || record);
+              ? this.customEngine(this.queryValue, recordValue)
+              : this.search(this.queryValue, recordValue);
             // Push match to results list with key if set
             if (match && key) {
               resList.push({
