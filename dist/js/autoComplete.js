@@ -175,7 +175,7 @@
       this.debounce = config.debounce || 0;
       this.resultsList = {
         render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
-        shadowRoot: config.resultsList.shadowRoot || document,
+        shadowRoot: config.resultsList && config.resultsList.shadowRoot ? config.resultsList.shadowRoot : document,
         view: config.resultsList && config.resultsList.render ? autoCompleteView.createResultsList({
           container:
           config.resultsList && config.resultsList.container
@@ -192,7 +192,7 @@
           element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul"
         }) : null,
         navigation: {
-          customMethod: config.resultsList.navigation && config.resultsList.navigation.customMethod ? config.resultsList.navigation.customMethod : false
+          customMethod: config.resultsList && config.resultsList.navigation && config.resultsList.navigation.customMethod ? config.resultsList.navigation.customMethod : false
         }
       };
       this.sort = config.sort || false;

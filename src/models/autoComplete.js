@@ -33,7 +33,8 @@ export default class autoComplete {
     this.resultsList = {
       render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
       // Allowing shadow dom components to pass its root document
-      shadowRoot: config.resultsList.shadowRoot || document,
+      shadowRoot:
+        config.resultsList && config.resultsList.shadowRoot ? config.resultsList.shadowRoot : document,
       view:
         config.resultsList && config.resultsList.render
           ? autoCompleteView.createResultsList({
@@ -63,7 +64,7 @@ export default class autoComplete {
       navigation: {
         // Custom navigation method
         customMethod:
-          config.resultsList.navigation && config.resultsList.navigation.customMethod
+          config.resultsList && config.resultsList.navigation && config.resultsList.navigation.customMethod
             ? config.resultsList.navigation.customMethod
             : false,
       },

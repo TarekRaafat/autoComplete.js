@@ -37,7 +37,7 @@ const autoCompletejs = new autoComplete({
   threshold: 0,
   debounce: 0,
   trigger: {
-    event: ["input"],
+    event: ["focusin", "input", "focusout"],
     condition: document.querySelector("#autoComplete").value > 3,
   },
   searchEngine: "strict",
