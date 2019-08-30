@@ -16,7 +16,7 @@
 
 > Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v6.1**
 
-autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with wide range of projects & systems, made for users and developers in mind.
+autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with a wide range of projects & systems, made for users and developers in mind.
 
 ## Features
 
