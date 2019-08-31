@@ -367,8 +367,6 @@ export default class autoComplete {
    * @return void
    */
   init() {
-    // Data Source holder
-    // const dataSrc = this.data.src();
     // Data source is Async
     if (this.data.src() instanceof Promise) {
       // Return Data
