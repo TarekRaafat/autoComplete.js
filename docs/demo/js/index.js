@@ -1,3 +1,7 @@
+// get current date
+const currentDate = document.querySelector('#currentDate');
+currentDate.textContent = new Date(Date.now()).getUTCFullYear();
+
 // autoComplete.js on type event emitter
 document.querySelector("#autoComplete").addEventListener("autoComplete", function(event) {
   console.log(event.detail);
