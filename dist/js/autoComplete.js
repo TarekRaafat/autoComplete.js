@@ -169,8 +169,7 @@
         event: config.trigger && config.trigger.event ? config.trigger.event : ["input"],
         condition: config.trigger && config.trigger.condition ? config.trigger.condition : false
       };
-      this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
-      this.customEngine = config.customEngine ? config.customEngine : false;
+      this.searchEngine = config.searchEngine === "loose" ? "loose" : typeof config.searchEngine === "function" ? config.searchEngine : "strict";
       this.threshold = config.threshold || 0;
       this.debounce = config.debounce || 0;
       this.resultsList = {
@@ -191,9 +190,7 @@
           : "afterend",
           element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul"
         }) : null,
-        navigation: {
-          customMethod: config.resultsList && config.resultsList.navigation && config.resultsList.navigation.customMethod ? config.resultsList.navigation.customMethod : false
-        }
+        navigation: config.resultsList && config.resultsList.navigation ? config.resultsList.navigation : false
       };
       this.sort = config.sort || false;
       this.placeHolder = config.placeHolder;
@@ -246,7 +243,7 @@
             var search = function search(key) {
               var recordValue = key ? record[key] : record;
               if (recordValue) {
-                var match = _this.customEngine ? _this.customEngine(_this.queryValue, recordValue) : _this.search(_this.queryValue, recordValue);
+                var match = typeof _this.searchEngine === "function" ? _this.searchEngine(_this.queryValue, recordValue) : _this.search(_this.queryValue, recordValue);
                 if (match && key) {
                   resList.push({
                     key: key,
@@ -293,7 +290,7 @@
           var list = _this.sort ? resList.sort(_this.sort).slice(0, _this.maxResults) : resList.slice(0, _this.maxResults);
           if (_this.resultsList.render) {
             autoCompleteView.addResultsToList(_this.resultsList.view, list, _this.resultItem);
-            _this.resultsList.navigation.customMethod ? _this.resultsList.navigation.customMethod(event, _this.resultsList.view, autoCompleteView.getInput(_this.selector)) : autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.resultsList.shadowRoot);
+            _this.resultsList.navigation ? _this.resultsList.navigation(event, _this.resultsList.view, autoCompleteView.getInput(_this.selector)) : autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.resultsList.shadowRoot);
           }
           return resolve({
             matches: resList.length,

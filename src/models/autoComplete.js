@@ -16,15 +16,18 @@ export default class autoComplete {
     };
     // Query Interceptor function
     this.query = config.query;
-    // autoCompleteJS event trigger
+    // autoCompleteJS event & conddition trigger
     this.trigger = {
       event: config.trigger && config.trigger.event ? config.trigger.event : ["input"],
       condition: config.trigger && config.trigger.condition ? config.trigger.condition : false,
     };
     // Search engine type
-    this.searchEngine = config.searchEngine === "loose" ? "loose" : "strict";
-    // Custom Search Engine function
-    this.customEngine = config.customEngine ? config.customEngine : false;
+    this.searchEngine =
+      config.searchEngine === "loose"
+        ? "loose"
+        : typeof config.searchEngine === "function"
+          ? config.searchEngine
+          : "strict";
     // Minimum characters length before engine starts rendering
     this.threshold = config.threshold || 0;
     // Minimum duration for API calls debouncing
@@ -60,14 +63,8 @@ export default class autoComplete {
             element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul",
           })
           : null,
-      // Suggestion navigation
-      navigation: {
-        // Custom navigation method
-        customMethod:
-          config.resultsList && config.resultsList.navigation && config.resultsList.navigation.customMethod
-            ? config.resultsList.navigation.customMethod
-            : false,
-      },
+      // Results List navigation
+      navigation: config.resultsList && config.resultsList.navigation ? config.resultsList.navigation : false,
     };
     // Sorting results list
     this.sort = config.sort || false;
@@ -171,9 +168,10 @@ export default class autoComplete {
           // Check if record isValid or NOT
           if (recordValue) {
             // Holds match value
-            const match = this.customEngine
-              ? this.customEngine(this.queryValue, recordValue)
-              : this.search(this.queryValue, recordValue);
+            const match =
+              typeof this.searchEngine === "function"
+                ? this.searchEngine(this.queryValue, recordValue)
+                : this.search(this.queryValue, recordValue);
             // Push match to results list with key if set
             if (match && key) {
               resList.push({
@@ -216,8 +214,8 @@ export default class autoComplete {
         autoCompleteView.addResultsToList(this.resultsList.view, list, this.resultItem);
         // Keyboard Navigation
         // If Navigation customMethod is set or default
-        this.resultsList.navigation.customMethod
-          ? this.resultsList.navigation.customMethod(
+        this.resultsList.navigation
+          ? this.resultsList.navigation(
             event,
             this.resultsList.view,
             autoCompleteView.getInput(this.selector),

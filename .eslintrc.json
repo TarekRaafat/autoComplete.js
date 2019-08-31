@@ -25,7 +25,7 @@
       "smart-tabs"
     ],
     "no-mixed-operators": 2,
-    "no-nested-ternary": 2,
+    "no-nested-ternary": 0,
     "no-console": 2,
     "prefer-const": 2,
     "no-useless-escape": 2,

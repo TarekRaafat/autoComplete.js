@@ -36,9 +36,6 @@ const autoCompletejs = new autoComplete({
   selector: "#autoComplete",
   threshold: 0,
   debounce: 0,
-  trigger: {
-    event: ["input"]
-  },
   searchEngine: "strict",
   highlight: true,
   maxResults: 10,

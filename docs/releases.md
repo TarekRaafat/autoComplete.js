@@ -26,7 +26,18 @@ Release flags:
 
 ## Release Notes
 
-- v6.1.0 :sparkles:
+- v7.0.0 :sparkles:
+  - New API for results list navigation `resultsList.navigation` (Thanks 👍 @fredluetkemeier)
+  - New API for autoComplete.js engine `trigger.event` (Thanks 👍 @fredluetkemeier)
+  - New API for autoComplete.js engine `trigger.condition`
+  - Added Support to `Shadow DOM` expanding customizability (Thanks 👍 @MSDevs)
+  - Node Element Support for Input Selector (Thanks 👍 @jkhaui)
+  - Empty record issue fix (Thanks 👍 @Platon)
+  - `customEngine` API `[Removed]`
+  - `customEngine` merged with `searchEngine` API key for more convenience `[Changed]`
+  - Code Optimizations
+
+- v6.1.0
   - Use Custom Search Algorithm via `customEngine` method (Thanks @hwangm)
 
 - v6.0.0
