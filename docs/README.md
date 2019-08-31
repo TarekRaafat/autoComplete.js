@@ -272,7 +272,7 @@ it with [autoComplete.js][so tag].
 
 * * *
 
-## 5. What's New in v6.1?
+## 5. What's New in v7.0?
 
 Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
