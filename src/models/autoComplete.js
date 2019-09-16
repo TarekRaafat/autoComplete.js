@@ -85,8 +85,6 @@ export default class autoComplete {
     this.highlight = config.highlight || false;
     // Action function on result selection
     this.onSelection = config.onSelection;
-    // Data source
-    this.dataSrc;
     // Starts the app Enigne
     this.init();
   }
@@ -296,7 +294,7 @@ export default class autoComplete {
         // or just have space before triggering the app
         if (triggerCondition) {
           // List matching results
-          this.listMatchedResults(this.dataSrc, event).then(list => {
+          this.listMatchedResults(this.dataStream, event).then(list => {
             // Event emitter on input field
             eventEmitter(event, list);
             // Checks if there's results
@@ -319,7 +317,7 @@ export default class autoComplete {
         }
         // If results will NOT be rendered
       } else if (!renderResultsList && triggerCondition) {
-        this.listMatchedResults(this.dataSrc, event).then(list => {
+        this.listMatchedResults(this.dataStream, event).then(list => {
           // Event emitter on input field
           eventEmitter(event, list);
         });
@@ -336,14 +334,14 @@ export default class autoComplete {
       if (!this.data.cache) {
         // Check if data src is a Promise
         // and resolve it before setting data src
-        if (this.data.src() instanceof Promise) {
-          this.data.src().then(response => {
-            this.dataSrc = response;
+        if (this.dataType) {
+          this.dataStream.then(response => {
+            this.dataStream = response;
             exec(event);
           });
           // Else if not Promise
         } else {
-          this.dataSrc = this.data.src();
+          this.dataStream = this.dataStream;
           exec(event);
         }
         // Else if data src is local
@@ -365,16 +363,18 @@ export default class autoComplete {
    * @return void
    */
   init() {
+    this.dataStream = this.data.src();
+    this.dataType = this.dataStream instanceof Promise;
     // Data source is Async
-    if (this.data.src() instanceof Promise) {
+    if (this.dataType) {
       // Return Data
-      this.data.src().then(response => {
-        this.dataSrc = response;
+      this.dataStream.then(response => {
+        this.dataStream = response;
         this.ignite();
       });
       // Data source is Array/Function
     } else {
-      this.dataSrc = this.data.src();
+      this.dataStream = this.dataStream;
       this.ignite();
     }
 

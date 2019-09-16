@@ -202,7 +202,6 @@
       this.noResults = config.noResults;
       this.highlight = config.highlight || false;
       this.onSelection = config.onSelection;
-      this.dataSrc;
       this.init();
     }
     _createClass(autoComplete, [{
@@ -338,7 +337,7 @@
           if (renderResultsList) {
             var clearResults = autoCompleteView.clearResults(_this2.resultsList.view);
             if (triggerCondition) {
-              _this2.listMatchedResults(_this2.dataSrc, event).then(function (list) {
+              _this2.listMatchedResults(_this2.dataStream, event).then(function (list) {
                 eventEmitter(event, list);
                 if (list.list.length === 0 && _this2.noResults && _this2.resultsList.render) {
                   _this2.noResults();
@@ -352,7 +351,7 @@
               eventEmitter(event);
             }
           } else if (!renderResultsList && triggerCondition) {
-            _this2.listMatchedResults(_this2.dataSrc, event).then(function (list) {
+            _this2.listMatchedResults(_this2.dataStream, event).then(function (list) {
               eventEmitter(event, list);
             });
           } else {
@@ -361,13 +360,13 @@
         };
         var run = function run(event) {
           if (!_this2.data.cache) {
-            if (_this2.data.src() instanceof Promise) {
-              _this2.data.src().then(function (response) {
-                _this2.dataSrc = response;
+            if (_this2.dataType) {
+              _this2.dataStream.then(function (response) {
+                _this2.dataStream = response;
                 exec(event);
               });
             } else {
-              _this2.dataSrc = _this2.data.src();
+              _this2.dataStream = _this2.dataStream;
               exec(event);
             }
           } else {
@@ -384,13 +383,15 @@
       key: "init",
       value: function init() {
         var _this3 = this;
-        if (this.data.src() instanceof Promise) {
-          this.data.src().then(function (response) {
-            _this3.dataSrc = response;
+        this.dataStream = this.data.src();
+        this.dataType = this.dataStream instanceof Promise;
+        if (this.dataType) {
+          this.dataStream.then(function (response) {
+            _this3.dataStream = response;
             _this3.ignite();
           });
         } else {
-          this.dataSrc = this.data.src();
+          this.dataStream = this.dataStream;
           this.ignite();
         }
         Polyfill.initElementClosestPolyfill();
