@@ -26,7 +26,11 @@ Release flags:
 
 ## Release Notes
 
-- v7.0.0 :sparkles:
+- v7.0.1 :sparkles:
+  - `api multiple calls` issue fix (Thanks 👍 @srinivas025)
+
+
+- v7.0.0
   - New API for results list navigation `resultsList.navigation` (Thanks 👍 @fredluetkemeier)
   - New API for autoComplete.js engine `trigger.event` (Thanks 👍 @fredluetkemeier)
   - New API for autoComplete.js engine `trigger.condition`
