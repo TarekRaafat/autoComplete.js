@@ -100,7 +100,6 @@ export default class autoComplete {
   search(query, record) {
     // Current record value toLowerCase
     const recordLowerCase = record.toLowerCase();
-
     // Loose mode
     if (this.searchEngine === "loose") {
       // Search query string sanitized & normalized
@@ -109,12 +108,10 @@ export default class autoComplete {
       const match = [];
       // Query character position based on success
       let searchPosition = 0;
-
       // Iterate over record characters
       for (let number = 0; number < recordLowerCase.length; number++) {
         // Holds current record character
         let recordChar = record[number];
-
         // Matching case
         if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
           // Highlight matching character
@@ -125,7 +122,6 @@ export default class autoComplete {
         // Adds matching character to the matching list
         match.push(recordChar);
       }
-
       // Non-Matching case
       if (searchPosition !== query.length) {
         return false;
@@ -156,7 +152,6 @@ export default class autoComplete {
     return new Promise(resolve => {
       // Final highlighted results list
       const resList = [];
-
       // Checks input has matches in data source
       data.filter((record, index) => {
         // Search/Matching function
@@ -188,7 +183,6 @@ export default class autoComplete {
             }
           }
         };
-
         // Checks if data key is set
         if (this.data.key) {
           // Iterates over all set data keys
@@ -200,12 +194,10 @@ export default class autoComplete {
           search();
         }
       });
-
       // Sorting / Slicing final results list
       const list = this.sort
         ? resList.sort(this.sort).slice(0, this.maxResults)
         : resList.slice(0, this.maxResults);
-
       // If resultsList set NOT to render
       if (this.resultsList.render) {
         // Rendering matching results to the UI list
@@ -220,7 +212,6 @@ export default class autoComplete {
           )
           : autoCompleteView.navigation(this.selector, this.resultsList.view, this.resultsList.shadowRoot);
       }
-
       // Returns rendered list
       return resolve({
         matches: resList.length,
@@ -237,7 +228,6 @@ export default class autoComplete {
   ignite() {
     // Specified Input field selector
     const input = autoCompleteView.getInput(this.selector);
-
     // Placeholder setter
     if (this.placeHolder) {
       input.setAttribute("placeholder", this.placeHolder);
@@ -267,6 +257,7 @@ export default class autoComplete {
       // App triggering condition
       const triggerCondition =
         this.trigger.condition || (queryValue.length > this.threshold && queryValue.replace(/ /g, "").length);
+
       // Event emitter on input field
       const eventEmitter = (event, results) => {
         // Dispatch event on input
@@ -284,12 +275,10 @@ export default class autoComplete {
           }),
         );
       };
-
       // Checks if results will be rendered or NOT
       if (renderResultsList) {
         // Clear Results function holder
         const clearResults = autoCompleteView.clearResults(this.resultsList.view);
-
         // Check if input is not empty
         // or just have space before triggering the app
         if (triggerCondition) {
@@ -321,34 +310,20 @@ export default class autoComplete {
           // Event emitter on input field
           eventEmitter(event, list);
         });
-      } else {
-        // Event emitter on input field
-        eventEmitter(event);
       }
     };
 
     // autoComplete.js run processes
     const run = event => {
-      // If data src NOT to be cached
-      // then we should invoke its function again
-      if (!this.data.cache) {
-        // Check if data src is a Promise
-        // and resolve it before setting data src
-        if (this.dataType) {
-          this.dataStream.then(response => {
-            this.dataStream = response;
-            exec(event);
-          });
-          // Else if not Promise
-        } else {
-          this.dataStream = this.dataStream;
+      // Check if data src set to be cached or NOT
+      // Resolve data src before assigning and excuting
+      Promise.resolve(this.data.cache ? this.dataStream : this.data.src())
+        .then(data => {
+          // Assign resolved data to the main data stream
+          this.dataStream = data;
+          // Invoke execution function
           exec(event);
-        }
-        // Else if data src is local
-        // not external src
-      } else {
-        exec(event);
-      }
+        });
     };
     // Updates results on input by default if navigation should be excluded
     // If option is provided as true, results will be shown on focus if input has initial text
@@ -363,21 +338,21 @@ export default class autoComplete {
    * @return void
    */
   init() {
-    this.dataStream = this.data.src();
-    this.dataType = this.dataStream instanceof Promise;
-    // Data source is Async
-    if (this.dataType) {
-      // Return Data
-      this.dataStream.then(response => {
-        this.dataStream = response;
-        this.ignite();
-      });
-      // Data source is Array/Function
+    // Checks if data set to be cached
+    if (this.data.cache) {
+      // Resolve data src before assigning and igniting
+      Promise.resolve(this.data.src())
+        .then(data => {
+        // Assigning resolved data to the main data stream
+          this.dataStream = data;
+          // Invoke ignition function
+          this.ignite();
+        });
+    // Else if data is NOT set to be  cached
     } else {
-      this.dataStream = this.dataStream;
+      // Invoke ignition function
       this.ignite();
     }
-
     // Polyfilling for IE11
     Polyfill.initElementClosestPolyfill();
   }

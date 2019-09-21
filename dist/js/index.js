@@ -10,13 +10,20 @@ const autoCompletejs = new autoComplete({
     src: async function () {
       // Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
+      // API key token
+      const token = "5c2d4273b2930ee4b53f4e84a7c4440d";
+      // User search query
+      const query = document.querySelector("#autoComplete").value;
       // Fetch External Data Source
-      const source = await fetch("./db/generic.json");
+      const source = await fetch(`https://www.food2fork.com/api/search?key=${token}&q=${query}`);
       const data = await source.json();
-      // Returns Fetched data
-      return data;
+      // Post loading placeholder text
+      document.querySelector("#autoComplete").setAttribute("placeholder", "Food & Drinks");
+      // Return Fetched data
+      return data.recipes;
     },
-    key: ["food", "cities", "animals"],
+    key: ["title"],
+    cache: false
   },
   sort: function (a, b) {
     if (a.match < b.match) {

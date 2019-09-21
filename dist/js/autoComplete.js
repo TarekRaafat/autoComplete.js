@@ -354,24 +354,13 @@
             _this2.listMatchedResults(_this2.dataStream, event).then(function (list) {
               eventEmitter(event, list);
             });
-          } else {
-            eventEmitter(event);
           }
         };
         var run = function run(event) {
-          if (!_this2.data.cache) {
-            if (_this2.dataType) {
-              _this2.dataStream.then(function (response) {
-                _this2.dataStream = response;
-                exec(event);
-              });
-            } else {
-              _this2.dataStream = _this2.dataStream;
-              exec(event);
-            }
-          } else {
+          Promise.resolve(_this2.data.cache ? _this2.dataStream : _this2.data.src()).then(function (data) {
+            _this2.dataStream = data;
             exec(event);
-          }
+          });
         };
         this.trigger.event.forEach(function (eventType) {
           input.addEventListener(eventType, debounce(function (event) {
@@ -383,15 +372,12 @@
       key: "init",
       value: function init() {
         var _this3 = this;
-        this.dataStream = this.data.src();
-        this.dataType = this.dataStream instanceof Promise;
-        if (this.dataType) {
-          this.dataStream.then(function (response) {
-            _this3.dataStream = response;
+        if (this.data.cache) {
+          Promise.resolve(this.data.src()).then(function (data) {
+            _this3.dataStream = data;
             _this3.ignite();
           });
         } else {
-          this.dataStream = this.dataStream;
           this.ignite();
         }
         Polyfill.initElementClosestPolyfill();
