@@ -32,6 +32,11 @@ const autoCompletejs = new autoComplete({
       return query.replace("@pizza", "burger");
     },
   },
+  trigger: {
+    condition: function (query) {
+      return !!query.replace(/ /g, "").length && query !== "hamburger";
+    },
+  },
   placeHolder: "Food & Drinks",
   selector: "#autoComplete",
   threshold: 0,
