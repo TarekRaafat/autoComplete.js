@@ -16,7 +16,7 @@ export default class autoComplete {
     };
     // Query Interceptor function
     this.query = config.query;
-    // autoCompleteJS event & conddition trigger
+    // autoCompleteJS event & condition trigger
     this.trigger = {
       event: config.trigger && config.trigger.event ? config.trigger.event : ["input"],
       condition: config.trigger && config.trigger.condition ? config.trigger.condition : false,
@@ -255,8 +255,9 @@ export default class autoComplete {
       // resultsList Render Switch
       const renderResultsList = this.resultsList.render;
       // App triggering condition
-      const triggerCondition =
-        this.trigger.condition || (queryValue.length > this.threshold && queryValue.replace(/ /g, "").length);
+      const triggerCondition = this.trigger.condition
+        ? this.trigger.condition(queryValue)
+        : (queryValue.length > this.threshold && queryValue.replace(/ /g, "").length);
 
       // Event emitter on input field
       const eventEmitter = (event, results) => {

@@ -320,7 +320,7 @@
           var inputValue = input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
           var queryValue = _this2.queryValue = _this2.query && _this2.query.manipulate ? _this2.query.manipulate(inputValue) : inputValue;
           var renderResultsList = _this2.resultsList.render;
-          var triggerCondition = _this2.trigger.condition || queryValue.length > _this2.threshold && queryValue.replace(/ /g, "").length;
+          var triggerCondition = _this2.trigger.condition ? _this2.trigger.condition(queryValue) : queryValue.length > _this2.threshold && queryValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
             input.dispatchEvent(new Polyfill.CustomEventWrapper("autoComplete", {
               bubbles: true,
