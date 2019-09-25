@@ -67,13 +67,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.1/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.2/dist/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.1/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.2/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="./img/logos/html_logo.png" alt="HTML Logo" width="40px"> HTML Local load
@@ -121,7 +121,7 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ```html
 <link rel="stylesheet" href="./css/autoComplete.css">
 OR
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.1/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.2/dist/css/autoComplete.min.css">
 ```
 
 2.  Assign the default `id` value `"autoComplete"` to the desired input field or use any custom `id/class` and configure the API selector accordingly in `Step 4`
@@ -136,7 +136,7 @@ OR
 <script src="./js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 OR
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.1/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.2/dist/js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 ```
 
@@ -215,7 +215,7 @@ new autoComplete({
 | Keys       | Description                                                      | Values                                                                                                                                                                                                                                                                                                                 | Default                                                                                                    |
 | -------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | `data`         | Data Source, Data Key & Data Caching                                          | **1- src**: <br> - `Array` of `Strings` / `Objects`<br>**OR**<br> - `Function` => `Array` of `Strings` / `Objects` <br> **2- key**: <br>- `Array` of `Strings`<br>**Required** if `src` is `Object`, for search to point to desired `keys` <br> **3- Cache**: <br> - `true` for static data `src` <br> - `false` for dynamic data `src` "API" with queries | Data `src`                                                                |
-| `trigger`         | Engine event & condition trigger   | **1- event**: <br> - `Array` of `Strings` <br> **2- condition**: <br>- Condition `String` | 1- event: `["input"]` <br> 2- condition: <br> `(queryValue.length > this.threshold && queryValue !== " ")` |
+| `trigger`         | Engine event & condition trigger   | **1- event**: <br> - `Array` of `Strings` <br> **2- condition**: <br>- `Function` (query) => Condition `String` | 1- event: `["input"]` <br> 2- condition: <br> `(query.length > this.threshold && query !== " ")` |
 | `query`         |  Query Interceptor  | **-** `Object` with 1 method<br> 1- manipulate: `Function` with (query) argument | Raw `Input` |
 | `sort`         | Sort rendered results                                            | `Function`                                                                                                                                                                                                                                                                                                             | Blank / Empty **(Random Results)**                                                                         |
 | `placeHolder`  | Place Holder text                                                | `String`                                                                                                                                                                                                                                                                                                               | Blank / Empty                                                                                              |
@@ -300,8 +300,8 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Handling large data sets
 -   [x] Event emitter fires on cleared empty input field state
 -   [x] `Query` Interception & Manipulation
+-   [x] Improve `Promise` usage for external data source handling
 -   [ ] Automatic deep search over all keys in multiple nested object data source
--   [ ] Improve `Promise` usage for external data source handling
 -   [ ] Add `weights` on nearest possible results
 
 ### Usability:

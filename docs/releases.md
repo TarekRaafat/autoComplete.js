@@ -26,9 +26,14 @@ Release flags:
 
 ## Release Notes
 
-- v7.0.1 :sparkles:
-  - `api multiple calls` issue fix (Thanks 👍 @srinivas025)
+- v7.0.2 :sparkles:
+  - Data Promise bug fix (Thanks 👍 @braco)
+  - Remote API duplicate calls fix (Thanks 👍 @srinivas025, @argebynogame)
+  - `trigger.condition` enhancement (Thanks 👍 @sakuraineed)
+  - Code Refactor for faster performance and lighter weight
 
+- v7.0.1
+  - `api multiple calls` issue fix (Thanks 👍 @srinivas025)
 
 - v7.0.0
   - New API for results list navigation `resultsList.navigation` (Thanks 👍 @fredluetkemeier)
