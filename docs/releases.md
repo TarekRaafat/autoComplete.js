@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v7.0.2 :sparkles:
+- v7.0.3 :sparkles:
+  - Duplicate values selection bug fix (Thanks 👍 @plungerman)
+
+- v7.0.2
   - Data Promise bug fix (Thanks 👍 @braco)
   - Remote API duplicate calls fix (Thanks 👍 @srinivas025, @argebynogame)
   - `trigger.condition` enhancement (Thanks 👍 @sakuraineed)

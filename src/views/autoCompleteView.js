@@ -1,4 +1,4 @@
-const dataAttribute = "data-result";
+const dataAttribute = "data-id";
 const select = {
   resultsList: "autoComplete_results_list",
   result: "autoComplete_result",
@@ -52,8 +52,8 @@ const highlight = value => `<span class=${select.highlight}>${value}</span>`;
 const addResultsToList = (resultsList, dataSrc, resultItem) => {
   dataSrc.forEach((event, record) => {
     const result = document.createElement(resultItem.element);
-    const resultValue = dataSrc[record].value[event.key] || dataSrc[record].value;
-    result.setAttribute(dataAttribute, resultValue);
+    const resultIndex = dataSrc[record].index;
+    result.setAttribute(dataAttribute, resultIndex);
     result.setAttribute("class", select.result);
     result.setAttribute("tabindex", "1");
     resultItem.content ? resultItem.content(event, result) : (result.innerHTML = event.match || event);
@@ -124,10 +124,10 @@ const getSelection = (field, resultsList, callback, resultsValues) => {
               getInput(field) instanceof HTMLInputElement ? getInput(field).value : getInput(field).innerHTML,
             matches: resultsValues.matches,
             results: resultsValues.list.map(record => record.value),
-            selection: resultsValues.list.find(value => {
-              const resValue = value.value[value.key] || value.value;
-              return resValue === event.target.closest(`.${select.result}`).getAttribute(dataAttribute);
-            }),
+            selection: resultsValues.list.find(
+              value =>
+                value.index === Number(event.target.closest(`.${select.result}`).getAttribute(dataAttribute)),
+            ),
           });
           // Clear Results after selection is made
           clearResults(resultsList);

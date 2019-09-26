@@ -26,7 +26,7 @@
     return Constructor;
   }
 
-  var dataAttribute = "data-result";
+  var dataAttribute = "data-id";
   var select = {
     resultsList: "autoComplete_results_list",
     result: "autoComplete_result",
@@ -50,8 +50,8 @@
   var addResultsToList = function addResultsToList(resultsList, dataSrc, resultItem) {
     dataSrc.forEach(function (event, record) {
       var result = document.createElement(resultItem.element);
-      var resultValue = dataSrc[record].value[event.key] || dataSrc[record].value;
-      result.setAttribute(dataAttribute, resultValue);
+      var resultIndex = dataSrc[record].index;
+      result.setAttribute(dataAttribute, resultIndex);
       result.setAttribute("class", select.result);
       result.setAttribute("tabindex", "1");
       resultItem.content ? resultItem.content(event, result) : result.innerHTML = event.match || event;
@@ -98,8 +98,7 @@
                 return record.value;
               }),
               selection: resultsValues.list.find(function (value) {
-                var resValue = value.value[value.key] || value.value;
-                return resValue === event.target.closest(".".concat(select.result)).getAttribute(dataAttribute);
+                return value.index === Number(event.target.closest(".".concat(select.result)).getAttribute(dataAttribute));
               })
             });
             clearResults(resultsList);
