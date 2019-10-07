@@ -1,198 +1,193 @@
 :root {
-    --transition-1: all 0.3s ease-in-out;
-    --transition-2: all 0.1s ease-in-out;
+  --transition-1: all 0.3s ease-in-out;
+  --transition-2: all 0.1s ease-in-out;
 }
 
 html {
-    font-size: 1rem;
-    font-family: "PT Sans", sans-serif;
+  font-size: 1rem;
+  font-family: "PT Sans", sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .contaier {
-    width: 100vw;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 .header {
-    text-align: center;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -webkit-touch-callout: none;
-}
-
-#autoComplete_results_list {
-    height: 45vh;
-    overflow: auto;
+  text-align: center;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .no_result {
-    margin: 0.15rem auto;
-    padding: 0.6rem;
-    max-width: 280px;
-    border: 0.05rem solid #e3e3e3;
-    list-style: none;
-    text-align: left;
-    font-size: 1.1rem;
-    color: rgb(123, 123, 123);
-    transition: all 0.1s ease-in-out;
-    background-color: #fff;
-    border-radius: 0 0 1rem 1rem;
-    outline: none;
-  }
+  margin: 0.15rem auto;
+  padding: 0.6rem;
+  max-width: 280px;
+  border: 0.05rem solid #e3e3e3;
+  list-style: none;
+  text-align: left;
+  font-size: 1.1rem;
+  color: rgb(123, 123, 123);
+  transition: all 0.1s ease-in-out;
+  background-color: #fff;
+  border-radius: 0 0 1rem 1rem;
+  outline: none;
+}
 
 .no_result:hover {
-    cursor: default;
-    background-color: #fff;
-    border: 0.05rem solid #e3e3e3;
+  cursor: default;
+  background-color: #fff;
+  border: 0.05rem solid #e3e3e3;
 }
 
 .no_result:focus {
-    cursor: default;
-    background-color: #fff;
-    border: 0.05rem solid #e3e3e3;
+  cursor: default;
+  background-color: #fff;
+  border: 0.05rem solid #e3e3e3;
 }
 
 h1 {
-    color: rgba(255, 122, 122, 1);
-    transition: var(--transition-1);
+  color: rgba(255, 122, 122, 1);
+  transition: var(--transition-1);
 }
 
-h1>a {
-    text-decoration: none;
-    color: rgba(255, 122, 122, 1);
+h1 > a {
+  text-decoration: none;
+  color: rgba(255, 122, 122, 1);
 }
 
-h1>a::selection {
-    color: rgb(255, 122, 122);
+h1 > a::selection {
+  color: rgb(255, 122, 122);
 }
 
 h4 {
-    margin-bottom: 5px;
-    color: #ffc6c6;
+  margin-bottom: 5px;
+  color: #ffc6c6;
 }
 
 h4::selection {
-    color: #ffc6c6;
+  color: #ffc6c6;
 }
 
 .github-corner {
-    transition: var(--transition-1);
+  transition: var(--transition-1);
 }
 
 .mode {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .toggele {
-    display: flex;
-    position: abolute;
-    border: 1px solid #ffc6c6;
-    height: 35px;
-    width: 120px;
-    border-radius: 50px;
-    justify-content: flex-start;
-    align-content: center;
-    transition: var(--transition-1);
+  display: flex;
+  position: abolute;
+  border: 1px solid #ffc6c6;
+  height: 35px;
+  width: 120px;
+  border-radius: 50px;
+  justify-content: flex-start;
+  align-content: center;
+  transition: var(--transition-1);
 }
 
 .toggeler {
-    display: grid;
-    cursor: pointer;
-    background-color: rgba(255, 198, 198, 1);
-    color: #fff;
-    height: 25px;
-    width: 60px;
-    border-radius: 50px;
-    margin: 5px;
-    text-align: center;
-    align-content: center;
-    align-self: flex-start;
-    transition: var(--transition-1);
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -webkit-touch-callout: none;
+  display: grid;
+  cursor: pointer;
+  background-color: rgba(255, 198, 198, 1);
+  color: #fff;
+  height: 25px;
+  width: 60px;
+  border-radius: 50px;
+  margin: 5px;
+  text-align: center;
+  align-content: center;
+  align-self: flex-start;
+  transition: var(--transition-1);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .toggeler:hover {
-    width: 70px;
-    background-color: rgba(255, 122, 122, 0.7);
+  width: 70px;
+  background-color: rgba(255, 122, 122, 0.7);
 }
 
 .toggeler::selection {
-    color: #fff;
+  color: #fff;
 }
 
 .strict {
-    display: inline;
+  display: inline;
 }
 
 .loose {
-    display: inline;
+  display: inline;
 }
 
 .selection {
-    margin-top: 25vh;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #ffc6c6;
-    transition: var(--transition-1);
+  margin-top: 25vh;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffc6c6;
+  transition: var(--transition-1);
 }
 
 .selection::selection {
-    color: #64ceaa;
+  color: #64ceaa;
 }
 
 .footer {
-    display: flex;
-    width: 100vw;
-    position: absolute;
-    bottom: 2rem;
-    color: rgb(147, 147, 147);
-    justify-content: center;
-    transition: var(--transition-1);
+  display: flex;
+  width: 100vw;
+  position: absolute;
+  bottom: 2rem;
+  color: rgb(147, 147, 147);
+  justify-content: center;
+  transition: var(--transition-1);
 }
 
-.footer>div>a {
-    text-decoration: none;
-    color: rgb(147, 147, 147);
+.footer > div > a {
+  text-decoration: none;
+  color: rgb(147, 147, 147);
 }
 
-.footer>div>a::selection {
-    color: rgba(255, 122, 122, 1);
+.footer > div > a::selection {
+  color: rgba(255, 122, 122, 1);
 }
 
 .copyrights {
-    font-size: 0.8rem;
+  font-size: 0.8rem;
 }
 
 .copyrights::selection {
-    color: rgb(147, 147, 147);
+  color: rgb(147, 147, 147);
 }
 
-.copyrights>a::selection {
-    color: rgb(147, 147, 147);
+.copyrights > a::selection {
+  color: rgb(147, 147, 147);
 }
 
 @media only screen and (max-width: 600px) {
-    .selection {
-        margin-top: 15vh;
-    }
+  .selection {
+    margin-top: 15vh;
+  }
 
-    .footer {
-        bottom: 1.5rem;
-        transition: var(--transition-1);
-    }
+  .footer {
+    bottom: 1.5rem;
+    transition: var(--transition-1);
+  }
 }
 
 @media only screen and (max-height: 500px) {
-    .footer {
-        display: none;
-    }
+  .footer {
+    display: none;
+  }
 }

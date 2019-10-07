@@ -14,7 +14,7 @@
 
 <h1>autoComplete.js</h1>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v7.0**
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v7.1**
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with a wide range of projects & systems, made for users and developers in mind.
 
@@ -67,13 +67,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.3/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.1.0/dist/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.3/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.1.0/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="./img/logos/html_logo.png" alt="HTML Logo" width="40px"> HTML Local load
@@ -121,7 +121,7 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ```html
 <link rel="stylesheet" href="./css/autoComplete.css">
 OR
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.3/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.1.0/dist/css/autoComplete.min.css">
 ```
 
 2.  Assign the default `id` value `"autoComplete"` to the desired input field or use any custom `id/class` and configure the API selector accordingly in `Step 4`
@@ -136,7 +136,7 @@ OR
 <script src="./js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 OR
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.0.3/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.1.0/dist/js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 ```
 
@@ -223,7 +223,7 @@ new autoComplete({
 | `threshold`    | Minimum characters length before engine starts rendering results | `Number`                                                                                                                                                                                                                                                                                                               | `0`                                                                                                        |
 | `debounce`    | Minimum duration after typing idle state for engine to kick in | `Number` <br> Milliseconds value <br> debounce: `300`         | `0`                                                                                                        |
 | `searchEngine` | Search Engine Type/Mode                                          | **-** `"strict"` lowerCase string <br>**OR**<br> **-** `"loose"` lowerCase string <br>**OR**<br> **-** customEngine `Function` with (query, record) parameters, returns each match individually    | `"strict"`                                                                                                 |
-| `resultsList`  | Rendered results list destination,  position & element | **-** `Object` with 5 methods<br> 1- render: `Boolean` <br> 2- shadwoRoot <br> 3- container: <br> `Function` with (source) parameter<br> 4- destination: `document.querySelector("#div")`<br> 5- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` <br> 6- element: <br> `"ul", "span", "div" or Custom` <br> 7- navigation: `Function` with (event, resList, input) parameters| 1- render: `false` <br> 2- shadowRoot: `document` <br> 3- container: `(source) => { ... }` <br> 4- destination: `document.querySelector("#autoComplete")` <br> 5- position: `"afterend"` <br> 6- element: `"ul"` |
+| `resultsList`  | Rendered results list destination,  position & element | **-** `Object` with 5 methods<br> 1- render: `Boolean` <br> 2- container: <br> `Function` with (source) parameter<br> 3- destination: `document.querySelector("#div")`<br> 4- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` <br> 5- element: <br> `"ul", "span", "div" or Custom` <br> 6- navigation: `Function` with `(event, input, resListElement, onSelection, resListData)` parameters| 1- render: `false` <br> 2- container: `(source) => { ... }` <br> 3- destination: `document.querySelector("#autoComplete")` <br> 4- position: `"afterend"` <br> 5- element: `"ul"` <br> 6- navigation: `default`|
 | `resultItem`   | Rendered result Item content & element | **-** `Object` with 2 methods<br> 1- content: <br>**-** `Function` with (data, source) parameters <br> **-** `data.match` has to be used for **Highlighted** result <br> 2- element: <br> `"li", "span", "div" or Custom` | 1- content: `(data, source) => { ... }` <br> 2- element: `"li"`  |
 | `noResults`   | Action script on noResults found | `Function` | No Action |
 | `highlight`    | Highlight matching results                                       | `Boolean`                                                                                                                                                                                                                                                                                                              | `false`                                                                                                    |
@@ -272,7 +272,7 @@ it with [autoComplete.js][so tag].
 
 * * *
 
-## 5. What's New in v7.0?
+## 5. What's New in v7.1?
 
 Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
@@ -322,9 +322,10 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] `ShadowDom` Support
 -   [x] API support for `customNavigation`
 -   [x] API support for `customEventTriggers` & `customTriggerConditions`
--   [ ] Better `resultsList` navigation [Without loosing cursor]
+-   [x] Better `resultsList` navigation [Without loosing cursor]
+-   [ ] Add event emitters for navigation
 -   [ ] Add more use examples & cases of the library to the documentation
--   [ ] Better code compression / optimization for the library to squeeze it under `[5kb]`
+-   [ ] Better code compression / optimization for the library to squeeze it back under `[5kb]`
 
 ### Plugins:
 

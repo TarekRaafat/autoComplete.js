@@ -28,9 +28,10 @@
 
   var dataAttribute = "data-id";
   var select = {
-    resultsList: "autoComplete_results_list",
+    resultsList: "autoComplete_list",
     result: "autoComplete_result",
-    highlight: "autoComplete_highlighted"
+    highlight: "autoComplete_highlighted",
+    selectedResult: "autoComplete_selected"
   };
   var getInput = function getInput(selector) {
     return typeof selector === "string" ? document.querySelector(selector) : selector();
@@ -53,58 +54,86 @@
       var resultIndex = dataSrc[record].index;
       result.setAttribute(dataAttribute, resultIndex);
       result.setAttribute("class", select.result);
-      result.setAttribute("tabindex", "1");
       resultItem.content ? resultItem.content(event, result) : result.innerHTML = event.match || event;
       resultsList.appendChild(result);
     });
   };
-  var navigation = function navigation(selector, resultsList, documentOrShadowRoot) {
-    var input = getInput(selector);
-    var first = resultsList.firstChild;
-    document.onkeydown = function (event) {
-      var active = documentOrShadowRoot.activeElement;
-      switch (event.keyCode) {
-        case 38:
-          if (active !== first && active !== input) {
-            active.previousSibling.focus();
-          } else if (active === first) {
-            input.focus();
-          }
-          break;
-        case 40:
-          if (active === input && resultsList.childNodes.length > 0) {
-            first.focus();
-          } else if (active !== resultsList.lastChild) {
-            active.nextSibling.focus();
-          }
-          break;
-      }
-    };
-  };
   var clearResults = function clearResults(resultsList) {
     return resultsList.innerHTML = "";
   };
-  var getSelection = function getSelection(field, resultsList, callback, resultsValues) {
-    var results = resultsList.querySelectorAll(".".concat(select.result));
-    Object.keys(results).forEach(function (selection) {
-      ["mousedown", "keydown"].forEach(function (eventType) {
-        results[selection].addEventListener(eventType, function (event) {
-          if (eventType === "mousedown" || event.keyCode === 13 || event.keyCode === 39) {
-            callback({
-              event: event,
-              query: getInput(field) instanceof HTMLInputElement ? getInput(field).value : getInput(field).innerHTML,
-              matches: resultsValues.matches,
-              results: resultsValues.list.map(function (record) {
-                return record.value;
-              }),
-              selection: resultsValues.list.find(function (value) {
-                return value.index === Number(event.target.closest(".".concat(select.result)).getAttribute(dataAttribute));
-              })
-            });
-            clearResults(resultsList);
-          }
-        });
-      });
+  var onSelection = function onSelection(event, field, resultsList, feedback, resultsValues, selection) {
+    feedback({
+      event: event,
+      query: field instanceof HTMLInputElement ? field.value : field.innerHTML,
+      matches: resultsValues.matches,
+      results: resultsValues.list.map(function (record) {
+        return record.value;
+      }),
+      selection: resultsValues.list.find(function (value) {
+        if (event.keyCode === 13) {
+          return value.index === Number(selection.getAttribute(dataAttribute));
+        } else if (event.type === "mousedown") {
+          return value.index === Number(event.target.getAttribute(dataAttribute));
+        }
+      })
+    });
+    clearResults(resultsList);
+  };
+  var navigation = function navigation(input, resultsList, feedback, resultsValues) {
+    var li = resultsList.childNodes,
+        liLength = li.length - 1;
+    var liSelected = undefined,
+        next;
+    var removeSelection = function removeSelection(direction) {
+      liSelected.classList.remove(select.selectedResult);
+      if (direction === 1) {
+        next = liSelected.nextSibling;
+      } else {
+        next = liSelected.previousSibling;
+      }
+    };
+    var highlightSelection = function highlightSelection(current) {
+      liSelected = current;
+      liSelected.classList.add(select.selectedResult);
+    };
+    input.onkeydown = function (event) {
+      if (li.length > 0) {
+        switch (event.keyCode) {
+          case 38:
+            if (liSelected) {
+              removeSelection(0);
+              if (next) {
+                highlightSelection(next);
+              } else {
+                highlightSelection(li[liLength]);
+              }
+            } else {
+              highlightSelection(li[liLength]);
+            }
+            break;
+          case 40:
+            if (liSelected) {
+              removeSelection(1);
+              if (next) {
+                highlightSelection(next);
+              } else {
+                highlightSelection(li[0]);
+              }
+            } else {
+              highlightSelection(li[0]);
+            }
+            break;
+          case 13:
+            if (liSelected) {
+              onSelection(event, input, resultsList, feedback, resultsValues, liSelected);
+            }
+        }
+      }
+    };
+    li.forEach(function (selection) {
+      selection.onmousedown = function (event) {
+        return onSelection(event, input, resultsList, feedback, resultsValues);
+      };
     });
   };
   var autoCompleteView = {
@@ -113,8 +142,7 @@
     highlight: highlight,
     addResultsToList: addResultsToList,
     navigation: navigation,
-    clearResults: clearResults,
-    getSelection: getSelection
+    clearResults: clearResults
   };
 
   var CustomEventPolyfill = function CustomEventPolyfill(event, params) {
@@ -173,7 +201,6 @@
       this.debounce = config.debounce || 0;
       this.resultsList = {
         render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
-        shadowRoot: config.resultsList && config.resultsList.shadowRoot ? config.resultsList.shadowRoot : document,
         view: config.resultsList && config.resultsList.render ? autoCompleteView.createResultsList({
           container:
           config.resultsList && config.resultsList.container
@@ -233,29 +260,27 @@
       }
     }, {
       key: "listMatchedResults",
-      value: function listMatchedResults(data, event) {
+      value: function listMatchedResults(data) {
         var _this = this;
         return new Promise(function (resolve) {
           var resList = [];
           data.filter(function (record, index) {
             var search = function search(key) {
               var recordValue = key ? record[key] : record;
-              if (recordValue) {
-                var match = typeof _this.searchEngine === "function" ? _this.searchEngine(_this.queryValue, recordValue) : _this.search(_this.queryValue, recordValue);
-                if (match && key) {
-                  resList.push({
-                    key: key,
-                    index: index,
-                    match: match,
-                    value: record
-                  });
-                } else if (match && !key) {
-                  resList.push({
-                    index: index,
-                    match: match,
-                    value: record
-                  });
-                }
+              var match = typeof _this.searchEngine === "function" ? _this.searchEngine(_this.queryValue, recordValue) : _this.search(_this.queryValue, recordValue);
+              if (match && key) {
+                resList.push({
+                  key: key,
+                  index: index,
+                  match: match,
+                  value: record
+                });
+              } else if (match && !key) {
+                resList.push({
+                  index: index,
+                  match: match,
+                  value: record
+                });
               }
             };
             if (_this.data.key) {
@@ -286,10 +311,6 @@
             }
           });
           var list = _this.sort ? resList.sort(_this.sort).slice(0, _this.maxResults) : resList.slice(0, _this.maxResults);
-          if (_this.resultsList.render) {
-            autoCompleteView.addResultsToList(_this.resultsList.view, list, _this.resultItem);
-            _this.resultsList.navigation ? _this.resultsList.navigation(event, _this.resultsList.view, autoCompleteView.getInput(_this.selector)) : autoCompleteView.navigation(_this.selector, _this.resultsList.view, _this.resultsList.shadowRoot);
-          }
           return resolve({
             matches: resList.length,
             list: list
@@ -334,15 +355,19 @@
             }));
           };
           if (renderResultsList) {
-            var clearResults = autoCompleteView.clearResults(_this2.resultsList.view);
+            var resultsList = _this2.resultsList.view;
+            var clearResults = autoCompleteView.clearResults(resultsList);
             if (triggerCondition) {
               _this2.listMatchedResults(_this2.dataStream, event).then(function (list) {
                 eventEmitter(event, list);
-                if (list.list.length === 0 && _this2.noResults && _this2.resultsList.render) {
-                  _this2.noResults();
-                } else {
-                  if (_this2.onSelection) {
-                    autoCompleteView.getSelection(_this2.selector, _this2.resultsList.view, _this2.onSelection, list);
+                if (_this2.resultsList.render) {
+                  if (list.list.length === 0 && _this2.noResults) {
+                    _this2.noResults();
+                  } else {
+                    autoCompleteView.addResultsToList(resultsList, list.list, _this2.resultItem);
+                    if (_this2.onSelection) {
+                      _this2.resultsList.navigation ? _this2.resultsList.navigation(event, input, resultsList, _this2.onSelection, list) : autoCompleteView.navigation(input, resultsList, _this2.onSelection, list);
+                    }
                   }
                 }
               });

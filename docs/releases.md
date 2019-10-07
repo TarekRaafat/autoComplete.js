@@ -26,7 +26,16 @@ Release flags:
 
 ## Release Notes
 
-- v7.0.3 :sparkles:
+- v7.1.0 :sparkles:
+  - New improved Navigation logic (Thanks 👍 @mtomov)
+  - `shadowRoot` API support `[Removed]`
+  - Enhanced `resList.navigation` API data feedback
+  - Styling `[Changed]`
+  - Major code Refactor & Optimizations
+    - Faster performance
+    - Reduced `autoComplete.js` weight
+
+- v7.0.3
   - Duplicate values selection bug fix (Thanks 👍 @plungerman)
 
 - v7.0.2

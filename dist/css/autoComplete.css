@@ -76,10 +76,8 @@
   box-shadow: rgba(255, 122, 122, 0.1) 0px 0px 20px 5px;
 }
 
-#autoComplete_results_list {
+#autoComplete_list {
   position: fixed;
-  height: 45vh;
-  overflow: auto;
   z-index: 1000;
   padding: 0;
   left: 0;
@@ -88,7 +86,6 @@
   margin-left: auto;
   margin-right: auto;
   width: 18rem;
-  overflow: hidden;
   transition: all 0.1s ease-in-out;
   -webkit-transition: all -webkit-transform 0.1s ease;
 }
@@ -144,7 +141,7 @@
   background-color: rgba(#ffffff, 0);
 }
 
-.autoComplete_selected_result {
+.autoComplete_selected {
   cursor: pointer;
   background-color: rgba(255, 248, 248, 0.9);
   border-left: 2px solid rgba(255, 122, 122, 1);

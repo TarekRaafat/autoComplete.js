@@ -35,9 +35,6 @@ export default class autoComplete {
     // Rendered results destination
     this.resultsList = {
       render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
-      // Allowing shadow dom components to pass its root document
-      shadowRoot:
-        config.resultsList && config.resultsList.shadowRoot ? config.resultsList.shadowRoot : document,
       view:
         config.resultsList && config.resultsList.render
           ? autoCompleteView.createResultsList({
@@ -148,7 +145,7 @@ export default class autoComplete {
    *
    * @return {*}
    */
-  listMatchedResults(data, event) {
+  listMatchedResults(data) {
     return new Promise(resolve => {
       // Final highlighted results list
       const resList = [];
@@ -158,29 +155,26 @@ export default class autoComplete {
         const search = key => {
           // This Record value
           const recordValue = key ? record[key] : record;
-          // Check if record isValid or NOT
-          if (recordValue) {
-            // Holds match value
-            const match =
-              typeof this.searchEngine === "function"
-                ? this.searchEngine(this.queryValue, recordValue)
-                : this.search(this.queryValue, recordValue);
-            // Push match to results list with key if set
-            if (match && key) {
-              resList.push({
-                key,
-                index,
-                match,
-                value: record,
-              });
-              // Push match to results list without key if not set
-            } else if (match && !key) {
-              resList.push({
-                index,
-                match,
-                value: record,
-              });
-            }
+          // Holds match value
+          const match =
+            typeof this.searchEngine === "function"
+              ? this.searchEngine(this.queryValue, recordValue)
+              : this.search(this.queryValue, recordValue);
+          // Push match to results list with key if set
+          if (match && key) {
+            resList.push({
+              key,
+              index,
+              match,
+              value: record,
+            });
+            // Push match to results list without key if not set
+          } else if (match && !key) {
+            resList.push({
+              index,
+              match,
+              value: record,
+            });
           }
         };
         // Checks if data key is set
@@ -198,20 +192,6 @@ export default class autoComplete {
       const list = this.sort
         ? resList.sort(this.sort).slice(0, this.maxResults)
         : resList.slice(0, this.maxResults);
-      // If resultsList set NOT to render
-      if (this.resultsList.render) {
-        // Rendering matching results to the UI list
-        autoCompleteView.addResultsToList(this.resultsList.view, list, this.resultItem);
-        // Keyboard Navigation
-        // If Navigation customMethod is set or default
-        this.resultsList.navigation
-          ? this.resultsList.navigation(
-            event,
-            this.resultsList.view,
-            autoCompleteView.getInput(this.selector),
-          )
-          : autoCompleteView.navigation(this.selector, this.resultsList.view, this.resultsList.shadowRoot);
-      }
       // Returns rendered list
       return resolve({
         matches: resList.length,
@@ -233,7 +213,14 @@ export default class autoComplete {
       input.setAttribute("placeholder", this.placeHolder);
     }
 
-    // Debouncer
+    /**
+     * Debouncer
+     *
+     * @param func
+     * @param delay
+     *
+     * @return void
+     */
     const debounce = (func, delay) => {
       let inDebounce;
       return function() {
@@ -244,7 +231,13 @@ export default class autoComplete {
       };
     };
 
-    // Excute autoComplete processes
+    /**
+     * Excute autoComplete processes
+     *
+     * @param event
+     *
+     * @return void
+     */
     const exec = event => {
       // Gets the input search value
       const inputValue =
@@ -257,9 +250,16 @@ export default class autoComplete {
       // App triggering condition
       const triggerCondition = this.trigger.condition
         ? this.trigger.condition(queryValue)
-        : (queryValue.length > this.threshold && queryValue.replace(/ /g, "").length);
+        : queryValue.length > this.threshold && queryValue.replace(/ /g, "").length;
 
-      // Event emitter on input field
+      /**
+       * Event emitter on input field
+       *
+       * @param event
+       * @param results
+       *
+       * @return void
+       */
       const eventEmitter = (event, results) => {
         // Dispatch event on input
         input.dispatchEvent(
@@ -278,24 +278,34 @@ export default class autoComplete {
       };
       // Checks if results will be rendered or NOT
       if (renderResultsList) {
+        const resultsList = this.resultsList.view;
         // Clear Results function holder
-        const clearResults = autoCompleteView.clearResults(this.resultsList.view);
+        const clearResults = autoCompleteView.clearResults(resultsList);
         // Check if input is not empty
         // or just have space before triggering the app
         if (triggerCondition) {
-          // List matching results
+          // > List matching results
           this.listMatchedResults(this.dataStream, event).then(list => {
-            // Event emitter on input field
+            // 1- Event emitter on input field
             eventEmitter(event, list);
-            // Checks if there's results
-            if (list.list.length === 0 && this.noResults && this.resultsList.render) {
-              // Runs noResults action function
-              this.noResults();
-            } else {
-              // Gets user's selection
-              // If action configured
-              if (this.onSelection) {
-                autoCompleteView.getSelection(this.selector, this.resultsList.view, this.onSelection, list);
+            // 2- If resultsList set to render
+            if (this.resultsList.render) {
+              // 3- Checks if there's results
+              if (list.list.length === 0 && this.noResults) {
+                // 4- Runs noResults action function
+                this.noResults();
+              } else {
+                // 4- Rendering matching results to the UI list
+                autoCompleteView.addResultsToList(resultsList, list.list, this.resultItem);
+                // 5- Gets user's selection
+                // If action configured
+                if (this.onSelection) {
+                  // 6- Keyboard & Mouse Navigation
+                  // If Navigation customMethod is set or default
+                  this.resultsList.navigation
+                    ? this.resultsList.navigation(event, input, resultsList, this.onSelection, list)
+                    : autoCompleteView.navigation(input, resultsList, this.onSelection, list);
+                }
               }
             }
           });
@@ -314,17 +324,22 @@ export default class autoComplete {
       }
     };
 
-    // autoComplete.js run processes
+    /**
+     * autoComplete.js run processes
+     *
+     * @param event
+     *
+     * @return void
+     */
     const run = event => {
       // Check if data src set to be cached or NOT
       // Resolve data src before assigning and excuting
-      Promise.resolve(this.data.cache ? this.dataStream : this.data.src())
-        .then(data => {
-          // Assign resolved data to the main data stream
-          this.dataStream = data;
-          // Invoke execution function
-          exec(event);
-        });
+      Promise.resolve(this.data.cache ? this.dataStream : this.data.src()).then(data => {
+        // Assign resolved data to the main data stream
+        this.dataStream = data;
+        // Invoke execution function
+        exec(event);
+      });
     };
     // Updates results on input by default if navigation should be excluded
     // If option is provided as true, results will be shown on focus if input has initial text
@@ -334,7 +349,7 @@ export default class autoComplete {
   }
 
   /**
-   * Starts the app Engine.
+   * Starts the app Engine
    *
    * @return void
    */
@@ -342,14 +357,13 @@ export default class autoComplete {
     // Checks if data set to be cached
     if (this.data.cache) {
       // Resolve data src before assigning and igniting
-      Promise.resolve(this.data.src())
-        .then(data => {
+      Promise.resolve(this.data.src()).then(data => {
         // Assigning resolved data to the main data stream
-          this.dataStream = data;
-          // Invoke ignition function
-          this.ignite();
-        });
-    // Else if data is NOT set to be  cached
+        this.dataStream = data;
+        // Invoke ignition function
+        this.ignite();
+      });
+      // Else if data is NOT set to be  cached
     } else {
       // Invoke ignition function
       this.ignite();
