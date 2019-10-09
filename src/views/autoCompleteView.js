@@ -5,6 +5,11 @@ const select = {
   highlight: "autoComplete_highlighted",
   selectedResult: "autoComplete_selected",
 };
+const keys = {
+  ENTER: 13,
+  ARROW_UP: 38,
+  ARROW_DOWN: 40
+};
 
 /**
  * Gets the user's input value
@@ -89,7 +94,7 @@ const onSelection = (event, field, resultsList, feedback, resultsValues, selecti
     matches: resultsValues.matches,
     results: resultsValues.list.map(record => record.value),
     selection: resultsValues.list.find(value => {
-      if (event.keyCode === 13) {
+      if (event.keyCode === keys.ENTER) {
         return value.index === Number(selection.getAttribute(dataAttribute));
       } else if (event.type === "mousedown") {
         return value.index === Number(event.target.getAttribute(dataAttribute));
@@ -136,7 +141,7 @@ const navigation = (input, resultsList, feedback, resultsValues) => {
       // console.log(liSelected);
       switch (event.keyCode) {
         // Arrow Up
-        case 38:
+        case keys.ARROW_UP:
           if (liSelected) {
             removeSelection(0);
             if (next) {
@@ -149,7 +154,7 @@ const navigation = (input, resultsList, feedback, resultsValues) => {
           }
           break;
         // Arrow Down
-        case 40:
+        case keys.ARROW_DOWN:
           if (liSelected) {
             removeSelection(1);
             if (next) {
@@ -161,7 +166,7 @@ const navigation = (input, resultsList, feedback, resultsValues) => {
             highlightSelection(li[0]);
           }
           break;
-        case 13:
+        case keys.ENTER:
           if (liSelected) {
             onSelection(event, input, resultsList, feedback, resultsValues, liSelected);
           }
