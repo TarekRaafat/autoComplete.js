@@ -33,6 +33,11 @@
     highlight: "autoComplete_highlighted",
     selectedResult: "autoComplete_selected"
   };
+  var keys = {
+    ENTER: 13,
+    ARROW_UP: 38,
+    ARROW_DOWN: 40
+  };
   var getInput = function getInput(selector) {
     return typeof selector === "string" ? document.querySelector(selector) : selector();
   };
@@ -49,14 +54,16 @@
     return "<span class=".concat(select.highlight, ">").concat(value, "</span>");
   };
   var addResultsToList = function addResultsToList(resultsList, dataSrc, resultItem) {
+    var fragment = document.createDocumentFragment();
     dataSrc.forEach(function (event, record) {
       var result = document.createElement(resultItem.element);
       var resultIndex = dataSrc[record].index;
       result.setAttribute(dataAttribute, resultIndex);
       result.setAttribute("class", select.result);
       resultItem.content ? resultItem.content(event, result) : result.innerHTML = event.match || event;
-      resultsList.appendChild(result);
+      fragment.appendChild(result);
     });
+    resultsList.appendChild(fragment);
   };
   var clearResults = function clearResults(resultsList) {
     return resultsList.innerHTML = "";
@@ -70,7 +77,7 @@
         return record.value;
       }),
       selection: resultsValues.list.find(function (value) {
-        if (event.keyCode === 13) {
+        if (event.keyCode === keys.ENTER) {
           return value.index === Number(selection.getAttribute(dataAttribute));
         } else if (event.type === "mousedown") {
           return value.index === Number(event.target.getAttribute(dataAttribute));
@@ -99,7 +106,7 @@
     input.onkeydown = function (event) {
       if (li.length > 0) {
         switch (event.keyCode) {
-          case 38:
+          case keys.ARROW_UP:
             if (liSelected) {
               removeSelection(0);
               if (next) {
@@ -111,7 +118,7 @@
               highlightSelection(li[liLength]);
             }
             break;
-          case 40:
+          case keys.ARROW_DOWN:
             if (liSelected) {
               removeSelection(1);
               if (next) {
@@ -123,7 +130,7 @@
               highlightSelection(li[0]);
             }
             break;
-          case 13:
+          case keys.ENTER:
             if (liSelected) {
               onSelection(event, input, resultsList, feedback, resultsValues, liSelected);
             }
