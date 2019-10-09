@@ -56,14 +56,16 @@ const highlight = value => `<span class=${select.highlight}>${value}</span>`;
  * @return void
  */
 const addResultsToList = (resultsList, dataSrc, resultItem) => {
+  const fragment = document.createDocumentFragment();
   dataSrc.forEach((event, record) => {
     const result = document.createElement(resultItem.element);
     const resultIndex = dataSrc[record].index;
     result.setAttribute(dataAttribute, resultIndex);
     result.setAttribute("class", select.result);
     resultItem.content ? resultItem.content(event, result) : (result.innerHTML = event.match || event);
-    resultsList.appendChild(result);
+    fragment.appendChild(result);
   });
+  resultsList.appendChild(fragment);
 };
 
 /**
