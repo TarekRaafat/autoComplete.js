@@ -3,86 +3,83 @@ import { Polyfill } from "../helpers/polyfill";
 
 export default class autoComplete {
   constructor(config) {
-    // User input Selector
-    this.selector = config.selector || "#autoComplete";
-    // Source of data list
+    const {
+      selector = "#autoComplete", // User input selector
+      data: {
+        key, // Data src key selection
+        src, // Data src selection
+        cache = true // Flag to cache data src
+      },
+      query, // Query interceptor function
+      trigger: {
+        event = ["input"], // autoCompleteJS event
+        condition = false // condition trigger
+      } = {},
+      searchEngine = "loose", // Search engine type
+      threshold = 0, // Minimum characters length before engine starts rendering
+      debounce = 0, // Minimum duration for API calls debouncing,
+      resultsList: {
+        render = false,
+        container = false,
+        destination, // Results list selector
+        position = "afterend", // Results list position
+        element: resultsListElement = "ul", // Results list element tag
+        navigation = false // Results list navigation
+      } = {},
+      sort = false, // Sorting results list
+      placeHolder, // Placeholder text
+      maxResults = 5, // Maximum number of results to show
+      resultItem: {
+        content = false, // Result item function
+        element: resultItemElement = "li" // Result item element tag
+      } = {},
+      noResults, // No results action
+      highlight = false, // Highlighting matching results
+      onSelection // Action function on result selection
+    } = config;
+
+    // Build results list DOM element
+    const resultsListView = render
+      ? autoCompleteView.createResultsList({
+        container,
+        destination: destination || autoCompleteView.getInput(this.selector),
+        position,
+        element: resultsListElement
+      })
+      : null;
+
+    this.selector = selector;
     this.data = {
-      // Data src selection
-      src: () => (typeof config.data.src === "function" ? config.data.src() : config.data.src),
-      // Data src key selection
-      key: config.data.key,
-      // Cache Data src or NOT
-      cache: typeof config.data.cache === "undefined" ? true : config.data.cache,
+      src: () => (typeof src === "function" ? src() : src),
+      key,
+      cache
     };
-    // Query Interceptor function
-    this.query = config.query;
-    // autoCompleteJS event & condition trigger
+    this.query = query;
     this.trigger = {
-      event: config.trigger && config.trigger.event ? config.trigger.event : ["input"],
-      condition: config.trigger && config.trigger.condition ? config.trigger.condition : false,
+      event,
+      condition
     };
-    // Search engine type
     this.searchEngine =
-      config.searchEngine === "loose"
-        ? "loose"
-        : typeof config.searchEngine === "function"
-          ? config.searchEngine
-          : "strict";
-    // Minimum characters length before engine starts rendering
-    this.threshold = config.threshold || 0;
-    // Minimum duration for API calls debouncing
-    this.debounce = config.debounce || 0;
-    // Rendered results destination
+      searchEngine === "loose" ? "loose" : typeof searchEngine === "function" ? searchEngine : "strict";
+    this.threshold = threshold;
+    this.debounce = debounce;
     this.resultsList = {
-      render: config.resultsList && config.resultsList.render ? config.resultsList.render : false,
-      view:
-        config.resultsList && config.resultsList.render
-          ? autoCompleteView.createResultsList({
-            // Results List function
-            container:
-                // If resultsList and container are set
-                config.resultsList && config.resultsList.container // Then set resultsList container
-                  ? config.resultsList.container // Else set default false
-                  : false,
-            // Results List selector
-            destination:
-                // If resultsList and destination are set
-                config.resultsList && config.resultsList.destination // Then set resultList destination
-                  ? config.resultsList.destination // Else set Default
-                  : autoCompleteView.getInput(this.selector),
-            // Results List position
-            position:
-                // If resultsList and position are set
-                config.resultsList && config.resultsList.position // Then resultsList position
-                  ? config.resultsList.position // Else set default "afterend"
-                  : "afterend",
-            // Results List element tag
-            element: config.resultsList && config.resultsList.element ? config.resultsList.element : "ul",
-          })
-          : null,
-      // Results List navigation
-      navigation: config.resultsList && config.resultsList.navigation ? config.resultsList.navigation : false,
+      render,
+      view: resultsListView,
+      navigation
     };
-    // Sorting results list
-    this.sort = config.sort || false;
-    // Placeholder text
-    this.placeHolder = config.placeHolder;
-    // Maximum number of results to show
-    this.maxResults = config.maxResults || 5;
-    // Rendered results item
+    this.sort = sort;
+    this.placeHolder = placeHolder;
+    this.maxResults = maxResults;
     this.resultItem = {
-      // Result Item function
-      content: config.resultItem && config.resultItem.content ? config.resultItem.content : false,
-      // Result Item element tag
-      element: config.resultItem && config.resultItem.element ? config.resultItem.element : "li",
+      content,
+      element: resultItemElement
     };
-    // No Results action
-    this.noResults = config.noResults;
-    // Highlighting matching results
-    this.highlight = config.highlight || false;
-    // Action function on result selection
-    this.onSelection = config.onSelection;
-    // Starts the app Enigne
+    this.noResults = noResults;
+    this.highlight = highlight;
+    this.onSelection = onSelection;
+
+    // Starts the app Engine
     this.init();
   }
 
@@ -166,14 +163,14 @@ export default class autoComplete {
               key,
               index,
               match,
-              value: record,
+              value: record
             });
             // Push match to results list without key if not set
           } else if (match && !key) {
             resList.push({
               index,
               match,
-              value: record,
+              value: record
             });
           }
         };
@@ -195,7 +192,7 @@ export default class autoComplete {
       // Returns rendered list
       return resolve({
         matches: resList.length,
-        list,
+        list
       });
     });
   }
@@ -270,10 +267,10 @@ export default class autoComplete {
               input: inputValue,
               query: queryValue,
               matches: results ? results.matches : null,
-              results: results ? results.list : null,
+              results: results ? results.list : null
             },
-            cancelable: true,
-          }),
+            cancelable: true
+          })
         );
       };
       // Checks if results will be rendered or NOT
