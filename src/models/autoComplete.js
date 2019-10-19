@@ -15,7 +15,7 @@ export default class autoComplete {
         event = ["input"], // autoCompleteJS event
         condition = false // condition trigger
       } = {},
-      searchEngine = "loose", // Search engine type
+      searchEngine = "strict", // Search engine type
       threshold = 0, // Minimum characters length before engine starts rendering
       debounce = 0, // Minimum duration for API calls debouncing,
       resultsList: {
@@ -42,7 +42,7 @@ export default class autoComplete {
     const resultsListView = render
       ? autoCompleteView.createResultsList({
         container,
-        destination: destination || autoCompleteView.getInput(this.selector),
+        destination: destination || autoCompleteView.getInput(selector),
         position,
         element: resultsListElement
       })
