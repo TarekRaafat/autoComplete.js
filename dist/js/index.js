@@ -40,7 +40,6 @@ const autoCompletejs = new autoComplete({
   },
   placeHolder: "Food & Drinks",
   selector: "#autoComplete",
-  threshold: 0,
   debounce: 0,
   searchEngine: "strict",
   highlight: true,
