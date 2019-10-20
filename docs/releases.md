@@ -26,7 +26,12 @@ Release flags:
 
 ## Release Notes
 
-- v7.1.0 :sparkles:
+- v7.1.1 :sparkles:
+  - `resList` now is fully created in `DocumentFragment` before rendering for better performance (Thanks 👍 @asafwat)
+  - `config` parameters restructure (Thanks 👍 @asafwat)
+  - Reduced `autoComplete.js` weight
+
+- v7.1.0
   - New improved Navigation logic (Thanks 👍 @mtomov)
   - `shadowRoot` API support `[Removed]`
   - Enhanced `resList.navigation` API data feedback
