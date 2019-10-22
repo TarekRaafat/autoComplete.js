@@ -303,6 +303,7 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [x] Improve `Promise` usage for external data source handling
 -   [ ] Automatic deep search over all keys in multiple nested object data source
 -   [ ] Add `weights` on nearest possible results
+-   [ ] Add support for `Diacritics`
 
 ### Usability:
 
