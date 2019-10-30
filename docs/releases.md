@@ -27,7 +27,7 @@ Release flags:
 ## Release Notes
 
 - v7.1.2 :sparkles:
-  - Fixed error behaviour occurs when searching (Empty, False, Null) record
+  - Fixed error behavior occurs when searching (Empty, False, Null) record
 
 
 - v7.1.1
