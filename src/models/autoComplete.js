@@ -152,26 +152,29 @@ export default class autoComplete {
         const search = key => {
           // This Record value
           const recordValue = key ? record[key] : record;
+          // Check if record does exist before search
+          if (recordValue) {
           // Holds match value
-          const match =
+            const match =
             typeof this.searchEngine === "function"
               ? this.searchEngine(this.queryValue, recordValue)
               : this.search(this.queryValue, recordValue);
-          // Push match to results list with key if set
-          if (match && key) {
-            resList.push({
-              key,
-              index,
-              match,
-              value: record
-            });
+            // Push match to results list with key if set
+            if (match && key) {
+              resList.push({
+                key,
+                index,
+                match,
+                value: record
+              });
             // Push match to results list without key if not set
-          } else if (match && !key) {
-            resList.push({
-              index,
-              match,
-              value: record
-            });
+            } else if (match && !key) {
+              resList.push({
+                index,
+                match,
+                value: record
+              });
+            }
           }
         };
         // Checks if data key is set

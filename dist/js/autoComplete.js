@@ -314,20 +314,22 @@
           data.filter(function (record, index) {
             var search = function search(key) {
               var recordValue = key ? record[key] : record;
-              var match = typeof _this.searchEngine === "function" ? _this.searchEngine(_this.queryValue, recordValue) : _this.search(_this.queryValue, recordValue);
-              if (match && key) {
-                resList.push({
-                  key: key,
-                  index: index,
-                  match: match,
-                  value: record
-                });
-              } else if (match && !key) {
-                resList.push({
-                  index: index,
-                  match: match,
-                  value: record
-                });
+              if (recordValue) {
+                var match = typeof _this.searchEngine === "function" ? _this.searchEngine(_this.queryValue, recordValue) : _this.search(_this.queryValue, recordValue);
+                if (match && key) {
+                  resList.push({
+                    key: key,
+                    index: index,
+                    match: match,
+                    value: record
+                  });
+                } else if (match && !key) {
+                  resList.push({
+                    index: index,
+                    match: match,
+                    value: record
+                  });
+                }
               }
             };
             if (_this.data.key) {
