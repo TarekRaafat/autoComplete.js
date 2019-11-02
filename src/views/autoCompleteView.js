@@ -99,7 +99,7 @@ const onSelection = (event, field, resultsList, feedback, resultsValues, selecti
       if (event.keyCode === keys.ENTER) {
         return value.index === Number(selection.getAttribute(dataAttribute));
       } else if (event.type === "mousedown") {
-        return value.index === Number(event.target.getAttribute(dataAttribute));
+        return value.index === Number(event.currentTarget.getAttribute(dataAttribute));
       }
     }),
   });
