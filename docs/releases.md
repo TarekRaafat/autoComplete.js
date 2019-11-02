@@ -26,7 +26,11 @@ Release flags:
 
 ## Release Notes
 
-- v7.1.2 :sparkles:
+- v7.1.3 :sparkles:
+  - Enhanced mouse selection (Thanks 👍 @adan-ferguson)
+
+
+- v7.1.2
   - Fixed error behavior occurs when searching (Empty, False, Null) record
 
 
