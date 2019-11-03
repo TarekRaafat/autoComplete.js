@@ -200,7 +200,7 @@ new autoComplete({
         result.setAttribute("class", "no_result");
         result.setAttribute("tabindex", "1");
         result.innerHTML = "No Results";
-        document.querySelector("#autoComplete_results_list").appendChild(result);
+        document.querySelector("#autoComplete_list").appendChild(result);
     },
 	onSelection: feedback => {			 // Action script onSelection event | (Optional)
 		console.log(feedback.selection.value.image_url);
