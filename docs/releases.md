@@ -26,7 +26,11 @@ Release flags:
 
 ## Release Notes
 
-- v7.1.3 :sparkles:
+- v7.2.0 :sparkles:
+  - Added support to `textarea` input field (Thanks 👍 @EmilStenstrom)
+
+
+- v7.1.3
   - Enhanced mouse selection (Thanks 👍 @adan-ferguson)
 
 

@@ -8,12 +8,12 @@ export default class autoComplete {
       data: {
         key, // Data src key selection
         src, // Data src selection
-        cache = true // Flag to cache data src
+        cache = true, // Flag to cache data src
       },
       query, // Query interceptor function
       trigger: {
         event = ["input"], // autoCompleteJS event
-        condition = false // condition trigger
+        condition = false, // condition trigger
       } = {},
       searchEngine = "strict", // Search engine type
       threshold = 0, // Minimum characters length before engine starts rendering
@@ -24,18 +24,18 @@ export default class autoComplete {
         destination, // Results list selector
         position = "afterend", // Results list position
         element: resultsListElement = "ul", // Results list element tag
-        navigation = false // Results list navigation
+        navigation = false, // Results list navigation
       } = {},
       sort = false, // Sorting results list
       placeHolder, // Placeholder text
       maxResults = 5, // Maximum number of results to show
       resultItem: {
         content = false, // Result item function
-        element: resultItemElement = "li" // Result item element tag
+        element: resultItemElement = "li", // Result item element tag
       } = {},
       noResults, // No results action
       highlight = false, // Highlighting matching results
-      onSelection // Action function on result selection
+      onSelection, // Action function on result selection
     } = config;
 
     // Build results list DOM element
@@ -44,7 +44,7 @@ export default class autoComplete {
         container,
         destination: destination || autoCompleteView.getInput(selector),
         position,
-        element: resultsListElement
+        element: resultsListElement,
       })
       : null;
 
@@ -52,12 +52,12 @@ export default class autoComplete {
     this.data = {
       src: () => (typeof src === "function" ? src() : src),
       key,
-      cache
+      cache,
     };
     this.query = query;
     this.trigger = {
       event,
-      condition
+      condition,
     };
     this.searchEngine =
       searchEngine === "loose" ? "loose" : typeof searchEngine === "function" ? searchEngine : "strict";
@@ -66,14 +66,14 @@ export default class autoComplete {
     this.resultsList = {
       render,
       view: resultsListView,
-      navigation
+      navigation,
     };
     this.sort = sort;
     this.placeHolder = placeHolder;
     this.maxResults = maxResults;
     this.resultItem = {
       content,
-      element: resultItemElement
+      element: resultItemElement,
     };
     this.noResults = noResults;
     this.highlight = highlight;
@@ -154,25 +154,25 @@ export default class autoComplete {
           const recordValue = key ? record[key] : record;
           // Check if record does exist before search
           if (recordValue) {
-          // Holds match value
+            // Holds match value
             const match =
-            typeof this.searchEngine === "function"
-              ? this.searchEngine(this.queryValue, recordValue)
-              : this.search(this.queryValue, recordValue);
+              typeof this.searchEngine === "function"
+                ? this.searchEngine(this.queryValue, recordValue)
+                : this.search(this.queryValue, recordValue);
             // Push match to results list with key if set
             if (match && key) {
               resList.push({
                 key,
                 index,
                 match,
-                value: record
+                value: record,
               });
-            // Push match to results list without key if not set
+              // Push match to results list without key if not set
             } else if (match && !key) {
               resList.push({
                 index,
                 match,
-                value: record
+                value: record,
               });
             }
           }
@@ -195,7 +195,7 @@ export default class autoComplete {
       // Returns rendered list
       return resolve({
         matches: resList.length,
-        list
+        list,
       });
     });
   }
@@ -241,7 +241,9 @@ export default class autoComplete {
     const exec = event => {
       // Gets the input search value
       const inputValue =
-        input instanceof HTMLInputElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
+        input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement
+          ? input.value.toLowerCase()
+          : input.innerHTML.toLowerCase();
       // Intercept query value
       const queryValue = (this.queryValue =
         this.query && this.query.manipulate ? this.query.manipulate(inputValue) : inputValue);
@@ -270,10 +272,10 @@ export default class autoComplete {
               input: inputValue,
               query: queryValue,
               matches: results ? results.matches : null,
-              results: results ? results.list : null
+              results: results ? results.list : null,
             },
-            cancelable: true
-          })
+            cancelable: true,
+          }),
         );
       };
       // Checks if results will be rendered or NOT
