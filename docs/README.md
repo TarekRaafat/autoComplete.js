@@ -180,8 +180,7 @@ new autoComplete({
     resultsList: {					   // Rendered results list object 	 | (Optional)
         render: true,
 		container: source => {
-			const resultsListID = "food_List";
-			return resultsListID;
+			source.setAttribute("id", "food_list");
 		},
 		destination: document.querySelector("#autoComplete"),
 		position: "afterend",
