@@ -125,7 +125,7 @@ export default class autoComplete {
       // Strict mode
     } else {
       if (recordLowerCase.includes(query)) {
-        // Regular Expression Query Pattern Ignores caseSensetive
+        // Regular Expression Query Pattern Ignores caseSensitive
         const pattern = new RegExp(`${query}`, "i");
         // Search for a match Query in Record
         query = pattern.exec(record);
