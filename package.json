@@ -48,8 +48,8 @@
   },
   "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
   "devDependencies": {
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
     "acorn": "^6.4.0",
     "babel-eslint": "^10.0.3",
     "local-web-server": "^2.6.1",
