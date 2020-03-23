@@ -26,6 +26,78 @@
     return Constructor;
   }
 
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(n);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _createForOfIteratorHelper(o) {
+    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+      if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
+        var i = 0;
+
+        var F = function () {};
+
+        return {
+          s: F,
+          n: function () {
+            if (i >= o.length) return {
+              done: true
+            };
+            return {
+              done: false,
+              value: o[i++]
+            };
+          },
+          e: function (e) {
+            throw e;
+          },
+          f: F
+        };
+      }
+
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+
+    var it,
+        normalCompletion = true,
+        didErr = false,
+        err;
+    return {
+      s: function () {
+        it = o[Symbol.iterator]();
+      },
+      n: function () {
+        var step = it.next();
+        normalCompletion = step.done;
+        return step;
+      },
+      e: function (e) {
+        didErr = true;
+        err = e;
+      },
+      f: function () {
+        try {
+          if (!normalCompletion && it.return != null) it.return();
+        } finally {
+          if (didErr) throw err;
+        }
+      }
+    };
+  }
+
   var dataAttribute = "data-id";
   var select = {
     resultsList: "autoComplete_list",
@@ -143,14 +215,6 @@
       };
     });
   };
-  var autoCompleteView = {
-    getInput: getInput,
-    createResultsList: createResultsList,
-    highlight: highlight,
-    addResultsToList: addResultsToList,
-    navigation: navigation,
-    clearResults: clearResults
-  };
 
   var CustomEventPolyfill = function CustomEventPolyfill(event, params) {
     params = params || {
@@ -186,8 +250,7 @@
     initElementClosestPolyfill: initElementClosestPolyfill
   };
 
-  var autoComplete =
-  function () {
+  var autoComplete = function () {
     function autoComplete(config) {
       _classCallCheck(this, autoComplete);
       var _config$selector = config.selector,
@@ -222,7 +285,7 @@
           _config$resultsList$e = _config$resultsList.element,
           resultsListElement = _config$resultsList$e === void 0 ? "ul" : _config$resultsList$e,
           _config$resultsList$n = _config$resultsList.navigation,
-          navigation = _config$resultsList$n === void 0 ? false : _config$resultsList$n,
+          navigation$$1 = _config$resultsList$n === void 0 ? false : _config$resultsList$n,
           _config$sort = config.sort,
           sort = _config$sort === void 0 ? false : _config$sort,
           placeHolder = config.placeHolder,
@@ -236,11 +299,11 @@
           resultItemElement = _config$resultItem$el === void 0 ? "li" : _config$resultItem$el,
           noResults = config.noResults,
           _config$highlight = config.highlight,
-          highlight = _config$highlight === void 0 ? false : _config$highlight,
+          highlight$$1 = _config$highlight === void 0 ? false : _config$highlight,
           onSelection = config.onSelection;
-      var resultsListView = render ? autoCompleteView.createResultsList({
+      var resultsListView = render ? createResultsList({
         container: container,
-        destination: destination || autoCompleteView.getInput(selector),
+        destination: destination || getInput(selector),
         position: position,
         element: resultsListElement
       }) : null;
@@ -263,7 +326,7 @@
       this.resultsList = {
         render: render,
         view: resultsListView,
-        navigation: navigation
+        navigation: navigation$$1
       };
       this.sort = sort;
       this.placeHolder = placeHolder;
@@ -273,7 +336,7 @@
         element: resultItemElement
       };
       this.noResults = noResults;
-      this.highlight = highlight;
+      this.highlight = highlight$$1;
       this.onSelection = onSelection;
       this.init();
     }
@@ -288,7 +351,7 @@
           for (var number = 0; number < recordLowerCase.length; number++) {
             var recordChar = record[number];
             if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-              recordChar = this.highlight ? autoCompleteView.highlight(recordChar) : recordChar;
+              recordChar = this.highlight ? highlight(recordChar) : recordChar;
               searchPosition++;
             }
             match.push(recordChar);
@@ -301,7 +364,7 @@
           if (recordLowerCase.includes(query)) {
             var pattern = new RegExp("".concat(query), "i");
             query = pattern.exec(record);
-            return this.highlight ? record.replace(query, autoCompleteView.highlight(query)) : record;
+            return this.highlight ? record.replace(query, highlight(query)) : record;
           }
         }
       }
@@ -333,27 +396,17 @@
               }
             };
             if (_this.data.key) {
-              var _iteratorNormalCompletion = true;
-              var _didIteratorError = false;
-              var _iteratorError = undefined;
+              var _iterator = _createForOfIteratorHelper(_this.data.key),
+                  _step;
               try {
-                for (var _iterator = _this.data.key[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                for (_iterator.s(); !(_step = _iterator.n()).done;) {
                   var key = _step.value;
                   search(key);
                 }
               } catch (err) {
-                _didIteratorError = true;
-                _iteratorError = err;
+                _iterator.e(err);
               } finally {
-                try {
-                  if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-                    _iterator["return"]();
-                  }
-                } finally {
-                  if (_didIteratorError) {
-                    throw _iteratorError;
-                  }
-                }
+                _iterator.f();
               }
             } else {
               search();
@@ -370,7 +423,7 @@
       key: "ignite",
       value: function ignite() {
         var _this2 = this;
-        var input = autoCompleteView.getInput(this.selector);
+        var input = getInput(this.selector);
         if (this.placeHolder) {
           input.setAttribute("placeholder", this.placeHolder);
         }
@@ -389,7 +442,7 @@
           var inputValue = input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement ? input.value.toLowerCase() : input.innerHTML.toLowerCase();
           var queryValue = _this2.queryValue = _this2.query && _this2.query.manipulate ? _this2.query.manipulate(inputValue) : inputValue;
           var renderResultsList = _this2.resultsList.render;
-          var triggerCondition = _this2.trigger.condition ? _this2.trigger.condition(queryValue) : queryValue.length > _this2.threshold && queryValue.replace(/ /g, "").length;
+          var triggerCondition = _this2.trigger.condition ? _this2.trigger.condition(queryValue) : queryValue.length >= _this2.threshold && queryValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
             input.dispatchEvent(new Polyfill.CustomEventWrapper("autoComplete", {
               bubbles: true,
@@ -405,7 +458,7 @@
           };
           if (renderResultsList) {
             var resultsList = _this2.resultsList.view;
-            var clearResults = autoCompleteView.clearResults(resultsList);
+            var clearResults$$1 = clearResults(resultsList);
             if (triggerCondition) {
               _this2.listMatchedResults(_this2.dataStream, event).then(function (list) {
                 eventEmitter(event, list);
@@ -413,9 +466,9 @@
                   if (list.list.length === 0 && _this2.noResults) {
                     _this2.noResults();
                   } else {
-                    autoCompleteView.addResultsToList(resultsList, list.list, _this2.resultItem);
+                    addResultsToList(resultsList, list.list, _this2.resultItem);
                     if (_this2.onSelection) {
-                      _this2.resultsList.navigation ? _this2.resultsList.navigation(event, input, resultsList, _this2.onSelection, list) : autoCompleteView.navigation(input, resultsList, _this2.onSelection, list);
+                      _this2.resultsList.navigation ? _this2.resultsList.navigation(event, input, resultsList, _this2.onSelection, list) : navigation(input, resultsList, _this2.onSelection, list);
                     }
                   }
                 }
