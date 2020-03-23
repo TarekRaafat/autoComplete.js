@@ -3,12 +3,12 @@ const select = {
   resultsList: "autoComplete_list",
   result: "autoComplete_result",
   highlight: "autoComplete_highlighted",
-  selectedResult: "autoComplete_selected",
+  selectedResult: "autoComplete_selected"
 };
 const keys = {
   ENTER: 13,
   ARROW_UP: 38,
-  ARROW_DOWN: 40,
+  ARROW_DOWN: 40
 };
 
 /**
@@ -101,7 +101,7 @@ const onSelection = (event, field, resultsList, feedback, resultsValues, selecti
       } else if (event.type === "mousedown") {
         return value.index === Number(event.currentTarget.getAttribute(dataAttribute));
       }
-    }),
+    })
   });
   // Clear Results after selection is made
   clearResults(resultsList);
@@ -181,11 +181,4 @@ const navigation = (input, resultsList, feedback, resultsValues) => {
   });
 };
 
-export const autoCompleteView = {
-  getInput,
-  createResultsList,
-  highlight,
-  addResultsToList,
-  navigation,
-  clearResults,
-};
+export { getInput, createResultsList, highlight, addResultsToList, navigation, clearResults };

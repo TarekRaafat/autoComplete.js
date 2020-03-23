@@ -29,7 +29,7 @@ const autoCompletejs = new autoComplete({
   },
   query: {
     manipulate: function (query) {
-      return query.replace("@pizza", "burger");
+      return query.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     },
   },
   trigger: {

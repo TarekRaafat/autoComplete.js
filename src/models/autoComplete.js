@@ -1,4 +1,4 @@
-import { autoCompleteView } from "../views/autoCompleteView";
+import * as autoCompleteView from "../views/autoCompleteView";
 import { Polyfill } from "../helpers/polyfill";
 
 export default class autoComplete {
@@ -252,7 +252,7 @@ export default class autoComplete {
       // App triggering condition
       const triggerCondition = this.trigger.condition
         ? this.trigger.condition(queryValue)
-        : queryValue.length > this.threshold && queryValue.replace(/ /g, "").length;
+        : queryValue.length >= this.threshold && queryValue.replace(/ /g, "").length;
 
       /**
        * Event emitter on input field
