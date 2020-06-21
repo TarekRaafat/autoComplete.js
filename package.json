@@ -48,8 +48,8 @@
   },
   "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/preset-env": "^7.9.0",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
     "acorn": "^6.4.0",
     "babel-eslint": "^10.1.0",
     "local-web-server": "^2.6.1",
@@ -57,7 +57,7 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-cleanup": "^3.1.0",
     "rollup-plugin-eslint": "^5.1.0",
-    "rollup-plugin-gzip": "^2.3.0",
+    "rollup-plugin-gzip": "^2.5.0",
     "rollup-plugin-uglify": "^6.0.4"
   }
 }
