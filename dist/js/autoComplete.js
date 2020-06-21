@@ -413,7 +413,7 @@
           var renderResultsList = _this2.resultsList.render;
           var triggerCondition = _this2.trigger.condition ? _this2.trigger.condition(queryValue) : queryValue.length >= _this2.threshold && queryValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
-            input.dispatchEvent("autoComplete", {
+            input.dispatchEvent(new CustomEvent("autoComplete", {
               bubbles: true,
               detail: {
                 event: event,
@@ -423,7 +423,7 @@
                 results: results ? results.list : null
               },
               cancelable: true
-            });
+            }));
           };
           if (renderResultsList) {
             var resultsList = _this2.resultsList.view;

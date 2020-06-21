@@ -3,12 +3,12 @@ const select = {
   resultsList: "autoComplete_list",
   result: "autoComplete_result",
   highlight: "autoComplete_highlighted",
-  selectedResult: "autoComplete_selected"
+  selectedResult: "autoComplete_selected",
 };
 const keys = {
   ENTER: 13,
   ARROW_UP: 38,
-  ARROW_DOWN: 40
+  ARROW_DOWN: 40,
 };
 
 /**
@@ -18,7 +18,7 @@ const keys = {
  *
  * @return Element
  */
-const getInput = selector => (typeof selector === "string" ? document.querySelector(selector) : selector());
+const getInput = (selector) => (typeof selector === "string" ? document.querySelector(selector) : selector());
 
 /**
  * Creates the results list HTML tag
@@ -27,7 +27,7 @@ const getInput = selector => (typeof selector === "string" ? document.querySelec
  *
  * @return HTMLElement
  */
-const createResultsList = renderResults => {
+const createResultsList = (renderResults) => {
   const resultsList = document.createElement(renderResults.element);
   resultsList.setAttribute("id", select.resultsList);
   if (renderResults.container) {
@@ -44,7 +44,7 @@ const createResultsList = renderResults => {
  *
  * @return string
  */
-const highlight = value => `<span class=${select.highlight}>${value}</span>`;
+const highlight = (value) => `<span class=${select.highlight}>${value}</span>`;
 
 /**
  * Adding matching results to the list
@@ -75,7 +75,7 @@ const addResultsToList = (resultsList, dataSrc, resultItem) => {
  *
  * @return string
  */
-const clearResults = resultsList => (resultsList.innerHTML = "");
+const clearResults = (resultsList) => (resultsList.innerHTML = "");
 
 /**
  * onSelection function
@@ -94,14 +94,14 @@ const onSelection = (event, field, resultsList, feedback, resultsValues, selecti
     event,
     query: field instanceof HTMLInputElement ? field.value : field.innerHTML,
     matches: resultsValues.matches,
-    results: resultsValues.list.map(record => record.value),
-    selection: resultsValues.list.find(value => {
+    results: resultsValues.list.map((record) => record.value),
+    selection: resultsValues.list.find((value) => {
       if (event.keyCode === keys.ENTER) {
         return value.index === Number(selection.getAttribute(dataAttribute));
       } else if (event.type === "mousedown") {
         return value.index === Number(event.currentTarget.getAttribute(dataAttribute));
       }
-    })
+    }),
   });
   // Clear Results after selection is made
   clearResults(resultsList);
@@ -124,7 +124,7 @@ const navigation = (input, resultsList, feedback, resultsValues) => {
   let liSelected = undefined,
     next;
   // Remove selection class
-  const removeSelection = direction => {
+  const removeSelection = (direction) => {
     liSelected.classList.remove(select.selectedResult);
     if (direction === 1) {
       next = liSelected.nextSibling;
@@ -133,12 +133,12 @@ const navigation = (input, resultsList, feedback, resultsValues) => {
     }
   };
   // Add selection class
-  const highlightSelection = current => {
+  const highlightSelection = (current) => {
     liSelected = current;
     liSelected.classList.add(select.selectedResult);
   };
   // Keyboard action
-  input.onkeydown = event => {
+  input.onkeydown = (event) => {
     if (li.length > 0) {
       switch (event.keyCode) {
         // Arrow Up
@@ -177,8 +177,8 @@ const navigation = (input, resultsList, feedback, resultsValues) => {
     }
   };
   // Mouse action
-  li.forEach(selection => {
-    selection.onmousedown = event => onSelection(event, input, resultsList, feedback, resultsValues);
+  li.forEach((selection) => {
+    selection.onmousedown = (event) => onSelection(event, input, resultsList, feedback, resultsValues);
   });
 };
 

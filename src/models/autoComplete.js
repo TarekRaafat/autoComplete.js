@@ -40,11 +40,11 @@ export default class autoComplete {
     // Build results list DOM element
     const resultsListView = render
       ? autoCompleteView.createResultsList({
-        container,
-        destination: destination || autoCompleteView.getInput(selector),
-        position,
-        element: resultsListElement,
-      })
+          container,
+          destination: destination || autoCompleteView.getInput(selector),
+          position,
+          element: resultsListElement,
+        })
       : null;
 
     this.selector = selector;
@@ -142,13 +142,13 @@ export default class autoComplete {
    * @return {*}
    */
   listMatchedResults(data) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       // Final highlighted results list
       const resList = [];
       // Checks input has matches in data source
       data.filter((record, index) => {
         // Search/Matching function
-        const search = key => {
+        const search = (key) => {
           // This Record value
           const recordValue = key ? record[key] : record;
           // Check if record does exist before search
@@ -188,9 +188,7 @@ export default class autoComplete {
         }
       });
       // Sorting / Slicing final results list
-      const list = this.sort
-        ? resList.sort(this.sort).slice(0, this.maxResults)
-        : resList.slice(0, this.maxResults);
+      const list = this.sort ? resList.sort(this.sort).slice(0, this.maxResults) : resList.slice(0, this.maxResults);
       // Returns rendered list
       return resolve({
         matches: resList.length,
@@ -237,7 +235,7 @@ export default class autoComplete {
      *
      * @return void
      */
-    const exec = event => {
+    const exec = (event) => {
       // Gets the input search value
       const inputValue =
         input instanceof HTMLInputElement || input instanceof HTMLTextAreaElement
@@ -263,17 +261,19 @@ export default class autoComplete {
        */
       const eventEmitter = (event, results) => {
         // Dispatch event on input
-        input.dispatchEvent("autoComplete", {
-          bubbles: true,
-          detail: {
-            event,
-            input: inputValue,
-            query: queryValue,
-            matches: results ? results.matches : null,
-            results: results ? results.list : null,
-          },
-          cancelable: true,
-        });
+        input.dispatchEvent(
+          new CustomEvent("autoComplete", {
+            bubbles: true,
+            detail: {
+              event,
+              input: inputValue,
+              query: queryValue,
+              matches: results ? results.matches : null,
+              results: results ? results.list : null,
+            },
+            cancelable: true,
+          })
+        );
       };
       // Checks if results will be rendered or NOT
       if (renderResultsList) {
@@ -284,7 +284,7 @@ export default class autoComplete {
         // or just have space before triggering the app
         if (triggerCondition) {
           // > List matching results
-          this.listMatchedResults(this.dataStream, event).then(list => {
+          this.listMatchedResults(this.dataStream, event).then((list) => {
             // 1- Event emitter on input field
             eventEmitter(event, list);
             // 2- If resultsList set to render
@@ -316,7 +316,7 @@ export default class autoComplete {
         }
         // If results will NOT be rendered
       } else if (!renderResultsList && triggerCondition) {
-        this.listMatchedResults(this.dataStream, event).then(list => {
+        this.listMatchedResults(this.dataStream, event).then((list) => {
           // Event emitter on input field
           eventEmitter(event, list);
         });
@@ -330,10 +330,10 @@ export default class autoComplete {
      *
      * @return void
      */
-    const run = event => {
+    const run = (event) => {
       // Check if data src set to be cached or NOT
       // Resolve data src before assigning and excuting
-      Promise.resolve(this.data.cache ? this.dataStream : this.data.src()).then(data => {
+      Promise.resolve(this.data.cache ? this.dataStream : this.data.src()).then((data) => {
         // Assign resolved data to the main data stream
         this.dataStream = data;
         // Invoke execution function
@@ -342,8 +342,11 @@ export default class autoComplete {
     };
     // Updates results on input by default if navigation should be excluded
     // If option is provided as true, results will be shown on focus if input has initial text
-    this.trigger.event.forEach(eventType => {
-      input.addEventListener(eventType, debounce(event => run(event), this.debounce));
+    this.trigger.event.forEach((eventType) => {
+      input.addEventListener(
+        eventType,
+        debounce((event) => run(event), this.debounce)
+      );
     });
   }
 
@@ -356,7 +359,7 @@ export default class autoComplete {
     // Checks if data set to be cached
     if (this.data.cache) {
       // Resolve data src before assigning and igniting
-      Promise.resolve(this.data.src()).then(data => {
+      Promise.resolve(this.data.src()).then((data) => {
         // Assigning resolved data to the main data stream
         this.dataStream = data;
         // Invoke ignition function
