@@ -1,5 +1,4 @@
 import * as autoCompleteView from "../views/autoCompleteView";
-import { Polyfill } from "../helpers/polyfill";
 
 export default class autoComplete {
   constructor(config) {
@@ -223,7 +222,7 @@ export default class autoComplete {
      */
     const debounce = (func, delay) => {
       let inDebounce;
-      return function() {
+      return function () {
         const context = this;
         const args = arguments;
         clearTimeout(inDebounce);
@@ -264,19 +263,17 @@ export default class autoComplete {
        */
       const eventEmitter = (event, results) => {
         // Dispatch event on input
-        input.dispatchEvent(
-          new Polyfill.CustomEventWrapper("autoComplete", {
-            bubbles: true,
-            detail: {
-              event,
-              input: inputValue,
-              query: queryValue,
-              matches: results ? results.matches : null,
-              results: results ? results.list : null,
-            },
-            cancelable: true,
-          }),
-        );
+        input.dispatchEvent("autoComplete", {
+          bubbles: true,
+          detail: {
+            event,
+            input: inputValue,
+            query: queryValue,
+            matches: results ? results.matches : null,
+            results: results ? results.list : null,
+          },
+          cancelable: true,
+        });
       };
       // Checks if results will be rendered or NOT
       if (renderResultsList) {
@@ -370,7 +367,5 @@ export default class autoComplete {
       // Invoke ignition function
       this.ignite();
     }
-    // Polyfilling for IE11
-    Polyfill.initElementClosestPolyfill();
   }
 }

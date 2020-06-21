@@ -219,40 +219,6 @@
     });
   };
 
-  var CustomEventPolyfill = function CustomEventPolyfill(event, params) {
-    params = params || {
-      bubbles: false,
-      cancelable: false,
-      detail: undefined
-    };
-    var evt = document.createEvent("CustomEvent");
-    evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-    return evt;
-  };
-  CustomEventPolyfill.prototype = window.Event.prototype;
-  var CustomEventWrapper = typeof window.CustomEvent === "function" && window.CustomEvent || CustomEventPolyfill;
-  var initElementClosestPolyfill = function initElementClosestPolyfill() {
-    if (!Element.prototype.matches) {
-      Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
-    }
-    if (!Element.prototype.closest) {
-      Element.prototype.closest = function (s) {
-        var el = this;
-        do {
-          if (el.matches(s)) {
-            return el;
-          }
-          el = el.parentElement || el.parentNode;
-        } while (el !== null && el.nodeType === 1);
-        return null;
-      };
-    }
-  };
-  var Polyfill = {
-    CustomEventWrapper: CustomEventWrapper,
-    initElementClosestPolyfill: initElementClosestPolyfill
-  };
-
   var autoComplete = function () {
     function autoComplete(config) {
       _classCallCheck(this, autoComplete);
@@ -447,7 +413,7 @@
           var renderResultsList = _this2.resultsList.render;
           var triggerCondition = _this2.trigger.condition ? _this2.trigger.condition(queryValue) : queryValue.length >= _this2.threshold && queryValue.replace(/ /g, "").length;
           var eventEmitter = function eventEmitter(event, results) {
-            input.dispatchEvent(new Polyfill.CustomEventWrapper("autoComplete", {
+            input.dispatchEvent("autoComplete", {
               bubbles: true,
               detail: {
                 event: event,
@@ -457,7 +423,7 @@
                 results: results ? results.list : null
               },
               cancelable: true
-            }));
+            });
           };
           if (renderResultsList) {
             var resultsList = _this2.resultsList.view;
@@ -509,7 +475,6 @@
         } else {
           this.ignite();
         }
-        Polyfill.initElementClosestPolyfill();
       }
     }]);
     return autoComplete;
