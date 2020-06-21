@@ -15,15 +15,10 @@
     "new-caps": {
       "newIsCap": true,
       "capIsNew": true,
-      "newIsCapExceptions": [
-        "autoComplete"
-      ]
+      "newIsCapExceptions": ["autoComplete"]
     },
     "no-constant-condition": 1,
-    "no-mixed-spaces-and-tabs": [
-      "error",
-      "smart-tabs"
-    ],
+    "no-mixed-spaces-and-tabs": ["error", "smart-tabs"],
     "no-mixed-operators": 2,
     "no-nested-ternary": 0,
     "no-console": 2,
@@ -37,10 +32,7 @@
     "no-unused-vars": 2,
     "no-use-before-define": 2,
     "comma-dangle": 0,
-    "max-params": [
-      "error",
-      6
-    ],
+    "max-params": ["error", 6],
     "no-inline-comments": 0,
     "no-trailing-spaces": 2,
     "no-underscore-dangle": 2,
@@ -60,17 +52,8 @@
         "SwitchCase": 1
       }
     ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "quotes": [
-      "error",
-      "double"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ]
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"]
   }
 }
