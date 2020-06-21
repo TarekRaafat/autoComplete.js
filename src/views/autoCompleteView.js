@@ -140,10 +140,11 @@ const navigation = (input, resultsList, feedback, resultsValues) => {
   // Keyboard action
   input.onkeydown = event => {
     if (li.length > 0) {
-      // console.log(liSelected);
       switch (event.keyCode) {
         // Arrow Up
         case keys.ARROW_UP:
+          // Prevent cursor relocation
+          event.preventDefault();
           if (liSelected) {
             removeSelection(0);
             if (next) {
