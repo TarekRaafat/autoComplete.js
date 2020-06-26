@@ -1,5 +1,4 @@
-import babel from "rollup-plugin-babel";
-import { eslint } from "rollup-plugin-eslint";
+import babel from "@rollup/plugin-babel";
 import cleanup from "rollup-plugin-cleanup";
 import { uglify } from "rollup-plugin-uglify";
 import pkg from "./package.json";
@@ -7,42 +6,42 @@ import gzipPlugin from "rollup-plugin-gzip";
 
 export default [
   {
-    input: "src/models/autoComplete.js",
+    input: "src/autoComplete.js",
     output: {
       file: pkg.browser,
       name: "autoComplete",
-      format: "umd"
+      format: "umd",
     },
     plugins: [
-      eslint(),
       babel({
+        babelHelpers: "bundled",
         exclude: "node_modules/**",
-        presets: ["@babel/preset-env"]
+        presets: ["@babel/preset-env"],
       }),
       uglify({
         compress: {
           toplevel: true,
-          drop_console: true
-        }
+          drop_console: true,
+        },
       }),
-      gzipPlugin()
-    ]
+      gzipPlugin(),
+    ],
   },
   {
-    input: "src/models/autoComplete.js",
+    input: "src/autoComplete.js",
     output: {
       file: pkg.main,
       name: "autoComplete",
-      format: "umd"
+      format: "umd",
     },
     plugins: [
-      eslint(),
       babel({
+        babelHelpers: "bundled",
         exclude: "node_modules/**",
-        presets: ["@babel/preset-env"]
+        presets: ["@babel/preset-env"],
       }),
       cleanup(),
-      gzipPlugin()
-    ]
-  }
+      gzipPlugin(),
+    ],
+  },
 ];

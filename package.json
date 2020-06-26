@@ -1,6 +1,6 @@
 {
   "name": "@tarekraafat/autocomplete.js",
-  "version": "7.2.0",
+  "version": "8.0.0",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "main": "dist/js/autoComplete.js",
   "browser": "dist/js/autoComplete.min.js",
@@ -50,13 +50,11 @@
   "devDependencies": {
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
+    "@rollup/plugin-babel": "^5.0.4",
     "acorn": "^6.4.0",
-    "babel-eslint": "^10.1.0",
     "local-web-server": "^2.6.1",
     "rollup": "^0.67.4",
-    "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-cleanup": "^3.1.0",
-    "rollup-plugin-eslint": "^5.1.0",
     "rollup-plugin-gzip": "^2.5.0",
     "rollup-plugin-uglify": "^6.0.4"
   }
