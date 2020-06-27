@@ -14,25 +14,31 @@ export default class autoComplete {
       src,
       cached,
     };
+    // Invoke preInit automatically
     this.preInit();
   }
 
+  // Initialize autoComplete.js processes
   init(event, inputField, data) {
     // 1- Close all open lists
     closeAllLists(false, inputField);
+    // If input field empty stop here
     if (!event.target.value) return false;
     // 2- Reset focus state
     focusState(-1);
     // 3- Generate & Render results list
     generateList(data, event, inputField);
-    // 4- Initiate navigation
+    // 4- Initialize navigation
     navigate(inputField);
     // 5- Listen for all clicks in the document
     document.addEventListener("click", (event) => {
+      // 6- Close all this menu if clicked
+      // outside the menu and input field
       closeAllLists(event.target, inputField);
     });
   }
 
+  // Pre-Initialization stage
   preInit() {
     // If data source
     // set to be cached
@@ -41,7 +47,7 @@ export default class autoComplete {
       prepareData(this.data.src, (data) => {
         // 2- Listen for all clicks in the input field
         this.inputField.addEventListener("input", (event, inputField = this.inputField) => {
-          // 3- Initiate autoComplete.js processes
+          // 3- Initialize autoComplete.js processes
           this.init(event, inputField, data);
         });
       });
@@ -52,7 +58,7 @@ export default class autoComplete {
       this.inputField.addEventListener("input", (event, inputField = this.inputField) => {
         // 2- Prepare the data
         prepareData(this.data.src, (data) => {
-          // 3- Initiate autoComplete.js processes
+          // 3- Initialize autoComplete.js processes
           this.init(event, inputField, data);
         });
       });
