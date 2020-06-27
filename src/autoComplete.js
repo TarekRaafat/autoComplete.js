@@ -43,11 +43,13 @@ export default class autoComplete {
 
   // Initialization stage
   init() {
+    // Assign data source type
+    const dataSrc = typeof this.data.src === "function" ? this.data.src() : this.data.src;
     // If data source
     // set to be cached
     if (this.data.cached) {
       // 1- Prepare the data
-      prepareData(this.data.src, (data) => {
+      prepareData(dataSrc, (data) => {
         // 2- Listen for all clicks in the input field
         this.inputField.addEventListener("input", (event, inputField = this.inputField) => {
           // 3- Initialize autoComplete.js processes
@@ -60,7 +62,7 @@ export default class autoComplete {
       // 1- Listen for all clicks in the input field
       this.inputField.addEventListener("input", (event, inputField = this.inputField) => {
         // 2- Prepare the data
-        prepareData(this.data.src, (data) => {
+        prepareData(dataSrc, (data) => {
           // 3- Initialize autoComplete.js processes
           this.run(event, inputField, data);
         });

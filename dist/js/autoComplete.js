@@ -205,7 +205,7 @@
   };
 
   var prepareData = function prepareData(request, callback) {
-    Promise.resolve(request()).then(function (data) {
+    Promise.resolve(request).then(function (data) {
       callback(data);
     });
   };
@@ -241,8 +241,9 @@
       key: "init",
       value: function init() {
         var _this = this;
+        var dataSrc = typeof this.data.src === "function" ? this.data.src() : this.data.src;
         if (this.data.cached) {
-          prepareData(this.data.src, function (data) {
+          prepareData(dataSrc, function (data) {
             _this.inputField.addEventListener("input", function (event) {
               var inputField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.inputField;
               _this.run(event, inputField, data);
@@ -251,7 +252,7 @@
         } else {
           this.inputField.addEventListener("input", function (event) {
             var inputField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.inputField;
-            prepareData(_this.data.src, function (data) {
+            prepareData(dataSrc, function (data) {
               _this.run(event, inputField, data);
             });
           });
