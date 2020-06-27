@@ -81,8 +81,8 @@ export default class autoComplete {
     const callback = (mutationsList, observer) => {
       // Use traditional 'for loops' for IE 11
       for (let mutation of mutationsList) {
-        // ! Error occurs when addedNode doesn't has an ID
-        // TODO Check needs to be fixed
+        // ! Error occurs if addedNode has no ID
+        // TODO Condition check needs to be fixed
         // Check if this is the selected input field
         if ("#" + mutation.addedNodes[0].id === this.inputFieldSelector) {
           // If yes disconnect the observer
