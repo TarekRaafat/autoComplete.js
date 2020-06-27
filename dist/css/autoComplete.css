@@ -1,21 +1,19 @@
 .autoComplete_wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 350px;
+  position: relative;
+  display: inline-block;
+  width: 370px;
 }
 
 #autoComplete {
   height: 3rem;
-  width: 16.5rem;
   margin: 0;
   padding: 0 2rem 0 3.5rem;
   font-size: 1.2rem;
   text-overflow: ellipsis;
-  color: rgba(255, 255, 255, 0);
+  color: rgba(255, 122, 122, 0.3);
   caret-color: rgb(255, 122, 122);
   outline: none;
-  border-radius: 50rem;
+  border-radius: 0.8rem;
   border: 0.05rem solid rgba(255, 122, 122, 0.3);
   background-image: url(./images/magnifier.svg);
   background-size: 1.5rem;
@@ -55,7 +53,7 @@
 }
 
 #autoComplete:hover {
-  color: rgba(255, 122, 122, 1);
+  color: rgba(255, 122, 122, 0.8);
   border: 0.05rem solid rgba(255, 122, 122, 0.6);
   transition: all 0.3s ease;
   -webkit-transition: all -webkit-transform 0.3s ease;
@@ -64,17 +62,22 @@
 #autoComplete:focus {
   color: rgba(255, 122, 122, 1);
   border: 0.05rem solid rgb(255, 122, 122);
+  border-radius: 0.8rem 0.8rem 0 0;
   box-shadow: rgba(255, 122, 122, 0.1) 0px 0px 20px 5px;
 }
 
 #autoComplete_list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
 }
 
 .autoComplete_result {
   margin: 0.15rem;
   padding: 0.6rem;
-  min-width: 250px;
   border: 0.05rem solid #e3e3e3;
   list-style: none;
   text-align: left;
@@ -95,15 +98,6 @@
 
 .autoComplete_result:hover {
   cursor: pointer;
-  background-color: rgba(255, 248, 248, 0.9);
-  border-left: 2px solid rgba(255, 122, 122, 1);
-  border-right: 2px solid rgba(255, 122, 122, 1);
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid transparent;
-}
-
-.autoComplete_result:focus {
-  outline: none;
   background-color: rgba(255, 248, 248, 0.9);
   border-left: 2px solid rgba(255, 122, 122, 1);
   border-right: 2px solid rgba(255, 122, 122, 1);
