@@ -218,8 +218,7 @@
           _config$data = config.data,
           src = _config$data.src,
           cached = _config$data.cached;
-      this.inputField;
-      this.inputFieldSelector = selector;
+      this.inputField = selector;
       this.data = {
         src: src,
         cached: cached
@@ -242,7 +241,6 @@
       key: "init",
       value: function init() {
         var _this = this;
-        console.log(this.inputFieldSelector);
         if (this.data.cached) {
           prepareData(this.data.src, function (data) {
             _this.inputField.addEventListener("input", function (event) {
@@ -274,9 +272,9 @@
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
               var mutation = _step.value;
-              if ("#" + mutation.addedNodes[0].id === _this2.inputFieldSelector) {
+              if (document.querySelector(_this2.inputField)) {
                 observer.disconnect();
-                _this2.inputField = document.querySelector(_this2.inputFieldSelector);
+                _this2.inputField = document.querySelector(_this2.inputField);
                 _this2.init();
               }
             }

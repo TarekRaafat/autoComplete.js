@@ -11,8 +11,7 @@ export default class autoComplete {
     } = config;
 
     // Assigning config values to properties
-    this.inputField;
-    this.inputFieldSelector = selector;
+    this.inputField = selector;
     this.data = {
       src,
       cached,
@@ -44,7 +43,6 @@ export default class autoComplete {
 
   // Initialization stage
   init() {
-    console.log(this.inputFieldSelector);
     // If data source
     // set to be cached
     if (this.data.cached) {
@@ -73,22 +71,20 @@ export default class autoComplete {
   // Pre-Initialization stage
   preInit() {
     // Observe DOM changes
-    // Select the node that will be observed for mutations
+    // The entire document will be observed for mutations
     const targetNode = document;
     // Options for the observer (which mutations to observe)
     const config = { childList: true, subtree: true };
     // Callback function to execute when mutations are observed
     const callback = (mutationsList, observer) => {
-      // Use traditional 'for loops' for IE 11
+      // Traditional 'for loops' for IE 11
       for (let mutation of mutationsList) {
-        // ! Error occurs if addedNode has no ID
-        // TODO Condition check needs to be fixed
         // Check if this is the selected input field
-        if ("#" + mutation.addedNodes[0].id === this.inputFieldSelector) {
+        if (document.querySelector(this.inputField)) {
           // If yes disconnect the observer
           observer.disconnect();
           // Assign the input field selector
-          this.inputField = document.querySelector(this.inputFieldSelector);
+          this.inputField = document.querySelector(this.inputField);
           // Initiate autoComplete.js
           this.init();
         }
