@@ -1,6 +1,6 @@
 // The autoComplete.js Engine instance creator
 new autoComplete({
-  selector: document.querySelector("#autoComplete"),
+  selector: "#autoComplete",
   data: {
     src: async () => {
       // Loading placeholder text

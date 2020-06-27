@@ -26,6 +26,80 @@
     return Constructor;
   }
 
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _createForOfIteratorHelper(o, allowArrayLike) {
+    var it;
+
+    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+        if (it) o = it;
+        var i = 0;
+
+        var F = function () {};
+
+        return {
+          s: F,
+          n: function () {
+            if (i >= o.length) return {
+              done: true
+            };
+            return {
+              done: false,
+              value: o[i++]
+            };
+          },
+          e: function (e) {
+            throw e;
+          },
+          f: F
+        };
+      }
+
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+
+    var normalCompletion = true,
+        didErr = false,
+        err;
+    return {
+      s: function () {
+        it = o[Symbol.iterator]();
+      },
+      n: function () {
+        var step = it.next();
+        normalCompletion = step.done;
+        return step;
+      },
+      e: function (e) {
+        didErr = true;
+        err = e;
+      },
+      f: function () {
+        try {
+          if (!normalCompletion && it.return != null) it.return();
+        } finally {
+          if (didErr) throw err;
+        }
+      }
+    };
+  }
+
   var search = (function (query, record, options) {
     var recordLowerCase = record.toLowerCase();
     if (options.searchEngine === "loose") {
@@ -144,7 +218,8 @@
           _config$data = config.data,
           src = _config$data.src,
           cached = _config$data.cached;
-      this.inputField = selector;
+      this.inputField;
+      this.inputFieldSelector = selector;
       this.data = {
         src: src,
         cached: cached
@@ -152,8 +227,8 @@
       this.preInit();
     }
     _createClass(autoComplete, [{
-      key: "init",
-      value: function init(event, inputField, data) {
+      key: "run",
+      value: function run(event, inputField, data) {
         closeAllLists(false, inputField);
         if (!event.target.value) return false;
         focusState(-1);
@@ -164,24 +239,55 @@
         });
       }
     }, {
-      key: "preInit",
-      value: function preInit() {
+      key: "init",
+      value: function init() {
         var _this = this;
+        console.log(this.inputFieldSelector);
         if (this.data.cached) {
           prepareData(this.data.src, function (data) {
             _this.inputField.addEventListener("input", function (event) {
               var inputField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.inputField;
-              _this.init(event, inputField, data);
+              _this.run(event, inputField, data);
             });
           });
         } else {
           this.inputField.addEventListener("input", function (event) {
             var inputField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.inputField;
             prepareData(_this.data.src, function (data) {
-              _this.init(event, inputField, data);
+              _this.run(event, inputField, data);
             });
           });
         }
+      }
+    }, {
+      key: "preInit",
+      value: function preInit() {
+        var _this2 = this;
+        var targetNode = document;
+        var config = {
+          childList: true,
+          subtree: true
+        };
+        var callback = function callback(mutationsList, observer) {
+          var _iterator = _createForOfIteratorHelper(mutationsList),
+              _step;
+          try {
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var mutation = _step.value;
+              if ("#" + mutation.addedNodes[0].id === _this2.inputFieldSelector) {
+                observer.disconnect();
+                _this2.inputField = document.querySelector(_this2.inputFieldSelector);
+                _this2.init();
+              }
+            }
+          } catch (err) {
+            _iterator.e(err);
+          } finally {
+            _iterator.f();
+          }
+        };
+        var observer = new MutationObserver(callback);
+        observer.observe(targetNode, config);
       }
     }]);
     return autoComplete;

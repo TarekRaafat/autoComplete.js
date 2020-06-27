@@ -11,7 +11,8 @@ export default class autoComplete {
     } = config;
 
     // Assigning config values to properties
-    this.inputField = selector;
+    this.inputField;
+    this.inputFieldSelector = selector;
     this.data = {
       src,
       cached,
@@ -21,8 +22,8 @@ export default class autoComplete {
     this.preInit();
   }
 
-  // Initialize autoComplete.js processes
-  init(event, inputField, data) {
+  // Run autoComplete.js processes
+  run(event, inputField, data) {
     // 1- Close all open lists
     closeAllLists(false, inputField);
     // If input field empty STOP here
@@ -41,8 +42,9 @@ export default class autoComplete {
     });
   }
 
-  // Pre-Initialization stage
-  preInit() {
+  // Initialization stage
+  init() {
+    console.log(this.inputFieldSelector);
     // If data source
     // set to be cached
     if (this.data.cached) {
@@ -51,7 +53,7 @@ export default class autoComplete {
         // 2- Listen for all clicks in the input field
         this.inputField.addEventListener("input", (event, inputField = this.inputField) => {
           // 3- Initialize autoComplete.js processes
-          this.init(event, inputField, data);
+          this.run(event, inputField, data);
         });
       });
       // Else if data source
@@ -62,9 +64,37 @@ export default class autoComplete {
         // 2- Prepare the data
         prepareData(this.data.src, (data) => {
           // 3- Initialize autoComplete.js processes
-          this.init(event, inputField, data);
+          this.run(event, inputField, data);
         });
       });
     }
+  }
+
+  // Pre-Initialization stage
+  preInit() {
+    // Observe DOM changes
+    // Select the node that will be observed for mutations
+    const targetNode = document;
+    // Options for the observer (which mutations to observe)
+    const config = { childList: true, subtree: true };
+    // Callback function to execute when mutations are observed
+    const callback = (mutationsList, observer) => {
+      // Use traditional 'for loops' for IE 11
+      for (let mutation of mutationsList) {
+        // Check if this is the selected input field
+        if ("#" + mutation.addedNodes[0].id === this.inputFieldSelector) {
+          // If yes disconnect the observer
+          observer.disconnect();
+          // Assign the input field selector
+          this.inputField = document.querySelector(this.inputFieldSelector);
+          // Initiate autoComplete.js
+          this.init();
+        }
+      }
+    };
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
   }
 }
