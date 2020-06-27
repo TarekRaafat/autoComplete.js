@@ -4,17 +4,20 @@ import { prepareData } from "./controllers/dataController";
 
 export default class autoComplete {
   constructor(config) {
+    // Deconstructing config values
     const {
       selector = inputField,
       data: { src, cached },
     } = config;
 
+    // Assigning config values to properties
     this.inputField = selector;
     this.data = {
       src,
       cached,
     };
-    // Invoke preInit automatically
+    // Invoking preInit automatically
+    // when autoComplete.js instance gets initiated
     this.preInit();
   }
 
@@ -22,7 +25,7 @@ export default class autoComplete {
   init(event, inputField, data) {
     // 1- Close all open lists
     closeAllLists(false, inputField);
-    // If input field empty stop here
+    // If input field empty STOP here
     if (!event.target.value) return false;
     // 2- Reset focus state
     focusState(-1);

@@ -35,7 +35,6 @@ const navigation = (event) => {
     addActive(list);
   } else if (event.keyCode === 38) {
     event.preventDefault();
-    // up
     // If the arrow UP key is pressed
     // decrease the currentFocus
     currentFocus--;
@@ -43,7 +42,7 @@ const navigation = (event) => {
     addActive(list);
   } else if (event.keyCode === 13) {
     // If the ENTER key is pressed
-    // prevent the form from it's default behaviour "being submitted"
+    // prevent the form from its default behaviour "being submitted"
     event.preventDefault();
     if (currentFocus > -1) {
       // and simulate a click on the selected "active" item

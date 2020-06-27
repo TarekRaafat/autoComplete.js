@@ -8,7 +8,7 @@ const closeAllLists = (element, inputField) => {
   // Iterate over all autoCompletejs open lists in the document
   for (let index = 0; index < list.length; index++) {
     // Close all lists
-    // Except the ones passed as an argument
+    // except the ones passed as an argument
     if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
   }
 };

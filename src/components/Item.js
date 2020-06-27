@@ -1,5 +1,5 @@
 export default (itemValue) => {
-  // create a DIV element for each matching element:
+  // Create a DIV element for each matching result item
   const result = document.createElement("div");
   result.setAttribute("class", "autoComplete_result");
   result.innerHTML = itemValue;
