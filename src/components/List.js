@@ -3,7 +3,7 @@ export default (to) => {
   const list = document.createElement("div");
   list.setAttribute("id", "autoComplete_list");
   list.setAttribute("class", "autoComplete_list");
-  // Append the DIV element as a child of autoComplete.js container
+  // Append the DIV element as a child of autoCompleteJS container
   to.parentNode.appendChild(list);
   return list;
 };

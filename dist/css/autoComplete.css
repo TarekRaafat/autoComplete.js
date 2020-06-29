@@ -25,12 +25,12 @@
 }
 
 #autoComplete::placeholder {
-  color: rgba(255, 122, 122, 0);
+  color: rgba(255, 122, 122, 0.2);
   transition: all 0.3s ease;
 }
 
 #autoComplete:hover::placeholder {
-  color: rgba(255, 122, 122, 0.3);
+  color: rgba(255, 122, 122, 0.5);
   transition: all 0.3s ease;
   -webkit-transition: all -webkit-transform 0.3s ease;
 }

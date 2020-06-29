@@ -5,5 +5,21 @@ const prepareData = (request, callback) => {
     callback(data);
   });
 };
+// Gets the input search value "query"
+const getInputValue = (inputField) => {
+  return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement
+    ? inputField.value.toLowerCase()
+    : inputField.innerHTML.toLowerCase();
+};
+// Intercept query value
+const prepareQueryValue = (query, inputValue) => {
+  return query && query.manipulate ? query.manipulate(inputValue) : inputValue;
+};
+// App triggering condition
+const checkTriggerCondition = (trigger, queryValue, threshold) => {
+  return trigger.condition
+    ? trigger.condition(queryValue)
+    : queryValue.length >= threshold && queryValue.replace(/ /g, "").length;
+};
 
-export { prepareData };
+export { prepareData, getInputValue, prepareQueryValue, checkTriggerCondition };

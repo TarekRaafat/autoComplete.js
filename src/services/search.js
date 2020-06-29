@@ -1,8 +1,17 @@
-export default (query, record, options) => {
+/**
+ * Search common characters within record
+ *
+ * @param query
+ * @param record
+ * @param {searchEngine, highlight}
+ *
+ * @return {*}
+ */
+export default (query, record, config) => {
   // Current record value toLowerCase
   const recordLowerCase = record.toLowerCase();
   // Loose mode
-  if (options.searchEngine === "loose") {
+  if (config.searchEngine === "loose") {
     // Search query string sanitized & normalized
     query = query.replace(/ /g, "");
     // Array of matching characters
@@ -16,7 +25,7 @@ export default (query, record, options) => {
       // Matching case
       if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
         // Highlight matching character
-        recordChar = options.highlight ? `<span class=${options.highlight}>${recordChar}</span>` : recordChar;
+        recordChar = config.highlight ? `<span class="autoComplete_highlighted">${recordChar}</span>` : recordChar;
         // Increment search position
         searchPosition++;
       }
@@ -36,7 +45,9 @@ export default (query, record, options) => {
       // Search for a match Query in Record
       query = pattern.exec(record);
       // Returns the match
-      return options.highlight ? record.replace(query, `<span class=${options.highlight}>${query}</span>`) : record;
+      return config.highlight
+        ? record.replace(query, `<span class="autoComplete_highlighted">${query}</span>`)
+        : record;
     }
   }
 };
