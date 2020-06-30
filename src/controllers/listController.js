@@ -27,14 +27,14 @@ const generateList = (data, event, feedback) => {
   // Initiate creating list process
   const list = createList(event.target);
   // Iterate over the data
-  for (let index = 0; index < data.length; index++) {
-    const result = data[index];
+  for (let index = 0; index < data.render.length; index++) {
+    const result = data.render[index];
     // create result item
     const resultItem = createItem(result);
     // Listen to clicks on this item
     resultItem.addEventListener("click", (event) => {
       // Returns the selected value onSelection
-      onSelection(event, inputValue, data, feedback);
+      onSelection(event, inputValue, data.raw, feedback);
     });
     // Add result to the list
     list.appendChild(resultItem);

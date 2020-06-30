@@ -101,7 +101,10 @@
   }
 
   var search = (function (query, data, config) {
-    var searchResults = [];
+    var searchResults = {
+      render: [],
+      raw: []
+    };
     for (var index = 0; index < data.length; index++) {
       var record = data[index];
       var recordLowerCase = record.toLowerCase();
@@ -118,13 +121,15 @@
           match.push(recordChar);
         }
         if (searchPosition === query.length) {
-          searchResults.push(match.join(""));
+          searchResults.render.push(match.join(""));
+          searchResults.raw.push(record);
         }
       } else {
         if (recordLowerCase.includes(query)) {
           var pattern = new RegExp("".concat(query), "i");
           query = pattern.exec(record);
-          searchResults.push(config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record);
+          searchResults.render.push(config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record);
+          searchResults.raw.push(record);
         }
       }
     }
@@ -163,11 +168,11 @@
   var generateList = function generateList(data, event, feedback) {
     var inputValue = event.target.value;
     var list = createList(event.target);
-    for (var index = 0; index < data.length; index++) {
-      var result = data[index];
+    for (var index = 0; index < data.render.length; index++) {
+      var result = data.render[index];
       var resultItem = createItem(result);
       resultItem.addEventListener("click", function (event) {
-        onSelection(event, inputValue, data, feedback);
+        onSelection(event, inputValue, data.raw, feedback);
       });
       list.appendChild(resultItem);
     }

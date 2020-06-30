@@ -8,7 +8,10 @@
  * @return {*}
  */
 export default (query, data, config) => {
-  const searchResults = [];
+  const searchResults = {
+    render: [],
+    raw: [],
+  };
   for (let index = 0; index < data.length; index++) {
     const record = data[index];
     // Current record value toLowerCase
@@ -38,7 +41,8 @@ export default (query, data, config) => {
       // Non-Matching case
       if (searchPosition === query.length) {
         // Return the joined match
-        searchResults.push(match.join(""));
+        searchResults.render.push(match.join(""));
+        searchResults.raw.push(record);
       }
       // Strict mode
     } else {
@@ -48,9 +52,10 @@ export default (query, data, config) => {
         // Search for a match Query in Record
         query = pattern.exec(record);
         // Returns the match
-        searchResults.push(
+        searchResults.render.push(
           config.highlight ? record.replace(query, `<span class="autoComplete_highlighted">${query}</span>`) : record
         );
+        searchResults.raw.push(record);
       }
     }
   }
