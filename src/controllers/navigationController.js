@@ -1,11 +1,5 @@
 let currentFocus;
 
-const focusState = (state) => {
-  // Global navigation
-  // focus status controller
-  currentFocus = state;
-};
-
 const removeActive = (list) => {
   // Remove "active" class from all list items
   for (let index = 0; index < list.length; index++) {
@@ -52,8 +46,10 @@ const navigation = (event) => {
 };
 
 const navigate = (inputField) => {
+  // Reset focus state
+  currentFocus = -1;
   // Listen to all key presses on the keyboard
   inputField.addEventListener("keydown", navigation);
 };
 
-export { navigate, focusState };
+export { navigate };

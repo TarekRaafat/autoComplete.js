@@ -100,30 +100,35 @@
     };
   }
 
-  var search = (function (query, record, config) {
-    var recordLowerCase = record.toLowerCase();
-    if (config.searchEngine === "loose") {
-      query = query.replace(/ /g, "");
-      var match = [];
-      var searchPosition = 0;
-      for (var number = 0; number < recordLowerCase.length; number++) {
-        var recordChar = record[number];
-        if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-          recordChar = config.highlight ? "<span class=\"autoComplete_highlighted\">".concat(recordChar, "</span>") : recordChar;
-          searchPosition++;
+  var search = (function (query, data, config) {
+    var searchResults = [];
+    for (var index = 0; index < data.length; index++) {
+      var record = data[index];
+      var recordLowerCase = record.toLowerCase();
+      if (config.searchEngine === "loose") {
+        query = query.replace(/ /g, "");
+        var match = [];
+        var searchPosition = 0;
+        for (var number = 0; number < recordLowerCase.length; number++) {
+          var recordChar = record[number];
+          if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
+            recordChar = config.highlight ? "<span class=\"autoComplete_highlighted\">".concat(recordChar, "</span>") : recordChar;
+            searchPosition++;
+          }
+          match.push(recordChar);
         }
-        match.push(recordChar);
-      }
-      if (searchPosition === query.length) {
-        return match.join("");
-      }
-    } else {
-      if (recordLowerCase.includes(query)) {
-        var pattern = new RegExp("".concat(query), "i");
-        query = pattern.exec(record);
-        return config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record;
+        if (searchPosition === query.length) {
+          searchResults.push(match.join(""));
+        }
+      } else {
+        if (recordLowerCase.includes(query)) {
+          var pattern = new RegExp("".concat(query), "i");
+          query = pattern.exec(record);
+          searchResults.push(config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record);
+        }
       }
     }
+    return searchResults;
   });
 
   var createList = (function (to) {
@@ -141,10 +146,11 @@
     return result;
   });
 
-  var onSelection = (function (event, query, resultsValues, feedback) {
+  var onSelection = (function (event, query, results, feedback) {
     feedback({
       event: event,
-      query: query
+      query: query,
+      results: results
     });
   });
 
@@ -154,31 +160,20 @@
       if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
     }
   };
-  var generateList = function generateList(data, event, _ref) {
-    var inputValue = _ref.inputValue,
-        searchEngine = _ref.searchEngine,
-        highlight = _ref.highlight,
-        feedback = _ref.feedback;
+  var generateList = function generateList(data, event, feedback) {
+    var inputValue = event.target.value;
     var list = createList(event.target);
-    data.forEach(function (value) {
-      var result = search(inputValue, value, {
-        searchEngine: searchEngine,
-        highlight: highlight
+    for (var index = 0; index < data.length; index++) {
+      var result = data[index];
+      var resultItem = createItem(result);
+      resultItem.addEventListener("click", function (event) {
+        onSelection(event, inputValue, data, feedback);
       });
-      if (result) {
-        var resultItem = createItem(result, inputValue);
-        resultItem.addEventListener("click", function (event) {
-          onSelection(event, inputValue, data, feedback);
-        });
-        list.appendChild(resultItem);
-      }
-    });
+      list.appendChild(resultItem);
+    }
   };
 
   var currentFocus;
-  var focusState = function focusState(state) {
-    currentFocus = state;
-  };
   var removeActive = function removeActive(list) {
     for (var index = 0; index < list.length; index++) {
       list[index].classList.remove("autoComplete_selected");
@@ -209,6 +204,7 @@
     }
   };
   var navigate = function navigate(inputField) {
+    currentFocus = -1;
     inputField.addEventListener("keydown", navigation);
   };
 
@@ -338,20 +334,17 @@
       key: "run",
       value: function run(event, inputField, data) {
         closeAllLists(false, inputField);
-        if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
         var inputValue = getInputValue(inputField);
         var queryValue = prepareQueryValue(this.query, inputValue);
         var triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
         if (triggerCondition) {
+          var searchResults = search(inputValue, data, {
+            searchEngine: this.searchEngine,
+            highlight: this.highlight
+          });
           if (this.resultsList.render) {
             if (!data.length) return this.noResults();
-            focusState(-1);
-            generateList(data, event, {
-              inputValue: queryValue,
-              searchEngine: this.searchEngine,
-              highlight: this.highlight,
-              feedback: this.onSelection
-            });
+            generateList(searchResults, event, this.onSelection);
             navigate(inputField);
             document.addEventListener("click", function (event) {
               closeAllLists(event.target, inputField);
@@ -364,17 +357,19 @@
       value: function init() {
         var _this = this;
         if (this.data.cache) {
-          prepareData(this.data.src(), function (data) {
-            _this.inputField.addEventListener("input", debouncer(function (event) {
+          debouncer(prepareData(this.data.src(), function (data) {
+            if (_this.placeHolder) _this.inputField.setAttribute("placeholder", _this.placeHolder);
+            _this.inputField.addEventListener("input", function (event) {
               var inputField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.inputField;
               eventEmitter(inputField, "autoComplete_input", {
                 event: event,
                 data: data
               });
               _this.run(event, inputField, data);
-            }, _this.debounce));
-          });
+            });
+          }), this.debounce);
         } else {
+          if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
           this.inputField.addEventListener("input", debouncer(function (event) {
             var inputField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.inputField;
             prepareData(_this.data.src(), function (data) {

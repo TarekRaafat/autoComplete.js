@@ -1,4 +1,3 @@
-import search from "../services/search";
 import createList from "../components/List";
 import createItem from "../components/Item";
 import onSelection from "./selectionController";
@@ -19,30 +18,27 @@ const closeAllLists = (element, inputField) => {
  *
  * @param data
  * @param event
- * @param { inputValue, searchEngine, highlight }
+ * @param feedback
  *
  * @return {*}
  */
-const generateList = (data, event, { inputValue, searchEngine, highlight , feedback}) => {
+const generateList = (data, event, feedback) => {
+  const inputValue = event.target.value;
   // Initiate creating list process
   const list = createList(event.target);
   // Iterate over the data
-  data.forEach((value) => {
-    // Match query with existing value
-    const result = search(inputValue, value, { searchEngine, highlight });
-    // If there's a match generate result
-    if (result) {
-      // create result item
-      const resultItem = createItem(result, inputValue);
-      // Listen to clicks on this item
-      resultItem.addEventListener("click", (event) => {
-        // Returns the selected value onSelection
-        onSelection(event, inputValue, data, feedback);
-      });
-      // Add result to the list
-      list.appendChild(resultItem);
-    }
-  });
+  for (let index = 0; index < data.length; index++) {
+    const result = data[index];
+    // create result item
+    const resultItem = createItem(result);
+    // Listen to clicks on this item
+    resultItem.addEventListener("click", (event) => {
+      // Returns the selected value onSelection
+      onSelection(event, inputValue, data, feedback);
+    });
+    // Add result to the list
+    list.appendChild(resultItem);
+  }
 };
 
 export { generateList, closeAllLists };

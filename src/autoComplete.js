@@ -1,5 +1,6 @@
+import search from "./services/search";
 import { generateList, closeAllLists } from "./controllers/listController";
-import { navigate, focusState } from "./controllers/navigationController";
+import { navigate } from "./controllers/navigationController";
 import { prepareData, getInputValue, prepareQueryValue, checkTriggerCondition } from "./controllers/dataController";
 import debouncer from "./utils/debounce";
 import eventEmitter from "./utils/eventEmitter";
@@ -84,8 +85,6 @@ export default class autoComplete {
   run(event, inputField, data) {
     // 1- Close all open lists
     closeAllLists(false, inputField);
-    // Set placeholder attribute value
-    if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
     // Prepare input value
     const inputValue = getInputValue(inputField);
     const queryValue = prepareQueryValue(this.query, inputValue);
@@ -93,20 +92,15 @@ export default class autoComplete {
     const triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
     // Check triggering condition
     if (triggerCondition) {
+      // Match query with existing value
+      const searchResults = search(inputValue, data, { searchEngine: this.searchEngine, highlight: this.highlight });
       // 1- If resultsList set to render
       if (this.resultsList.render) {
         // 2- Checks if there are NO results
         // Runs noResults action function
         if (!data.length) return this.noResults();
-        // 2- Reset focus state
-        focusState(-1);
         // 3- Generate & Render results list
-        generateList(data, event, {
-          inputValue: queryValue,
-          searchEngine: this.searchEngine,
-          highlight: this.highlight,
-          feedback: this.onSelection,
-        });
+        generateList(searchResults, event, this.onSelection);
         // 4- Initialize navigation
         navigate(inputField);
         // 5- Listen for all clicks in the document
@@ -127,11 +121,12 @@ export default class autoComplete {
     // set to be cached
     if (this.data.cache) {
       // 1- Prepare the data
-      prepareData(this.data.src(), (data) => {
-        // 2- Listen for all clicks in the input field
-        this.inputField.addEventListener(
-          "input",
-          debouncer((event, inputField = this.inputField) => {
+      debouncer(
+        prepareData(this.data.src(), (data) => {
+          // Set placeholder attribute value
+          if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
+          // 2- Listen for all clicks in the input field
+          this.inputField.addEventListener("input", (event, inputField = this.inputField) => {
             // Emit Event on connection
             // ! Not finished yet
             eventEmitter(inputField, "autoComplete_input", {
@@ -140,12 +135,15 @@ export default class autoComplete {
             });
             // 3- Initialize autoCompleteJS processes
             this.run(event, inputField, data);
-          }, this.debounce)
-        );
-      });
+          });
+        }),
+        this.debounce
+      );
       // Else if data source
       // set to be streamlined
     } else {
+      // Set placeholder attribute value
+      if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
       // 1- Listen for all clicks in the input field
       this.inputField.addEventListener(
         "input",
