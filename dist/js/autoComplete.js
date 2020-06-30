@@ -128,7 +128,8 @@
         if (recordLowerCase.includes(query)) {
           var pattern = new RegExp("".concat(query), "i");
           query = pattern.exec(record);
-          searchResults.render.push(config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record);
+          var _match = config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record;
+          searchResults.render.push(_match);
           searchResults.raw.push(record);
         }
       }

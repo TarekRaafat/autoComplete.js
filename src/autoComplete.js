@@ -75,6 +75,7 @@ export default class autoComplete {
     };
     this.noResults = noResults;
     this.highlight = highlight;
+    // TODO onSelection to be changed to feedback
     this.onSelection = onSelection;
     // Invoking preInit automatically
     // when autoCompleteJS instance gets initiated

@@ -2,7 +2,7 @@
  * Search common characters within record
  *
  * @param query
- * @param record
+ * @param data
  * @param {searchEngine, highlight}
  *
  * @return {*}
@@ -51,10 +51,11 @@ export default (query, data, config) => {
         const pattern = new RegExp(`${query}`, "i");
         // Search for a match Query in Record
         query = pattern.exec(record);
+        const match = config.highlight
+          ? record.replace(query, `<span class="autoComplete_highlighted">${query}</span>`)
+          : record;
         // Returns the match
-        searchResults.render.push(
-          config.highlight ? record.replace(query, `<span class="autoComplete_highlighted">${query}</span>`) : record
-        );
+        searchResults.render.push(match);
         searchResults.raw.push(record);
       }
     }
