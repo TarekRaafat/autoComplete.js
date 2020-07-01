@@ -95,6 +95,12 @@ export default class autoComplete {
     if (triggerCondition) {
       // Match query with existing value
       const searchResults = search(inputValue, data, { searchEngine: this.searchEngine, highlight: this.highlight });
+      // Emit Event on input
+      eventEmitter(
+        this.inputField,
+        { inputValue, queryValue, searchResults: searchResults.raw },
+        "autoCompleteJS_input"
+      );
       // 1- If resultsList set to render
       if (this.resultsList.render) {
         // 2- Checks if there are NO results
@@ -106,12 +112,10 @@ export default class autoComplete {
         navigate(inputField);
         // 5- Listen for all clicks in the document
         document.addEventListener("click", (event) => {
-          // 6- Close all this menu if clicked
+          // 6- Close this menu if clicked
           // outside the menu and input field
           closeAllLists(event.target, inputField);
         });
-      } else {
-        // Return results list with no rendering
       }
     }
   }
@@ -127,15 +131,9 @@ export default class autoComplete {
           // Set placeholder attribute value
           if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
           // 2- Listen for all clicks in the input field
-          this.inputField.addEventListener("input", (event, inputField = this.inputField) => {
-            // Emit Event on connection
-            // ! Not finished yet
-            eventEmitter(inputField, "autoComplete_input", {
-              event,
-              data,
-            });
+          this.inputField.addEventListener("input", (event) => {
             // 3- Initialize autoCompleteJS processes
-            this.run(event, inputField, data);
+            this.run(event, this.inputField, data);
           });
         }),
         this.debounce
@@ -148,11 +146,11 @@ export default class autoComplete {
       // 1- Listen for all clicks in the input field
       this.inputField.addEventListener(
         "input",
-        debouncer((event, inputField = this.inputField) => {
+        debouncer((event) => {
           // 2- Prepare the data
           prepareData(this.data.src(), (data) => {
             // 3- Initialize autoCompleteJS processes
-            this.run(event, inputField, data);
+            this.run(event, this.inputField, data);
           });
         }, this.debounce)
       );
@@ -177,8 +175,7 @@ export default class autoComplete {
           // Assign the input field selector
           this.inputField = document.querySelector(this.inputField);
           // Emit Event on connection
-          // ! Not finished yet
-          eventEmitter(this.inputField, mutation, "connected");
+          eventEmitter(this.inputField, { mutation }, "autoCompleteJS_connect");
           // Initiate autoCompleteJS
           this.init();
         }

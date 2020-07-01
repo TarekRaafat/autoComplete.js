@@ -241,7 +241,7 @@
     };
   });
 
-  var eventEmitter = (function (target, name, detail) {
+  var eventEmitter = (function (target, detail, name) {
     target.dispatchEvent(new CustomEvent(name, {
       bubbles: true,
       detail: detail,
@@ -348,6 +348,11 @@
             searchEngine: this.searchEngine,
             highlight: this.highlight
           });
+          eventEmitter(this.inputField, {
+            inputValue: inputValue,
+            queryValue: queryValue,
+            searchResults: searchResults.raw
+          }, "autoCompleteJS_input");
           if (this.resultsList.render) {
             if (!data.length) return this.noResults();
             generateList(searchResults, event, this.onSelection);
@@ -366,20 +371,14 @@
           debouncer(prepareData(this.data.src(), function (data) {
             if (_this.placeHolder) _this.inputField.setAttribute("placeholder", _this.placeHolder);
             _this.inputField.addEventListener("input", function (event) {
-              var inputField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.inputField;
-              eventEmitter(inputField, "autoComplete_input", {
-                event: event,
-                data: data
-              });
-              _this.run(event, inputField, data);
+              _this.run(event, _this.inputField, data);
             });
           }), this.debounce);
         } else {
           if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
           this.inputField.addEventListener("input", debouncer(function (event) {
-            var inputField = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.inputField;
             prepareData(_this.data.src(), function (data) {
-              _this.run(event, inputField, data);
+              _this.run(event, _this.inputField, data);
             });
           }, this.debounce));
         }
@@ -402,7 +401,9 @@
               if (document.querySelector(_this2.inputField)) {
                 observer.disconnect();
                 _this2.inputField = document.querySelector(_this2.inputField);
-                eventEmitter(_this2.inputField, mutation, "connected");
+                eventEmitter(_this2.inputField, {
+                  mutation: mutation
+                }, "autoCompleteJS_connect");
                 _this2.init();
               }
             }

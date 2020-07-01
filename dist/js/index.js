@@ -1,8 +1,11 @@
-// autoComplete.js on type event emitter
-document.querySelector("#autoComplete").addEventListener("autoComplete_input", function (event) {
-  console.log(event.detail);
+// autoComplete.js on connect event emitter
+document.querySelector("#autoComplete").addEventListener("autoCompleteJS_connect", function (event) {
+  console.log(event);
 });
-
+// autoComplete.js on type event emitter
+document.querySelector("#autoComplete").addEventListener("autoCompleteJS_input", function (event) {
+  console.log(event);
+});
 // The autoComplete.js Engine instance creator
 new autoComplete({
   selector: "#autoComplete",
@@ -27,7 +30,10 @@ new autoComplete({
   placeHolder: "Search for Food!",
   highlight: true,
   // debounce: 3000,
-  threshold: 2,
+  threshold: 0,
+  resultsList: {
+    render: true,
+  },
   onSelection: (feedback) => {
     console.log(feedback);
   },
