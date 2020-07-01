@@ -1,11 +1,11 @@
-// autoComplete.js on connect event emitter
-document.querySelector("#autoComplete").addEventListener("autoCompleteJS_connect", function (event) {
-  console.log(event);
-});
-// autoComplete.js on type event emitter
-document.querySelector("#autoComplete").addEventListener("autoCompleteJS_input", function (event) {
-  console.log(event);
-});
+// // autoComplete.js on connect event emitter
+// document.querySelector("#autoComplete").addEventListener("autoCompleteJS_connect", function (event) {
+//   console.log(event);
+// });
+// // autoComplete.js on type event emitter
+// document.querySelector("#autoComplete").addEventListener("autoCompleteJS_input", function (event) {
+//   console.log(event);
+// });
 // The autoComplete.js Engine instance creator
 new autoComplete({
   selector: "#autoComplete",
@@ -19,6 +19,7 @@ new autoComplete({
       // Returns Fetched data
       return data;
     },
+    // key: ["food"],
     cache: true,
   },
   // query: {
@@ -29,10 +30,13 @@ new autoComplete({
   searchEngine: "loose",
   placeHolder: "Search for Food!",
   highlight: true,
-  // debounce: 3000,
+  debounce: 1000,
   threshold: 0,
   resultsList: {
     render: true,
+  },
+  feedback: (data) => {
+    console.log(data);
   },
   onSelection: (feedback) => {
     console.log(feedback);

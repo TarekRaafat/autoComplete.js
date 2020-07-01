@@ -3,62 +3,52 @@
  *
  * @param query
  * @param data
- * @param {searchEngine, highlight}
+ * @param {searchEngineType, highlight}
  *
  * @return {*}
  */
-export default (query, data, config) => {
-  const searchResults = {
-    render: [],
-    raw: [],
-  };
-  for (let index = 0; index < data.length; index++) {
-    const record = data[index];
-    // Current record value toLowerCase
-    const recordLowerCase = record.toLowerCase();
-    // Loose mode
-    if (config.searchEngine === "loose") {
-      // Search query string sanitized & normalized
-      query = query.replace(/ /g, "");
-      // Array of matching characters
-      const match = [];
-      // Query character position based on success
-      let searchPosition = 0;
-      // Iterate over record characters
-      for (let number = 0; number < recordLowerCase.length; number++) {
-        // Holds current record character
-        let recordChar = record[number];
-        // Matching case
-        if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-          // Highlight matching character
-          recordChar = config.highlight ? `<span class="autoComplete_highlighted">${recordChar}</span>` : recordChar;
-          // Increment search position
-          searchPosition++;
-        }
-        // Adds matching character to the matching list
-        match.push(recordChar);
+export default (query, record, config) => {
+  // Current record value toLowerCase
+  const recordLowerCase = record.toLowerCase();
+  // Loose mode
+  if (config.searchEngineType === "loose") {
+    // Search query string sanitized & normalized
+    query = query.replace(/ /g, "");
+    // Array of matching characters
+    const match = [];
+    // Query character position based on success
+    let searchPosition = 0;
+    // Iterate over record characters
+    for (let number = 0; number < recordLowerCase.length; number++) {
+      // Holds current record character
+      let recordChar = record[number];
+      // Matching case
+      if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
+        // Highlight matching character
+        recordChar = config.highlight ? `<span class="autoComplete_highlighted">${recordChar}</span>` : recordChar;
+        // Increment search position
+        searchPosition++;
       }
-      // Non-Matching case
-      if (searchPosition === query.length) {
-        // Return the joined match
-        searchResults.render.push(match.join(""));
-        searchResults.raw.push(record);
-      }
-      // Strict mode
-    } else {
-      if (recordLowerCase.includes(query)) {
-        // Regular Expression Query Pattern Ignores caseSensitive
-        const pattern = new RegExp(`${query}`, "i");
-        // Search for a match Query in Record
-        query = pattern.exec(record);
-        const match = config.highlight
-          ? record.replace(query, `<span class="autoComplete_highlighted">${query}</span>`)
-          : record;
-        // Returns the match
-        searchResults.render.push(match);
-        searchResults.raw.push(record);
-      }
+      // Adds matching character to the matching list
+      match.push(recordChar);
+    }
+    // Non-Matching case
+    if (searchPosition === query.length) {
+      // Return the joined match
+      return match.join("");
+    }
+    // Strict mode
+  } else {
+    if (recordLowerCase.includes(query)) {
+      // Regular Expression Query Pattern Ignores caseSensitive
+      const pattern = new RegExp(`${query}`, "i");
+      // Search for a match Query in Record
+      query = pattern.exec(record);
+      const match = config.highlight
+        ? record.replace(query, `<span class="autoComplete_highlighted">${query}</span>`)
+        : record;
+      // Returns the match
+      return match;
     }
   }
-  return searchResults;
 };

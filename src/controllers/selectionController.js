@@ -2,20 +2,20 @@
  * onSelection function
  *
  * @param event
- * @param feedback
- * @param resultsValues
+ * @param query
+ * @param results
  * @param selection
+ * @param feedback
  *
  * @return void
  */
-export default (event, query, results, feedback) => {
+export default (event, query, results, selection, feedback) => {
   // Data feedback function
   // invoked on user selection
-  // TODO Revision for the feedback function
   feedback({
     event,
     query,
     results,
-    // selection,
+    selection,
   });
 };

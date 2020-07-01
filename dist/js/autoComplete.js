@@ -100,43 +100,6 @@
     };
   }
 
-  var search = (function (query, data, config) {
-    var searchResults = {
-      render: [],
-      raw: []
-    };
-    for (var index = 0; index < data.length; index++) {
-      var record = data[index];
-      var recordLowerCase = record.toLowerCase();
-      if (config.searchEngine === "loose") {
-        query = query.replace(/ /g, "");
-        var match = [];
-        var searchPosition = 0;
-        for (var number = 0; number < recordLowerCase.length; number++) {
-          var recordChar = record[number];
-          if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-            recordChar = config.highlight ? "<span class=\"autoComplete_highlighted\">".concat(recordChar, "</span>") : recordChar;
-            searchPosition++;
-          }
-          match.push(recordChar);
-        }
-        if (searchPosition === query.length) {
-          searchResults.render.push(match.join(""));
-          searchResults.raw.push(record);
-        }
-      } else {
-        if (recordLowerCase.includes(query)) {
-          var pattern = new RegExp("".concat(query), "i");
-          query = pattern.exec(record);
-          var _match = config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record;
-          searchResults.render.push(_match);
-          searchResults.raw.push(record);
-        }
-      }
-    }
-    return searchResults;
-  });
-
   var createList = (function (to) {
     var list = document.createElement("div");
     list.setAttribute("id", "autoComplete_list");
@@ -152,11 +115,12 @@
     return result;
   });
 
-  var onSelection = (function (event, query, results, feedback) {
+  var onSelection = (function (event, query, results, selection, feedback) {
     feedback({
       event: event,
       query: query,
-      results: results
+      results: results,
+      selection: selection
     });
   });
 
@@ -169,13 +133,16 @@
   var generateList = function generateList(data, event, feedback) {
     var inputValue = event.target.value;
     var list = createList(event.target);
-    for (var index = 0; index < data.render.length; index++) {
-      var result = data.render[index];
+    var _loop = function _loop(index) {
+      var result = data[index].match;
       var resultItem = createItem(result);
       resultItem.addEventListener("click", function (event) {
-        onSelection(event, inputValue, data.raw, feedback);
+        onSelection(event, inputValue, data, data[index].value, feedback);
       });
       list.appendChild(resultItem);
+    };
+    for (var index = 0; index < data.length; index++) {
+      _loop(index);
     }
   };
 
@@ -214,6 +181,33 @@
     inputField.addEventListener("keydown", navigation);
   };
 
+  var searchEngine = (function (query, record, config) {
+    var recordLowerCase = record.toLowerCase();
+    if (config.searchEngineType === "loose") {
+      query = query.replace(/ /g, "");
+      var match = [];
+      var searchPosition = 0;
+      for (var number = 0; number < recordLowerCase.length; number++) {
+        var recordChar = record[number];
+        if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
+          recordChar = config.highlight ? "<span class=\"autoComplete_highlighted\">".concat(recordChar, "</span>") : recordChar;
+          searchPosition++;
+        }
+        match.push(recordChar);
+      }
+      if (searchPosition === query.length) {
+        return match.join("");
+      }
+    } else {
+      if (recordLowerCase.includes(query)) {
+        var pattern = new RegExp("".concat(query), "i");
+        query = pattern.exec(record);
+        var _match = config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record;
+        return _match;
+      }
+    }
+  });
+
   var prepareData = function prepareData(request, callback) {
     Promise.resolve(request).then(function (data) {
       callback(data);
@@ -227,6 +221,56 @@
   };
   var checkTriggerCondition = function checkTriggerCondition(trigger, queryValue, threshold) {
     return trigger.condition ? trigger.condition(queryValue) : queryValue.length >= threshold && queryValue.replace(/ /g, "").length;
+  };
+  var listMatchingResults = function listMatchingResults(query, data, config) {
+    var resList = [];
+    var _loop = function _loop(index) {
+      var record = data[index];
+      var search = function search(key) {
+        var recordValue = key ? record[key] : record;
+        if (recordValue) {
+          var match = typeof config.searchEngine === "function" ? config.searchEngine(query, recordValue, config) : searchEngine(query, recordValue, config);
+          if (match && key) {
+            resList.push({
+              key: key,
+              index: index,
+              match: match,
+              value: record
+            });
+          } else if (match && !key) {
+            resList.push({
+              index: index,
+              match: match,
+              value: record
+            });
+          }
+        }
+      };
+      if (config.key) {
+        var _iterator = _createForOfIteratorHelper(config.key),
+            _step;
+        try {
+          for (_iterator.s(); !(_step = _iterator.n()).done;) {
+            var key = _step.value;
+            search(key);
+          }
+        } catch (err) {
+          _iterator.e(err);
+        } finally {
+          _iterator.f();
+        }
+      } else {
+        search();
+      }
+    };
+    for (var index = 0; index < data.length; index++) {
+      _loop(index);
+    }
+    var list = config.sort ? resList.sort(config.sort).slice(0, config.maxResults) : resList.slice(0, config.maxResults);
+    return {
+      matches: resList.length,
+      list: list
+    };
   };
 
   var debouncer = (function (func, delay) {
@@ -299,6 +343,7 @@
           noResults = config.noResults,
           _config$highlight = config.highlight,
           highlight = _config$highlight === void 0 ? false : _config$highlight,
+          feedback = config.feedback,
           onSelection = config.onSelection;
       this.inputField = selector;
       this.data = {
@@ -333,6 +378,7 @@
       };
       this.noResults = noResults;
       this.highlight = highlight;
+      this.feedback = feedback;
       this.onSelection = onSelection;
       this.preInit();
     }
@@ -344,23 +390,26 @@
         var queryValue = prepareQueryValue(this.query, inputValue);
         var triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
         if (triggerCondition) {
-          var searchResults = search(inputValue, data, {
+          var searchConfig = {
             searchEngine: this.searchEngine,
-            highlight: this.highlight
-          });
-          eventEmitter(this.inputField, {
+            highlight: this.highlight,
+            key: this.data.key,
+            sort: this.sort,
+            maxResults: this.maxResults
+          };
+          var searchResults = listMatchingResults(inputValue, data, searchConfig);
+          eventEmitter(inputField, {
             inputValue: inputValue,
             queryValue: queryValue,
-            searchResults: searchResults.raw
+            searchResults: searchResults
           }, "autoCompleteJS_input");
-          if (this.resultsList.render) {
-            if (!data.length) return this.noResults();
-            generateList(searchResults, event, this.onSelection);
-            navigate(inputField);
-            document.addEventListener("click", function (event) {
-              closeAllLists(event.target, inputField);
-            });
-          }
+          if (!data.length) return this.noResults();
+          if (!this.resultsList.render) return this.feedback(searchResults);
+          generateList(searchResults.list, event, this.onSelection);
+          navigate(inputField);
+          document.addEventListener("click", function (event) {
+            closeAllLists(event.target, inputField);
+          });
         }
       }
     }, {

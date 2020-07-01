@@ -1,7 +1,12 @@
-import search from "./services/search";
 import { generateList, closeAllLists } from "./controllers/listController";
 import { navigate } from "./controllers/navigationController";
-import { prepareData, getInputValue, prepareQueryValue, checkTriggerCondition } from "./controllers/dataController";
+import {
+  prepareData,
+  getInputValue,
+  prepareQueryValue,
+  checkTriggerCondition,
+  listMatchingResults,
+} from "./controllers/dataController";
 import debouncer from "./utils/debounce";
 import eventEmitter from "./utils/eventEmitter";
 
@@ -40,6 +45,7 @@ export default class autoComplete {
       } = {},
       noResults, // No results action
       highlight = false, // Highlighting matching results
+      feedback, // Data feedback
       onSelection, // Action function on result selection
     } = config;
 
@@ -75,7 +81,7 @@ export default class autoComplete {
     };
     this.noResults = noResults;
     this.highlight = highlight;
-    // TODO onSelection to be changed to feedback
+    this.feedback = feedback;
     this.onSelection = onSelection;
     // Invoking preInit automatically
     // when autoCompleteJS instance gets initiated
@@ -84,39 +90,42 @@ export default class autoComplete {
 
   // Run autoCompleteJS processes
   run(event, inputField, data) {
-    // 1- Close all open lists
+    // 0- Close all open lists
     closeAllLists(false, inputField);
-    // Prepare input value
+    // 1- Prepare input values
     const inputValue = getInputValue(inputField);
     const queryValue = prepareQueryValue(this.query, inputValue);
-    // Get trigger condition
+    // 2- Get trigger condition
     const triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
-    // Check triggering condition
+    // 3- Check triggering condition
     if (triggerCondition) {
-      // Match query with existing value
-      const searchResults = search(inputValue, data, { searchEngine: this.searchEngine, highlight: this.highlight });
-      // Emit Event on input
-      eventEmitter(
-        this.inputField,
-        { inputValue, queryValue, searchResults: searchResults.raw },
-        "autoCompleteJS_input"
-      );
-      // 1- If resultsList set to render
-      if (this.resultsList.render) {
-        // 2- Checks if there are NO results
-        // Runs noResults action function
-        if (!data.length) return this.noResults();
-        // 3- Generate & Render results list
-        generateList(searchResults, event, this.onSelection);
-        // 4- Initialize navigation
-        navigate(inputField);
-        // 5- Listen for all clicks in the document
-        document.addEventListener("click", (event) => {
-          // 6- Close this menu if clicked
-          // outside the menu and input field
-          closeAllLists(event.target, inputField);
-        });
-      }
+      // 4- Search engine configurations
+      const searchConfig = {
+        searchEngine: this.searchEngine,
+        highlight: this.highlight,
+        key: this.data.key,
+        sort: this.sort,
+        maxResults: this.maxResults,
+      };
+      // 5- Match query with existing value
+      const searchResults = listMatchingResults(inputValue, data, searchConfig);
+      // 6- Emit Event on input
+      eventEmitter(inputField, { inputValue, queryValue, searchResults: searchResults }, "autoCompleteJS_input");
+      // 7- Checks if there are NO results
+      // Runs noResults action function
+      if (!data.length) return this.noResults();
+      // 8- If resultsList set not to render
+      if (!this.resultsList.render) return this.feedback(searchResults);
+      // 9- Generate & Render results list
+      generateList(searchResults.list, event, this.onSelection);
+      // 10- Initialize navigation
+      navigate(inputField);
+      // 11- Listen for all clicks in the document
+      document.addEventListener("click", (event) => {
+        // 12- Close this menu if clicked
+        // outside the menu and input field
+        closeAllLists(event.target, inputField);
+      });
     }
   }
 
