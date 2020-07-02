@@ -391,6 +391,7 @@
         var queryValue = prepareQueryValue(this.query, inputValue);
         var triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
         if (triggerCondition) {
+          eventEmitter(this.inputField, data, "autoCompleteJS_request");
           var searchConfig = {
             searchEngine: this.searchEngine,
             highlight: this.highlight,
@@ -400,10 +401,10 @@
           };
           var searchResults = listMatchingResults(queryValue, data, searchConfig);
           eventEmitter(inputField, {
-            inputValue: inputValue,
-            queryValue: queryValue,
-            searchResults: searchResults
-          }, "autoCompleteJS_input");
+            input: inputValue,
+            query: queryValue,
+            results: searchResults
+          }, "autoCompleteJS_response");
           if (!data.length) return this.noResults();
           var dataFeedback = {
             input: inputValue,
@@ -437,6 +438,7 @@
             });
           }, this.debounce));
         }
+        eventEmitter(this.inputField, null, "autoCompleteJS_init");
       }
     }, {
       key: "preInit",

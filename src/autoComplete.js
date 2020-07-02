@@ -99,6 +99,8 @@ export default class autoCompleteJS {
     const triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
     // 3- Check triggering condition
     if (triggerCondition) {
+      // Emit Event on search request
+      eventEmitter(this.inputField, data, "autoCompleteJS_request");
       // 4- Prepare search engine configurations
       const searchConfig = {
         searchEngine: this.searchEngine,
@@ -109,8 +111,12 @@ export default class autoCompleteJS {
       };
       // 5- Match query with existing value
       const searchResults = listMatchingResults(queryValue, data, searchConfig);
-      // 6- Emit Event on input
-      eventEmitter(inputField, { inputValue, queryValue, searchResults: searchResults }, "autoCompleteJS_input");
+      // 6- Emit Event on search response
+      eventEmitter(
+        inputField,
+        { input: inputValue, query: queryValue, results: searchResults },
+        "autoCompleteJS_response"
+      );
       // 7- Checks if there are NO results
       // Runs noResults action function
       if (!data.length) return this.noResults();
@@ -164,6 +170,8 @@ export default class autoCompleteJS {
         }, this.debounce)
       );
     }
+    // Emit Event on Initialization
+    eventEmitter(this.inputField, null, "autoCompleteJS_init");
   }
 
   // Pre-Initialization stage
