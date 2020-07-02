@@ -7,10 +7,10 @@ import {
   checkTriggerCondition,
   listMatchingResults,
 } from "./controllers/dataController";
-import debouncer from "./utils/debounce";
+import debouncer from "./utils/debouncer";
 import eventEmitter from "./utils/eventEmitter";
 
-export default class autoComplete {
+export default class autoCompleteJS {
   constructor(config) {
     // Deconstructing config values
     const {
@@ -99,7 +99,7 @@ export default class autoComplete {
     const triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
     // 3- Check triggering condition
     if (triggerCondition) {
-      // 4- Search engine configurations
+      // 4- Prepare search engine configurations
       const searchConfig = {
         searchEngine: this.searchEngine,
         highlight: this.highlight,
@@ -108,24 +108,24 @@ export default class autoComplete {
         maxResults: this.maxResults,
       };
       // 5- Match query with existing value
-      const searchResults = listMatchingResults(inputValue, data, searchConfig);
+      const searchResults = listMatchingResults(queryValue, data, searchConfig);
       // 6- Emit Event on input
       eventEmitter(inputField, { inputValue, queryValue, searchResults: searchResults }, "autoCompleteJS_input");
       // 7- Checks if there are NO results
       // Runs noResults action function
       if (!data.length) return this.noResults();
-      // 8- If resultsList set not to render
-      if (!this.resultsList.render) return this.feedback(searchResults);
-      // 9- Generate & Render results list
-      generateList(searchResults.list, event, this.onSelection);
-      // 10- Initialize navigation
+      // 8- Prepare data feedback object
+      const dataFeedback = { input: inputValue, query: queryValue, results: searchResults };
+      // 9- If resultsList set not to render
+      if (!this.resultsList.render) return this.feedback(event, dataFeedback);
+      // 10- Generate & Render results list
+      generateList(queryValue, searchResults.list, event, this.onSelection);
+      // 11- Initialize navigation
       navigate(inputField);
-      // 11- Listen for all clicks in the document
-      document.addEventListener("click", (event) => {
-        // 12- Close this menu if clicked
-        // outside the menu and input field
-        closeAllLists(event.target, inputField);
-      });
+      // 12- Listen for all clicks in the document
+      // 13- Close this menu if clicked
+      // outside the menu and input field
+      document.addEventListener("click", (event) => closeAllLists(event.target, inputField));
     }
   }
 
@@ -135,18 +135,18 @@ export default class autoComplete {
     // set to be cached
     if (this.data.cache) {
       // 1- Prepare the data
-      debouncer(
-        prepareData(this.data.src(), (data) => {
-          // Set placeholder attribute value
-          if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-          // 2- Listen for all clicks in the input field
-          this.inputField.addEventListener("input", (event) => {
+      prepareData(this.data.src(), (data) => {
+        // Set placeholder attribute value
+        if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
+        // 2- Listen for all clicks in the input field
+        this.inputField.addEventListener(
+          "input",
+          debouncer((event) => {
             // 3- Initialize autoCompleteJS processes
             this.run(event, this.inputField, data);
-          });
-        }),
-        this.debounce
-      );
+          }, this.debounce)
+        );
+      });
       // Else if data source
       // set to be streamlined
     } else {

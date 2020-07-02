@@ -7,7 +7,7 @@
 //   console.log(event);
 // });
 // The autoComplete.js Engine instance creator
-new autoComplete({
+const autoComplete = new autoCompleteJS({
   selector: "#autoComplete",
   data: {
     src: async () => {
@@ -22,21 +22,21 @@ new autoComplete({
     // key: ["food"],
     cache: true,
   },
-  // query: {
-  //   manipulate: function (query) {
-  //     return query;
-  //   },
-  // },
+  query: {
+    manipulate: function (query) {
+      return `${query}`;
+    },
+  },
   searchEngine: "loose",
   placeHolder: "Search for Food!",
   highlight: true,
-  debounce: 1000,
+  debounce: 500,
   threshold: 0,
   resultsList: {
     render: true,
   },
-  feedback: (data) => {
-    console.log(data);
+  feedback: (event, data) => {
+    console.log(event, data);
   },
   onSelection: (feedback) => {
     console.log(feedback);

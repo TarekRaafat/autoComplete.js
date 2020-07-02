@@ -1,6 +1,13 @@
 import searchEngine from "../services/search";
 
-// Prepare data from data source
+/**
+ * Prepare data from data source
+ *
+ * @param request
+ * @param callback
+ *
+ * @return void
+ */
 const prepareData = (request, callback) => {
   // Resolve the incoming data promise
   Promise.resolve(request).then((data) => {
@@ -8,23 +15,56 @@ const prepareData = (request, callback) => {
     callback(data);
   });
 };
-// Gets the input search value "query"
+
+/**
+ * Gets the input search value "query"
+ *
+ * @param inputField
+ *
+ * @return void
+ */
 const getInputValue = (inputField) => {
   return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement
     ? inputField.value.toLowerCase()
     : inputField.innerHTML.toLowerCase();
 };
-// Intercept query value
+
+/**
+ * Intercept query value
+ *
+ * @param query
+ * @param inputField
+ *
+ * @return queryValue
+ */
 const prepareQueryValue = (query, inputValue) => {
   return query && query.manipulate ? query.manipulate(inputValue) : inputValue;
 };
-// App triggering condition
+
+/**
+ * App triggering condition
+ *
+ * @param trigger
+ * @param queryValue
+ * @param threshold
+ *
+ * @return triggerCondition
+ */
 const checkTriggerCondition = (trigger, queryValue, threshold) => {
   return trigger.condition
     ? trigger.condition(queryValue)
     : queryValue.length >= threshold && queryValue.replace(/ /g, "").length;
 };
-// List search matching results
+
+/**
+ * List search matching results
+ *
+ * @param query
+ * @param data
+ * @param config
+ *
+ * @return {*}
+ */
 const listMatchingResults = (query, data, config) => {
   // Final highlighted results list
   const resList = [];
@@ -40,7 +80,7 @@ const listMatchingResults = (query, data, config) => {
         // Holds match value
         const match =
           typeof config.searchEngine === "function"
-            ? config.searchEngine(query, recordValue, config)
+            ? config.searchEngine(query, recordValue)
             : searchEngine(query, recordValue, config);
         // Push match to results list with key if set
         if (match && key) {

@@ -1,3 +1,10 @@
+/**
+ * List Item element creator
+ *
+ * @param itemValue
+ *
+ * @return result
+ */
 export default (itemValue) => {
   // Create a DIV element for each matching result item
   const result = document.createElement("div");

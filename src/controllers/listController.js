@@ -2,6 +2,14 @@ import createList from "../components/List";
 import createItem from "../components/Item";
 import onSelection from "./selectionController";
 
+/**
+ * Close all open lists
+ *
+ * @param element
+ * @param inputField
+ *
+ * @return void
+ */
 const closeAllLists = (element, inputField) => {
   // Get all autoCompleteJS lists
   const list = document.getElementsByClassName("autoComplete_list");
@@ -16,13 +24,14 @@ const closeAllLists = (element, inputField) => {
 /**
  * List all matching results
  *
+ * @param query
  * @param data
  * @param event
  * @param feedback
  *
- * @return {*}
+ * @return void
  */
-const generateList = (data, event, feedback) => {
+const generateList = (query, data, event, feedback) => {
   const inputValue = event.target.value;
   // Initiate creating list process
   const list = createList(event.target);
@@ -33,8 +42,10 @@ const generateList = (data, event, feedback) => {
     const resultItem = createItem(result);
     // Listen to clicks on this item
     resultItem.addEventListener("click", (event) => {
+      // Prepare onSelection feedback data object
+      const onSelectionData = { query, input: inputValue, results: data, selection: data[index].value };
       // Returns the selected value onSelection
-      onSelection(event, inputValue, data, data[index].value, feedback);
+      onSelection(onSelectionData, feedback);
     });
     // Add result to the list
     list.appendChild(resultItem);

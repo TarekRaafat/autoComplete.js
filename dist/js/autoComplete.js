@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
-  (global.autoComplete = factory());
+  (global.autoCompleteJS = factory());
 }(this, (function () { 'use strict';
 
   function _classCallCheck(instance, Constructor) {
@@ -115,13 +115,8 @@
     return result;
   });
 
-  var onSelection = (function (event, query, results, selection, feedback) {
-    feedback({
-      event: event,
-      query: query,
-      results: results,
-      selection: selection
-    });
+  var onSelection = (function (data, feedback) {
+    feedback(data);
   });
 
   var closeAllLists = function closeAllLists(element, inputField) {
@@ -130,14 +125,20 @@
       if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
     }
   };
-  var generateList = function generateList(data, event, feedback) {
+  var generateList = function generateList(query, data, event, feedback) {
     var inputValue = event.target.value;
     var list = createList(event.target);
     var _loop = function _loop(index) {
       var result = data[index].match;
       var resultItem = createItem(result);
       resultItem.addEventListener("click", function (event) {
-        onSelection(event, inputValue, data, data[index].value, feedback);
+        var onSelectionData = {
+          query: query,
+          input: inputValue,
+          results: data,
+          selection: data[index].value
+        };
+        onSelection(onSelectionData, feedback);
       });
       list.appendChild(resultItem);
     };
@@ -229,7 +230,7 @@
       var search = function search(key) {
         var recordValue = key ? record[key] : record;
         if (recordValue) {
-          var match = typeof config.searchEngine === "function" ? config.searchEngine(query, recordValue, config) : searchEngine(query, recordValue, config);
+          var match = typeof config.searchEngine === "function" ? config.searchEngine(query, recordValue) : searchEngine(query, recordValue, config);
           if (match && key) {
             resList.push({
               key: key,
@@ -293,9 +294,9 @@
     }));
   });
 
-  var autoComplete = function () {
-    function autoComplete(config) {
-      _classCallCheck(this, autoComplete);
+  var autoCompleteJS = function () {
+    function autoCompleteJS(config) {
+      _classCallCheck(this, autoCompleteJS);
       var _config$selector = config.selector,
           selector = _config$selector === void 0 ? "#autoComplete" : _config$selector,
           _config$data = config.data,
@@ -382,7 +383,7 @@
       this.onSelection = onSelection;
       this.preInit();
     }
-    _createClass(autoComplete, [{
+    _createClass(autoCompleteJS, [{
       key: "run",
       value: function run(event, inputField, data) {
         closeAllLists(false, inputField);
@@ -397,18 +398,23 @@
             sort: this.sort,
             maxResults: this.maxResults
           };
-          var searchResults = listMatchingResults(inputValue, data, searchConfig);
+          var searchResults = listMatchingResults(queryValue, data, searchConfig);
           eventEmitter(inputField, {
             inputValue: inputValue,
             queryValue: queryValue,
             searchResults: searchResults
           }, "autoCompleteJS_input");
           if (!data.length) return this.noResults();
-          if (!this.resultsList.render) return this.feedback(searchResults);
-          generateList(searchResults.list, event, this.onSelection);
+          var dataFeedback = {
+            input: inputValue,
+            query: queryValue,
+            results: searchResults
+          };
+          if (!this.resultsList.render) return this.feedback(event, dataFeedback);
+          generateList(queryValue, searchResults.list, event, this.onSelection);
           navigate(inputField);
           document.addEventListener("click", function (event) {
-            closeAllLists(event.target, inputField);
+            return closeAllLists(event.target, inputField);
           });
         }
       }
@@ -417,12 +423,12 @@
       value: function init() {
         var _this = this;
         if (this.data.cache) {
-          debouncer(prepareData(this.data.src(), function (data) {
+          prepareData(this.data.src(), function (data) {
             if (_this.placeHolder) _this.inputField.setAttribute("placeholder", _this.placeHolder);
-            _this.inputField.addEventListener("input", function (event) {
+            _this.inputField.addEventListener("input", debouncer(function (event) {
               _this.run(event, _this.inputField, data);
-            });
-          }), this.debounce);
+            }, _this.debounce));
+          });
         } else {
           if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
           this.inputField.addEventListener("input", debouncer(function (event) {
@@ -466,9 +472,9 @@
         observer.observe(targetNode, config);
       }
     }]);
-    return autoComplete;
+    return autoCompleteJS;
   }();
 
-  return autoComplete;
+  return autoCompleteJS;
 
 })));

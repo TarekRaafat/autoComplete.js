@@ -4,7 +4,7 @@
  * @param func
  * @param delay
  *
- * @return void
+ * @return func
  */
 export default (func, delay) => {
   let inDebounce;

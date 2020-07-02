@@ -9,7 +9,7 @@ export default [
     input: "src/autoComplete.js",
     output: {
       file: pkg.browser,
-      name: "autoComplete",
+      name: "autoCompleteJS",
       format: "umd",
     },
     plugins: [
@@ -31,7 +31,7 @@ export default [
     input: "src/autoComplete.js",
     output: {
       file: pkg.main,
-      name: "autoComplete",
+      name: "autoCompleteJS",
       format: "umd",
     },
     plugins: [

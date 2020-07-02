@@ -1,3 +1,10 @@
+/**
+ * List element creator
+ *
+ * @param to
+ *
+ * @return list
+ */
 export default (to) => {
   // Create a DIV element that will contain the results items
   const list = document.createElement("div");

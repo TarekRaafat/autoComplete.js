@@ -5,7 +5,7 @@
  * @param data
  * @param {searchEngineType, highlight}
  *
- * @return {*}
+ * @return match
  */
 export default (query, record, config) => {
   // Current record value toLowerCase

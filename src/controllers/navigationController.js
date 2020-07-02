@@ -1,5 +1,12 @@
 let currentFocus;
 
+/**
+ * Remove list item active state
+ *
+ * @param list
+ *
+ * @return void
+ */
 const removeActive = (list) => {
   // Remove "active" class from all list items
   for (let index = 0; index < list.length; index++) {
@@ -7,6 +14,13 @@ const removeActive = (list) => {
   }
 };
 
+/**
+ * Add active state to list item
+ *
+ * @param list
+ *
+ * @return void
+ */
 const addActive = (list) => {
   // Add "active" class to a list item
   if (!list) return false;
@@ -18,6 +32,13 @@ const addActive = (list) => {
   list[currentFocus].classList.add("autoComplete_selected");
 };
 
+/**
+ * List navigation function
+ *
+ * @param event
+ *
+ * @return void
+ */
 const navigation = (event) => {
   let list = document.getElementById("autoComplete_list");
   if (list) list = list.getElementsByTagName("div");
@@ -45,6 +66,13 @@ const navigation = (event) => {
   }
 };
 
+/**
+ * List navigation function initializer
+ *
+ * @param inputField
+ *
+ * @return void
+ */
 const navigate = (inputField) => {
   // Reset focus state
   currentFocus = -1;

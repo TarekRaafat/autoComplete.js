@@ -2,9 +2,8 @@
  * Event emitter on input field
  *
  * @param target
- * @param { detail }
+ * @param {*}
  * @param name
- *
  *
  * @return void
  */
