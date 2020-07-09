@@ -10,6 +10,11 @@ import {
 import debouncer from "./utils/debouncer";
 import eventEmitter from "./utils/eventEmitter";
 
+/**
+ * @desc This is autoCompleteJS
+ * @version 8.0.0.0
+ * @example let autoComplete = new autoCompleteJS({config});
+ */
 export default class autoCompleteJS {
   constructor(config) {
     // Deconstructing config values
@@ -99,7 +104,9 @@ export default class autoCompleteJS {
     const triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
     // 3- Check triggering condition
     if (triggerCondition) {
-      // Emit Event on search request
+      /**
+       * @emits {autoCompleteJS_request} Emits Event on search request
+       **/
       eventEmitter(this.inputField, data, "autoCompleteJS_request");
       // 4- Prepare search engine configurations
       const searchConfig = {
@@ -111,7 +118,9 @@ export default class autoCompleteJS {
       };
       // 5- Match query with existing value
       const searchResults = listMatchingResults(queryValue, data, searchConfig);
-      // 6- Emit Event on search response
+      /**
+       * @emits {autoCompleteJS_response} Emits Event on search response
+       **/
       eventEmitter(
         inputField,
         { input: inputValue, query: queryValue, results: searchResults },
@@ -125,12 +134,15 @@ export default class autoCompleteJS {
       // 9- If resultsList set not to render
       if (!this.resultsList.render) return this.feedback(event, dataFeedback);
       // 10- Generate & Render results list
-      generateList(queryValue, searchResults.list, event, this.onSelection);
+      generateList(queryValue, searchResults, event, this.onSelection);
       // 11- Initialize navigation
       navigate(inputField);
-      // 12- Listen for all clicks in the document
-      // 13- Close this menu if clicked
-      // outside the menu and input field
+      /**
+       * @desc
+       * Listens for all `click` events in the document
+       * and closes this menu if clicked outside the list and input field
+       * @listens {click} Listens to all `click` events on the document
+       **/
       document.addEventListener("click", (event) => closeAllLists(event.target, inputField));
     }
   }
@@ -144,7 +156,9 @@ export default class autoCompleteJS {
       prepareData(this.data.src(), (data) => {
         // Set placeholder attribute value
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-        // 2- Listen for all clicks in the input field
+        /**
+         * @listens {input} Listens to all `input` events on the input field
+         **/
         this.inputField.addEventListener(
           "input",
           debouncer((event) => {
@@ -158,7 +172,9 @@ export default class autoCompleteJS {
     } else {
       // Set placeholder attribute value
       if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-      // 1- Listen for all clicks in the input field
+      /**
+       * @listens {input} Listens to all `input` events on the input field
+       **/
       this.inputField.addEventListener(
         "input",
         debouncer((event) => {
@@ -170,7 +186,9 @@ export default class autoCompleteJS {
         }, this.debounce)
       );
     }
-    // Emit Event on Initialization
+    /**
+     * @emits {autoCompleteJS_init} Emits Event on Initialization
+     **/
     eventEmitter(this.inputField, null, "autoCompleteJS_init");
   }
 
@@ -186,12 +204,14 @@ export default class autoCompleteJS {
       // Traditional 'for loops' for IE 11
       for (let mutation of mutationsList) {
         // Check if this is the selected input field
-        if (document.querySelector(this.inputField)) {
+        if (targetNode.querySelector(this.inputField)) {
           // If yes disconnect the observer
           observer.disconnect();
           // Assign the input field selector
-          this.inputField = document.querySelector(this.inputField);
-          // Emit Event on connection
+          this.inputField = targetNode.querySelector(this.inputField);
+          /**
+           * @emits {autoCompleteJS_connect} Emits Event on connection
+           **/
           eventEmitter(this.inputField, { mutation }, "autoCompleteJS_connect");
           // Initiate autoCompleteJS
           this.init();

@@ -1,9 +1,9 @@
 /**
  * List Item element creator
  *
- * @param itemValue
+ * @param {String} itemValue - The item value string
  *
- * @return result
+ * @return {Element} result - The created item element
  */
 export default (itemValue) => {
   // Create a DIV element for each matching result item

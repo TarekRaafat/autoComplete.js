@@ -1,17 +1,17 @@
 /**
  * Debouncer
  *
- * @param func
- * @param delay
+ * @param {Function} callback - The callback function
+ * @param {Number} delay - The delay number value
  *
- * @return func
+ * @return {Function} function - The callback function wrapped in `setTimeout` function
  */
-export default (func, delay) => {
+export default (callback, delay) => {
   let inDebounce;
   return function () {
     const context = this;
     const args = arguments;
     clearTimeout(inDebounce);
-    inDebounce = setTimeout(() => func.apply(context, args), delay);
+    inDebounce = setTimeout(() => callback.apply(context, args), delay);
   };
 };

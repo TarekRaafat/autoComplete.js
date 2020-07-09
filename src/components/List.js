@@ -1,9 +1,9 @@
 /**
  * List element creator
  *
- * @param to
+ * @param {Element} to - The list parent element
  *
- * @return list
+ * @return {Element} list - The created list element
  */
 export default (to) => {
   // Create a DIV element that will contain the results items

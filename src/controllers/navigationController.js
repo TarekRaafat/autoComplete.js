@@ -3,9 +3,8 @@ let currentFocus;
 /**
  * Remove list item active state
  *
- * @param list
+ * @param {Array <elements>} list - The array of list items
  *
- * @return void
  */
 const removeActive = (list) => {
   // Remove "active" class from all list items
@@ -17,9 +16,8 @@ const removeActive = (list) => {
 /**
  * Add active state to list item
  *
- * @param list
+ * @param {Array <elements>} list - The array of list items
  *
- * @return void
  */
 const addActive = (list) => {
   // Add "active" class to a list item
@@ -33,11 +31,10 @@ const addActive = (list) => {
 };
 
 /**
- * List navigation function
+ * List Navigation Function
  *
- * @param event
+ * @param {Object} event - The `keydown` event Object
  *
- * @return void
  */
 const navigation = (event) => {
   let list = document.getElementById("autoComplete_list");
@@ -71,12 +68,13 @@ const navigation = (event) => {
  *
  * @param inputField
  *
- * @return void
  */
 const navigate = (inputField) => {
   // Reset focus state
   currentFocus = -1;
-  // Listen to all key presses on the keyboard
+  /**
+   * @listens {keydown} Listens to all `keydown` events on the input field
+   **/
   inputField.addEventListener("keydown", navigation);
 };
 

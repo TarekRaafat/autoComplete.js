@@ -1,11 +1,11 @@
 /**
  * Search common characters within record
  *
- * @param query
- * @param data
- * @param {searchEngineType, highlight}
+ * @param {String} query - User's search query value after manipulation
+ * @param {String} data - The data item string to be compared
+ * @param {Object{searchEngineType: String, highlight: Boolean}} config - The search engine configurations
  *
- * @return match
+ * @return {String} match - The matched data item string
  */
 export default (query, record, config) => {
   // Current record value toLowerCase

@@ -115,10 +115,6 @@
     return result;
   });
 
-  var onSelection = (function (data, feedback) {
-    feedback(data);
-  });
-
   var closeAllLists = function closeAllLists(element, inputField) {
     var list = document.getElementsByClassName("autoComplete_list");
     for (var index = 0; index < list.length; index++) {
@@ -138,7 +134,7 @@
           results: data,
           selection: data[index].value
         };
-        onSelection(onSelectionData, feedback);
+        feedback(onSelectionData);
       });
       list.appendChild(resultItem);
     };
@@ -268,20 +264,17 @@
       _loop(index);
     }
     var list = config.sort ? resList.sort(config.sort).slice(0, config.maxResults) : resList.slice(0, config.maxResults);
-    return {
-      matches: resList.length,
-      list: list
-    };
+    return list;
   };
 
-  var debouncer = (function (func, delay) {
+  var debouncer = (function (callback, delay) {
     var inDebounce;
     return function () {
       var context = this;
       var args = arguments;
       clearTimeout(inDebounce);
       inDebounce = setTimeout(function () {
-        return func.apply(context, args);
+        return callback.apply(context, args);
       }, delay);
     };
   });
@@ -412,7 +405,7 @@
             results: searchResults
           };
           if (!this.resultsList.render) return this.feedback(event, dataFeedback);
-          generateList(queryValue, searchResults.list, event, this.onSelection);
+          generateList(queryValue, searchResults, event, this.onSelection);
           navigate(inputField);
           document.addEventListener("click", function (event) {
             return closeAllLists(event.target, inputField);
@@ -455,9 +448,9 @@
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
               var mutation = _step.value;
-              if (document.querySelector(_this2.inputField)) {
+              if (targetNode.querySelector(_this2.inputField)) {
                 observer.disconnect();
-                _this2.inputField = document.querySelector(_this2.inputField);
+                _this2.inputField = targetNode.querySelector(_this2.inputField);
                 eventEmitter(_this2.inputField, {
                   mutation: mutation
                 }, "autoCompleteJS_connect");

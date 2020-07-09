@@ -1,7 +1,7 @@
-// // autoComplete.js on connect event emitter
-// document.querySelector("#autoComplete").addEventListener("autoCompleteJS_connect", function (event) {
-//   console.log(event);
-// });
+// autoComplete.js on connect event emitter
+document.querySelector("#autoComplete").addEventListener("autoCompleteJS_connect", function (event) {
+  console.log(event);
+});
 // autoComplete.js on type event emitter
 document.querySelector("#autoComplete").addEventListener("autoCompleteJS_init", function (event) {
   console.log(event);

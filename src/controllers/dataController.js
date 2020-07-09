@@ -3,10 +3,8 @@ import searchEngine from "../services/search";
 /**
  * Prepare data from data source
  *
- * @param request
- * @param callback
- *
- * @return void
+ * @param {Promise} request - The fetched data promise
+ * @param {Function} callback - The callback function
  */
 const prepareData = (request, callback) => {
   // Resolve the incoming data promise
@@ -19,9 +17,7 @@ const prepareData = (request, callback) => {
 /**
  * Gets the input search value "query"
  *
- * @param inputField
- *
- * @return void
+ * @param {Element} inputField - autoCompleteJS input field or textarea element
  */
 const getInputValue = (inputField) => {
   return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement
@@ -32,8 +28,8 @@ const getInputValue = (inputField) => {
 /**
  * Intercept query value
  *
- * @param query
- * @param inputField
+ * @param {String} query - User's search query value
+ * @param {Element} inputField - autoCompleteJS input field
  *
  * @return queryValue
  */
@@ -44,9 +40,9 @@ const prepareQueryValue = (query, inputValue) => {
 /**
  * App triggering condition
  *
- * @param trigger
- * @param queryValue
- * @param threshold
+ * @param {Object} trigger - Trigger Object with the condition function
+ * @param {String} queryValue - User's search query value string after manipulation
+ * @param {Number} threshold - The threshold value number
  *
  * @return triggerCondition
  */
@@ -59,11 +55,11 @@ const checkTriggerCondition = (trigger, queryValue, threshold) => {
 /**
  * List search matching results
  *
- * @param query
- * @param data
- * @param config
+ * @param {String} query - User's search query string
+ * @param {Object} data - The available data object
+ * @param {Object} config - The search engine configurations
  *
- * @return {*}
+ * @return {Array} - The matching results list array
  */
 const listMatchingResults = (query, data, config) => {
   // Final highlighted results list
@@ -116,10 +112,7 @@ const listMatchingResults = (query, data, config) => {
     ? resList.sort(config.sort).slice(0, config.maxResults)
     : resList.slice(0, config.maxResults);
   // Returns rendered list
-  return {
-    matches: resList.length,
-    list,
-  };
+  return list;
 };
 
 export { prepareData, getInputValue, prepareQueryValue, checkTriggerCondition, listMatchingResults };
