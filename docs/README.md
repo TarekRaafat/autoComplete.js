@@ -179,6 +179,8 @@ new autoComplete({
     searchEngine: "strict",			  // Search Engine type/mode 		  | (Optional)
     resultsList: {					   // Rendered results list object 	 | (Optional)
         render: true,
+        /* if set to false, add an eventListener to the selector for event type
+           "autoComplete" to handle the result */
 		container: source => {
 			source.setAttribute("id", "food_list");
 		},
