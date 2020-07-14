@@ -21,24 +21,27 @@ const closeAllLists = (element, inputField) => {
 /**
  * List all matching results
  *
- * @param {String} query - User's search query string
  * @param {Object} data - The available data object
- * @param {Object} event - The event object
+ * @param {Object} config - Input field selector, User's search input string values & Elements classes string values
  * @param {Function} feedback - The callback function on user's selection for API
  */
-const generateList = (query, data, event, feedback) => {
-  const inputValue = event.target.value;
+const generateList = (data, config, feedback) => {
   // Initiate creating list process
-  const list = createList(event.target);
+  const list = createList(config.inputField, config.listClass, config.listContainer);
   // Iterate over the data
   for (let index = 0; index < data.length; index++) {
     const result = data[index].match;
     // create result item
-    const resultItem = createItem(result);
+    const resultItem = createItem(result, data[index].value, config.itemClass, config.itemContent);
     // Listen to clicks on this item
-    resultItem.addEventListener("click", (event) => {
+    resultItem.addEventListener("click", () => {
       // Prepare onSelection feedback data object
-      const onSelectionData = { query, input: inputValue, results: data, selection: data[index].value };
+      const onSelectionData = {
+        input: config.rawInputValue,
+        query: config.queryInputValue,
+        results: data,
+        selection: data[index].value,
+      };
       // Returns the selected value onSelection
       feedback(onSelectionData);
     });

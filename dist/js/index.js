@@ -34,6 +34,14 @@ const autoComplete = new autoCompleteJS({
   threshold: 0,
   resultsList: {
     render: true,
+    container: (element) => {
+      // console.log(element);
+    },
+  },
+  resultItem: {
+    content: (data, element) => {
+      // console.log(data, element);
+    },
   },
   feedback: (event, data) => {
     console.log(event, data);

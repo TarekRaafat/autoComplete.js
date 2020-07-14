@@ -28,12 +28,12 @@ const getInputValue = (inputField) => {
 /**
  * Intercept query value
  *
- * @param {String} query - User's search query value
  * @param {Element} inputField - autoCompleteJS input field
+ * @param {String} query - User's search query value
  *
  * @return queryValue
  */
-const prepareQueryValue = (query, inputValue) => {
+const prepareQueryValue = (inputValue, query) => {
   return query && query.manipulate ? query.manipulate(inputValue) : inputValue;
 };
 

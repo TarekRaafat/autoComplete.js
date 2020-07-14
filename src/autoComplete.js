@@ -39,6 +39,7 @@ export default class autoCompleteJS {
         destination, // Results list selector
         position = "afterend", // Results list position
         element: resultsListElement = "ul", // Results list element tag
+        className: resultsListClass = "autoComplete_list",
         navigation = false, // Results list navigation
       } = {},
       sort = false, // Sorting results list
@@ -47,6 +48,7 @@ export default class autoCompleteJS {
       resultItem: {
         content = false, // Result item function
         element: resultItemElement = "li", // Result item element tag
+        className: resultItemClass = "autoComplete_result",
       } = {},
       noResults, // No results action
       highlight = false, // Highlighting matching results
@@ -75,6 +77,7 @@ export default class autoCompleteJS {
       destination: destination || this.inputField,
       position,
       element: resultsListElement,
+      className: resultsListClass,
       navigation,
     };
     this.sort = sort;
@@ -83,6 +86,7 @@ export default class autoCompleteJS {
     this.resultItem = {
       content,
       element: resultItemElement,
+      className: resultItemClass,
     };
     this.noResults = noResults;
     this.highlight = highlight;
@@ -98,10 +102,10 @@ export default class autoCompleteJS {
     // 0- Close all open lists
     closeAllLists(false, inputField);
     // 1- Prepare input values
-    const inputValue = getInputValue(inputField);
-    const queryValue = prepareQueryValue(this.query, inputValue);
+    const rawInputValue = getInputValue(inputField);
+    const queryInputValue = prepareQueryValue(rawInputValue, this.query);
     // 2- Get trigger condition
-    const triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
+    const triggerCondition = checkTriggerCondition(this.trigger, queryInputValue, this.threshold);
     // 3- Check triggering condition
     if (triggerCondition) {
       /**
@@ -117,24 +121,34 @@ export default class autoCompleteJS {
         maxResults: this.maxResults,
       };
       // 5- Match query with existing value
-      const searchResults = listMatchingResults(queryValue, data, searchConfig);
+      const searchResults = listMatchingResults(queryInputValue, data, searchConfig);
       /**
        * @emits {autoCompleteJS_response} Emits Event on search response
        **/
       eventEmitter(
         inputField,
-        { input: inputValue, query: queryValue, results: searchResults },
+        { input: rawInputValue, query: queryInputValue, results: searchResults },
         "autoCompleteJS_response"
       );
       // 7- Checks if there are NO results
       // Runs noResults action function
       if (!data.length) return this.noResults();
       // 8- Prepare data feedback object
-      const dataFeedback = { input: inputValue, query: queryValue, results: searchResults };
+      const dataFeedback = { input: rawInputValue, query: queryInputValue, results: searchResults };
       // 9- If resultsList set not to render
       if (!this.resultsList.render) return this.feedback(event, dataFeedback);
+      // List generation configurations object
+      const listConfig = {
+        inputField,
+        rawInputValue: rawInputValue,
+        queryInputValue: queryInputValue,
+        listClass: this.resultsList.className,
+        itemClass: this.resultItem.className,
+        listContainer: this.resultsList.container,
+        itemContent: this.resultItem.content,
+      };
       // 10- Generate & Render results list
-      generateList(queryValue, searchResults, event, this.onSelection);
+      generateList(searchResults, listConfig, this.onSelection);
       // 11- Initialize navigation
       navigate(inputField);
       /**

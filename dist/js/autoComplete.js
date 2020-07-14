@@ -100,18 +100,23 @@
     };
   }
 
-  var createList = (function (to) {
+  var createList = (function (to, listClass, container) {
     var list = document.createElement("div");
     list.setAttribute("id", "autoComplete_list");
-    list.setAttribute("class", "autoComplete_list");
+    list.setAttribute("class", listClass);
+    list.setAttribute("role", "listbox");
+    list.setAttribute("tabindex", "-1");
+    if (container) container(list);
     to.parentNode.appendChild(list);
     return list;
   });
 
-  var createItem = (function (itemValue) {
+  var createItem = (function (itemValue, rawValue, itemClass, content) {
     var result = document.createElement("div");
-    result.setAttribute("class", "autoComplete_result");
+    result.setAttribute("class", itemClass);
+    result.setAttribute("role", "option");
     result.innerHTML = itemValue;
+    if (content) content(rawValue, result);
     return result;
   });
 
@@ -121,16 +126,15 @@
       if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
     }
   };
-  var generateList = function generateList(query, data, event, feedback) {
-    var inputValue = event.target.value;
-    var list = createList(event.target);
+  var generateList = function generateList(data, config, feedback) {
+    var list = createList(config.inputField, config.listClass, config.listContainer);
     var _loop = function _loop(index) {
       var result = data[index].match;
-      var resultItem = createItem(result);
-      resultItem.addEventListener("click", function (event) {
+      var resultItem = createItem(result, data[index].value, config.itemClass, config.itemContent);
+      resultItem.addEventListener("click", function () {
         var onSelectionData = {
-          query: query,
-          input: inputValue,
+          input: config.rawInputValue,
+          query: config.queryInputValue,
           results: data,
           selection: data[index].value
         };
@@ -159,10 +163,13 @@
   var navigation = function navigation(event) {
     var list = document.getElementById("autoComplete_list");
     if (list) list = list.getElementsByTagName("div");
-    if (event.keyCode === 40) {
+    if (event.keyCode === 27) {
+      closeAllLists(false, event.target);
+    } else if (event.keyCode === 40 || event.keyCode === 9) {
+      event.preventDefault();
       currentFocus++;
       addActive(list);
-    } else if (event.keyCode === 38) {
+    } else if (event.keyCode === 38 || event.keyCode === 9) {
       event.preventDefault();
       currentFocus--;
       addActive(list);
@@ -213,7 +220,7 @@
   var getInputValue = function getInputValue(inputField) {
     return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value.toLowerCase() : inputField.innerHTML.toLowerCase();
   };
-  var prepareQueryValue = function prepareQueryValue(query, inputValue) {
+  var prepareQueryValue = function prepareQueryValue(inputValue, query) {
     return query && query.manipulate ? query.manipulate(inputValue) : inputValue;
   };
   var checkTriggerCondition = function checkTriggerCondition(trigger, queryValue, threshold) {
@@ -321,6 +328,8 @@
           position = _config$resultsList$p === void 0 ? "afterend" : _config$resultsList$p,
           _config$resultsList$e = _config$resultsList.element,
           resultsListElement = _config$resultsList$e === void 0 ? "ul" : _config$resultsList$e,
+          _config$resultsList$c2 = _config$resultsList.className,
+          resultsListClass = _config$resultsList$c2 === void 0 ? "autoComplete_list" : _config$resultsList$c2,
           _config$resultsList$n = _config$resultsList.navigation,
           navigation = _config$resultsList$n === void 0 ? false : _config$resultsList$n,
           _config$sort = config.sort,
@@ -334,6 +343,8 @@
           content = _config$resultItem$co === void 0 ? false : _config$resultItem$co,
           _config$resultItem$el = _config$resultItem.element,
           resultItemElement = _config$resultItem$el === void 0 ? "li" : _config$resultItem$el,
+          _config$resultItem$cl = _config$resultItem.className,
+          resultItemClass = _config$resultItem$cl === void 0 ? "autoComplete_result" : _config$resultItem$cl,
           noResults = config.noResults,
           _config$highlight = config.highlight,
           highlight = _config$highlight === void 0 ? false : _config$highlight,
@@ -361,6 +372,7 @@
         destination: destination || this.inputField,
         position: position,
         element: resultsListElement,
+        className: resultsListClass,
         navigation: navigation
       };
       this.sort = sort;
@@ -368,7 +380,8 @@
       this.maxResults = maxResults;
       this.resultItem = {
         content: content,
-        element: resultItemElement
+        element: resultItemElement,
+        className: resultItemClass
       };
       this.noResults = noResults;
       this.highlight = highlight;
@@ -380,9 +393,9 @@
       key: "run",
       value: function run(event, inputField, data) {
         closeAllLists(false, inputField);
-        var inputValue = getInputValue(inputField);
-        var queryValue = prepareQueryValue(this.query, inputValue);
-        var triggerCondition = checkTriggerCondition(this.trigger, queryValue, this.threshold);
+        var rawInputValue = getInputValue(inputField);
+        var queryInputValue = prepareQueryValue(rawInputValue, this.query);
+        var triggerCondition = checkTriggerCondition(this.trigger, queryInputValue, this.threshold);
         if (triggerCondition) {
           eventEmitter(this.inputField, data, "autoCompleteJS_request");
           var searchConfig = {
@@ -392,20 +405,29 @@
             sort: this.sort,
             maxResults: this.maxResults
           };
-          var searchResults = listMatchingResults(queryValue, data, searchConfig);
+          var searchResults = listMatchingResults(queryInputValue, data, searchConfig);
           eventEmitter(inputField, {
-            input: inputValue,
-            query: queryValue,
+            input: rawInputValue,
+            query: queryInputValue,
             results: searchResults
           }, "autoCompleteJS_response");
           if (!data.length) return this.noResults();
           var dataFeedback = {
-            input: inputValue,
-            query: queryValue,
+            input: rawInputValue,
+            query: queryInputValue,
             results: searchResults
           };
           if (!this.resultsList.render) return this.feedback(event, dataFeedback);
-          generateList(queryValue, searchResults, event, this.onSelection);
+          var listConfig = {
+            inputField: inputField,
+            rawInputValue: rawInputValue,
+            queryInputValue: queryInputValue,
+            listClass: this.resultsList.className,
+            itemClass: this.resultItem.className,
+            listContainer: this.resultsList.container,
+            itemContent: this.resultItem.content
+          };
+          generateList(searchResults, listConfig, this.onSelection);
           navigate(inputField);
           document.addEventListener("click", function (event) {
             return closeAllLists(event.target, inputField);

@@ -1,3 +1,5 @@
+import { closeAllLists } from "./listController";
+
 let currentFocus;
 
 /**
@@ -39,15 +41,20 @@ const addActive = (list) => {
 const navigation = (event) => {
   let list = document.getElementById("autoComplete_list");
   if (list) list = list.getElementsByTagName("div");
-  if (event.keyCode === 40) {
-    // If the arrow DOWN key is pressed
+  if (event.keyCode === 27) {
+    // If the ESC key is pressed
+    // closes open lists
+    closeAllLists(false, event.target);
+  } else if (event.keyCode === 40 || event.keyCode === 9) {
+    event.preventDefault();
+    // If the arrow DOWN or TAB key is pressed
     // increase the currentFocus
     currentFocus++;
     // and add "active" class to the list item
     addActive(list);
-  } else if (event.keyCode === 38) {
+  } else if (event.keyCode === 38 || event.keyCode === 9) {
     event.preventDefault();
-    // If the arrow UP key is pressed
+    // If the arrow UP or TAB key is pressed
     // decrease the currentFocus
     currentFocus--;
     // and add "active" class to the list item

@@ -50,7 +50,7 @@
   "devDependencies": {
     "@babel/core": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
-    "@rollup/plugin-babel": "^5.0.4",
+    "@rollup/plugin-babel": "^5.1.0",
     "acorn": "^6.4.0",
     "local-web-server": "^2.6.1",
     "rollup": "^0.67.4",
