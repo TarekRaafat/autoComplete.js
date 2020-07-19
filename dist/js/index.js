@@ -19,7 +19,7 @@ const autoComplete = new autoCompleteJS({
       // Returns Fetched data
       return data;
     },
-    key: ["food"],
+    key: ["food", "cities", "animals"],
     cache: true,
   },
   query: {
@@ -47,6 +47,7 @@ const autoComplete = new autoCompleteJS({
     console.log(event, data);
   },
   onSelection: (feedback) => {
+    document.querySelector("#autoComplete").value = "";
     console.log(feedback);
   },
 });

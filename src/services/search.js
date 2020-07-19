@@ -3,7 +3,7 @@
  *
  * @param {String} query - User's search query value after manipulation
  * @param {String} data - The data item string to be compared
- * @param {Object{searchEngineType: String, highlight: Boolean}} config - The search engine configurations
+ * @param {Object{searchEngine: String, highlight: Boolean}} config - The search engine configurations
  *
  * @return {String} match - The matched data item string
  */
@@ -11,7 +11,7 @@ export default (query, record, config) => {
   // Current record value toLowerCase
   const recordLowerCase = record.toLowerCase();
   // Loose mode
-  if (config.searchEngineType === "loose") {
+  if (config.searchEngine === "loose") {
     // Search query string sanitized & normalized
     query = query.replace(/ /g, "");
     // Array of matching characters

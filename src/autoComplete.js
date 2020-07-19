@@ -1,3 +1,4 @@
+import inputComponent from "./components/Input";
 import { generateList, closeAllLists } from "./controllers/listController";
 import { navigate } from "./controllers/navigationController";
 import {
@@ -19,6 +20,7 @@ export default class autoCompleteJS {
   constructor(config) {
     // Deconstructing config values
     const {
+      name = "Search",
       selector = "#autoComplete", // User input selector
       data: {
         src, // Data src selection
@@ -39,6 +41,7 @@ export default class autoCompleteJS {
         destination, // Results list selector
         position = "afterend", // Results list position
         element: resultsListElement = "ul", // Results list element tag
+        idName: resultsListId = "autoComplete_list",
         className: resultsListClass = "autoComplete_list",
         navigation = false, // Results list navigation
       } = {},
@@ -48,6 +51,7 @@ export default class autoCompleteJS {
       resultItem: {
         content = false, // Result item function
         element: resultItemElement = "li", // Result item element tag
+        idName: resultItemId = "autoComplete_result",
         className: resultItemClass = "autoComplete_result",
       } = {},
       noResults, // No results action
@@ -57,6 +61,7 @@ export default class autoCompleteJS {
     } = config;
 
     // Assigning config values to properties
+    this.name = name;
     this.inputField = selector;
     this.data = {
       src: () => (typeof src === "function" ? src() : src),
@@ -77,6 +82,7 @@ export default class autoCompleteJS {
       destination: destination || this.inputField,
       position,
       element: resultsListElement,
+      idName: resultsListId,
       className: resultsListClass,
       navigation,
     };
@@ -86,6 +92,7 @@ export default class autoCompleteJS {
     this.resultItem = {
       content,
       element: resultItemElement,
+      idName: resultItemId,
       className: resultItemClass,
     };
     this.noResults = noResults;
@@ -142,15 +149,17 @@ export default class autoCompleteJS {
         inputField,
         rawInputValue: rawInputValue,
         queryInputValue: queryInputValue,
+        listId: this.resultsList.idName,
         listClass: this.resultsList.className,
+        itemId: this.resultItem.idName,
         itemClass: this.resultItem.className,
         listContainer: this.resultsList.container,
         itemContent: this.resultItem.content,
       };
       // 10- Generate & Render results list
-      generateList(searchResults, listConfig, this.onSelection);
+      const list = generateList(searchResults, listConfig, this.onSelection);
       // 11- Initialize navigation
-      navigate(inputField);
+      navigate(inputField, list, this.resultsList.navigation);
       /**
        * @desc
        * Listens for all `click` events in the document
@@ -223,6 +232,14 @@ export default class autoCompleteJS {
           observer.disconnect();
           // Assign the input field selector
           this.inputField = targetNode.querySelector(this.inputField);
+          const inputConfig = {
+            inputName: this.name,
+            listId: this.resultsList.idName,
+            listClass: this.resultsList.className,
+            itemId: this.resultItem.idName,
+            itemClass: this.resultItem.className,
+          };
+          inputComponent(this.inputField, inputConfig);
           /**
            * @emits {autoCompleteJS_connect} Emits Event on connection
            **/

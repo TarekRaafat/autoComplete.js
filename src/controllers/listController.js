@@ -27,12 +27,12 @@ const closeAllLists = (element, inputField) => {
  */
 const generateList = (data, config, feedback) => {
   // Initiate creating list process
-  const list = createList(config.inputField, config.listClass, config.listContainer);
+  const list = createList(config.inputField, config);
   // Iterate over the data
   for (let index = 0; index < data.length; index++) {
     const result = data[index].match;
     // create result item
-    const resultItem = createItem(result, data[index].value, config.itemClass, config.itemContent);
+    const resultItem = createItem(result, data[index].value, index, config.itemClass, config.itemContent);
     // Listen to clicks on this item
     resultItem.addEventListener("click", () => {
       // Prepare onSelection feedback data object
@@ -48,6 +48,8 @@ const generateList = (data, config, feedback) => {
     // Add result to the list
     list.appendChild(resultItem);
   }
+
+  return list;
 };
 
 export { generateList, closeAllLists };

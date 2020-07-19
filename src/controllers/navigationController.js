@@ -11,6 +11,7 @@ let currentFocus;
 const removeActive = (list) => {
   // Remove "active" class from all list items
   for (let index = 0; index < list.length; index++) {
+    list[index].removeAttribute("aria-selected");
     list[index].classList.remove("autoComplete_selected");
   }
 };
@@ -29,6 +30,7 @@ const addActive = (list) => {
   if (currentFocus >= list.length) currentFocus = 0;
   if (currentFocus < 0) currentFocus = list.length - 1;
   // Add "active" class to the item
+  list[currentFocus].setAttribute("aria-selected", "true");
   list[currentFocus].classList.add("autoComplete_selected");
 };
 
@@ -74,15 +76,18 @@ const navigation = (event) => {
  * List navigation function initializer
  *
  * @param inputField
+ * @param list
+ * @param customNavigator
  *
  */
-const navigate = (inputField) => {
+const navigate = (inputField, list, customNavigator) => {
   // Reset focus state
   currentFocus = -1;
+  const navigate = customNavigator || navigation;
   /**
    * @listens {keydown} Listens to all `keydown` events on the input field
    **/
-  inputField.addEventListener("keydown", navigation);
+  inputField.addEventListener("keydown", navigate);
 };
 
 export { navigate };

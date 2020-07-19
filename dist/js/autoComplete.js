@@ -100,19 +100,38 @@
     };
   }
 
-  var createList = (function (to, listClass, container) {
+  var inputComponent = (function (inputField, config) {
+    inputField.setAttribute("dir", "ltr");
+    inputField.setAttribute("type", "text");
+    inputField.setAttribute("spellcheck", false);
+    inputField.setAttribute("autocorrect", "off");
+    inputField.setAttribute("autocomplete", "off");
+    inputField.setAttribute("autocapitalize", "off");
+    inputField.setAttribute("title", config.inputName);
+    inputField.setAttribute("role", "combobox");
+    inputField.setAttribute("aria-label", config.inputName);
+    inputField.setAttribute("aria-owns", config.listId);
+    inputField.setAttribute("aria-haspopup", true);
+    inputField.setAttribute("aria-autocomplete", "both");
+  });
+
+  var createList = (function (to, config) {
+    console.log(config);
     var list = document.createElement("div");
-    list.setAttribute("id", "autoComplete_list");
-    list.setAttribute("class", listClass);
+    list.setAttribute("id", config.listId);
+    list.setAttribute("aria-expanded", true);
+    list.setAttribute("aria-labelledby", config.listId);
+    list.setAttribute("class", config.listClass);
     list.setAttribute("role", "listbox");
     list.setAttribute("tabindex", "-1");
-    if (container) container(list);
+    if (config.container) container(list);
     to.parentNode.appendChild(list);
     return list;
   });
 
-  var createItem = (function (itemValue, rawValue, itemClass, content) {
+  var createItem = (function (itemValue, rawValue, resultIndex, itemClass, content) {
     var result = document.createElement("div");
+    result.setAttribute("id", "".concat(itemClass, "_").concat(resultIndex));
     result.setAttribute("class", itemClass);
     result.setAttribute("role", "option");
     result.innerHTML = itemValue;
@@ -127,10 +146,10 @@
     }
   };
   var generateList = function generateList(data, config, feedback) {
-    var list = createList(config.inputField, config.listClass, config.listContainer);
+    var list = createList(config.inputField, config);
     var _loop = function _loop(index) {
       var result = data[index].match;
-      var resultItem = createItem(result, data[index].value, config.itemClass, config.itemContent);
+      var resultItem = createItem(result, data[index].value, index, config.itemClass, config.itemContent);
       resultItem.addEventListener("click", function () {
         var onSelectionData = {
           input: config.rawInputValue,
@@ -145,11 +164,13 @@
     for (var index = 0; index < data.length; index++) {
       _loop(index);
     }
+    return list;
   };
 
   var currentFocus;
   var removeActive = function removeActive(list) {
     for (var index = 0; index < list.length; index++) {
+      list[index].removeAttribute("aria-selected");
       list[index].classList.remove("autoComplete_selected");
     }
   };
@@ -158,6 +179,7 @@
     removeActive(list);
     if (currentFocus >= list.length) currentFocus = 0;
     if (currentFocus < 0) currentFocus = list.length - 1;
+    list[currentFocus].setAttribute("aria-selected", "true");
     list[currentFocus].classList.add("autoComplete_selected");
   };
   var navigation = function navigation(event) {
@@ -180,14 +202,15 @@
       }
     }
   };
-  var navigate = function navigate(inputField) {
+  var navigate = function navigate(inputField, list, customNavigator) {
     currentFocus = -1;
-    inputField.addEventListener("keydown", navigation);
+    var navigate = customNavigator || navigation;
+    inputField.addEventListener("keydown", navigate);
   };
 
   var searchEngine = (function (query, record, config) {
     var recordLowerCase = record.toLowerCase();
-    if (config.searchEngineType === "loose") {
+    if (config.searchEngine === "loose") {
       query = query.replace(/ /g, "");
       var match = [];
       var searchPosition = 0;
@@ -297,7 +320,9 @@
   var autoCompleteJS = function () {
     function autoCompleteJS(config) {
       _classCallCheck(this, autoCompleteJS);
-      var _config$selector = config.selector,
+      var _config$name = config.name,
+          name = _config$name === void 0 ? "Search" : _config$name,
+          _config$selector = config.selector,
           selector = _config$selector === void 0 ? "#autoComplete" : _config$selector,
           _config$data = config.data,
           _src = _config$data.src,
@@ -328,6 +353,8 @@
           position = _config$resultsList$p === void 0 ? "afterend" : _config$resultsList$p,
           _config$resultsList$e = _config$resultsList.element,
           resultsListElement = _config$resultsList$e === void 0 ? "ul" : _config$resultsList$e,
+          _config$resultsList$i = _config$resultsList.idName,
+          resultsListId = _config$resultsList$i === void 0 ? "autoComplete_list" : _config$resultsList$i,
           _config$resultsList$c2 = _config$resultsList.className,
           resultsListClass = _config$resultsList$c2 === void 0 ? "autoComplete_list" : _config$resultsList$c2,
           _config$resultsList$n = _config$resultsList.navigation,
@@ -343,6 +370,8 @@
           content = _config$resultItem$co === void 0 ? false : _config$resultItem$co,
           _config$resultItem$el = _config$resultItem.element,
           resultItemElement = _config$resultItem$el === void 0 ? "li" : _config$resultItem$el,
+          _config$resultItem$id = _config$resultItem.idName,
+          resultItemId = _config$resultItem$id === void 0 ? "autoComplete_result" : _config$resultItem$id,
           _config$resultItem$cl = _config$resultItem.className,
           resultItemClass = _config$resultItem$cl === void 0 ? "autoComplete_result" : _config$resultItem$cl,
           noResults = config.noResults,
@@ -350,6 +379,7 @@
           highlight = _config$highlight === void 0 ? false : _config$highlight,
           feedback = config.feedback,
           onSelection = config.onSelection;
+      this.name = name;
       this.inputField = selector;
       this.data = {
         src: function src() {
@@ -372,6 +402,7 @@
         destination: destination || this.inputField,
         position: position,
         element: resultsListElement,
+        idName: resultsListId,
         className: resultsListClass,
         navigation: navigation
       };
@@ -381,6 +412,7 @@
       this.resultItem = {
         content: content,
         element: resultItemElement,
+        idName: resultItemId,
         className: resultItemClass
       };
       this.noResults = noResults;
@@ -422,13 +454,15 @@
             inputField: inputField,
             rawInputValue: rawInputValue,
             queryInputValue: queryInputValue,
+            listId: this.resultsList.idName,
             listClass: this.resultsList.className,
+            itemId: this.resultItem.idName,
             itemClass: this.resultItem.className,
             listContainer: this.resultsList.container,
             itemContent: this.resultItem.content
           };
-          generateList(searchResults, listConfig, this.onSelection);
-          navigate(inputField);
+          var list = generateList(searchResults, listConfig, this.onSelection);
+          navigate(inputField, list, this.resultsList.navigation);
           document.addEventListener("click", function (event) {
             return closeAllLists(event.target, inputField);
           });
@@ -473,6 +507,14 @@
               if (targetNode.querySelector(_this2.inputField)) {
                 observer.disconnect();
                 _this2.inputField = targetNode.querySelector(_this2.inputField);
+                var inputConfig = {
+                  inputName: _this2.name,
+                  listId: _this2.resultsList.idName,
+                  listClass: _this2.resultsList.className,
+                  itemId: _this2.resultItem.idName,
+                  itemClass: _this2.resultItem.className
+                };
+                inputComponent(_this2.inputField, inputConfig);
                 eventEmitter(_this2.inputField, {
                   mutation: mutation
                 }, "autoCompleteJS_connect");
