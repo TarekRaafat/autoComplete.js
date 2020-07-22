@@ -217,6 +217,9 @@
         return onSelection(event, input, resultsList, feedback, resultsValues);
       };
     });
+    if (resultsList.childNodes) {
+      highlightSelection(resultsList.childNodes[0]);
+    }
   };
 
   var CustomEventPolyfill = function CustomEventPolyfill(event, params) {

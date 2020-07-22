@@ -180,6 +180,10 @@ const navigation = (input, resultsList, feedback, resultsValues) => {
   li.forEach(selection => {
     selection.onmousedown = event => onSelection(event, input, resultsList, feedback, resultsValues);
   });
+  // Highlight first item in the list by default
+  if(resultsList.childNodes) {
+    highlightSelection(resultsList.childNodes[0]);
+  }
 };
 
 export { getInput, createResultsList, highlight, addResultsToList, navigation, clearResults };
