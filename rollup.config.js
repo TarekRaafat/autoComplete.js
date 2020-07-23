@@ -4,12 +4,14 @@ import { uglify } from "rollup-plugin-uglify";
 import pkg from "./package.json";
 import gzipPlugin from "rollup-plugin-gzip";
 
+const libName = "autoCompleteJS";
+
 export default [
   {
     input: "src/autoComplete.js",
     output: {
       file: pkg.browser,
-      name: "autoCompleteJS",
+      name: libName,
       format: "umd",
     },
     plugins: [
@@ -31,7 +33,7 @@ export default [
     input: "src/autoComplete.js",
     output: {
       file: pkg.main,
-      name: "autoCompleteJS",
+      name: libName,
       format: "umd",
     },
     plugins: [

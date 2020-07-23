@@ -2,16 +2,6 @@
   "name": "@tarekraafat/autocomplete.js",
   "version": "8.0.0",
   "description": "Simple autocomplete pure vanilla Javascript library.",
-  "main": "dist/js/autoComplete.js",
-  "browser": "dist/js/autoComplete.min.js",
-  "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w & ws --rewrite '/* -> /dist/$1'  --spa ./dist/index.html"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TarekRaafat/autoComplete.js.git"
-  },
   "keywords": [
     "simple",
     "autocomplete",
@@ -37,16 +27,31 @@
     "search",
     "dropdown"
   ],
+  "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
+  "bugs": {
+    "url": "https://github.com/TarekRaafat/autoComplete.js/issues"
+  },
+  "license": "Apache-2.0",
   "author": {
     "name": "Tarek Raafat",
     "email": "tarek.m.raafat@gmail.com",
     "url": "http://www.tarekraafat.com"
   },
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/TarekRaafat/autoComplete.js/issues"
+  "files": [
+    "dist/js/autoComplete.js"
+  ],
+  "main": "dist/js/autoComplete.js",
+  "browser": "dist/js/autoComplete.min.js",
+  "unpkg": "dist/js/autoComplete.min.js",
+  "module": "dist/js/autoComplete.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TarekRaafat/autoComplete.js.git"
   },
-  "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w & ws --rewrite '/* -> /dist/$1'  --spa ./dist/index.html"
+  },
   "devDependencies": {
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
