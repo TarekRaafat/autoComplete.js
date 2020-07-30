@@ -11,7 +11,8 @@ let currentFocus;
 const removeActive = (list) => {
   // Remove "active" class from all list items
   for (let index = 0; index < list.length; index++) {
-    list[index].removeAttribute("aria-selected");
+    // list[index].removeAttribute("aria-selected");
+    list[index].setAttribute("aria-selected", "false");
     list[index].classList.remove("autoComplete_selected");
   }
 };

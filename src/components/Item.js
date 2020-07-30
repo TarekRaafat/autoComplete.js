@@ -11,6 +11,8 @@ export default (itemValue, rawValue, resultIndex, itemClass, content) => {
   // Create a DIV element for each matching result item
   const result = document.createElement("div");
   result.setAttribute("id", `${itemClass}_${resultIndex}`);
+  // result.setAttribute("data-value", rawValue);
+  result.setAttribute("aria-selected", "false");
   result.setAttribute("class", itemClass);
   result.setAttribute("role", "option");
   result.innerHTML = itemValue;

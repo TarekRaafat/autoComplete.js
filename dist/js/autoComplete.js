@@ -132,6 +132,7 @@
   var createItem = (function (itemValue, rawValue, resultIndex, itemClass, content) {
     var result = document.createElement("div");
     result.setAttribute("id", "".concat(itemClass, "_").concat(resultIndex));
+    result.setAttribute("aria-selected", "false");
     result.setAttribute("class", itemClass);
     result.setAttribute("role", "option");
     result.innerHTML = itemValue;
@@ -170,7 +171,7 @@
   var currentFocus;
   var removeActive = function removeActive(list) {
     for (var index = 0; index < list.length; index++) {
-      list[index].removeAttribute("aria-selected");
+      list[index].setAttribute("aria-selected", "false");
       list[index].classList.remove("autoComplete_selected");
     }
   };
