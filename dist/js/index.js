@@ -51,3 +51,5 @@ const autoComplete = new autoCompleteJS({
     console.log(feedback);
   },
 });
+
+// autoComplete.detach();

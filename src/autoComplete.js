@@ -179,35 +179,33 @@ export default class autoCompleteJS {
       prepareData(this.data.src(), (data) => {
         // Set placeholder attribute value
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
+        // Run executer
+        this.exec = debouncer((event) => {
+          // 3- Initialize autoCompleteJS processes
+          this.run(event, this.inputField, data);
+        }, this.debounce);
         /**
          * @listens {input} Listens to all `input` events on the input field
          **/
-        this.inputField.addEventListener(
-          "input",
-          debouncer((event) => {
-            // 3- Initialize autoCompleteJS processes
-            this.run(event, this.inputField, data);
-          }, this.debounce)
-        );
+        this.inputField.addEventListener("input", this.exec);
       });
       // Else if data source
       // set to be streamlined
     } else {
       // Set placeholder attribute value
       if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
+      // Run executer
+      this.exec = debouncer((event) => {
+        // 2- Prepare the data
+        prepareData(this.data.src(), (data) => {
+          // 3- Initialize autoCompleteJS processes
+          this.run(event, this.inputField, data);
+        });
+      }, this.debounce);
       /**
        * @listens {input} Listens to all `input` events on the input field
        **/
-      this.inputField.addEventListener(
-        "input",
-        debouncer((event) => {
-          // 2- Prepare the data
-          prepareData(this.data.src(), (data) => {
-            // 3- Initialize autoCompleteJS processes
-            this.run(event, this.inputField, data);
-          });
-        }, this.debounce)
-      );
+      this.inputField.addEventListener("input", this.exec);
     }
     /**
      * @emits {autoCompleteJS_init} Emits Event on Initialization
@@ -253,5 +251,13 @@ export default class autoCompleteJS {
     const observer = new MutationObserver(callback);
     // Start observing the target node for configured mutations
     observer.observe(targetNode, config);
+  }
+
+  attach() {
+    this.init();
+  }
+
+  detach() {
+    this.inputField.removeEventListener("input", this.exec);
   }
 }

@@ -476,17 +476,19 @@
         if (this.data.cache) {
           prepareData(this.data.src(), function (data) {
             if (_this.placeHolder) _this.inputField.setAttribute("placeholder", _this.placeHolder);
-            _this.inputField.addEventListener("input", debouncer(function (event) {
+            _this.exec = debouncer(function (event) {
               _this.run(event, _this.inputField, data);
-            }, _this.debounce));
+            }, _this.debounce);
+            _this.inputField.addEventListener("input", _this.exec);
           });
         } else {
           if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-          this.inputField.addEventListener("input", debouncer(function (event) {
+          this.exec = debouncer(function (event) {
             prepareData(_this.data.src(), function (data) {
               _this.run(event, _this.inputField, data);
             });
-          }, this.debounce));
+          }, this.debounce);
+          this.inputField.addEventListener("input", this.exec);
         }
         eventEmitter(this.inputField, null, "autoCompleteJS_init");
       }
@@ -530,6 +532,16 @@
         };
         var observer = new MutationObserver(callback);
         observer.observe(targetNode, config);
+      }
+    }, {
+      key: "attach",
+      value: function attach() {
+        this.init();
+      }
+    }, {
+      key: "detach",
+      value: function detach() {
+        this.inputField.removeEventListener("input", this.exec);
       }
     }]);
     return autoCompleteJS;
