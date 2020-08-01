@@ -381,7 +381,7 @@
           feedback = config.feedback,
           onSelection = config.onSelection;
       this.name = name;
-      this.inputField = selector;
+      this.selector = selector;
       this.data = {
         src: function src() {
           return typeof _src === "function" ? _src() : _src;
@@ -421,6 +421,7 @@
       this.feedback = feedback;
       this.onSelection = onSelection;
       this.preInit();
+      this.inputField;
     }
     _createClass(autoCompleteJS, [{
       key: "run",
@@ -507,9 +508,9 @@
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
               var mutation = _step.value;
-              if (targetNode.querySelector(_this2.inputField)) {
+              if (targetNode.querySelector(_this2.selector)) {
                 observer.disconnect();
-                _this2.inputField = targetNode.querySelector(_this2.inputField);
+                _this2.inputField = targetNode.querySelector(_this2.selector);
                 var inputConfig = {
                   inputName: _this2.name,
                   listId: _this2.resultsList.idName,

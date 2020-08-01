@@ -62,7 +62,7 @@ export default class autoCompleteJS {
 
     // Assigning config values to properties
     this.name = name;
-    this.inputField = selector;
+    this.selector = selector;
     this.data = {
       src: () => (typeof src === "function" ? src() : src),
       key,
@@ -102,6 +102,7 @@ export default class autoCompleteJS {
     // Invoking preInit automatically
     // when autoCompleteJS instance gets initiated
     this.preInit();
+    this.inputField;
   }
 
   // Run autoCompleteJS processes
@@ -225,11 +226,11 @@ export default class autoCompleteJS {
       // Traditional 'for loops' for IE 11
       for (let mutation of mutationsList) {
         // Check if this is the selected input field
-        if (targetNode.querySelector(this.inputField)) {
+        if (targetNode.querySelector(this.selector)) {
           // If yes disconnect the observer
           observer.disconnect();
           // Assign the input field selector
-          this.inputField = targetNode.querySelector(this.inputField);
+          this.inputField = targetNode.querySelector(this.selector);
           const inputConfig = {
             inputName: this.name,
             listId: this.resultsList.idName,

@@ -5,8 +5,8 @@
 [![GitHub version](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js.svg)](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js)
 [![npm version](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js.svg)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
-![\[Zero Dependencies\]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
-![\[Size\]()](https://img.shields.io/badge/Size-7%20KB-green.svg)
+![[Zero Dependencies]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
+![[Size]()](https://img.shields.io/badge/Size-7%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
 
 <br>
@@ -25,13 +25,34 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 
 ## Features
 
--   Pure Vanilla Javascript
--   Zero Dependencies
--   Simple & Easy to use
--   Extremely Lightweight
--   Blazing Fast
--   Versatile
--   Hackable & highly customizable
+- Pure Vanilla Javascript
+- Zero Dependencies
+- Simple & Easy to use
+- Extremely Lightweight
+- Blazing Fast
+- Versatile
+- Hackable & highly customizable
+
+## v8 changes
+
+- Whole new architecture and API design
+- Added high quality accessability (WAI-ARIA) support
+- Added life cycle events for each stage
+- Added `detach/attach` methods
+- Added input field observing functionality
+- Added API for controlling all `Classes` and `IDs` (Thanks 👍 @Lirux)
+- Added new styles including neutral/non-opinionated style (Thanks 👍 @luizbills)
+- Enhanced non-cached data fetching
+- Enhanced `resultsList` navigation
+- Enhanced `resultsList` rendering
+- Fixed `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb)
+- Fixed query `threshold` length
+- Fixed right click behavior on `resultsList` (Thanks 👍 @drankje)
+- Fixed cursor relocation on `keyUp` (Thanks 👍 @cadday)
+
+## v8 breaking changes
+
+- Will be logged in this section soon..
 
 ## [![autoComplete.js Code Example](./docs/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW?editors=0010)
 
@@ -39,7 +60,7 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 
 ### Clone:
 
--   Clone autoComplete.js to your local machine
+- Clone autoComplete.js to your local machine
 
 ```shell
 git clone https://github.com/TarekRaafat/autoComplete.js.git
@@ -47,12 +68,15 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 
 ### Installation:
 
--   <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="https://www.jsdelivr.com/img/logo@2x.png" alt="jsDelivr" width="100px"></a> CDN
+- <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="https://www.jsdelivr.com/img/logo@2x.png" alt="jsDelivr" width="100px"></a> CDN
 
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css"
+/>
 ```
 
 `JS`
@@ -61,13 +85,13 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
 ```
 
--   <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js">npm</a> install `(Node Package Manager)`
+- <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js">npm</a> install `(Node Package Manager)`
 
 ```shell
 npm i @tarekraafat/autocomplete.js
 ```
 
--   <a href="https://yarn.pm/@tarekraafat/autocomplete.js">Yarn</a> install `(Javascript Package Manager)`
+- <a href="https://yarn.pm/@tarekraafat/autocomplete.js">Yarn</a> install `(Javascript Package Manager)`
 
 ```shell
 yarn add @tarekraafat/autocomplete.js
@@ -77,9 +101,9 @@ yarn add @tarekraafat/autocomplete.js
 
 ## Documentation:
 
--   For more details check out **autoComplete.js** <a href="https://tarekraafat.github.io/autoComplete.js/">**docs** :notebook_with_decorative_cover:</a>
+- For more details check out **autoComplete.js** <a href="https://tarekraafat.github.io/autoComplete.js/">**docs** :notebook_with_decorative_cover:</a>
 
-* * *
+---
 
 ## Support
 
@@ -91,24 +115,22 @@ it with [autoComplete.js][so tag].
 <!-- section links -->
 
 [stack overflow]: https://stackoverflow.com/
-
 [@tarekraafat]: https://twitter.com/TarekRaafat
-
 [so tag]: https://stackoverflow.com/questions/tagged/autoComplete.js
 
-* * *
+---
 
 ## Author
 
 **Tarek Raafat**
 
--   Email: tarek.m.raafat@gmail.com
--   Website: <http://www.tarekraafat.com/>
--   Github: <https://github.com/TarekRaafat/>
+- Email: tarek.m.raafat@gmail.com
+- Website: <http://www.tarekraafat.com/>
+- Github: <https://github.com/TarekRaafat/>
 
 Distributed under the Apache 2.0 license. See `Apache 2.0` for more information.
 
-* * *
+---
 
 ## License
 
