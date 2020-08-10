@@ -53,7 +53,7 @@
     "dev": "rollup -c -w & ws --rewrite '/* -> /dist/$1'  --spa ./dist/index.html"
   },
   "devDependencies": {
-    "@babel/core": "^7.11.0",
+    "@babel/core": "^7.11.1",
     "@babel/preset-env": "^7.11.0",
     "@rollup/plugin-babel": "^5.1.0",
     "acorn": "^6.4.0",
