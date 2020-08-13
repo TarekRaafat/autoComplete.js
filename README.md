@@ -15,9 +15,9 @@
 - Whole new architecture and API design
 - Added high quality accessability (WAI-ARIA) support
 - Added life cycle events for each stage (Thanks 👍 @zippy84)
-- Added `detach/attach` methods
+- Added `detach/attach` methods (Thanks 👍 @Keagel)
 - Added input field observing functionality
-- Added API for controlling all `Classes` and `IDs` (Thanks 👍 @Lirux)
+- Added API for controlling all `Classes` and `IDs` (Thanks 👍 @xtellurian, @Lirux)
 - Added new styles including neutral/non-opinionated style (Thanks 👍 @luizbills)
 - Enhanced non-cached data fetching
 - Enhanced `resultsList` navigation
