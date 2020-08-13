@@ -1,4 +1,5 @@
 import { closeAllLists } from "./listController";
+import eventEmitter from "../utils/eventEmitter";
 
 let currentFocus;
 
@@ -71,6 +72,10 @@ const navigation = (event) => {
       if (list) list[currentFocus].click();
     }
   }
+  /**
+   * @emits {navigation} Emits Event on results list navigation
+   **/
+  eventEmitter(event.srcElement, { selection: list[currentFocus], event }, "navigation");
 };
 
 /**

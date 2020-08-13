@@ -8,7 +8,6 @@
  * @return {Element} list - The created list element
  */
 export default (to, config) => {
-  console.log(config);
   // Create a DIV element that will contain the results items
   const list = document.createElement("div");
   list.setAttribute("id", config.listId);

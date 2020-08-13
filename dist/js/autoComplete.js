@@ -116,7 +116,6 @@
   });
 
   var createList = (function (to, config) {
-    console.log(config);
     var list = document.createElement("div");
     list.setAttribute("id", config.listId);
     list.setAttribute("aria-expanded", true);
@@ -168,6 +167,14 @@
     return list;
   };
 
+  var eventEmitter = (function (target, detail, name) {
+    target.dispatchEvent(new CustomEvent(name, {
+      bubbles: true,
+      detail: detail,
+      cancelable: true
+    }));
+  });
+
   var currentFocus;
   var removeActive = function removeActive(list) {
     for (var index = 0; index < list.length; index++) {
@@ -202,6 +209,10 @@
         if (list) list[currentFocus].click();
       }
     }
+    eventEmitter(event.srcElement, {
+      selection: list[currentFocus],
+      event: event
+    }, "navigation");
   };
   var navigate = function navigate(inputField, list, customNavigator) {
     currentFocus = -1;
@@ -308,14 +319,6 @@
         return callback.apply(context, args);
       }, delay);
     };
-  });
-
-  var eventEmitter = (function (target, detail, name) {
-    target.dispatchEvent(new CustomEvent(name, {
-      bubbles: true,
-      detail: detail,
-      cancelable: true
-    }));
   });
 
   var autoCompleteJS = function () {
@@ -431,7 +434,6 @@
         var queryInputValue = prepareQueryValue(rawInputValue, this.query);
         var triggerCondition = checkTriggerCondition(this.trigger, queryInputValue, this.threshold);
         if (triggerCondition) {
-          eventEmitter(this.inputField, data, "autoCompleteJS_request");
           var searchConfig = {
             searchEngine: this.searchEngine,
             highlight: this.highlight,
@@ -444,7 +446,7 @@
             input: rawInputValue,
             query: queryInputValue,
             results: searchResults
-          }, "autoCompleteJS_response");
+          }, "response");
           if (!data.length) return this.noResults();
           var dataFeedback = {
             input: rawInputValue,
@@ -463,7 +465,12 @@
             listContainer: this.resultsList.container,
             itemContent: this.resultItem.content
           };
-          var list = generateList(searchResults, listConfig, this.onSelection);
+          var list = searchResults.length ? generateList(searchResults, listConfig, this.onSelection) : null;
+          eventEmitter(inputField, {
+            input: rawInputValue,
+            query: queryInputValue,
+            results: searchResults
+          }, "rendered");
           navigate(inputField, list, this.resultsList.navigation);
           document.addEventListener("click", function (event) {
             return closeAllLists(event.target, inputField);
@@ -476,6 +483,7 @@
         var _this = this;
         if (this.data.cache) {
           prepareData(this.data.src(), function (data) {
+            eventEmitter(_this.inputField, data, "request");
             if (_this.placeHolder) _this.inputField.setAttribute("placeholder", _this.placeHolder);
             _this.exec = debouncer(function (event) {
               _this.run(event, _this.inputField, data);
@@ -486,12 +494,13 @@
           if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
           this.exec = debouncer(function (event) {
             prepareData(_this.data.src(), function (data) {
+              eventEmitter(_this.inputField, data, "request");
               _this.run(event, _this.inputField, data);
             });
           }, this.debounce);
           this.inputField.addEventListener("input", this.exec);
         }
-        eventEmitter(this.inputField, null, "autoCompleteJS_init");
+        eventEmitter(this.inputField, null, "init");
       }
     }, {
       key: "preInit",
@@ -521,7 +530,7 @@
                 inputComponent(_this2.inputField, inputConfig);
                 eventEmitter(_this2.inputField, {
                   mutation: mutation
-                }, "autoCompleteJS_connect");
+                }, "connect");
                 _this2.init();
               }
             }
@@ -543,6 +552,7 @@
       key: "detach",
       value: function detach() {
         this.inputField.removeEventListener("input", this.exec);
+        eventEmitter(this.inputField, null, "detached");
       }
     }]);
     return autoCompleteJS;

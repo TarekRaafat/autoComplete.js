@@ -116,10 +116,6 @@ export default class autoCompleteJS {
     const triggerCondition = checkTriggerCondition(this.trigger, queryInputValue, this.threshold);
     // 3- Check triggering condition
     if (triggerCondition) {
-      /**
-       * @emits {autoCompleteJS_request} Emits Event on search request
-       **/
-      eventEmitter(this.inputField, data, "autoCompleteJS_request");
       // 4- Prepare search engine configurations
       const searchConfig = {
         searchEngine: this.searchEngine,
@@ -131,13 +127,9 @@ export default class autoCompleteJS {
       // 5- Match query with existing value
       const searchResults = listMatchingResults(queryInputValue, data, searchConfig);
       /**
-       * @emits {autoCompleteJS_response} Emits Event on search response
+       * @emits {response} Emits Event on search response
        **/
-      eventEmitter(
-        inputField,
-        { input: rawInputValue, query: queryInputValue, results: searchResults },
-        "autoCompleteJS_response"
-      );
+      eventEmitter(inputField, { input: rawInputValue, query: queryInputValue, results: searchResults }, "response");
       // 7- Checks if there are NO results
       // Runs noResults action function
       if (!data.length) return this.noResults();
@@ -158,7 +150,11 @@ export default class autoCompleteJS {
         itemContent: this.resultItem.content,
       };
       // 10- Generate & Render results list
-      const list = generateList(searchResults, listConfig, this.onSelection);
+      const list = searchResults.length ? generateList(searchResults, listConfig, this.onSelection) : null;
+      /**
+       * @emits {rendered} Emits Event after results list rendering
+       **/
+      eventEmitter(inputField, { input: rawInputValue, query: queryInputValue, results: searchResults }, "rendered");
       // 11- Initialize navigation
       navigate(inputField, list, this.resultsList.navigation);
       /**
@@ -178,6 +174,10 @@ export default class autoCompleteJS {
     if (this.data.cache) {
       // 1- Prepare the data
       prepareData(this.data.src(), (data) => {
+        /**
+         * @emits {request} Emits Event on search request
+         **/
+        eventEmitter(this.inputField, data, "request");
         // Set placeholder attribute value
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
         // Run executer
@@ -199,6 +199,10 @@ export default class autoCompleteJS {
       this.exec = debouncer((event) => {
         // 2- Prepare the data
         prepareData(this.data.src(), (data) => {
+          /**
+           * @emits {request} Emits Event on search request
+           **/
+          eventEmitter(this.inputField, data, "request");
           // 3- Initialize autoCompleteJS processes
           this.run(event, this.inputField, data);
         });
@@ -209,9 +213,9 @@ export default class autoCompleteJS {
       this.inputField.addEventListener("input", this.exec);
     }
     /**
-     * @emits {autoCompleteJS_init} Emits Event on Initialization
+     * @emits {init} Emits Event on Initialization
      **/
-    eventEmitter(this.inputField, null, "autoCompleteJS_init");
+    eventEmitter(this.inputField, null, "init");
   }
 
   // Pre-Initialization stage
@@ -240,9 +244,9 @@ export default class autoCompleteJS {
           };
           inputComponent(this.inputField, inputConfig);
           /**
-           * @emits {autoCompleteJS_connect} Emits Event on connection
+           * @emits {connect} Emits Event on connection
            **/
-          eventEmitter(this.inputField, { mutation }, "autoCompleteJS_connect");
+          eventEmitter(this.inputField, { mutation }, "connect");
           // Initiate autoCompleteJS
           this.init();
         }
@@ -260,5 +264,9 @@ export default class autoCompleteJS {
 
   detach() {
     this.inputField.removeEventListener("input", this.exec);
+    /**
+     * @emits {detached} Emits Event on input eventListener detachment
+     **/
+    eventEmitter(this.inputField, null, "detached");
   }
 }

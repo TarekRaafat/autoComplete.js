@@ -17,6 +17,7 @@
 - Added life cycle events for each stage (Thanks 👍 @zippy84)
 - Added `detach/attach` methods (Thanks 👍 @Keagel)
 - Added input field observing functionality
+- Added `Diacritics` support (Thanks 👍 @batcaverna)
 - Added API for controlling all `Classes` and `IDs` (Thanks 👍 @xtellurian, @Lirux)
 - Added new styles including neutral/non-opinionated style (Thanks 👍 @luizbills)
 - Enhanced non-cached data fetching
@@ -31,12 +32,14 @@
 ## v8 API breaking changes
 
 - Library class name changed from `autoComplete` to `autoCompleteJS`
+- New events `connect`, `init`, `request`, `response`, `rendered`, `navigation`, `detached` (Subject to change in final release)
 
 ## v8 TODO
 
-- [] Add `aria-activedescendant` update on list navigation
-- [] Add `list-sections` separate each data key records with section name (Thanks 👍 @Matoo125)
-- [] Add `Diacritics` support (Thanks 👍 @batcaverna)
+- [ ] Add `aria-activedescendant` update on list navigation
+- [ ] Add `list-sections` separate each data key records with section name (Thanks 👍 @Matoo125)
+- [ ] Add `Diacritics` support (Thanks 👍 @batcaverna)
+- [ ] Add `eventEmitter` post list rendering (Thanks 👍 @zippy84)
 
 ---
 

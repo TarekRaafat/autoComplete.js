@@ -1,9 +1,29 @@
-// autoComplete.js on connect event emitter
-document.querySelector("#autoComplete").addEventListener("autoCompleteJS_connect", function (event) {
+// autoComplete.js input eventListener on connect event
+document.querySelector("#autoComplete").addEventListener("connect", function (event) {
   console.log(event);
 });
-// autoComplete.js on type event emitter
-document.querySelector("#autoComplete").addEventListener("autoCompleteJS_init", function (event) {
+// autoComplete.js input eventListener on initialization event
+document.querySelector("#autoComplete").addEventListener("init", function (event) {
+  console.log(event);
+});
+// autoComplete.js input eventListener on data request event
+document.querySelector("#autoComplete").addEventListener("request", function (event) {
+  console.log(event);
+});
+// autoComplete.js input eventListener on data response event
+document.querySelector("#autoComplete").addEventListener("response", function (event) {
+  console.log(event);
+});
+// autoComplete.js input eventListener on post results list rendering event
+document.querySelector("#autoComplete").addEventListener("rendered", function (event) {
+  console.log(event);
+});
+// autoComplete.js input eventListener on results list navigation
+document.querySelector("#autoComplete").addEventListener("navigation", function (event) {
+  console.log(event);
+});
+// autoComplete.js input eventListener on post detaching from input event
+document.querySelector("#autoComplete").addEventListener("detached", function (event) {
   console.log(event);
 });
 // The autoComplete.js Engine instance creator
