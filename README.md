@@ -14,7 +14,7 @@
 
 - Whole new architecture and API design
 - Added high quality accessability (WAI-ARIA) support
-- Added life cycle events for each stage
+- Added life cycle events for each stage (Thanks 👍 @zippy84)
 - Added `detach/attach` methods
 - Added input field observing functionality
 - Added API for controlling all `Classes` and `IDs` (Thanks 👍 @Lirux)
@@ -24,12 +24,19 @@
 - Enhanced `resultsList` rendering
 - Fixed `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb)
 - Fixed query `threshold` length
+- Fixed calling data `src` on each trigger (Thanks 👍 @thomasphilibert)
 - Fixed right click behavior on `resultsList` (Thanks 👍 @drankje)
 - Fixed cursor relocation on `keyUp` (Thanks 👍 @cadday)
 
-## v8 breaking changes
+## v8 API breaking changes
 
-- Will be logged in this section soon..
+- Library class name changed from `autoComplete` to `autoCompleteJS`
+
+## v8 TODO
+
+- [] Add `aria-activedescendant` update on list navigation
+- [] Add `list-sections` separate each data key records with section name (Thanks 👍 @Matoo125)
+- [] Add `Diacritics` support (Thanks 👍 @batcaverna)
 
 ---
 
