@@ -29,6 +29,8 @@ export default class autoComplete {
       sort = false, // Sorting results list
       placeHolder, // Placeholder text
       maxResults = 5, // Maximum number of results to show
+      resultsPerPage = 5,
+      loadMoreResults = false,
       resultItem: {
         content = false, // Result item function
         element: resultItemElement = "li", // Result item element tag
@@ -71,6 +73,8 @@ export default class autoComplete {
     this.sort = sort;
     this.placeHolder = placeHolder;
     this.maxResults = maxResults;
+    this.resultsPerPage = resultsPerPage;
+    this.loadMoreResults = loadMoreResults;
     this.resultItem = {
       content,
       element: resultItemElement,
@@ -189,12 +193,12 @@ export default class autoComplete {
         }
       });
       // Sorting / Slicing final results list
-      const list = this.sort
-        ? resList.sort(this.sort).slice(0, this.maxResults)
-        : resList.slice(0, this.maxResults);
+      const fullList = this.sort ? resList.sort(this.sort) : resList;
+      const list = fullList.slice(0, this.maxResults);
       // Returns rendered list
       return resolve({
         matches: resList.length,
+        fullList,
         list,
       });
     });
