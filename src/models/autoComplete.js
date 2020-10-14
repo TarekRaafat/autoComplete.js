@@ -29,8 +29,8 @@ export default class autoComplete {
       sort = false, // Sorting results list
       placeHolder, // Placeholder text
       maxResults = 5, // Maximum number of results to show
-      resultsPerPage = 5,
-      loadMoreResults = false,
+      resultsPerPage = 5, // The number of results to show per page
+      loadMoreResults = false, // Whether to enable "More Results" button
       resultItem: {
         content = false, // Result item function
         element: resultItemElement = "li", // Result item element tag
@@ -202,6 +202,22 @@ export default class autoComplete {
         list,
       });
     });
+  }
+
+  /**
+   * Push resultsPerPage more results 
+   * @param data The array of objects for all the results, including those not currently loaded
+   */
+  loadMoreResults(data) {
+    // How do I get the currently displayed list
+
+    for (let index = resList.length; i < resList.length + this.resultsPerPage; i++) {
+      data.push({
+        index,
+        match,
+        value: resList[index]
+      });
+    }
   }
 
   /**
