@@ -17,7 +17,11 @@ export default [
       format: "umd",
     },
     plugins: [
-      nodent({ promises: true, noRuntime: true, es6target: true }),
+      nodent({
+        promises: true,
+        noRuntime: true,
+        es6target: true,
+      }),
       babel({
         babelHelpers: "bundled",
         exclude: "node_modules/**",
@@ -40,7 +44,11 @@ export default [
       format: "umd",
     },
     plugins: [
-      nodent({ promises: true, noRuntime: true, es6target: true }),
+      nodent({
+        promises: true,
+        noRuntime: true,
+        es6target: true,
+      }),
       babel({
         babelHelpers: "bundled",
         exclude: "node_modules/**",
