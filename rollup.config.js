@@ -9,16 +9,18 @@ import sizes from "rollup-plugin-sizes";
 import serve from "rollup-plugin-serve";
 import livereload from "rollup-plugin-livereload";
 
+// Library Name
 const libName = "autoCompleteJS";
-
+// Library Max. Size Allowed
 const limitBytes = 3 * 1024 * 1024;
-
+// Library Size Analyzer
 const onAnalysis = ({ bundleSize }) => {
   if (bundleSize < limitBytes) return;
   console.log(`Bundle size exceeds ${limitBytes} bytes: ${bundleSize} bytes`);
   return process.exit(1);
 };
 
+// Rollup Config.
 export default [
   {
     input: "src/autoComplete.js",
