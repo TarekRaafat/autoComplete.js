@@ -2,7 +2,6 @@ import inputComponent from "./components/Input";
 import { generateList, closeAllLists } from "./controllers/listController";
 import { navigate } from "./controllers/navigationController";
 import {
-  prepareData,
   getInputValue,
   prepareQueryValue,
   checkTriggerCondition,
@@ -168,28 +167,24 @@ export default class autoCompleteJS {
   }
 
   // Initialization stage
-  init() {
+  async init() {
     // If data source
     // set to be cached
     if (this.data.cache) {
       // 1- Prepare the data
-      prepareData(this.data.src(), (data) => {
-        /**
-         * @emits {request} Emits Event on search request
-         **/
-        eventEmitter(this.inputField, data, "request");
-        // Set placeholder attribute value
-        if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-        // Run executer
-        this.exec = debouncer((event) => {
-          // 3- Initialize autoCompleteJS processes
-          this.run(event, this.inputField, data);
-        }, this.debounce);
-        /**
-         * @listens {input} Listens to all `input` events on the input field
-         **/
-        this.inputField.addEventListener("input", this.exec);
-      });
+      const data = await this.data.src();
+      /**
+       * @emits {request} Emits Event on search request
+       **/
+      eventEmitter(this.inputField, data, "request");
+      // Set placeholder attribute value
+      if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
+      // Run executer
+      this.exec = debouncer((event) => {
+        // 3- Initialize autoCompleteJS processes
+        this.run(event, this.inputField, data);
+      }, this.debounce);
+
       // Else if data source
       // set to be streamlined
     } else {
@@ -198,20 +193,20 @@ export default class autoCompleteJS {
       // Run executer
       this.exec = debouncer((event) => {
         // 2- Prepare the data
-        prepareData(this.data.src(), (data) => {
+        const data = await this.data.src();
           /**
            * @emits {request} Emits Event on search request
            **/
           eventEmitter(this.inputField, data, "request");
           // 3- Initialize autoCompleteJS processes
           this.run(event, this.inputField, data);
-        });
+
       }, this.debounce);
-      /**
-       * @listens {input} Listens to all `input` events on the input field
-       **/
-      this.inputField.addEventListener("input", this.exec);
     }
+    /**
+     * @listens {input} Listens to all `input` events on the input field
+     **/
+    this.inputField.addEventListener("input", this.exec);
     /**
      * @emits {init} Emits Event on Initialization
      **/

@@ -1,20 +1,6 @@
 import searchEngine from "../services/search";
 
 /**
- * Prepare data from data source
- *
- * @param {Promise} request - The fetched data promise
- * @param {Function} callback - The callback function
- */
-const prepareData = (request, callback) => {
-  // Resolve the incoming data promise
-  Promise.resolve(request).then((data) => {
-    // Pass the data value to the callback function
-    callback(data);
-  });
-};
-
-/**
  * Gets the input search value "query"
  *
  * @param {Element} inputField - autoCompleteJS input field or textarea element
@@ -115,4 +101,4 @@ const listMatchingResults = (query, data, config) => {
   return list;
 };
 
-export { prepareData, getInputValue, prepareQueryValue, checkTriggerCondition, listMatchingResults };
+export { getInputValue, prepareQueryValue, checkTriggerCondition, listMatchingResults };

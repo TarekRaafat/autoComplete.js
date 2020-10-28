@@ -249,11 +249,6 @@
     }
   });
 
-  var prepareData = function prepareData(request, callback) {
-    Promise.resolve(request).then(function (data) {
-      callback(data);
-    });
-  };
   var getInputValue = function getInputValue(inputField) {
     return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value.toLowerCase() : inputField.innerHTML.toLowerCase();
   };
@@ -483,26 +478,44 @@
       key: "init",
       value: function init() {
         var _this = this;
-        if (this.data.cache) {
-          prepareData(this.data.src(), function (data) {
-            eventEmitter(_this.inputField, data, "request");
+        return new Promise(function ($return, $error) {
+          if (_this.data.cache) {
+            var data;
+            return _this.data.src().then(function ($await_2) {
+              try {
+                data = $await_2;
+                eventEmitter(_this.inputField, data, "request");
+                if (_this.placeHolder) _this.inputField.setAttribute("placeholder", _this.placeHolder);
+                _this.exec = debouncer(function (event) {
+                  _this.run(event, _this.inputField, data);
+                }, _this.debounce);
+                return $If_1.call(_this);
+              } catch ($boundEx) {
+                return $error($boundEx);
+              }
+            }, $error);
+          } else {
             if (_this.placeHolder) _this.inputField.setAttribute("placeholder", _this.placeHolder);
             _this.exec = debouncer(function (event) {
-              _this.run(event, _this.inputField, data);
+              var data;
+              return _this.data.src().then(function ($await_3) {
+                try {
+                  data = $await_3;
+                  eventEmitter(_this.inputField, data, "request");
+                  _this.run(event, _this.inputField, data);
+                } catch ($boundEx) {
+                  return $error($boundEx);
+                }
+              }, $error);
             }, _this.debounce);
-            _this.inputField.addEventListener("input", _this.exec);
-          });
-        } else {
-          if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-          this.exec = debouncer(function (event) {
-            prepareData(_this.data.src(), function (data) {
-              eventEmitter(_this.inputField, data, "request");
-              _this.run(event, _this.inputField, data);
-            });
-          }, this.debounce);
-          this.inputField.addEventListener("input", this.exec);
-        }
-        eventEmitter(this.inputField, null, "init");
+            return $If_1.call(_this);
+          }
+          function $If_1() {
+            this.inputField.addEventListener("input", this.exec);
+            eventEmitter(this.inputField, null, "init");
+            return $return();
+          }
+        });
       }
     }, {
       key: "preInit",
