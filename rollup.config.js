@@ -47,6 +47,7 @@ export default [
           toplevel: true,
           drop_console: true,
         },
+        sourcemap: true,
       }),
       gzipPlugin(),
     ],
