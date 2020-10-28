@@ -50,18 +50,20 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w & ws --rewrite '/* -> /dist/$1'  --spa ./dist/index.html"
+    "dev": "rollup -c -w"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@rollup/plugin-babel": "^5.2.1",
     "acorn": "^8.0.4",
-    "local-web-server": "^2.6.1",
     "rollup": "^2.32.1",
+    "rollup-plugin-analyzer": "^3.3.0",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-gzip": "^2.5.0",
+    "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-nodent": "^0.2.2",
+    "rollup-plugin-serve": "^1.0.4",
     "rollup-plugin-sizes": "^1.0.3",
     "rollup-plugin-uglify": "^6.0.4"
   }

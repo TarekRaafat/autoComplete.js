@@ -4,9 +4,20 @@ import cleanup from "rollup-plugin-cleanup";
 import { uglify } from "rollup-plugin-uglify";
 import pkg from "./package.json";
 import gzipPlugin from "rollup-plugin-gzip";
+import analyze from "rollup-plugin-analyzer";
 import sizes from "rollup-plugin-sizes";
+import serve from "rollup-plugin-serve";
+import livereload from "rollup-plugin-livereload";
 
 const libName = "autoCompleteJS";
+
+const limitBytes = 3 * 1024 * 1024;
+
+const onAnalysis = ({ bundleSize }) => {
+  if (bundleSize < limitBytes) return;
+  console.log(`Bundle size exceeds ${limitBytes} bytes: ${bundleSize} bytes`);
+  return process.exit(1);
+};
 
 export default [
   {
@@ -45,7 +56,9 @@ export default [
     },
     plugins: [
       nodent({
+        es7: true,
         promises: true,
+        sourcemap: true,
         noRuntime: true,
         es6target: true,
       }),
@@ -56,7 +69,21 @@ export default [
       }),
       cleanup(),
       gzipPlugin(),
+      analyze({
+        onAnalysis,
+        summaryOnly: true,
+        showExports: true,
+      }),
       sizes(),
+      serve({
+        open: true,
+        openPage: "/index.html",
+        host: "localhost",
+        port: 8000,
+        verbose: true,
+        contentBase: "./dist",
+      }),
+      livereload({ watch: "./dist" }),
     ],
   },
 ];
