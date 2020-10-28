@@ -29,7 +29,9 @@ export default [
     },
     plugins: [
       nodent({
+        es7: true,
         promises: true,
+        sourcemap: true,
         noRuntime: true,
         es6target: true,
       }),
