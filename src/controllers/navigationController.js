@@ -43,39 +43,41 @@ const addActive = (list) => {
  *
  */
 const navigation = (event) => {
-  let list = document.getElementById("autoComplete_list");
-  if (list) list = list.getElementsByTagName("div");
-  if (event.keyCode === 27) {
-    // If the ESC key is pressed
-    // closes open lists
-    closeAllLists(false, event.target);
-  } else if (event.keyCode === 40 || event.keyCode === 9) {
-    event.preventDefault();
-    // If the arrow DOWN or TAB key is pressed
-    // increase the currentFocus
-    currentFocus++;
-    // and add "active" class to the list item
-    addActive(list);
-  } else if (event.keyCode === 38 || event.keyCode === 9) {
-    event.preventDefault();
-    // If the arrow UP or TAB key is pressed
-    // decrease the currentFocus
-    currentFocus--;
-    // and add "active" class to the list item
-    addActive(list);
-  } else if (event.keyCode === 13) {
-    // If the ENTER key is pressed
-    // prevent the form from its default behaviour "being submitted"
-    event.preventDefault();
-    if (currentFocus > -1) {
-      // and simulate a click on the selected "active" item
-      if (list) list[currentFocus].click();
+  if (event.target.value.trim()) {
+    let list = document.getElementById("autoComplete_list");
+    if (list) list = list.getElementsByTagName("div");
+    if (event.keyCode === 27) {
+      // If the ESC key is pressed
+      // closes open lists
+      closeAllLists(false, event.target);
+    } else if (event.keyCode === 40 || event.keyCode === 9) {
+      event.preventDefault();
+      // If the arrow DOWN or TAB key is pressed
+      // increase the currentFocus
+      currentFocus++;
+      // and add "active" class to the list item
+      addActive(list);
+    } else if (event.keyCode === 38 || event.keyCode === 9) {
+      event.preventDefault();
+      // If the arrow UP or TAB key is pressed
+      // decrease the currentFocus
+      currentFocus--;
+      // and add "active" class to the list item
+      addActive(list);
+    } else if (event.keyCode === 13) {
+      // If the ENTER key is pressed
+      // prevent the form from its default behaviour "being submitted"
+      event.preventDefault();
+      if (currentFocus > -1) {
+        // and simulate a click on the selected "active" item
+        if (list) list[currentFocus].click();
+      }
     }
+    /**
+     * @emits {navigation} Emits Event on results list navigation
+     **/
+    eventEmitter(event.srcElement, { selection: list[currentFocus], event }, "navigation");
   }
-  /**
-   * @emits {navigation} Emits Event on results list navigation
-   **/
-  eventEmitter(event.srcElement, { selection: list[currentFocus], event }, "navigation");
 };
 
 /**

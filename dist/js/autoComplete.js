@@ -193,28 +193,30 @@
     list[currentFocus].classList.add("autoComplete_selected");
   };
   var navigation = function navigation(event) {
-    var list = document.getElementById("autoComplete_list");
-    if (list) list = list.getElementsByTagName("div");
-    if (event.keyCode === 27) {
-      closeAllLists(false, event.target);
-    } else if (event.keyCode === 40 || event.keyCode === 9) {
-      event.preventDefault();
-      currentFocus++;
-      addActive(list);
-    } else if (event.keyCode === 38 || event.keyCode === 9) {
-      event.preventDefault();
-      currentFocus--;
-      addActive(list);
-    } else if (event.keyCode === 13) {
-      event.preventDefault();
-      if (currentFocus > -1) {
-        if (list) list[currentFocus].click();
+    if (event.target.value.trim()) {
+      var list = document.getElementById("autoComplete_list");
+      if (list) list = list.getElementsByTagName("div");
+      if (event.keyCode === 27) {
+        closeAllLists(false, event.target);
+      } else if (event.keyCode === 40 || event.keyCode === 9) {
+        event.preventDefault();
+        currentFocus++;
+        addActive(list);
+      } else if (event.keyCode === 38 || event.keyCode === 9) {
+        event.preventDefault();
+        currentFocus--;
+        addActive(list);
+      } else if (event.keyCode === 13) {
+        event.preventDefault();
+        if (currentFocus > -1) {
+          if (list) list[currentFocus].click();
+        }
       }
+      eventEmitter(event.srcElement, {
+        selection: list[currentFocus],
+        event: event
+      }, "navigation");
     }
-    eventEmitter(event.srcElement, {
-      selection: list[currentFocus],
-      event: event
-    }, "navigation");
   };
   var navigate = function navigate(inputField, list, customNavigator) {
     currentFocus = -1;
