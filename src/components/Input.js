@@ -6,7 +6,7 @@
  *
  */
 export default (inputField, config) => {
-  // Normal attributes
+  // General attributes
   inputField.setAttribute("dir", "ltr");
   inputField.setAttribute("type", "text");
   inputField.setAttribute("spellcheck", false);

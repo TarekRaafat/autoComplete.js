@@ -29,7 +29,8 @@
   ],
   "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
   "bugs": {
-    "url": "https://github.com/TarekRaafat/autoComplete.js/issues"
+    "url": "https://github.com/TarekRaafat/autoComplete.js/issues",
+    "email": "tarek.m.raafat@gmail.com"
   },
   "license": "Apache-2.0",
   "author": {
@@ -38,7 +39,8 @@
     "url": "http://www.tarekraafat.com"
   },
   "files": [
-    "dist/js/autoComplete.js"
+    "dist/js/autoComplete.js",
+    "dist/js/autoComplete.min.js"
   ],
   "main": "dist/js/autoComplete.js",
   "browser": "dist/js/autoComplete.min.js",
@@ -66,5 +68,9 @@
     "rollup-plugin-serve": "^1.1.0",
     "rollup-plugin-sizes": "^1.0.3",
     "rollup-plugin-uglify": "^6.0.4"
+  },
+  "engines": {
+    "node": "12",
+    "npm": "6"
   }
 }
