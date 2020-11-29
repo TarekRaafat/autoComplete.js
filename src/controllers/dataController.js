@@ -83,10 +83,10 @@ const listMatchingResults = (query, data, config) => {
       }
     };
     // If no data key not set
-    if (config.key) {
+    if (config.data.key) {
       // If data key is set
       // Iterates over all set data keys
-      for (const key of config.key) {
+      for (const key of config.data.key) {
         search(key);
       }
     } else {

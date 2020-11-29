@@ -28,6 +28,55 @@
     return Constructor;
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
@@ -102,31 +151,30 @@
     };
   }
 
-  var inputComponent = (function (inputField, config) {
-    inputField.setAttribute("dir", "ltr");
-    inputField.setAttribute("type", "text");
-    inputField.setAttribute("spellcheck", false);
-    inputField.setAttribute("autocorrect", "off");
-    inputField.setAttribute("autocomplete", "off");
-    inputField.setAttribute("autocapitalize", "off");
-    inputField.setAttribute("title", config.inputName);
-    inputField.setAttribute("role", "combobox");
-    inputField.setAttribute("aria-label", config.inputName);
-    inputField.setAttribute("aria-owns", config.listId);
-    inputField.setAttribute("aria-haspopup", true);
-    inputField.setAttribute("aria-autocomplete", "both");
+  var inputComponent = (function (config) {
+    config.inputField.setAttribute("dir", "ltr");
+    config.inputField.setAttribute("type", "text");
+    config.inputField.setAttribute("spellcheck", false);
+    config.inputField.setAttribute("autocorrect", "off");
+    config.inputField.setAttribute("autocomplete", "off");
+    config.inputField.setAttribute("autocapitalize", "off");
+    config.inputField.setAttribute("title", config.name);
+    config.inputField.setAttribute("aria-label", config.inputName);
+    config.inputField.setAttribute("aria-owns", config.resultItem.idName);
+    config.inputField.setAttribute("aria-haspopup", true);
+    config.inputField.setAttribute("aria-autocomplete", "both");
   });
 
-  var createList = (function (to, config) {
+  var createList = (function (config) {
     var list = document.createElement("div");
-    list.setAttribute("id", config.listId);
+    list.setAttribute("id", config.resultsList.idName);
     list.setAttribute("aria-expanded", true);
-    list.setAttribute("aria-labelledby", config.listId);
-    list.setAttribute("class", config.listClass);
+    list.setAttribute("aria-labelledby", config.resultsList.idName);
+    list.setAttribute("class", config.resultsList.className);
     list.setAttribute("role", "listbox");
     list.setAttribute("tabindex", "-1");
-    if (config.container) container(list);
-    to.parentNode.appendChild(list);
+    if (config.resultsList.container) config.resultsList.container(list);
+    config.inputField.parentNode.appendChild(list);
     return list;
   });
 
@@ -148,10 +196,10 @@
     }
   };
   var generateList = function generateList(data, config, feedback) {
-    var list = createList(config.inputField, config);
+    var list = createList(config);
     var _loop = function _loop(index) {
       var result = data[index].match;
-      var resultItem = createItem(result, data[index].value, index, config.itemClass, config.itemContent);
+      var resultItem = createItem(result, data[index].value, index, config.resultItem.className, config.resultItem.content);
       resultItem.addEventListener("click", function () {
         var onSelectionData = {
           input: config.rawInputValue,
@@ -284,8 +332,8 @@
           }
         }
       };
-      if (config.key) {
-        var _iterator = _createForOfIteratorHelper(config.key),
+      if (config.data.key) {
+        var _iterator = _createForOfIteratorHelper(config.data.key),
             _step;
         try {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -428,13 +476,7 @@
       key: "start",
       value: function start(data, rawInputValue, queryInputValue) {
         var _this = this;
-        var searchResults = listMatchingResults(queryInputValue, data, {
-          searchEngine: this.searchEngine,
-          highlight: this.highlight,
-          key: this.data.key,
-          sort: this.sort,
-          maxResults: this.maxResults
-        });
+        var searchResults = listMatchingResults(queryInputValue, data, this);
         eventEmitter(this.inputField, {
           input: rawInputValue,
           query: queryInputValue,
@@ -447,17 +489,10 @@
           results: searchResults
         };
         if (!this.resultsList.render) return this.feedback(dataFeedback);
-        var list = searchResults.length ? generateList(searchResults, {
-          inputField: this.inputField,
+        var list = searchResults.length ? generateList(searchResults, _objectSpread2({
           rawInputValue: rawInputValue,
-          queryInputValue: queryInputValue,
-          listId: this.resultsList.idName,
-          listClass: this.resultsList.className,
-          itemId: this.resultItem.idName,
-          itemClass: this.resultItem.className,
-          listContainer: this.resultsList.container,
-          itemContent: this.resultItem.content
-        }, this.onSelection) : null;
+          queryInputValue: queryInputValue
+        }, this), this.onSelection) : null;
         eventEmitter(this.inputField, {
           input: rawInputValue,
           query: queryInputValue,
@@ -521,13 +556,7 @@
               if (targetNode.querySelector(_this4.selector)) {
                 observer.disconnect();
                 _this4.inputField = targetNode.querySelector(_this4.selector);
-                inputComponent(_this4.inputField, {
-                  inputName: _this4.name,
-                  listId: _this4.resultsList.idName,
-                  listClass: _this4.resultsList.className,
-                  itemId: _this4.resultItem.idName,
-                  itemClass: _this4.resultItem.className
-                });
+                inputComponent(_this4);
                 eventEmitter(_this4.inputField, {
                   mutation: mutation
                 }, "connect");

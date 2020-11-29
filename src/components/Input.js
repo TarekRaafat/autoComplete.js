@@ -1,25 +1,24 @@
 /**
  * Input field element
  *
- * @param {Element} inputField - Input field element
- * @param {Object} config - Input field element configurations
+ * @param {Object} config - autoCompleteJS configurations
  *
  */
-export default (inputField, config) => {
+export default (config) => {
   // General attributes
-  inputField.setAttribute("dir", "ltr");
-  inputField.setAttribute("type", "text");
-  inputField.setAttribute("spellcheck", false);
-  inputField.setAttribute("autocorrect", "off");
-  inputField.setAttribute("autocomplete", "off");
-  inputField.setAttribute("autocapitalize", "off");
-  inputField.setAttribute("title", config.inputName);
+  config.inputField.setAttribute("dir", "ltr");
+  config.inputField.setAttribute("type", "text");
+  config.inputField.setAttribute("spellcheck", false);
+  config.inputField.setAttribute("autocorrect", "off");
+  config.inputField.setAttribute("autocomplete", "off");
+  config.inputField.setAttribute("autocapitalize", "off");
+  config.inputField.setAttribute("title", config.name);
   // ARIA attributes
-  inputField.setAttribute("role", "combobox");
-  inputField.setAttribute("aria-label", config.inputName);
+  // config.inputField.setAttribute("role", "combobox");
+  config.inputField.setAttribute("aria-label", config.inputName);
   //   inputField.setAttribute("aria-labelledby", config.listId);
-  inputField.setAttribute("aria-owns", config.listId);
+  config.inputField.setAttribute("aria-owns", config.resultItem.idName);
   //   inputField.setAttribute("aria-controls", config.listId);
-  inputField.setAttribute("aria-haspopup", true);
-  inputField.setAttribute("aria-autocomplete", "both");
+  config.inputField.setAttribute("aria-haspopup", true);
+  config.inputField.setAttribute("aria-autocomplete", "both");
 };

@@ -27,12 +27,18 @@ const closeAllLists = (element, inputField) => {
  */
 const generateList = (data, config, feedback) => {
   // Initiate creating list process
-  const list = createList(config.inputField, config);
+  const list = createList(config);
   // Iterate over the data
   for (let index = 0; index < data.length; index++) {
     const result = data[index].match;
     // create result item
-    const resultItem = createItem(result, data[index].value, index, config.itemClass, config.itemContent);
+    const resultItem = createItem(
+      result,
+      data[index].value,
+      index,
+      config.resultItem.className,
+      config.resultItem.content
+    );
     // Listen to clicks on this item
     resultItem.addEventListener("click", () => {
       // Prepare onSelection feedback data object

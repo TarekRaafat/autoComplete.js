@@ -106,13 +106,7 @@ export default class autoCompleteJS {
   // Run autoCompleteJS processes
   start(data, rawInputValue, queryInputValue) {
     // - Match query with existing value
-    const searchResults = listMatchingResults(queryInputValue, data, {
-      searchEngine: this.searchEngine,
-      highlight: this.highlight,
-      key: this.data.key,
-      sort: this.sort,
-      maxResults: this.maxResults,
-    });
+    const searchResults = listMatchingResults(queryInputValue, data, this);
     /**
      * @emits {response} Emits Event on search response
      **/
@@ -125,17 +119,17 @@ export default class autoCompleteJS {
     // - If resultsList set not to render
     if (!this.resultsList.render) return this.feedback(dataFeedback);
     // - Generate & Render results list
-    const list = searchResults.length ? generateList(searchResults, {
-      inputField: this.inputField,
-      rawInputValue: rawInputValue,
-      queryInputValue: queryInputValue,
-      listId: this.resultsList.idName,
-      listClass: this.resultsList.className,
-      itemId: this.resultItem.idName,
-      itemClass: this.resultItem.className,
-      listContainer: this.resultsList.container,
-      itemContent: this.resultItem.content,
-    }, this.onSelection) : null;
+    const list = searchResults.length
+      ? generateList(
+          searchResults,
+          {
+            rawInputValue: rawInputValue,
+            queryInputValue: queryInputValue,
+            ...this,
+          },
+          this.onSelection
+        )
+      : null;
     /**
      * @emits {rendered} Emits Event after results list rendering
      **/
@@ -208,13 +202,7 @@ export default class autoCompleteJS {
           observer.disconnect();
           // Assign the input field selector
           this.inputField = targetNode.querySelector(this.selector);
-          inputComponent(this.inputField, {
-            inputName: this.name,
-            listId: this.resultsList.idName,
-            listClass: this.resultsList.className,
-            itemId: this.resultItem.idName,
-            itemClass: this.resultItem.className,
-          });
+          inputComponent(this);
           /**
            * @emits {connect} Emits Event on connection
            **/
