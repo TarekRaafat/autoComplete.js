@@ -14,7 +14,6 @@
   -webkit-box-sizing: border-box;
   font-size: 1rem;
   text-overflow: ellipsis;
-  /* color: rgba(255, 255, 255, 0.3); */
   color: rgba(255, 122, 122, 0.3);
   /* caret-color: rgb(255, 122, 122); */
   outline: none;
@@ -82,6 +81,7 @@
   box-shadow: 0 3px 6px rgba(149, 157, 165, 0.15);
   border: 1px solid rgba(33, 33, 33, 0.07);
   z-index: 1000;
+  outline: none;
 }
 
 .autoComplete_result {
@@ -108,10 +108,8 @@
 
 .autoComplete_result:hover {
   cursor: pointer;
-  /* background-color: #64ceaa; */
-  /* background-color: rgb(78, 160, 255); */
-  background-color: #eee;
-  /* background-color: rgba(255, 122, 122, 0.15); */
+  /* background-color: #eee; */
+  background-color: rgba(255, 122, 122, 0.15);
 }
 
 .autoComplete_highlighted {
@@ -126,13 +124,8 @@
 
 .autoComplete_selected {
   cursor: pointer;
-  /* color: #fff; */
-  /* background-color: #0366d6; */
-  /* background-color: #64ceaa; */
-  /* background-color: #1188e6; */
-  /* background-color: rgb(78, 160, 255); */
-  background-color: #eee;
-  /* background-color: rgba(255, 122, 122, 0.15); */
+  /* background-color: #eee; */
+  background-color: rgba(255, 122, 122, 0.15);
 }
 
 @media only screen and (max-width: 600px) {
