@@ -48,12 +48,8 @@
   color: rgba(255, 122, 122, 0.4);
 }
 
-#autoComplete::selection {
-  color: transparent;
-}
-
 #autoComplete:focus::selection {
-  color: rgba(0, 0, 0, 1);
+  background-color: rgba(255, 122, 122, 0.15);
 }
 
 #autoComplete:hover {
