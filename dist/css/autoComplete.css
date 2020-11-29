@@ -106,10 +106,6 @@
   background-color: rgba(#ffffff, 0);
 }
 
-.autoComplete_result:only-child {
-  border-radius: 0.8rem;
-}
-
 .autoComplete_result:hover {
   cursor: pointer;
   /* background-color: #64ceaa; */
