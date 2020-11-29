@@ -8,7 +8,7 @@
   height: 3rem;
   width: 370px;
   margin: 0;
-  padding: 0 2rem 0 3.3rem;
+  padding: 0 2rem 0 3.2rem;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -22,7 +22,7 @@
   border: 0;
   border: 0.05rem solid rgba(255, 122, 122, 0.5);
   background-image: url(./images/search.svg);
-  background-size: 1.5rem;
+  background-size: 1.4rem;
   background-position: left 1.05rem top 0.8rem;
   background-repeat: no-repeat;
   background-origin: border-box;
