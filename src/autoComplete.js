@@ -236,6 +236,6 @@ export default class autoCompleteJS {
     /**
      * @emits {detached} Emits Event on input eventListener detachment
      **/
-    eventEmitter(this.inputField, null, "uninit");
+    eventEmitter(this.inputField, null, "unInit");
   }
 }

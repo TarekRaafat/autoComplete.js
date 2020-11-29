@@ -547,7 +547,7 @@
       key: "unInit",
       value: function unInit() {
         this.inputField.removeEventListener("input", this.hook);
-        eventEmitter(this.inputField, null, "uninit");
+        eventEmitter(this.inputField, null, "unInit");
       }
     }]);
     return autoCompleteJS;
