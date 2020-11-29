@@ -22,8 +22,8 @@ document.querySelector("#autoComplete").addEventListener("rendered", function (e
 document.querySelector("#autoComplete").addEventListener("navigation", function (event) {
   console.log(event);
 });
-// autoComplete.js input eventListener on post detaching from input event
-document.querySelector("#autoComplete").addEventListener("detached", function (event) {
+// autoComplete.js input eventListener on post un-initialization event
+document.querySelector("#autoComplete").addEventListener("uninit", function (event) {
   console.log(event);
 });
 // The autoComplete.js Engine instance creator

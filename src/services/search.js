@@ -2,7 +2,7 @@
  * Search common characters within record
  *
  * @param {String} query - User's search query value after manipulation
- * @param {String} data - The data item string to be compared
+ * @param {String} record - The data item string to be compared
  * @param {Object{searchEngine: String, highlight: Boolean}} config - The search engine configurations
  *
  * @return {String} match - The matched data item string

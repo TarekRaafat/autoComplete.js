@@ -101,112 +101,90 @@ export default class autoCompleteJS {
     // Invoking preInit automatically
     // when autoCompleteJS instance gets initiated
     this.preInit();
-    this.inputField;
   }
 
   // Run autoCompleteJS processes
-  run(event, inputField, data) {
-    // 0- Close all open lists
-    closeAllLists(false, inputField);
-    // 1- Prepare input values
-    const rawInputValue = getInputValue(inputField);
+  start(data, rawInputValue, queryInputValue) {
+    // - Match query with existing value
+    const searchResults = listMatchingResults(queryInputValue, data, {
+      searchEngine: this.searchEngine,
+      highlight: this.highlight,
+      key: this.data.key,
+      sort: this.sort,
+      maxResults: this.maxResults,
+    });
+    /**
+     * @emits {response} Emits Event on search response
+     **/
+    eventEmitter(this.inputField, { input: rawInputValue, query: queryInputValue, results: searchResults }, "response");
+    // - Checks if there are NO results
+    // Runs noResults action function
+    if (!data.length) return this.noResults();
+    // - Prepare data feedback object
+    const dataFeedback = { input: rawInputValue, query: queryInputValue, results: searchResults };
+    // - If resultsList set not to render
+    if (!this.resultsList.render) return this.feedback(dataFeedback);
+    // - Generate & Render results list
+    const list = searchResults.length ? generateList(searchResults, {
+      inputField: this.inputField,
+      rawInputValue: rawInputValue,
+      queryInputValue: queryInputValue,
+      listId: this.resultsList.idName,
+      listClass: this.resultsList.className,
+      itemId: this.resultItem.idName,
+      itemClass: this.resultItem.className,
+      listContainer: this.resultsList.container,
+      itemContent: this.resultItem.content,
+    }, this.onSelection) : null;
+    /**
+     * @emits {rendered} Emits Event after results list rendering
+     **/
+    eventEmitter(this.inputField, { input: rawInputValue, query: queryInputValue, results: searchResults }, "rendered");
+    // - Initialize navigation
+    navigate(this.inputField, list, this.resultsList.navigation);
+    /**
+     * @desc
+     * Listens for all `click` events in the document
+     * and closes this menu if clicked outside the list and input field
+     * @listens {click} Listens to all `click` events on the document
+     **/
+    document.addEventListener("click", (event) => closeAllLists(event.target, this.inputField));
+  }
+
+  // Run autoCompleteJS composer
+  async compose(event) {
+    // 1- Prepare the data
+    const data = await this.data.src();
+    /**
+     * @emits {request} Emits Event on search request
+     **/
+    eventEmitter(this.inputField, data, "request");
+    // 2- Prepare input values
+    const rawInputValue = getInputValue(this.inputField);
     const queryInputValue = prepareQueryValue(rawInputValue, this.query);
-    // 2- Get trigger condition
+    // 0- Close all open lists
+    closeAllLists(false, this.inputField);
+    // 3- Get trigger condition
     const triggerCondition = checkTriggerCondition(this.trigger, queryInputValue, this.threshold);
-    // 3- Check triggering condition
+    // 4- Check triggering condition
     if (triggerCondition) {
-      // 4- Prepare search engine configurations
-      const searchConfig = {
-        searchEngine: this.searchEngine,
-        highlight: this.highlight,
-        key: this.data.key,
-        sort: this.sort,
-        maxResults: this.maxResults,
-      };
-      // 5- Match query with existing value
-      const searchResults = listMatchingResults(queryInputValue, data, searchConfig);
-      /**
-       * @emits {response} Emits Event on search response
-       **/
-      eventEmitter(inputField, { input: rawInputValue, query: queryInputValue, results: searchResults }, "response");
-      // 7- Checks if there are NO results
-      // Runs noResults action function
-      if (!data.length) return this.noResults();
-      // 8- Prepare data feedback object
-      const dataFeedback = { input: rawInputValue, query: queryInputValue, results: searchResults };
-      // 9- If resultsList set not to render
-      if (!this.resultsList.render) return this.feedback(event, dataFeedback);
-      // List generation configurations object
-      const listConfig = {
-        inputField,
-        rawInputValue: rawInputValue,
-        queryInputValue: queryInputValue,
-        listId: this.resultsList.idName,
-        listClass: this.resultsList.className,
-        itemId: this.resultItem.idName,
-        itemClass: this.resultItem.className,
-        listContainer: this.resultsList.container,
-        itemContent: this.resultItem.content,
-      };
-      // 10- Generate & Render results list
-      const list = searchResults.length ? generateList(searchResults, listConfig, this.onSelection) : null;
-      /**
-       * @emits {rendered} Emits Event after results list rendering
-       **/
-      eventEmitter(inputField, { input: rawInputValue, query: queryInputValue, results: searchResults }, "rendered");
-      // 11- Initialize navigation
-      navigate(inputField, list, this.resultsList.navigation);
-      /**
-       * @desc
-       * Listens for all `click` events in the document
-       * and closes this menu if clicked outside the list and input field
-       * @listens {click} Listens to all `click` events on the document
-       **/
-      document.addEventListener("click", (event) => closeAllLists(event.target, inputField));
+      this.start(data, rawInputValue, queryInputValue);
     }
   }
 
   // Initialization stage
-  async init() {
-    // If data source
-    // set to be cached
-    if (this.data.cache) {
-      // 1- Prepare the data
-      const data = await this.data.src();
-      /**
-       * @emits {request} Emits Event on search request
-       **/
-      eventEmitter(this.inputField, data, "request");
-      // Set placeholder attribute value
-      if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-      // Run executer
-      this.exec = debouncer((event) => {
-        // 3- Initialize autoCompleteJS processes
-        this.run(event, this.inputField, data);
-      }, this.debounce);
-
-      // Else if data source
-      // set to be streamlined
-    } else {
-      // Set placeholder attribute value
-      if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-      // Run executer
-      this.exec = debouncer((event) => {
-        // 2- Prepare the data
-        const data = await this.data.src();
-          /**
-           * @emits {request} Emits Event on search request
-           **/
-          eventEmitter(this.inputField, data, "request");
-          // 3- Initialize autoCompleteJS processes
-          this.run(event, this.inputField, data);
-
-      }, this.debounce);
-    }
+  init() {
+    // Set placeholder attribute value
+    if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
+    // Run executer
+    this.hook = debouncer((event) => {
+      // 3- Prepare autoCompleteJS processes
+      this.compose(event);
+    }, this.debounce);
     /**
      * @listens {input} Listens to all `input` events on the input field
      **/
-    this.inputField.addEventListener("input", this.exec);
+    this.inputField.addEventListener("input", this.hook);
     /**
      * @emits {init} Emits Event on Initialization
      **/
@@ -230,14 +208,13 @@ export default class autoCompleteJS {
           observer.disconnect();
           // Assign the input field selector
           this.inputField = targetNode.querySelector(this.selector);
-          const inputConfig = {
+          inputComponent(this.inputField, {
             inputName: this.name,
             listId: this.resultsList.idName,
             listClass: this.resultsList.className,
             itemId: this.resultItem.idName,
             itemClass: this.resultItem.className,
-          };
-          inputComponent(this.inputField, inputConfig);
+          });
           /**
            * @emits {connect} Emits Event on connection
            **/
@@ -253,15 +230,12 @@ export default class autoCompleteJS {
     observer.observe(targetNode, config);
   }
 
-  attach() {
-    this.init();
-  }
-
-  detach() {
-    this.inputField.removeEventListener("input", this.exec);
+  // un-initialize autoCompleteJS
+  unInit() {
+    this.inputField.removeEventListener("input", this.hook);
     /**
      * @emits {detached} Emits Event on input eventListener detachment
      **/
-    eventEmitter(this.inputField, null, "detached");
+    eventEmitter(this.inputField, null, "uninit");
   }
 }
