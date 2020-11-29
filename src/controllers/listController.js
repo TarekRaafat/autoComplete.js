@@ -22,7 +22,7 @@ const closeAllLists = (element, inputField) => {
  * List all matching results
  *
  * @param {Object} data - The available data object
- * @param {Object} config - Input field selector, User's search input string values & Elements classes string values
+ * @param {Object} config - autoCompleteJS configurations
  * @param {Function} feedback - The callback function on user's selection for API
  */
 const generateList = (data, config, feedback) => {
