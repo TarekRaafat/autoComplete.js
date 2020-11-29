@@ -1,7 +1,9 @@
 language: node_js
 
 node_js:
-  - "stable"
+  - "node"
+  - "lts/*"
   - "10"
   - "8"
+  - "7"
   - "6"
