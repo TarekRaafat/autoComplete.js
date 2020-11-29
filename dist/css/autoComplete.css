@@ -82,13 +82,13 @@
 
 .autoComplete_result {
   margin: 0.3rem;
-  padding: 0.5rem;
+  padding: 0.3rem 0.5rem;
   list-style: none;
   text-align: left;
   font-size: 1rem;
   color: #212121;
   transition: all 0.1s ease-in-out;
-  border-radius: 0.4rem;
+  border-radius: 0.35rem;
   background-color: rgba(255, 255, 255, 1);
   white-space: nowrap;
   overflow: hidden;
