@@ -39,8 +39,7 @@
     "url": "http://www.tarekraafat.com"
   },
   "files": [
-    "dist/js/autoComplete.js",
-    "dist/js/autoComplete.min.js"
+    "dist/js/autoComplete.js"
   ],
   "main": "dist/js/autoComplete.js",
   "browser": "dist/js/autoComplete.min.js",
