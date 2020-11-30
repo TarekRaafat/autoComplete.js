@@ -125,7 +125,7 @@ export default class autoCompleteJS {
      **/
     eventEmitter(this.inputField, dataFeedback, "rendered");
     // - Initialize navigation
-    navigate(this, list);
+    navigate(this);
     /**
      * @desc
      * Listens for all `click` events in the document

@@ -23,7 +23,6 @@ const closeAllLists = (element, inputField) => {
  *
  * @param {Object} data - The available data object
  * @param {Object} config - autoCompleteJS configurations
- * @param {Function} feedback - The callback function on user's selection for API
  */
 const generateList = (config, data) => {
   // Initiate creating list process

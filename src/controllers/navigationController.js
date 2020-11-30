@@ -83,12 +83,10 @@ const navigation = (event) => {
 /**
  * List navigation function initializer
  *
- * @param inputField
- * @param list
- * @param customNavigator
+ * @param {Object} config - autoCompleteJS configurations
  *
  */
-const navigate = (config, list) => {
+const navigate = (config) => {
   // Reset focus state
   currentFocus = -1;
   const navigate = config.resultsList.navigation || navigation;

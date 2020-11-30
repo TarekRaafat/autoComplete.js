@@ -217,7 +217,7 @@
       }, "navigation");
     }
   };
-  var navigate = function navigate(config, list) {
+  var navigate = function navigate(config) {
     currentFocus = -1;
     var navigate = config.resultsList.navigation || navigation;
     config.inputField.addEventListener("keydown", navigate);
