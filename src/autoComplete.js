@@ -20,7 +20,7 @@ export default class autoCompleteJS {
     // Deconstructing config values
     const {
       name = "Search",
-      selector = "#autoComplete", // User input selector
+      selector = "#autoCompleteJS", // User input selector
       data: {
         src, // Data src selection
         key, // Data src key selection
@@ -40,8 +40,8 @@ export default class autoCompleteJS {
         destination, // Results list selector
         position = "afterend", // Results list position
         element: resultsListElement = "ul", // Results list element tag
-        idName: resultsListId = "autoComplete_list",
-        className: resultsListClass = "autoComplete_list",
+        idName: resultsListId = "autoCompleteJS_list",
+        className: resultsListClass = "autoCompleteJS_list",
         navigation = false, // Results list navigation
       } = {},
       sort = false, // Sorting results list
@@ -50,8 +50,8 @@ export default class autoCompleteJS {
       resultItem: {
         content = false, // Result item function
         element: resultItemElement = "li", // Result item element tag
-        idName: resultItemId = "autoComplete_result",
-        className: resultItemClass = "autoComplete_result",
+        idName: resultItemId = "autoCompleteJS_result",
+        className: resultItemClass = "autoCompleteJS_result",
       } = {},
       noResults, // No results action
       highlight = false, // Highlighting matching results

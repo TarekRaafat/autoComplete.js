@@ -1,10 +1,10 @@
-.autoComplete_wrapper {
+.autoCompleteJS_wrapper {
   position: relative;
   display: inline-block;
   width: 370px;
 }
 
-#autoComplete {
+#autoCompleteJS {
   height: 3rem;
   width: 370px;
   margin: 0;
@@ -30,41 +30,41 @@
   -webkit-transition: all -webkit-transform 0.4s ease;
 }
 
-#autoComplete::placeholder {
+#autoCompleteJS::placeholder {
   color: rgba(255, 122, 122, 0.5);
   transition: all 0.3s ease;
   -webkit-transition: all -webkit-transform 0.3s ease;
 }
 
-#autoComplete:hover::placeholder {
+#autoCompleteJS:hover::placeholder {
   color: rgba(255, 122, 122, 0.6);
   transition: all 0.3s ease;
   -webkit-transition: all -webkit-transform 0.3s ease;
 }
 
-#autoComplete:focus::placeholder {
+#autoCompleteJS:focus::placeholder {
   padding: 0.1rem 0.6rem;
   font-size: 0.95rem;
   color: rgba(255, 122, 122, 0.4);
 }
 
-#autoComplete:focus::selection {
+#autoCompleteJS:focus::selection {
   background-color: rgba(255, 122, 122, 0.15);
 }
 
-#autoComplete:hover {
+#autoCompleteJS:hover {
   color: rgba(255, 122, 122, 0.8);
   transition: all 0.3s ease;
   -webkit-transition: all -webkit-transform 0.3s ease;
 }
 
-#autoComplete:focus {
+#autoCompleteJS:focus {
   color: rgba(255, 122, 122, 1);
   border: 0.06rem solid rgba(255, 122, 122, 0.8);
   /* box-shadow: 0 0 30px 5px rgba(255, 122, 122, 0.15); */
 }
 
-#autoComplete_list {
+#autoCompleteJS_list {
   position: absolute;
   top: 100%;
   left: 0;
@@ -81,7 +81,7 @@
   outline: none;
 }
 
-.autoComplete_result {
+.autoCompleteJS_result {
   margin: 0.3rem;
   padding: 0.3rem 0.5rem;
   list-style: none;
@@ -98,57 +98,57 @@
   transition: all 0.2s ease;
 }
 
-.autoComplete_result::selection {
+.autoCompleteJS_result::selection {
   color: rgba(#ffffff, 0);
   background-color: rgba(#ffffff, 0);
 }
 
-.autoComplete_result:hover {
+.autoCompleteJS_result:hover {
   cursor: pointer;
   /* background-color: #eee; */
   background-color: rgba(255, 122, 122, 0.15);
 }
 
-.autoComplete_highlighted {
+.autoCompleteJS_highlighted {
   color: rgba(255, 122, 122, 1);
   font-weight: bold;
 }
 
-.autoComplete_highlighted::selection {
+.autoCompleteJS_highlighted::selection {
   color: rgba(#ffffff, 0);
   background-color: rgba(#ffffff, 0);
 }
 
-.autoComplete_selected {
+.autoCompleteJS_selected {
   cursor: pointer;
   /* background-color: #eee; */
   background-color: rgba(255, 122, 122, 0.15);
 }
 
 @media only screen and (max-width: 600px) {
-  .autoComplete_wrapper {
+  .autoCompleteJS_wrapper {
     width: 320px;
   }
 
-  #autoComplete {
+  #autoCompleteJS {
     width: 18rem;
     background-size: 1.6rem;
     background-position: left 1.1rem top 0.75rem;
   }
 
-  #autoComplete_list {
+  #autoCompleteJS_list {
     margin: 10px;
   }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  #autoComplete {
+  #autoCompleteJS {
     border-width: 1px;
   }
 }
 
 @-moz-document url-prefix() {
-  #autoComplete {
+  #autoCompleteJS {
     background-size: 1.2rem;
     background-origin: border-box;
     border-width: 1px;

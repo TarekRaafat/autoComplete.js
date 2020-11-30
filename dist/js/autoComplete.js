@@ -141,7 +141,7 @@
   });
 
   var closeAllLists = function closeAllLists(element, inputField) {
-    var list = document.getElementsByClassName("autoComplete_list");
+    var list = document.getElementsByClassName("autoCompleteJS_list");
     for (var index = 0; index < list.length; index++) {
       if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
     }
@@ -186,7 +186,7 @@
     var removeActive = function removeActive(list) {
       for (var index = 0; index < list.length; index++) {
         list[index].setAttribute("aria-selected", "false");
-        list[index].classList.remove("autoComplete_selected");
+        list[index].classList.remove("autoCompleteJS_selected");
       }
     };
     var addActive = function addActive(list) {
@@ -195,7 +195,7 @@
       if (currentFocus >= list.length) currentFocus = 0;
       if (currentFocus < 0) currentFocus = list.length - 1;
       list[currentFocus].setAttribute("aria-selected", "true");
-      list[currentFocus].classList.add("autoComplete_selected");
+      list[currentFocus].classList.add("autoCompleteJS_selected");
     };
     var navigation = function navigation(event) {
       var list = document.getElementById(config.resultsList.idName);
@@ -239,7 +239,7 @@
       for (var number = 0; number < recordLowerCase.length; number++) {
         var recordChar = record[number];
         if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-          recordChar = config.highlight ? "<span class=\"autoComplete_highlighted\">".concat(recordChar, "</span>") : recordChar;
+          recordChar = config.highlight ? "<span class=\"autoCompleteJS_highlighted\">".concat(recordChar, "</span>") : recordChar;
           searchPosition++;
         }
         match.push(recordChar);
@@ -251,7 +251,7 @@
       if (recordLowerCase.includes(query)) {
         var pattern = new RegExp("".concat(query), "i");
         query = pattern.exec(record);
-        var _match = config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record;
+        var _match = config.highlight ? record.replace(query, "<span class=\"autoCompleteJS_highlighted\">".concat(query, "</span>")) : record;
         return _match;
       }
     }
@@ -332,7 +332,7 @@
       var _config$name = config.name,
           name = _config$name === void 0 ? "Search" : _config$name,
           _config$selector = config.selector,
-          selector = _config$selector === void 0 ? "#autoComplete" : _config$selector,
+          selector = _config$selector === void 0 ? "#autoCompleteJS" : _config$selector,
           _config$data = config.data,
           src = _config$data.src,
           key = _config$data.key,
@@ -363,9 +363,9 @@
           _config$resultsList$e = _config$resultsList.element,
           resultsListElement = _config$resultsList$e === void 0 ? "ul" : _config$resultsList$e,
           _config$resultsList$i = _config$resultsList.idName,
-          resultsListId = _config$resultsList$i === void 0 ? "autoComplete_list" : _config$resultsList$i,
+          resultsListId = _config$resultsList$i === void 0 ? "autoCompleteJS_list" : _config$resultsList$i,
           _config$resultsList$c2 = _config$resultsList.className,
-          resultsListClass = _config$resultsList$c2 === void 0 ? "autoComplete_list" : _config$resultsList$c2,
+          resultsListClass = _config$resultsList$c2 === void 0 ? "autoCompleteJS_list" : _config$resultsList$c2,
           _config$resultsList$n = _config$resultsList.navigation,
           navigation = _config$resultsList$n === void 0 ? false : _config$resultsList$n,
           _config$sort = config.sort,
@@ -380,9 +380,9 @@
           _config$resultItem$el = _config$resultItem.element,
           resultItemElement = _config$resultItem$el === void 0 ? "li" : _config$resultItem$el,
           _config$resultItem$id = _config$resultItem.idName,
-          resultItemId = _config$resultItem$id === void 0 ? "autoComplete_result" : _config$resultItem$id,
+          resultItemId = _config$resultItem$id === void 0 ? "autoCompleteJS_result" : _config$resultItem$id,
           _config$resultItem$cl = _config$resultItem.className,
-          resultItemClass = _config$resultItem$cl === void 0 ? "autoComplete_result" : _config$resultItem$cl,
+          resultItemClass = _config$resultItem$cl === void 0 ? "autoCompleteJS_result" : _config$resultItem$cl,
           noResults = config.noResults,
           _config$highlight = config.highlight,
           highlight = _config$highlight === void 0 ? false : _config$highlight,

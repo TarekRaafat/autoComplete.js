@@ -22,7 +22,7 @@ const navigate = (config) => {
     for (let index = 0; index < list.length; index++) {
       // list[index].removeAttribute("aria-selected");
       list[index].setAttribute("aria-selected", "false");
-      list[index].classList.remove("autoComplete_selected");
+      list[index].classList.remove("autoCompleteJS_selected");
     }
   };
 
@@ -41,7 +41,7 @@ const navigate = (config) => {
     if (currentFocus < 0) currentFocus = list.length - 1;
     // Add "active" class to the item
     list[currentFocus].setAttribute("aria-selected", "true");
-    list[currentFocus].classList.add("autoComplete_selected");
+    list[currentFocus].classList.add("autoCompleteJS_selected");
   };
 
   /**

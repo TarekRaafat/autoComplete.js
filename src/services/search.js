@@ -25,7 +25,7 @@ export default (query, record, config) => {
       // Matching case
       if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
         // Highlight matching character
-        recordChar = config.highlight ? `<span class="autoComplete_highlighted">${recordChar}</span>` : recordChar;
+        recordChar = config.highlight ? `<span class="autoCompleteJS_highlighted">${recordChar}</span>` : recordChar;
         // Increment search position
         searchPosition++;
       }
@@ -45,7 +45,7 @@ export default (query, record, config) => {
       // Search for a match Query in Record
       query = pattern.exec(record);
       const match = config.highlight
-        ? record.replace(query, `<span class="autoComplete_highlighted">${query}</span>`)
+        ? record.replace(query, `<span class="autoCompleteJS_highlighted">${query}</span>`)
         : record;
       // Returns the match
       return match;

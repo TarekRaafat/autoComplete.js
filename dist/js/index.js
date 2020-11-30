@@ -28,16 +28,16 @@
 // });
 // The autoComplete.js Engine instance creator
 const autoComplete = new autoCompleteJS({
-  selector: "#autoComplete",
+  selector: "#autoCompleteJS",
   data: {
     src: async () => {
       // Loading placeholder text
-      document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
+      document.querySelector("#autoCompleteJS").setAttribute("placeholder", "Loading...");
       // Fetch External Data Source
       const source = await fetch("./db/generic.json");
       const data = await source.json();
       // Post Loading placeholder text
-      document.querySelector("#autoComplete").setAttribute("placeholder", autoComplete.placeHolder);
+      document.querySelector("#autoCompleteJS").setAttribute("placeholder", autoComplete.placeHolder);
       // Returns Fetched data
       return data;
     },
@@ -69,7 +69,7 @@ const autoComplete = new autoCompleteJS({
     console.log(event, data);
   },
   onSelection: (feedback) => {
-    document.querySelector("#autoComplete").value = "";
+    document.querySelector("#autoCompleteJS").value = "";
     console.log(feedback);
   },
 });
