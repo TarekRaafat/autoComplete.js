@@ -28,55 +28,6 @@
     return Constructor;
   }
 
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-      keys.push.apply(keys, symbols);
-    }
-
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-
-    return target;
-  }
-
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
@@ -195,23 +146,23 @@
       if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
     }
   };
-  var generateList = function generateList(data, config, feedback) {
+  var generateList = function generateList(config, data) {
     var list = createList(config);
     var _loop = function _loop(index) {
-      var result = data[index].match;
-      var resultItem = createItem(result, data[index].value, index, config.resultItem.className, config.resultItem.content);
+      var result = data.results[index].match;
+      var resultItem = createItem(result, data.results[index].value, index, config.resultItem.className, config.resultItem.content);
       resultItem.addEventListener("click", function () {
-        var onSelectionData = {
-          input: config.rawInputValue,
-          query: config.queryInputValue,
-          results: data,
-          selection: data[index].value
+        var dataFeedback = {
+          input: data.input,
+          query: data.query,
+          results: data.results,
+          selection: data.results[index].value
         };
-        feedback(onSelectionData);
+        config.onSelection(dataFeedback);
       });
       list.appendChild(resultItem);
     };
-    for (var index = 0; index < data.length; index++) {
+    for (var index = 0; index < data.results.length; index++) {
       _loop(index);
     }
     return list;
@@ -266,10 +217,10 @@
       }, "navigation");
     }
   };
-  var navigate = function navigate(inputField, list, customNavigator) {
+  var navigate = function navigate(config, list) {
     currentFocus = -1;
-    var navigate = customNavigator || navigation;
-    inputField.addEventListener("keydown", navigate);
+    var navigate = config.resultsList.navigation || navigation;
+    config.inputField.addEventListener("keydown", navigate);
   };
 
   var searchEngine = (function (query, record, config) {
@@ -308,7 +259,7 @@
   var checkTriggerCondition = function checkTriggerCondition(trigger, queryValue, threshold) {
     return trigger.condition ? trigger.condition(queryValue) : queryValue.length >= threshold && queryValue.replace(/ /g, "").length;
   };
-  var listMatchingResults = function listMatchingResults(query, data, config) {
+  var listMatchingResults = function listMatchingResults(config, query, data) {
     var resList = [];
     var _loop = function _loop(index) {
       var record = data[index];
@@ -474,31 +425,20 @@
     }
     _createClass(autoCompleteJS, [{
       key: "start",
-      value: function start(data, rawInputValue, queryInputValue) {
+      value: function start(data, input, query) {
         var _this = this;
-        var searchResults = listMatchingResults(queryInputValue, data, this);
-        eventEmitter(this.inputField, {
-          input: rawInputValue,
-          query: queryInputValue,
-          results: searchResults
-        }, "response");
-        if (!data.length) return this.noResults();
+        var results = listMatchingResults(this, query, data);
         var dataFeedback = {
-          input: rawInputValue,
-          query: queryInputValue,
-          results: searchResults
+          input: input,
+          query: query,
+          results: results
         };
+        eventEmitter(this.inputField, dataFeedback, "response");
+        if (!data.length) return this.noResults();
         if (!this.resultsList.render) return this.feedback(dataFeedback);
-        var list = searchResults.length ? generateList(searchResults, _objectSpread2({
-          rawInputValue: rawInputValue,
-          queryInputValue: queryInputValue
-        }, this), this.onSelection) : null;
-        eventEmitter(this.inputField, {
-          input: rawInputValue,
-          query: queryInputValue,
-          results: searchResults
-        }, "rendered");
-        navigate(this.inputField, list, this.resultsList.navigation);
+        var list = results.length ? generateList(this, dataFeedback) : null;
+        eventEmitter(this.inputField, dataFeedback, "rendered");
+        navigate(this);
         document.addEventListener("click", function (event) {
           return closeAllLists(event.target, _this.inputField);
         });
@@ -508,23 +448,30 @@
       value: function compose(event) {
         var _this2 = this;
         return new Promise(function ($return, $error) {
-          var data, rawInputValue, queryInputValue, triggerCondition;
-          return _this2.data.src().then(function ($await_1) {
-            try {
-              data = $await_1;
-              eventEmitter(_this2.inputField, data, "request");
-              rawInputValue = getInputValue(_this2.inputField);
-              queryInputValue = prepareQueryValue(rawInputValue, _this2.query);
-              closeAllLists(false, _this2.inputField);
-              triggerCondition = checkTriggerCondition(_this2.trigger, queryInputValue, _this2.threshold);
-              if (triggerCondition) {
-                _this2.start(data, rawInputValue, queryInputValue);
+          var input, query, triggerCondition;
+          input = getInputValue(_this2.inputField);
+          query = prepareQueryValue(input, _this2.query);
+          triggerCondition = checkTriggerCondition(_this2.trigger, query, _this2.threshold);
+          if (triggerCondition) {
+            var data;
+            return _this2.data.src().then(function ($await_2) {
+              try {
+                data = $await_2;
+                eventEmitter(_this2.inputField, data, "request");
+                closeAllLists(false, _this2.inputField);
+                _this2.start(data, input, query);
+                return $If_1.call(_this2);
+              } catch ($boundEx) {
+                return $error($boundEx);
               }
-              return $return();
-            } catch ($boundEx) {
-              return $error($boundEx);
-            }
-          }, $error);
+            }, $error);
+          } else {
+            closeAllLists(false, _this2.inputField);
+            return $If_1.call(_this2);
+          }
+          function $If_1() {
+            return $return();
+          }
         });
       }
     }, {

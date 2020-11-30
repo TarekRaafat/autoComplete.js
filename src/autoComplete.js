@@ -104,38 +104,28 @@ export default class autoCompleteJS {
   }
 
   // Run autoCompleteJS processes
-  start(data, rawInputValue, queryInputValue) {
+  start(data, input, query) {
     // - Match query with existing value
-    const searchResults = listMatchingResults(queryInputValue, data, this);
+    const results = listMatchingResults(this, query, data);
+    // - Prepare data feedback object
+    const dataFeedback = { input, query, results };
     /**
      * @emits {response} Emits Event on search response
      **/
-    eventEmitter(this.inputField, { input: rawInputValue, query: queryInputValue, results: searchResults }, "response");
+    eventEmitter(this.inputField, dataFeedback, "response");
     // - Checks if there are NO results
     // Runs noResults action function
     if (!data.length) return this.noResults();
-    // - Prepare data feedback object
-    const dataFeedback = { input: rawInputValue, query: queryInputValue, results: searchResults };
     // - If resultsList set not to render
     if (!this.resultsList.render) return this.feedback(dataFeedback);
     // - Generate & Render results list
-    const list = searchResults.length
-      ? generateList(
-          searchResults,
-          {
-            rawInputValue: rawInputValue,
-            queryInputValue: queryInputValue,
-            ...this,
-          },
-          this.onSelection
-        )
-      : null;
+    const list = results.length ? generateList(this, dataFeedback) : null;
     /**
      * @emits {rendered} Emits Event after results list rendering
      **/
-    eventEmitter(this.inputField, { input: rawInputValue, query: queryInputValue, results: searchResults }, "rendered");
+    eventEmitter(this.inputField, dataFeedback, "rendered");
     // - Initialize navigation
-    navigate(this.inputField, list, this.resultsList.navigation);
+    navigate(this, list);
     /**
      * @desc
      * Listens for all `click` events in the document
@@ -147,22 +137,27 @@ export default class autoCompleteJS {
 
   // Run autoCompleteJS composer
   async compose(event) {
-    // 1- Prepare the data
-    const data = await this.data.src();
-    /**
-     * @emits {request} Emits Event on search request
-     **/
-    eventEmitter(this.inputField, data, "request");
-    // 2- Prepare input values
-    const rawInputValue = getInputValue(this.inputField);
-    const queryInputValue = prepareQueryValue(rawInputValue, this.query);
-    // 0- Close all open lists
-    closeAllLists(false, this.inputField);
-    // 3- Get trigger condition
-    const triggerCondition = checkTriggerCondition(this.trigger, queryInputValue, this.threshold);
-    // 4- Check triggering condition
+    // 1- Prepare raw input value
+    const input = getInputValue(this.inputField);
+    // 1- Prepare manipulated query input value
+    const query = prepareQueryValue(input, this.query);
+    // 2- Get trigger condition
+    const triggerCondition = checkTriggerCondition(this.trigger, query, this.threshold);
+    // 3- Check triggering condition
     if (triggerCondition) {
-      this.start(data, rawInputValue, queryInputValue);
+      // 4- Prepare the data
+      const data = await this.data.src();
+      /**
+       * @emits {request} Emits Event on search request
+       **/
+      eventEmitter(this.inputField, data, "request");
+      // 5- Close all open lists
+      closeAllLists(false, this.inputField);
+      // 6- Start autoCompleteJS engine
+      this.start(data, input, query);
+    } else {
+      // 4- Close all open lists
+      closeAllLists(false, this.inputField);
     }
   }
 

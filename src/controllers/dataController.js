@@ -41,13 +41,13 @@ const checkTriggerCondition = (trigger, queryValue, threshold) => {
 /**
  * List search matching results
  *
+ * @param {Object} config - The search engine configurations
  * @param {String} query - User's search query string
  * @param {Object} data - The available data object
- * @param {Object} config - The search engine configurations
  *
  * @return {Array} - The matching results list array
  */
-const listMatchingResults = (query, data, config) => {
+const listMatchingResults = (config, query, data) => {
   // Final highlighted results list
   const resList = [];
   // Checks input has matches in data source

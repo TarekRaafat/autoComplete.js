@@ -25,16 +25,16 @@ const closeAllLists = (element, inputField) => {
  * @param {Object} config - autoCompleteJS configurations
  * @param {Function} feedback - The callback function on user's selection for API
  */
-const generateList = (data, config, feedback) => {
+const generateList = (config, data) => {
   // Initiate creating list process
   const list = createList(config);
   // Iterate over the data
-  for (let index = 0; index < data.length; index++) {
-    const result = data[index].match;
+  for (let index = 0; index < data.results.length; index++) {
+    const result = data.results[index].match;
     // create result item
     const resultItem = createItem(
       result,
-      data[index].value,
+      data.results[index].value,
       index,
       config.resultItem.className,
       config.resultItem.content
@@ -42,14 +42,14 @@ const generateList = (data, config, feedback) => {
     // Listen to clicks on this item
     resultItem.addEventListener("click", () => {
       // Prepare onSelection feedback data object
-      const onSelectionData = {
-        input: config.rawInputValue,
-        query: config.queryInputValue,
-        results: data,
-        selection: data[index].value,
+      const dataFeedback = {
+        input: data.input,
+        query: data.query,
+        results: data.results,
+        selection: data.results[index].value,
       };
       // Returns the selected value onSelection
-      feedback(onSelectionData);
+      config.onSelection(dataFeedback);
     });
     // Add result to the list
     list.appendChild(resultItem);

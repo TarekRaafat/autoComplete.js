@@ -88,14 +88,14 @@ const navigation = (event) => {
  * @param customNavigator
  *
  */
-const navigate = (inputField, list, customNavigator) => {
+const navigate = (config, list) => {
   // Reset focus state
   currentFocus = -1;
-  const navigate = customNavigator || navigation;
+  const navigate = config.resultsList.navigation || navigation;
   /**
    * @listens {keydown} Listens to all `keydown` events on the input field
    **/
-  inputField.addEventListener("keydown", navigate);
+  config.inputField.addEventListener("keydown", navigate);
 };
 
 export { navigate };
