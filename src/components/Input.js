@@ -15,7 +15,7 @@ export default (config) => {
   config.inputField.setAttribute("title", config.name);
   // ARIA attributes
   // config.inputField.setAttribute("role", "combobox");
-  //   inputField.setAttribute("aria-labelledby", config.listId);
+  // config.inputField.setAttribute("aria-labelledby", config.listId);
   // config.inputField.setAttribute("aria-owns", config.resultItem.idName);
   config.inputField.setAttribute("aria-label", config.name);
   config.inputField.setAttribute("aria-controls", config.resultsList.idName);
