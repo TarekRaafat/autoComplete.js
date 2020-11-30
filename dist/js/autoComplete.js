@@ -256,8 +256,8 @@
   var prepareQueryValue = function prepareQueryValue(inputValue, query) {
     return query && query.manipulate ? query.manipulate(inputValue) : inputValue;
   };
-  var checkTriggerCondition = function checkTriggerCondition(trigger, queryValue, threshold) {
-    return trigger.condition ? trigger.condition(queryValue) : queryValue.length >= threshold && queryValue.replace(/ /g, "").length;
+  var checkTriggerCondition = function checkTriggerCondition(config, queryValue) {
+    return config.trigger.condition ? config.trigger.condition(queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
   };
   var listMatchingResults = function listMatchingResults(config, query, data) {
     var resList = [];
@@ -451,7 +451,7 @@
           var input, query, triggerCondition;
           input = getInputValue(_this2.inputField);
           query = prepareQueryValue(input, _this2.query);
-          triggerCondition = checkTriggerCondition(_this2.trigger, query, _this2.threshold);
+          triggerCondition = checkTriggerCondition(_this2, query);
           if (triggerCondition) {
             var data;
             return _this2.data.src().then(function ($await_2) {

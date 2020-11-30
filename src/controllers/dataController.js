@@ -32,10 +32,10 @@ const prepareQueryValue = (inputValue, query) => {
  *
  * @return triggerCondition
  */
-const checkTriggerCondition = (trigger, queryValue, threshold) => {
-  return trigger.condition
-    ? trigger.condition(queryValue)
-    : queryValue.length >= threshold && queryValue.replace(/ /g, "").length;
+const checkTriggerCondition = (config, queryValue) => {
+  return config.trigger.condition
+    ? config.trigger.condition(queryValue)
+    : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
 };
 
 /**

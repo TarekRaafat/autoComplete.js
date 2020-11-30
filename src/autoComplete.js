@@ -142,7 +142,7 @@ export default class autoCompleteJS {
     // 1- Prepare manipulated query input value
     const query = prepareQueryValue(input, this.query);
     // 2- Get trigger condition
-    const triggerCondition = checkTriggerCondition(this.trigger, query, this.threshold);
+    const triggerCondition = checkTriggerCondition(this, query);
     // 3- Check triggering condition
     if (triggerCondition) {
       // 4- Prepare the data
