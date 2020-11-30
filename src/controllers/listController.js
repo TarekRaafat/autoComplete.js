@@ -29,11 +29,12 @@ const generateList = (config, data, matches) => {
   const list = createList(config);
   // Iterate over the data
   for (let index = 0; index < data.results.length; index++) {
-    const result = data.results[index].match;
+    const item = data.results[index];
     // create result item
-    const resultItem = createItem(result, data.results[index].value, index, config);
+    const resultItem = createItem(item, index, config);
     // Listen to clicks on this item
     resultItem.addEventListener("click", () => {
+      config.inputField.setAttribute("aria-activedescendant", "");
       // Prepare onSelection feedback data object
       const dataFeedback = {
         matches,
@@ -41,10 +42,8 @@ const generateList = (config, data, matches) => {
         query: data.query,
         results: data.results,
         selection: {
+          ...item,
           index,
-          key: data.results[index].key,
-          match: data.results[index].match,
-          value: data.results[index].value,
         },
       };
       // Returns the selected value onSelection

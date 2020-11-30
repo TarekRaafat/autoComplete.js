@@ -28,6 +28,55 @@
     return Constructor;
   }
 
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
@@ -111,16 +160,15 @@
     config.inputField.setAttribute("autocapitalize", "off");
     config.inputField.setAttribute("title", config.name);
     config.inputField.setAttribute("aria-label", config.name);
-    config.inputField.setAttribute("aria-owns", config.resultItem.idName);
-    config.inputField.setAttribute("aria-haspopup", true);
+    config.inputField.setAttribute("aria-controls", config.resultsList.idName);
+    config.inputField.setAttribute("aria-labelledby", config.name);
     config.inputField.setAttribute("aria-autocomplete", "both");
   });
 
   var createList = (function (config) {
     var list = document.createElement(config.resultsList.element);
     list.setAttribute("id", config.resultsList.idName);
-    list.setAttribute("aria-expanded", true);
-    list.setAttribute("aria-labelledby", config.resultsList.idName);
+    list.setAttribute("aria-labelledby", config.name);
     list.setAttribute("class", config.resultsList.className);
     list.setAttribute("role", "listbox");
     list.setAttribute("tabindex", "-1");
@@ -129,14 +177,14 @@
     return list;
   });
 
-  var createItem = (function (itemValue, rawValue, resultIndex, config) {
+  var createItem = (function (item, index, config) {
     var result = document.createElement(config.resultItem.element);
-    result.setAttribute("id", "".concat(config.resultItem.className, "_").concat(resultIndex));
-    result.setAttribute("aria-selected", "false");
+    result.setAttribute("id", "".concat(config.resultItem.className, "_").concat(index));
+    result.setAttribute("data-value", item.value[item.key]);
     result.setAttribute("class", config.resultItem.className);
     result.setAttribute("role", "option");
-    result.innerHTML = itemValue;
-    if (config.resultItem.content) config.resultItem.content(rawValue, result);
+    result.innerHTML = item.match;
+    if (config.resultItem.content) config.resultItem.content(item.value, result);
     return result;
   });
 
@@ -149,20 +197,18 @@
   var generateList = function generateList(config, data, matches) {
     var list = createList(config);
     var _loop = function _loop(index) {
-      var result = data.results[index].match;
-      var resultItem = createItem(result, data.results[index].value, index, config);
+      var item = data.results[index];
+      var resultItem = createItem(item, index, config);
       resultItem.addEventListener("click", function () {
+        config.inputField.setAttribute("aria-activedescendant", "");
         var dataFeedback = {
           matches: matches,
           input: data.input,
           query: data.query,
           results: data.results,
-          selection: {
-            index: index,
-            key: data.results[index].key,
-            match: data.results[index].match,
-            value: data.results[index].value
-          }
+          selection: _objectSpread2(_objectSpread2({}, item), {}, {
+            index: index
+          })
         };
         config.onSelection(dataFeedback);
       });
@@ -184,9 +230,23 @@
 
   var navigate = function navigate(config) {
     var currentFocus = -1;
+    var update = function update(event, list, state, config) {
+      event.preventDefault();
+      if (state) {
+        currentFocus++;
+      } else {
+        currentFocus--;
+      }
+      addActive(list);
+      config.inputField.setAttribute("aria-activedescendant", list[currentFocus].dataset.value);
+      eventEmitter(event.srcElement, {
+        event: event,
+        selection: list[currentFocus]
+      }, "navigation");
+    };
     var removeActive = function removeActive(list) {
       for (var index = 0; index < list.length; index++) {
-        list[index].setAttribute("aria-selected", "false");
+        list[index].removeAttribute("aria-selected");
         list[index].classList.remove("autoCompleteJS_selected");
       }
     };
@@ -205,21 +265,9 @@
       if (event.keyCode === 27) {
         closeAllLists(false, event.target);
       } else if (event.keyCode === 40 || event.keyCode === 9) {
-        event.preventDefault();
-        currentFocus++;
-        addActive(list);
-        eventEmitter(event.srcElement, {
-          selection: list[currentFocus],
-          event: event
-        }, "navigation");
+        update(event, list, true, config);
       } else if (event.keyCode === 38 || event.keyCode === 9) {
-        event.preventDefault();
-        currentFocus--;
-        addActive(list);
-        eventEmitter(event.srcElement, {
-          selection: list[currentFocus],
-          event: event
-        }, "navigation");
+        update(event, list, false, config);
       } else if (event.keyCode === 13) {
         event.preventDefault();
         if (currentFocus > -1) {

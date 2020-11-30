@@ -14,12 +14,13 @@
 
 - Whole new architecture and API design
 - Added high quality accessability (WAI-ARIA) support
-- Added life cycle events for each stage (Thanks 👍 @zippy84)
-- Added `detach/attach` methods (Thanks 👍 @Keagel)
+- Added life cycle events for `autoComplete.js` stage (Thanks 👍 @zippy84)
+- Added `detach/attach` methods under the name of `init/unInit` (Thanks 👍 @Keagel)
 - Added input field observing functionality
 - Added `Diacritics` support (Thanks 👍 @batcaverna)
 - Added API for controlling all `Classes` and `IDs` (Thanks 👍 @xtellurian, @Lirux)
 - Added new styles including neutral/non-opinionated style (Thanks 👍 @luizbills)
+- Add `aria-activedescendant` update on list navigation
 - Enhanced non-cached data fetching
 - Enhanced `resultsList` navigation
 - Enhanced `resultsList` rendering
@@ -36,10 +37,8 @@
 
 ## v8 TODO
 
-- [ ] Add `aria-activedescendant` update on list navigation
 - [ ] Add `list-sections` separate each data key records with section name (Thanks 👍 @Matoo125)
 - [ ] Add `Diacritics` support (Thanks 👍 @batcaverna)
-- [ ] Add `eventEmitter` post list rendering (Thanks 👍 @zippy84)
 
 ---
 

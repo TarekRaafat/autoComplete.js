@@ -12,6 +12,34 @@ const navigate = (config) => {
   let currentFocus = -1;
 
   /**
+   * Update list item state
+   *
+   * @param {Object} event - The `keydown` event Object
+   * @param {Array <elements>} list - The array of list items
+   * @param {Object} config - autoCompleteJS configurations
+   *
+   */
+  const update = (event, list, state, config) => {
+    event.preventDefault();
+    if (state) {
+      // If the arrow DOWN or TAB key is pressed
+      // increase the currentFocus
+      currentFocus++;
+    } else {
+      // If the arrow UP or TAB key is pressed
+      // decrease the currentFocus
+      currentFocus--;
+    }
+    // and add "active" class to the list item
+    addActive(list);
+    config.inputField.setAttribute("aria-activedescendant", list[currentFocus].dataset.value);
+    /**
+     * @emits {navigation} Emits Event on results list navigation
+     **/
+    eventEmitter(event.srcElement, { event, selection: list[currentFocus] }, "navigation");
+  };
+
+  /**
    * Remove list item active state
    *
    * @param {Array <elements>} list - The array of list items
@@ -20,8 +48,9 @@ const navigate = (config) => {
   const removeActive = (list) => {
     // Remove "active" class from all list items
     for (let index = 0; index < list.length; index++) {
-      // list[index].removeAttribute("aria-selected");
-      list[index].setAttribute("aria-selected", "false");
+      // Remove "active" class from the item
+      list[index].removeAttribute("aria-selected");
+      // list[index].setAttribute("aria-selected", "false");
       list[index].classList.remove("autoCompleteJS_selected");
     }
   };
@@ -62,27 +91,11 @@ const navigate = (config) => {
       // closes open lists
       closeAllLists(false, event.target);
     } else if (event.keyCode === 40 || event.keyCode === 9) {
-      event.preventDefault();
-      // If the arrow DOWN or TAB key is pressed
-      // increase the currentFocus
-      currentFocus++;
-      // and add "active" class to the list item
-      addActive(list);
-      /**
-       * @emits {navigation} Emits Event on results list navigation
-       **/
-      eventEmitter(event.srcElement, { selection: list[currentFocus], event }, "navigation");
+      // Update list items state
+      update(event, list, true, config);
     } else if (event.keyCode === 38 || event.keyCode === 9) {
-      event.preventDefault();
-      // If the arrow UP or TAB key is pressed
-      // decrease the currentFocus
-      currentFocus--;
-      // and add "active" class to the list item
-      addActive(list);
-      /**
-       * @emits {navigation} Emits Event on results list navigation
-       **/
-      eventEmitter(event.srcElement, { selection: list[currentFocus], event }, "navigation");
+      // Update list items state
+      update(event, list, false, config);
     } else if (event.keyCode === 13) {
       // If the ENTER key is pressed
       // prevent the form from its default behaviour "being submitted"

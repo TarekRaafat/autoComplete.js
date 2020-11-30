@@ -15,10 +15,10 @@ export default (config) => {
   config.inputField.setAttribute("title", config.name);
   // ARIA attributes
   // config.inputField.setAttribute("role", "combobox");
-  config.inputField.setAttribute("aria-label", config.name);
   //   inputField.setAttribute("aria-labelledby", config.listId);
-  config.inputField.setAttribute("aria-owns", config.resultItem.idName);
-  //   inputField.setAttribute("aria-controls", config.listId);
-  config.inputField.setAttribute("aria-haspopup", true);
+  // config.inputField.setAttribute("aria-owns", config.resultItem.idName);
+  config.inputField.setAttribute("aria-label", config.name);
+  config.inputField.setAttribute("aria-controls", config.resultsList.idName);
+  config.inputField.setAttribute("aria-labelledby", config.name);
   config.inputField.setAttribute("aria-autocomplete", "both");
 };
