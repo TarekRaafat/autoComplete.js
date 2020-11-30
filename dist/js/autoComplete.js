@@ -305,7 +305,7 @@
     for (var index = 0; index < data.length; index++) {
       _loop(index);
     }
-    var list = config.sort ? resList.sort(config.sort).slice(0, config.maxResults) : resList.slice(0, config.maxResults);
+    var list = config.sort ? resList.sort(config.sort) : resList;
     return list;
   };
 
@@ -433,9 +433,13 @@
         var dataFeedback = {
           input: input,
           query: query,
-          results: results
+          results: results.slice(0, this.maxResults)
         };
-        eventEmitter(this.inputField, dataFeedback, "response");
+        eventEmitter(this.inputField, {
+          input: input,
+          query: query,
+          results: results
+        }, "results");
         if (!results.length) return this.noResults ? this.noResults() : null;
         if (!this.resultsList.render) return this.feedback(dataFeedback);
         var list = results.length ? generateList(this, dataFeedback) : null;
@@ -459,7 +463,7 @@
             return _this2.data.src().then(function ($await_2) {
               try {
                 data = $await_2;
-                eventEmitter(_this2.inputField, data, "request");
+                eventEmitter(_this2.inputField, data, "fetch");
                 closeAllLists(false, _this2.inputField);
                 _this2.start(data, input, query);
                 return $If_1.call(_this2);
@@ -506,9 +510,7 @@
                 observer.disconnect();
                 _this4.inputField = targetNode.querySelector(_this4.selector);
                 inputComponent(_this4);
-                eventEmitter(_this4.inputField, {
-                  mutation: mutation
-                }, "connect");
+                eventEmitter(_this4.inputField, null, "connect");
                 _this4.init();
               }
             }

@@ -94,9 +94,7 @@ const listMatchingResults = (config, query, data) => {
     }
   }
   // Sorting / Slicing final results list
-  const list = config.sort
-    ? resList.sort(config.sort).slice(0, config.maxResults)
-    : resList.slice(0, config.maxResults);
+  const list = config.sort ? resList.sort(config.sort) : resList;
   // Returns rendered list
   return list;
 };

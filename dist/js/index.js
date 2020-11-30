@@ -6,12 +6,12 @@ document.querySelector("#autoComplete").addEventListener("connect", function (ev
 document.querySelector("#autoComplete").addEventListener("init", function (event) {
   console.log(event);
 });
-// autoComplete.js input eventListener on data request event
-document.querySelector("#autoComplete").addEventListener("request", function (event) {
+// autoComplete.js input eventListener on data response event
+document.querySelector("#autoComplete").addEventListener("fetch", function (event) {
   console.log(event);
 });
-// autoComplete.js input eventListener on data response event
-document.querySelector("#autoComplete").addEventListener("response", function (event) {
+// autoComplete.js input eventListener on search results event
+document.querySelector("#autoComplete").addEventListener("results", function (event) {
   console.log(event);
 });
 // autoComplete.js input eventListener on post results list rendering event

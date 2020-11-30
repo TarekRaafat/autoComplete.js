@@ -108,11 +108,11 @@ export default class autoCompleteJS {
     // - Match query with existing value
     const results = listMatchingResults(this, query, data);
     // - Prepare data feedback object
-    const dataFeedback = { input, query, results };
+    const dataFeedback = { input, query, results: results.slice(0, this.maxResults) };
     /**
      * @emits {response} Emits Event on search response
      **/
-    eventEmitter(this.inputField, dataFeedback, "response");
+    eventEmitter(this.inputField, { input, query, results }, "results");
     // - Checks if there are NO results
     // Runs noResults action function
     if (!results.length) return this.noResults ? this.noResults() : null;
@@ -148,9 +148,9 @@ export default class autoCompleteJS {
       // 4- Prepare the data
       const data = await this.data.src();
       /**
-       * @emits {request} Emits Event on search request
+       * @emits {request} Emits Event on data response
        **/
-      eventEmitter(this.inputField, data, "request");
+      eventEmitter(this.inputField, data, "fetch");
       // 5- Close all open lists
       closeAllLists(false, this.inputField);
       // 6- Start autoCompleteJS engine
@@ -201,7 +201,7 @@ export default class autoCompleteJS {
           /**
            * @emits {connect} Emits Event on connection
            **/
-          eventEmitter(this.inputField, { mutation }, "connect");
+          eventEmitter(this.inputField, null, "connect");
           // Initiate autoCompleteJS
           this.init();
         }
