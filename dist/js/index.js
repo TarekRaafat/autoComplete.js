@@ -26,6 +26,7 @@
 // document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
 //   console.log(event);
 // });
+
 // The autoComplete.js Engine instance creator
 const autoComplete = new autoCompleteJS({
   selector: "#autoCompleteJS",
