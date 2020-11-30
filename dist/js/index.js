@@ -65,8 +65,8 @@ const autoComplete = new autoCompleteJS({
       // console.log(data, element);
     },
   },
-  feedback: (event, data) => {
-    console.log(event, data);
+  feedback: (data) => {
+    console.log(data);
   },
   onSelection: (feedback) => {
     document.querySelector("#autoCompleteJS").value = "";
