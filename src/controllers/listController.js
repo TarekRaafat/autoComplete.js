@@ -24,7 +24,7 @@ const closeAllLists = (element, inputField) => {
  * @param {Object} data - The available data object
  * @param {Object} config - autoCompleteJS configurations
  */
-const generateList = (config, data) => {
+const generateList = (config, data, matches) => {
   // Initiate creating list process
   const list = createList(config);
   // Iterate over the data
@@ -36,6 +36,7 @@ const generateList = (config, data) => {
     resultItem.addEventListener("click", () => {
       // Prepare onSelection feedback data object
       const dataFeedback = {
+        matches,
         input: data.input,
         query: data.query,
         results: data.results,

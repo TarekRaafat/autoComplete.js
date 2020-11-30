@@ -119,7 +119,7 @@ export default class autoCompleteJS {
     // - If resultsList set not to render
     if (!this.resultsList.render) return this.feedback(dataFeedback);
     // - Generate & Render results list
-    const list = results.length ? generateList(this, dataFeedback) : null;
+    const list = results.length ? generateList(this, dataFeedback, results) : null;
     /**
      * @emits {rendered} Emits Event after results list rendering
      **/

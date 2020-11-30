@@ -146,13 +146,14 @@
       if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
     }
   };
-  var generateList = function generateList(config, data) {
+  var generateList = function generateList(config, data, matches) {
     var list = createList(config);
     var _loop = function _loop(index) {
       var result = data.results[index].match;
       var resultItem = createItem(result, data.results[index].value, index, config);
       resultItem.addEventListener("click", function () {
         var dataFeedback = {
+          matches: matches,
           input: data.input,
           query: data.query,
           results: data.results,
@@ -445,7 +446,7 @@
         }, "results");
         if (!results.length) return this.noResults ? this.noResults() : null;
         if (!this.resultsList.render) return this.feedback(dataFeedback);
-        var list = results.length ? generateList(this, dataFeedback) : null;
+        var list = results.length ? generateList(this, dataFeedback, results) : null;
         eventEmitter(this.inputField, dataFeedback, "rendered");
         navigate(this);
         document.addEventListener("click", function (event) {
