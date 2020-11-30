@@ -117,7 +117,7 @@
   });
 
   var createList = (function (config) {
-    var list = document.createElement("div");
+    var list = document.createElement(config.resultsList.element);
     list.setAttribute("id", config.resultsList.idName);
     list.setAttribute("aria-expanded", true);
     list.setAttribute("aria-labelledby", config.resultsList.idName);
@@ -129,14 +129,14 @@
     return list;
   });
 
-  var createItem = (function (itemValue, rawValue, resultIndex, itemClass, content) {
-    var result = document.createElement("div");
-    result.setAttribute("id", "".concat(itemClass, "_").concat(resultIndex));
+  var createItem = (function (itemValue, rawValue, resultIndex, config) {
+    var result = document.createElement(config.resultItem.element);
+    result.setAttribute("id", "".concat(config.resultItem.className, "_").concat(resultIndex));
     result.setAttribute("aria-selected", "false");
-    result.setAttribute("class", itemClass);
+    result.setAttribute("class", config.resultItem.className);
     result.setAttribute("role", "option");
     result.innerHTML = itemValue;
-    if (content) content(rawValue, result);
+    if (config.resultItem.content) config.resultItem.content(rawValue, result);
     return result;
   });
 
@@ -150,7 +150,7 @@
     var list = createList(config);
     var _loop = function _loop(index) {
       var result = data.results[index].match;
-      var resultItem = createItem(result, data.results[index].value, index, config.resultItem.className, config.resultItem.content);
+      var resultItem = createItem(result, data.results[index].value, index, config);
       resultItem.addEventListener("click", function () {
         var dataFeedback = {
           input: data.input,
@@ -176,49 +176,51 @@
     }));
   });
 
-  var currentFocus;
-  var removeActive = function removeActive(list) {
-    for (var index = 0; index < list.length; index++) {
-      list[index].setAttribute("aria-selected", "false");
-      list[index].classList.remove("autoComplete_selected");
-    }
-  };
-  var addActive = function addActive(list) {
-    if (!list) return false;
-    removeActive(list);
-    if (currentFocus >= list.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = list.length - 1;
-    list[currentFocus].setAttribute("aria-selected", "true");
-    list[currentFocus].classList.add("autoComplete_selected");
-  };
-  var navigation = function navigation(event) {
-    if (event.target.value.trim()) {
-      var list = document.getElementById("autoComplete_list");
-      if (list) list = list.getElementsByTagName("div");
+  var navigate = function navigate(config) {
+    var currentFocus = -1;
+    var removeActive = function removeActive(list) {
+      for (var index = 0; index < list.length; index++) {
+        list[index].setAttribute("aria-selected", "false");
+        list[index].classList.remove("autoComplete_selected");
+      }
+    };
+    var addActive = function addActive(list) {
+      if (!list) return false;
+      removeActive(list);
+      if (currentFocus >= list.length) currentFocus = 0;
+      if (currentFocus < 0) currentFocus = list.length - 1;
+      list[currentFocus].setAttribute("aria-selected", "true");
+      list[currentFocus].classList.add("autoComplete_selected");
+    };
+    var navigation = function navigation(event) {
+      var list = document.getElementById(config.resultsList.idName);
+      if (!list) return config.inputField.removeEventListener("keydown", navigate);
+      list = list.getElementsByTagName(config.resultItem.element);
       if (event.keyCode === 27) {
         closeAllLists(false, event.target);
       } else if (event.keyCode === 40 || event.keyCode === 9) {
         event.preventDefault();
         currentFocus++;
         addActive(list);
+        eventEmitter(event.srcElement, {
+          selection: list[currentFocus],
+          event: event
+        }, "navigation");
       } else if (event.keyCode === 38 || event.keyCode === 9) {
         event.preventDefault();
         currentFocus--;
         addActive(list);
+        eventEmitter(event.srcElement, {
+          selection: list[currentFocus],
+          event: event
+        }, "navigation");
       } else if (event.keyCode === 13) {
         event.preventDefault();
         if (currentFocus > -1) {
           if (list) list[currentFocus].click();
         }
       }
-      eventEmitter(event.srcElement, {
-        selection: list[currentFocus],
-        event: event
-      }, "navigation");
-    }
-  };
-  var navigate = function navigate(config) {
-    currentFocus = -1;
+    };
     var navigate = config.resultsList.navigation || navigation;
     config.inputField.addEventListener("keydown", navigate);
   };
@@ -434,7 +436,7 @@
           results: results
         };
         eventEmitter(this.inputField, dataFeedback, "response");
-        if (!data.length) return this.noResults();
+        if (!results.length) return this.noResults ? this.noResults() : null;
         if (!this.resultsList.render) return this.feedback(dataFeedback);
         var list = results.length ? generateList(this, dataFeedback) : null;
         eventEmitter(this.inputField, dataFeedback, "rendered");

@@ -7,7 +7,7 @@
  */
 export default (config) => {
   // Create a DIV element that will contain the results items
-  const list = document.createElement("div");
+  const list = document.createElement(config.resultsList.element);
   list.setAttribute("id", config.resultsList.idName);
   list.setAttribute("aria-expanded", true);
   list.setAttribute("aria-labelledby", config.resultsList.idName);

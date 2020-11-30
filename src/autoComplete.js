@@ -115,7 +115,7 @@ export default class autoCompleteJS {
     eventEmitter(this.inputField, dataFeedback, "response");
     // - Checks if there are NO results
     // Runs noResults action function
-    if (!data.length) return this.noResults();
+    if (!results.length) return this.noResults ? this.noResults() : null;
     // - If resultsList set not to render
     if (!this.resultsList.render) return this.feedback(dataFeedback);
     // - Generate & Render results list

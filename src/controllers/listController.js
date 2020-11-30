@@ -31,13 +31,7 @@ const generateList = (config, data) => {
   for (let index = 0; index < data.results.length; index++) {
     const result = data.results[index].match;
     // create result item
-    const resultItem = createItem(
-      result,
-      data.results[index].value,
-      index,
-      config.resultItem.className,
-      config.resultItem.content
-    );
+    const resultItem = createItem(result, data.results[index].value, index, config);
     // Listen to clicks on this item
     resultItem.addEventListener("click", () => {
       // Prepare onSelection feedback data object

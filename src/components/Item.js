@@ -7,15 +7,15 @@
  *
  * @return {Element} result - The created item element
  */
-export default (itemValue, rawValue, resultIndex, itemClass, content) => {
+export default (itemValue, rawValue, resultIndex, config) => {
   // Create a DIV element for each matching result item
-  const result = document.createElement("div");
-  result.setAttribute("id", `${itemClass}_${resultIndex}`);
+  const result = document.createElement(config.resultItem.element);
+  result.setAttribute("id", `${config.resultItem.className}_${resultIndex}`);
   // result.setAttribute("data-value", rawValue);
   result.setAttribute("aria-selected", "false");
-  result.setAttribute("class", itemClass);
+  result.setAttribute("class", config.resultItem.className);
   result.setAttribute("role", "option");
   result.innerHTML = itemValue;
-  if (content) content(rawValue, result);
+  if (config.resultItem.content) config.resultItem.content(rawValue, result);
   return result;
 };
