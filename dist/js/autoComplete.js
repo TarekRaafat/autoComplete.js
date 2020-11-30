@@ -110,7 +110,7 @@
     config.inputField.setAttribute("autocomplete", "off");
     config.inputField.setAttribute("autocapitalize", "off");
     config.inputField.setAttribute("title", config.name);
-    config.inputField.setAttribute("aria-label", config.inputName);
+    config.inputField.setAttribute("aria-label", config.name);
     config.inputField.setAttribute("aria-owns", config.resultItem.idName);
     config.inputField.setAttribute("aria-haspopup", true);
     config.inputField.setAttribute("aria-autocomplete", "both");
