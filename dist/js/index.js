@@ -74,4 +74,4 @@ const autoComplete = new autoCompleteJS({
   },
 });
 
-// autoComplete.detach();
+// autoComplete.unInit();
