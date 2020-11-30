@@ -13,7 +13,7 @@
 ## v8 changes
 
 - Whole new architecture and API design
-- Added high quality accessability (WAI-ARIA) support
+- Added high quality accessability (WAI-ARIA 1.1) support
 - Added life cycle events for `autoComplete.js` stage (Thanks 👍 @zippy84)
 - Added `detach/attach` methods under the name of `init/unInit` (Thanks 👍 @Keagel)
 - Added input field observing functionality
