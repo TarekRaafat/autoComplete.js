@@ -18,10 +18,10 @@
 // document.querySelector("#autoCompleteJS").addEventListener("rendered", function (event) {
 //   console.log(event.detail);
 // });
-// autoComplete.js input eventListener on results list navigation
-document.querySelector("#autoCompleteJS").addEventListener("navigation", function (event) {
-  console.log(event.detail);
-});
+// // autoComplete.js input eventListener on results list navigation
+// document.querySelector("#autoCompleteJS").addEventListener("navigation", function (event) {
+//   console.log(event.detail);
+// });
 // // autoComplete.js input eventListener on post un-initialization event
 // document.querySelector("#autoCompleteJS").addEventListener("unInit", function (event) {
 //   console.log(event.detail);
