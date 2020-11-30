@@ -20,7 +20,6 @@
 - Added `Diacritics` support (Thanks 👍 @batcaverna)
 - Added API for controlling all `Classes` and `IDs` (Thanks 👍 @xtellurian, @Lirux)
 - Added new styles including neutral/non-opinionated style (Thanks 👍 @luizbills)
-- Add `aria-activedescendant` update on list navigation
 - Enhanced non-cached data fetching
 - Enhanced `resultsList` navigation
 - Enhanced `resultsList` rendering
