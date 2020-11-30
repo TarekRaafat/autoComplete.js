@@ -36,6 +36,8 @@ const autoComplete = new autoCompleteJS({
       // Fetch External Data Source
       const source = await fetch("./db/generic.json");
       const data = await source.json();
+      // Post Loading placeholder text
+      document.querySelector("#autoComplete").setAttribute("placeholder", autoComplete.placeHolder);
       // Returns Fetched data
       return data;
     },
