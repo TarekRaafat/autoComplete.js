@@ -37,8 +37,8 @@
 
 ## v8 TODO
 
-- [ ] Add `list-sections` separate each data key records with section name (Thanks 👍 @Matoo125)
 - [ ] Add `Diacritics` support (Thanks 👍 @batcaverna)
+- [ ] Restore `data.cache` support
 
 ---
 
