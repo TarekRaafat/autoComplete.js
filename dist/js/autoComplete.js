@@ -156,7 +156,12 @@
           input: data.input,
           query: data.query,
           results: data.results,
-          selection: data.results[index].value
+          selection: {
+            index: index,
+            key: data.results[index].key,
+            match: data.results[index].match,
+            value: data.results[index].value
+          }
         };
         config.onSelection(dataFeedback);
       });
@@ -329,7 +334,7 @@
           _config$selector = config.selector,
           selector = _config$selector === void 0 ? "#autoComplete" : _config$selector,
           _config$data = config.data,
-          _src = _config$data.src,
+          src = _config$data.src,
           key = _config$data.key,
           _config$data$cache = _config$data.cache,
           cache = _config$data$cache === void 0 ? true : _config$data$cache,
@@ -386,9 +391,7 @@
       this.name = name;
       this.selector = selector;
       this.data = {
-        src: function src() {
-          return typeof _src === "function" ? _src() : _src;
-        },
+        src: src,
         key: key,
         cache: cache
       };
@@ -460,22 +463,27 @@
           triggerCondition = checkTriggerCondition(_this2, query);
           if (triggerCondition) {
             var data;
-            return _this2.data.src().then(function ($await_2) {
+            return new Promise(function ($return, $error) {
+              if (typeof _this2.data.src === "function") {
+                return _this2.data.src().then($return, $error);
+              }
+              return $return(_this2.data.src);
+            }).then(function ($await_5) {
               try {
-                data = $await_2;
+                data = $await_5;
                 eventEmitter(_this2.inputField, data, "fetch");
                 closeAllLists(false, _this2.inputField);
                 _this2.start(data, input, query);
-                return $If_1.call(_this2);
+                return $If_2.call(_this2);
               } catch ($boundEx) {
                 return $error($boundEx);
               }
             }, $error);
           } else {
             closeAllLists(false, _this2.inputField);
-            return $If_1.call(_this2);
+            return $If_2.call(_this2);
           }
-          function $If_1() {
+          function $If_2() {
             return $return();
           }
         });

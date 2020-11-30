@@ -1,31 +1,31 @@
-// autoComplete.js input eventListener on connect event
-document.querySelector("#autoComplete").addEventListener("connect", function (event) {
-  console.log(event);
-});
-// autoComplete.js input eventListener on initialization event
-document.querySelector("#autoComplete").addEventListener("init", function (event) {
-  console.log(event);
-});
-// autoComplete.js input eventListener on data response event
-document.querySelector("#autoComplete").addEventListener("fetch", function (event) {
-  console.log(event);
-});
-// autoComplete.js input eventListener on search results event
-document.querySelector("#autoComplete").addEventListener("results", function (event) {
-  console.log(event);
-});
-// autoComplete.js input eventListener on post results list rendering event
-document.querySelector("#autoComplete").addEventListener("rendered", function (event) {
-  console.log(event);
-});
-// autoComplete.js input eventListener on results list navigation
-document.querySelector("#autoComplete").addEventListener("navigation", function (event) {
-  console.log(event);
-});
-// autoComplete.js input eventListener on post un-initialization event
-document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
-  console.log(event);
-});
+// // autoComplete.js input eventListener on connect event
+// document.querySelector("#autoComplete").addEventListener("connect", function (event) {
+//   console.log(event);
+// });
+// // autoComplete.js input eventListener on initialization event
+// document.querySelector("#autoComplete").addEventListener("init", function (event) {
+//   console.log(event);
+// });
+// // autoComplete.js input eventListener on data response event
+// document.querySelector("#autoComplete").addEventListener("fetch", function (event) {
+//   console.log(event);
+// });
+// // autoComplete.js input eventListener on search results event
+// document.querySelector("#autoComplete").addEventListener("results", function (event) {
+//   console.log(event);
+// });
+// // autoComplete.js input eventListener on post results list rendering event
+// document.querySelector("#autoComplete").addEventListener("rendered", function (event) {
+//   console.log(event);
+// });
+// // autoComplete.js input eventListener on results list navigation
+// document.querySelector("#autoComplete").addEventListener("navigation", function (event) {
+//   console.log(event);
+// });
+// // autoComplete.js input eventListener on post un-initialization event
+// document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
+//   console.log(event);
+// });
 // The autoComplete.js Engine instance creator
 const autoComplete = new autoCompleteJS({
   selector: "#autoComplete",

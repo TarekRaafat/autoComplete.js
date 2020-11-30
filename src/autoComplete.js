@@ -63,7 +63,7 @@ export default class autoCompleteJS {
     this.name = name;
     this.selector = selector;
     this.data = {
-      src: () => (typeof src === "function" ? src() : src),
+      src,
       key,
       cache,
     };
@@ -146,7 +146,7 @@ export default class autoCompleteJS {
     // 3- Check triggering condition
     if (triggerCondition) {
       // 4- Prepare the data
-      const data = await this.data.src();
+      const data = typeof this.data.src === "function" ? await this.data.src() : this.data.src;
       /**
        * @emits {request} Emits Event on data response
        **/

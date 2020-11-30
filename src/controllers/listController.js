@@ -39,7 +39,12 @@ const generateList = (config, data) => {
         input: data.input,
         query: data.query,
         results: data.results,
-        selection: data.results[index].value,
+        selection: {
+          index,
+          key: data.results[index].key,
+          match: data.results[index].match,
+          value: data.results[index].value,
+        },
       };
       // Returns the selected value onSelection
       config.onSelection(dataFeedback);
