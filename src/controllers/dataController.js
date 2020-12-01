@@ -56,7 +56,7 @@ const listMatchingResults = (config, query, data) => {
     // Search/Matching function
     const search = (key) => {
       // This Record value
-      const recordValue = key ? record[key] : record;
+      const recordValue = (key ? record[key] : record).toString();
       // Check if record does exist before search
       if (recordValue) {
         // Holds match value

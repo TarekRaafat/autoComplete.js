@@ -321,7 +321,7 @@
     var _loop = function _loop(index) {
       var record = data[index];
       var search = function search(key) {
-        var recordValue = key ? record[key] : record;
+        var recordValue = (key ? record[key] : record).toString();
         if (recordValue) {
           var match = typeof config.searchEngine === "function" ? config.searchEngine(query, recordValue) : searchEngine(query, recordValue, config);
           if (match && key) {
