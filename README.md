@@ -28,6 +28,7 @@
 - Fixed calling data `src` on each trigger (Thanks 👍 @thomasphilibert)
 - Fixed right click behavior on `resultsList` (Thanks 👍 @drankje)
 - Fixed cursor relocation on `keyUp` (Thanks 👍 @cadday)
+- Fixed data as a `Number` parsing issue (Thanks 👍 @andresfdel17)
 
 ## v8 API breaking changes
 
