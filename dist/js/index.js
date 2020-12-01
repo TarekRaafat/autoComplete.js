@@ -52,6 +52,7 @@ const autoComplete = new autoCompleteJS({
   },
   searchEngine: "loose",
   placeHolder: "Search for Food & Drinks!",
+  maxResults: 5,
   highlight: true,
   debounce: 300,
   threshold: 0,
