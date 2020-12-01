@@ -51,7 +51,7 @@ const autoComplete = new autoCompleteJS({
     },
   },
   searchEngine: "loose",
-  placeHolder: "Search for Food!",
+  placeHolder: "Search for Food & Drinks!",
   highlight: true,
   debounce: 300,
   threshold: 0,
