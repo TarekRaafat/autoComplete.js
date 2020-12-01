@@ -263,6 +263,7 @@
       if (!list) return config.inputField.removeEventListener("keydown", navigate);
       list = list.getElementsByTagName(config.resultItem.element);
       if (event.keyCode === 27) {
+        config.inputField.value = "";
         closeAllLists(false, event.target);
       } else if (event.keyCode === 40 || event.keyCode === 9) {
         update(event, list, true, config);

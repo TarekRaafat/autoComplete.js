@@ -88,7 +88,9 @@ const navigate = (config) => {
 
     if (event.keyCode === 27) {
       // If the ESC key is pressed
-      // closes open lists
+      // Clear Input value
+      config.inputField.value = "";
+      // Closes open lists
       closeAllLists(false, event.target);
     } else if (event.keyCode === 40 || event.keyCode === 9) {
       // Update list items state
