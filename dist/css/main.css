@@ -1,6 +1,6 @@
 :root {
   --transition-1: all 0.3s ease-in-out;
-  --transition-2: all 0.1s ease-in-out;
+  --transition-2: all 0.2s ease-in-out;
 }
 
 html {
@@ -13,7 +13,7 @@ body {
   padding: 0;
 }
 
-.contaier {
+.container {
   width: 100vw;
   height: 100vh;
 }
@@ -84,19 +84,19 @@ h4::selection {
   margin-top: 20px;
 }
 
-.toggele {
+.toggle {
   display: flex;
-  position: abolute;
+  /* position: absolute; */
   border: 1px solid #ffc6c6;
   height: 35px;
   width: 120px;
   border-radius: 50px;
   justify-content: flex-start;
   align-content: center;
-  transition: var(--transition-1);
+  transition: var(--transition-2);
 }
 
-.toggeler {
+.toggler {
   display: grid;
   cursor: pointer;
   background-color: rgba(255, 198, 198, 1);
@@ -108,19 +108,19 @@ h4::selection {
   text-align: center;
   align-content: center;
   align-self: flex-start;
-  transition: var(--transition-1);
+  transition: var(--transition-2);
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -webkit-touch-callout: none;
 }
 
-.toggeler:hover {
-  width: 70px;
+.toggler:hover {
+  width: 65px;
   background-color: rgba(255, 122, 122, 0.7);
 }
 
-.toggeler::selection {
+.toggler::selection {
   color: #fff;
 }
 
