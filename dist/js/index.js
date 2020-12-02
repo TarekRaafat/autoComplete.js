@@ -55,7 +55,7 @@ const autoComplete = new autoCompleteJS({
   maxResults: 5,
   highlight: true,
   debounce: 300,
-  threshold: 0,
+  threshold: 1,
   resultsList: {
     render: true,
     container: (element) => {
