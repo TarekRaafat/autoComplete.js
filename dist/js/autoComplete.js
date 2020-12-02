@@ -489,7 +489,7 @@
         eventEmitter(this.inputField, _objectSpread2(_objectSpread2({}, dataFeedback), {}, {
           matches: results
         }), "results");
-        if (!results.length) return this.noResults ? this.noResults() : null;
+        if (!results.length) return this.noResults ? this.noResults(dataFeedback, generateList) : null;
         if (!this.resultsList.render) return this.feedback(dataFeedback);
         var list = results.length ? generateList(this, dataFeedback, results) : null;
         eventEmitter(this.inputField, _objectSpread2(_objectSpread2({}, dataFeedback), {}, {
