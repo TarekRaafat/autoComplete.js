@@ -7,7 +7,7 @@ import createItem from "../components/Item";
  * @param {Element} element - Current selected element
  * @param {Element} inputField - autoCompleteJS input field
  */
-const closeAllLists = (element, inputField) => {
+const closeAllLists = (inputField, element) => {
   // Get all autoCompleteJS lists
   const list = document.getElementsByClassName("autoCompleteJS_list");
   // Iterate over all autoCompleteJS open lists in the document

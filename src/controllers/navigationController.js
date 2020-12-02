@@ -95,7 +95,7 @@ const navigate = (config, results, dataFeedback) => {
       // Clear Input value
       config.inputField.value = "";
       // Closes open lists
-      closeAllLists(false, event.target);
+      closeAllLists(event.target);
     } else if (event.keyCode === 40 || event.keyCode === 9) {
       // Update list items state
       update(event, list, true, config);

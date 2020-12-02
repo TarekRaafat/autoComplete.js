@@ -180,7 +180,6 @@
   var createItem = (function (item, index, config) {
     var result = document.createElement(config.resultItem.element);
     result.setAttribute("id", "".concat(config.resultItem.className, "_").concat(index));
-    result.setAttribute("data-value", item.value[item.key]);
     result.setAttribute("class", config.resultItem.className);
     result.setAttribute("role", "option");
     result.innerHTML = item.match;
@@ -188,7 +187,7 @@
     return result;
   });
 
-  var closeAllLists = function closeAllLists(element, inputField) {
+  var closeAllLists = function closeAllLists(inputField, element) {
     var list = document.getElementsByClassName("autoCompleteJS_list");
     for (var index = 0; index < list.length; index++) {
       if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
@@ -266,7 +265,7 @@
       list = list.getElementsByTagName(config.resultItem.element);
       if (event.keyCode === 27) {
         config.inputField.value = "";
-        closeAllLists(false, event.target);
+        closeAllLists(event.target);
       } else if (event.keyCode === 40 || event.keyCode === 9) {
         update(event, list, true, config);
       } else if (event.keyCode === 38 || event.keyCode === 9) {
@@ -501,7 +500,7 @@
         }), "rendered");
         navigate(this, results, dataFeedback);
         document.addEventListener("click", function (event) {
-          return closeAllLists(event.target, _this.inputField);
+          return closeAllLists(_this.inputField, event.target);
         });
       }
     }, {
@@ -524,7 +523,7 @@
               try {
                 data = $await_5;
                 eventEmitter(_this2.inputField, data, "fetch");
-                closeAllLists(false, _this2.inputField);
+                closeAllLists(_this2.inputField);
                 _this2.start(data, input, query);
                 return $If_2.call(_this2);
               } catch ($boundEx) {
@@ -532,7 +531,7 @@
               }
             }, $error);
           } else {
-            closeAllLists(false, _this2.inputField);
+            closeAllLists(_this2.inputField);
             return $If_2.call(_this2);
           }
           function $If_2() {

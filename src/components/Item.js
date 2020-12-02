@@ -11,7 +11,7 @@ export default (item, index, config) => {
   // Create a DIV element for each matching result item
   const result = document.createElement(config.resultItem.element);
   result.setAttribute("id", `${config.resultItem.className}_${index}`);
-  result.setAttribute("data-value", item.value[item.key]);
+  // result.setAttribute("data-value", item.value[item.key]);
   // result.setAttribute("aria-selected", "false");
   result.setAttribute("class", config.resultItem.className);
   result.setAttribute("role", "option");

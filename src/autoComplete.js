@@ -132,7 +132,7 @@ export default class autoCompleteJS {
      * and closes this menu if clicked outside the list and input field
      * @listens {click} Listens to all `click` events on the document
      **/
-    document.addEventListener("click", (event) => closeAllLists(event.target, this.inputField));
+    document.addEventListener("click", (event) => closeAllLists(this.inputField, event.target));
   }
 
   // Run autoCompleteJS composer
@@ -152,12 +152,12 @@ export default class autoCompleteJS {
        **/
       eventEmitter(this.inputField, data, "fetch");
       // 5- Close all open lists
-      closeAllLists(false, this.inputField);
+      closeAllLists(this.inputField);
       // 6- Start autoCompleteJS engine
       this.start(data, input, query);
     } else {
       // 4- Close all open lists
-      closeAllLists(false, this.inputField);
+      closeAllLists(this.inputField);
     }
   }
 
