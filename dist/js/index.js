@@ -68,8 +68,10 @@ const autoComplete = new autoCompleteJS({
       const key = Object.keys(data).find((key) => data[key] === element.innerText);
 
       element.style = "display: flex; justify-content: space-between;";
-      element.innerHTML = `<span>${element.innerHTML}</span>
-      <span style="font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">${key}</span>`;
+      element.innerHTML = `<span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+        ${element.innerHTML}</span>
+        <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+      ${key}</span>`;
     },
   },
   feedback: (data) => {
