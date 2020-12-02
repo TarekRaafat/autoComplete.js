@@ -136,7 +136,7 @@ export default class autoCompleteJS {
   }
 
   // Run autoCompleteJS composer
-  async compose(event) {
+  async compose() {
     // 1- Prepare raw input value
     const input = getInputValue(this.inputField);
     // 1- Prepare manipulated query input value
@@ -166,9 +166,9 @@ export default class autoCompleteJS {
     // Set placeholder attribute value
     if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
     // Run executer
-    this.hook = debouncer((event) => {
-      // 3- Prepare autoCompleteJS processes
-      this.compose(event);
+    this.hook = debouncer(() => {
+      // - Prepare autoCompleteJS processes
+      this.compose();
     }, this.debounce);
     /**
      * @listens {input} Listens to all `input` events on the input field

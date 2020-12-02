@@ -502,7 +502,7 @@
       }
     }, {
       key: "compose",
-      value: function compose(event) {
+      value: function compose() {
         var _this2 = this;
         return new Promise(function ($return, $error) {
           var input, query, triggerCondition;
@@ -541,8 +541,8 @@
       value: function init() {
         var _this3 = this;
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-        this.hook = debouncer(function (event) {
-          _this3.compose(event);
+        this.hook = debouncer(function () {
+          _this3.compose();
         }, this.debounce);
         this.inputField.addEventListener("input", this.hook);
         eventEmitter(this.inputField, null, "init");
