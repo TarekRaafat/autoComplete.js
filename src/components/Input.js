@@ -14,13 +14,9 @@ export default (config) => {
   // config.inputField.setAttribute("autocapitalize", "off");
   // config.inputField.setAttribute("title", config.name);
   // ARIA attributes
-  // config.inputField.setAttribute("aria-labelledby", config.listId);
-  // config.inputField.setAttribute("aria-label", config.name);
-  // config.inputField.setAttribute("aria-readonly", true);
   config.inputField.setAttribute("role", "combobox");
   config.inputField.setAttribute("aria-haspopup", true);
   config.inputField.setAttribute("aria-expanded", false);
   config.inputField.setAttribute("aria-controls", config.resultsList.idName);
-  // config.inputField.setAttribute("aria-label", config.name);
   config.inputField.setAttribute("aria-autocomplete", "both");
 };
