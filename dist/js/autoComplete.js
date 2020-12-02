@@ -152,23 +152,18 @@
   }
 
   var inputComponent = (function (config) {
-    config.inputField.setAttribute("dir", "ltr");
     config.inputField.setAttribute("type", "text");
-    config.inputField.setAttribute("spellcheck", false);
-    config.inputField.setAttribute("autocorrect", "off");
-    config.inputField.setAttribute("autocomplete", "off");
-    config.inputField.setAttribute("autocapitalize", "off");
-    config.inputField.setAttribute("title", config.name);
-    config.inputField.setAttribute("aria-label", config.name);
+    config.inputField.setAttribute("role", "combobox");
+    config.inputField.setAttribute("aria-haspopup", true);
+    config.inputField.setAttribute("aria-expanded", false);
     config.inputField.setAttribute("aria-controls", config.resultsList.idName);
-    config.inputField.setAttribute("aria-labelledby", config.name);
     config.inputField.setAttribute("aria-autocomplete", "both");
   });
 
   var createList = (function (config) {
     var list = document.createElement(config.resultsList.element);
     list.setAttribute("id", config.resultsList.idName);
-    list.setAttribute("aria-labelledby", config.name);
+    list.setAttribute("aria-label", config.name);
     list.setAttribute("class", config.resultsList.className);
     list.setAttribute("role", "listbox");
     list.setAttribute("tabindex", "-1");
@@ -193,9 +188,11 @@
       if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
     }
     inputField.removeAttribute("aria-activedescendant");
+    inputField.setAttribute("aria-expanded", false);
   };
   var generateList = function generateList(config, data, matches) {
     var list = createList(config);
+    config.inputField.setAttribute("aria-expanded", true);
     var _loop = function _loop(index) {
       var item = data.results[index];
       var resultItem = createItem(item, index, config);
@@ -237,7 +234,7 @@
         currentFocus--;
       }
       addActive(list);
-      config.inputField.setAttribute("aria-activedescendant", "".concat(config.resultItem.className, "_").concat(currentFocus));
+      config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
       eventEmitter(event.srcElement, _objectSpread2(_objectSpread2({
         event: event
       }, dataFeedback), {}, {

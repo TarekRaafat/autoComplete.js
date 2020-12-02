@@ -29,6 +29,7 @@ document.querySelector("#autoCompleteJS").addEventListener("unInit", function (e
 
 // The autoComplete.js Engine instance creator
 const autoComplete = new autoCompleteJS({
+  name: "food & drinks",
   selector: "#autoCompleteJS",
   data: {
     src: async () => {

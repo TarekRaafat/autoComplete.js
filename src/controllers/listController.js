@@ -18,6 +18,8 @@ const closeAllLists = (inputField, element) => {
   }
   // Remove active descendant
   inputField.removeAttribute("aria-activedescendant");
+  // Set list to closed
+  inputField.setAttribute("aria-expanded", false);
 };
 
 /**
@@ -29,6 +31,8 @@ const closeAllLists = (inputField, element) => {
 const generateList = (config, data, matches) => {
   // Initiate creating list process
   const list = createList(config);
+  // Set list to opened
+  config.inputField.setAttribute("aria-expanded", true);
   // Iterate over the data
   for (let index = 0; index < data.results.length; index++) {
     const item = data.results[index];
