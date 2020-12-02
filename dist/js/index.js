@@ -24,7 +24,7 @@ document.querySelector("#autoCompleteJS").addEventListener("navigation", functio
 });
 // autoComplete.js input eventListener on post un-initialization event
 document.querySelector("#autoCompleteJS").addEventListener("unInit", function (event) {
-  console.log(event.detail);
+  console.log(event);
 });
 
 // The autoComplete.js Engine instance creator
