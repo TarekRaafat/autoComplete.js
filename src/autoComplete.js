@@ -137,7 +137,7 @@ export default class autoCompleteJS {
 
   // Run autoCompleteJS composer
   async compose() {
-    // 1- Prepare raw input value
+    // 0- Prepare raw input value
     const input = getInputValue(this.inputField);
     // 1- Prepare manipulated query input value
     const query = prepareQueryValue(input, this.query);
