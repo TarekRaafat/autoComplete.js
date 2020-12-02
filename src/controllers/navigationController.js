@@ -32,7 +32,7 @@ const navigate = (config, results, dataFeedback) => {
     }
     // and add "active" class to the list item
     addActive(list);
-    config.inputField.setAttribute("aria-activedescendant", list[currentFocus].dataset.value);
+    config.inputField.setAttribute("aria-activedescendant", `${config.resultItem.className}_${currentFocus}`);
     /**
      * @emits {navigation} Emits Event on results list navigation
      **/

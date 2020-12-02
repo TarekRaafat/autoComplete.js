@@ -238,7 +238,7 @@
         currentFocus--;
       }
       addActive(list);
-      config.inputField.setAttribute("aria-activedescendant", list[currentFocus].dataset.value);
+      config.inputField.setAttribute("aria-activedescendant", "".concat(config.resultItem.className, "_").concat(currentFocus));
       eventEmitter(event.srcElement, _objectSpread2(_objectSpread2({
         event: event
       }, dataFeedback), {}, {
