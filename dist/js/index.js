@@ -51,7 +51,7 @@ const autoComplete = new autoCompleteJS({
       return `${query}`;
     },
   },
-  searchEngine: "loose",
+  searchEngine: "strict",
   placeHolder: "Search for Food & Drinks!",
   maxResults: 5,
   highlight: true,
