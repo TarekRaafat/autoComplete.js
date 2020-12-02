@@ -52,6 +52,10 @@
   background-color: rgba(255, 122, 122, 0.15);
 }
 
+#autoCompleteJS::selection {
+  background-color: rgba(255, 122, 122, 0.15);
+}
+
 #autoCompleteJS:hover {
   color: rgba(255, 122, 122, 0.8);
   transition: all 0.3s ease;
