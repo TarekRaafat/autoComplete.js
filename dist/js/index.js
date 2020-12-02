@@ -65,8 +65,9 @@ const autoComplete = new autoCompleteJS({
   },
   resultItem: {
     content: (data, element) => {
+      // Prepare Value's Key
       const key = Object.keys(data).find((key) => data[key] === element.innerText);
-
+      // Modify Results Item
       element.style = "display: flex; justify-content: space-between;";
       element.innerHTML = `<span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
         ${element.innerHTML}</span>
@@ -75,8 +76,9 @@ const autoComplete = new autoCompleteJS({
     },
   },
   noResults: (feedback, generateList) => {
+    // Generate autoCompleteJS List
     generateList(autoComplete, feedback, feedback.results);
-
+    // No Results List Item
     const result = document.createElement("li");
     result.setAttribute("class", "no_result");
     result.setAttribute("tabindex", "1");
@@ -88,6 +90,7 @@ const autoComplete = new autoCompleteJS({
   },
   onSelection: (feedback) => {
     document.querySelector("#autoCompleteJS").blur();
+    // Prepare User's Selected Value
     const selection = feedback.selection.value[feedback.selection.key];
     // Render selected choice to selection div
     document.querySelector(".selection").innerHTML = selection;
