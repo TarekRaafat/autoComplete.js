@@ -16,6 +16,8 @@ const closeAllLists = (element, inputField) => {
     // except the ones passed as an argument
     if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
   }
+  // Remove active descendant
+  inputField.removeAttribute("aria-activedescendant");
 };
 
 /**
@@ -34,7 +36,6 @@ const generateList = (config, data, matches) => {
     const resultItem = createItem(item, index, config);
     // Listen to clicks on this item
     resultItem.addEventListener("click", () => {
-      config.inputField.setAttribute("aria-activedescendant", "");
       // Prepare onSelection feedback data object
       const dataFeedback = {
         matches,

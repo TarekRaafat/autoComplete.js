@@ -193,6 +193,7 @@
     for (var index = 0; index < list.length; index++) {
       if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
     }
+    inputField.removeAttribute("aria-activedescendant");
   };
   var generateList = function generateList(config, data, matches) {
     var list = createList(config);
@@ -200,7 +201,6 @@
       var item = data.results[index];
       var resultItem = createItem(item, index, config);
       resultItem.addEventListener("click", function () {
-        config.inputField.setAttribute("aria-activedescendant", "");
         var dataFeedback = {
           matches: matches,
           input: data.input,
