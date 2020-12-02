@@ -72,7 +72,13 @@ const autoComplete = new autoCompleteJS({
     console.log(data);
   },
   onSelection: (feedback) => {
-    document.querySelector("#autoCompleteJS").value = "";
+    document.querySelector("#autoCompleteJS").blur();
+    const selection = feedback.selection.value.food;
+    // Render selected choice to selection div
+    document.querySelector(".selection").innerHTML = selection;
+    // Replace Input value with the selected value
+    document.querySelector("#autoCompleteJS").value = selection;
+    // Console log autoComplete data feedback
     console.log(feedback);
   },
 });
