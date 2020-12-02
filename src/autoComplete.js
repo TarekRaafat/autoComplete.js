@@ -213,7 +213,7 @@ export default class autoCompleteJS {
     observer.observe(targetNode, config);
   }
 
-  // un-initialize autoCompleteJS
+  // Un-initialize autoCompleteJS
   unInit() {
     this.inputField.removeEventListener("input", this.hook);
     /**
