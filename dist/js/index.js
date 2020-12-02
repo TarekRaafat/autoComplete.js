@@ -77,3 +77,58 @@ const autoComplete = new autoCompleteJS({
 });
 
 // autoComplete.unInit();
+
+// Toggle Search Engine Type/Mode
+document.querySelector(".toggler").addEventListener("click", function () {
+  // Holds the toggle button alignment
+  const toggle = document.querySelector(".toggle").style.justifyContent;
+
+  if (toggle === "flex-start" || toggle === "") {
+    // Set Search Engine mode to Loose
+    document.querySelector(".toggle").style.justifyContent = "flex-end";
+    document.querySelector(".toggler").innerHTML = "Loose";
+    autoComplete.searchEngine = "loose";
+  } else {
+    // Set Search Engine mode to Strict
+    document.querySelector(".toggle").style.justifyContent = "flex-start";
+    document.querySelector(".toggler").innerHTML = "Strict";
+    autoComplete.searchEngine = "strict";
+  }
+});
+
+// Toggle results list and other elements
+const action = function (action) {
+  const github = document.querySelector(".github-corner");
+  const title = document.querySelector("h1");
+  const mode = document.querySelector(".mode");
+  const selection = document.querySelector(".selection");
+  const footer = document.querySelector(".footer");
+
+  if (action === "dim") {
+    github.style.opacity = 1;
+    title.style.opacity = 1;
+    mode.style.opacity = 1;
+    selection.style.opacity = 1;
+    footer.style.opacity = 1;
+  } else {
+    github.style.opacity = 0.1;
+    title.style.opacity = 0.3;
+    mode.style.opacity = 0.2;
+    selection.style.opacity = 0.1;
+    footer.style.opacity = 0.1;
+  }
+};
+
+// Toggle event for search input
+// showing & hiding results list onfocus / blur
+["focus", "blur"].forEach(function (eventType) {
+  document.querySelector("#autoCompleteJS").addEventListener(eventType, function () {
+    // Hide results list & show other elements
+    if (eventType === "blur") {
+      action("dim");
+    } else if (eventType === "focus") {
+      // Show results list & hide other elements
+      action("light");
+    }
+  });
+});
