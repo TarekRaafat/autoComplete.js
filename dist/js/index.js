@@ -88,7 +88,7 @@ const autoComplete = new autoCompleteJS({
   },
   onSelection: (feedback) => {
     document.querySelector("#autoCompleteJS").blur();
-    const selection = feedback.selection.value.food;
+    const selection = feedback.selection.value[feedback.selection.key];
     // Render selected choice to selection div
     document.querySelector(".selection").innerHTML = selection;
     // Replace Input value with the selected value
