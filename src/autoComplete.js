@@ -112,7 +112,7 @@ export default class autoCompleteJS {
     /**
      * @emits {response} Emits Event on search response
      **/
-    eventEmitter(this.inputField, { input, query, results }, "results");
+    eventEmitter(this.inputField, { ...dataFeedback, matches: results }, "results");
     // - Checks if there are NO results
     // Runs noResults action function
     if (!results.length) return this.noResults ? this.noResults() : null;
@@ -123,9 +123,9 @@ export default class autoCompleteJS {
     /**
      * @emits {rendered} Emits Event after results list rendering
      **/
-    eventEmitter(this.inputField, dataFeedback, "rendered");
+    eventEmitter(this.inputField, { ...dataFeedback, matches: results }, "rendered");
     // - Initialize navigation
-    navigate(this);
+    navigate(this, results, dataFeedback);
     /**
      * @desc
      * Listens for all `click` events in the document

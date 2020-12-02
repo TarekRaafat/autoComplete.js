@@ -228,7 +228,7 @@
     }));
   });
 
-  var navigate = function navigate(config) {
+  var navigate = function navigate(config, results, dataFeedback) {
     var currentFocus = -1;
     var update = function update(event, list, state, config) {
       event.preventDefault();
@@ -239,10 +239,12 @@
       }
       addActive(list);
       config.inputField.setAttribute("aria-activedescendant", list[currentFocus].dataset.value);
-      eventEmitter(event.srcElement, {
-        event: event,
-        selection: list[currentFocus]
-      }, "navigation");
+      eventEmitter(event.srcElement, _objectSpread2(_objectSpread2({
+        event: event
+      }, dataFeedback), {}, {
+        matches: results,
+        selection: results[currentFocus]
+      }), "navigation");
     };
     var removeActive = function removeActive(list) {
       for (var index = 0; index < list.length; index++) {
@@ -488,16 +490,16 @@
           query: query,
           results: results.slice(0, this.maxResults)
         };
-        eventEmitter(this.inputField, {
-          input: input,
-          query: query,
-          results: results
-        }, "results");
+        eventEmitter(this.inputField, _objectSpread2(_objectSpread2({}, dataFeedback), {}, {
+          matches: results
+        }), "results");
         if (!results.length) return this.noResults ? this.noResults() : null;
         if (!this.resultsList.render) return this.feedback(dataFeedback);
         var list = results.length ? generateList(this, dataFeedback, results) : null;
-        eventEmitter(this.inputField, dataFeedback, "rendered");
-        navigate(this);
+        eventEmitter(this.inputField, _objectSpread2(_objectSpread2({}, dataFeedback), {}, {
+          matches: results
+        }), "rendered");
+        navigate(this, results, dataFeedback);
         document.addEventListener("click", function (event) {
           return closeAllLists(event.target, _this.inputField);
         });
