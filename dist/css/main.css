@@ -26,21 +26,6 @@ body {
   -webkit-touch-callout: none;
 }
 
-.results_list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  padding: 0;
-  margin-top: 0.5rem;
-  border-radius: 0.6rem;
-  background-color: #fff;
-  box-shadow: 0 3px 6px rgba(149, 157, 165, 0.15);
-  border: 1px solid rgba(33, 33, 33, 0.07);
-  z-index: 1000;
-  outline: none;
-}
-
 .no_result {
   margin: 0.3rem;
   padding: 0.3rem 0.5rem;
@@ -55,6 +40,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   transition: all 0.2s ease;
+  outline: none;
 }
 
 h1 {

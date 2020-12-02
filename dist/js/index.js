@@ -74,13 +74,13 @@ const autoComplete = new autoCompleteJS({
       ${key}</span>`;
     },
   },
-  noResults: (data, generateList) => {
-    generateList(autoComplete, data, data.results);
+  noResults: (feedback, generateList) => {
+    generateList(autoComplete, feedback, feedback.results);
 
     const result = document.createElement("li");
     result.setAttribute("class", "no_result");
     result.setAttribute("tabindex", "1");
-    result.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${data.query}"</span>`;
+    result.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${feedback.query}"</span>`;
     document.querySelector(`#${autoComplete.resultsList.idName}`).appendChild(result);
   },
   feedback: (data) => {
