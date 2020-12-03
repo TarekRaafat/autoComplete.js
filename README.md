@@ -37,8 +37,7 @@
 
 ## v8 TODO
 
-- [ ] Add `Diacritics` support (Thanks 👍 @batcaverna)
-- [ ] Restore `data.cache` support
+
 
 ---
 
