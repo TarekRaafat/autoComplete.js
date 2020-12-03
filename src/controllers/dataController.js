@@ -49,12 +49,12 @@ const checkTriggerCondition = (config, queryValue) => {
  *
  * @return {Array} - The matching results list array
  */
-const listMatchingResults = (config, query, data) => {
+const listMatchingResults = (config, query) => {
   // Final highlighted results list
   const resList = [];
   // Checks input has matches in data source
-  for (let index = 0; index < data.length; index++) {
-    const record = data[index];
+  for (let index = 0; index < config.data.store.length; index++) {
+    const record = config.data.store[index];
     // Search/Matching function
     const search = (key) => {
       // This Record value

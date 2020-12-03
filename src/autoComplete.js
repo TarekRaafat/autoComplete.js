@@ -25,6 +25,7 @@ export default class autoCompleteJS {
         src, // Data src selection
         key, // Data src key selection
         cache = true, // Flag to cache data src
+        store,
       },
       query, // Query interceptor function
       trigger: {
@@ -66,6 +67,7 @@ export default class autoCompleteJS {
       src,
       key,
       cache,
+      store,
     };
     this.query = query;
     this.trigger = {
@@ -104,9 +106,9 @@ export default class autoCompleteJS {
   }
 
   // Run autoCompleteJS processes
-  start(data, input, query) {
+  start(input, query) {
     // - Match query with existing value
-    const results = listMatchingResults(this, query, data);
+    const results = listMatchingResults(this, query);
     // - Prepare data feedback object
     const dataFeedback = { input, query, matches: results, results: results.slice(0, this.maxResults) };
     /**
@@ -135,6 +137,14 @@ export default class autoCompleteJS {
     document.addEventListener("click", (event) => closeAllLists(this.inputField, event.target));
   }
 
+  async dataStore() {
+    this.data.store = typeof this.data.src === "function" ? await this.data.src() : this.data.src;
+    /**
+     * @emits {request} Emits Event on data response
+     **/
+    eventEmitter(this.inputField, this.data.store, "fetch");
+  }
+
   // Run autoCompleteJS composer
   async compose() {
     // 0- Prepare raw input value
@@ -146,15 +156,11 @@ export default class autoCompleteJS {
     // 3- Check triggering condition
     if (triggerCondition) {
       // 4- Prepare the data
-      const data = typeof this.data.src === "function" ? await this.data.src() : this.data.src;
-      /**
-       * @emits {request} Emits Event on data response
-       **/
-      eventEmitter(this.inputField, data, "fetch");
+      !this.data.cache ? await this.dataStore() : this.data.cache && !this.data.store ? await this.dataStore() : null;
       // 5- Close all open lists
       closeAllLists(this.inputField);
       // 6- Start autoCompleteJS engine
-      this.start(data, input, query);
+      this.start(input, query);
     } else {
       // 4- Close all open lists
       closeAllLists(this.inputField);

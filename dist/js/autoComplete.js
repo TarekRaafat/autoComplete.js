@@ -313,10 +313,10 @@
   var checkTriggerCondition = function checkTriggerCondition(config, queryValue) {
     return config.trigger.condition ? config.trigger.condition(queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
   };
-  var listMatchingResults = function listMatchingResults(config, query, data) {
+  var listMatchingResults = function listMatchingResults(config, query) {
     var resList = [];
     var _loop = function _loop(index) {
-      var record = data[index];
+      var record = config.data.store[index];
       var search = function search(key) {
         var recordValue = (key ? record[key] : record).toString();
         if (recordValue) {
@@ -354,7 +354,7 @@
         search();
       }
     };
-    for (var index = 0; index < data.length; index++) {
+    for (var index = 0; index < config.data.store.length; index++) {
       _loop(index);
     }
     var list = config.sort ? resList.sort(config.sort) : resList;
@@ -385,6 +385,7 @@
           key = _config$data.key,
           _config$data$cache = _config$data.cache,
           cache = _config$data$cache === void 0 ? true : _config$data$cache,
+          store = _config$data.store,
           query = config.query,
           _config$trigger = config.trigger;
       _config$trigger = _config$trigger === void 0 ? {} : _config$trigger;
@@ -440,7 +441,8 @@
       this.data = {
         src: src,
         key: key,
-        cache: cache
+        cache: cache,
+        store: store
       };
       this.query = query;
       this.trigger = {
@@ -477,9 +479,9 @@
     }
     _createClass(autoCompleteJS, [{
       key: "start",
-      value: function start(data, input, query) {
+      value: function start(input, query) {
         var _this = this;
-        var results = listMatchingResults(this, query, data);
+        var results = listMatchingResults(this, query);
         var dataFeedback = {
           input: input,
           query: query,
@@ -497,37 +499,60 @@
         });
       }
     }, {
-      key: "compose",
-      value: function compose() {
+      key: "dataStore",
+      value: function dataStore() {
         var _this2 = this;
         return new Promise(function ($return, $error) {
+          return new Promise(function ($return, $error) {
+            if (typeof _this2.data.src === "function") {
+              return _this2.data.src().then($return, $error);
+            }
+            return $return(_this2.data.src);
+          }).then(function ($await_9) {
+            try {
+              _this2.data.store = $await_9;
+              eventEmitter(_this2.inputField, _this2.data.store, "fetch");
+              return $return();
+            } catch ($boundEx) {
+              return $error($boundEx);
+            }
+          }, $error);
+        });
+      }
+    }, {
+      key: "compose",
+      value: function compose() {
+        var _this3 = this;
+        return new Promise(function ($return, $error) {
           var input, query, triggerCondition;
-          input = getInputValue(_this2.inputField);
-          query = prepareQueryValue(input, _this2.query);
-          triggerCondition = checkTriggerCondition(_this2, query);
+          input = getInputValue(_this3.inputField);
+          query = prepareQueryValue(input, _this3.query);
+          triggerCondition = checkTriggerCondition(_this3, query);
           if (triggerCondition) {
-            var data;
             return new Promise(function ($return, $error) {
-              if (typeof _this2.data.src === "function") {
-                return _this2.data.src().then($return, $error);
+              if (!_this3.data.cache) {
+                return _this3.dataStore().then($return, $error);
               }
-              return $return(_this2.data.src);
-            }).then(function ($await_5) {
+              return new Promise(function ($return, $error) {
+                if (_this3.data.cache && !_this3.data.store) {
+                  return _this3.dataStore().then($return, $error);
+                }
+                return $return(null);
+              }).then($return, $error);
+            }).then(function ($await_13) {
               try {
-                data = $await_5;
-                eventEmitter(_this2.inputField, data, "fetch");
-                closeAllLists(_this2.inputField);
-                _this2.start(data, input, query);
-                return $If_2.call(_this2);
+                closeAllLists(_this3.inputField);
+                _this3.start(input, query);
+                return $If_5.call(_this3);
               } catch ($boundEx) {
                 return $error($boundEx);
               }
             }, $error);
           } else {
-            closeAllLists(_this2.inputField);
-            return $If_2.call(_this2);
+            closeAllLists(_this3.inputField);
+            return $If_5.call(_this3);
           }
-          function $If_2() {
+          function $If_5() {
             return $return();
           }
         });
@@ -535,10 +560,10 @@
     }, {
       key: "init",
       value: function init() {
-        var _this3 = this;
+        var _this4 = this;
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
         this.hook = debouncer(function () {
-          _this3.compose();
+          _this4.compose();
         }, this.debounce);
         this.inputField.addEventListener("input", this.hook);
         eventEmitter(this.inputField, null, "init");
@@ -546,7 +571,7 @@
     }, {
       key: "preInit",
       value: function preInit() {
-        var _this4 = this;
+        var _this5 = this;
         var targetNode = document;
         var config = {
           childList: true,
@@ -558,12 +583,12 @@
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
               var mutation = _step.value;
-              if (targetNode.querySelector(_this4.selector)) {
+              if (targetNode.querySelector(_this5.selector)) {
                 observer.disconnect();
-                _this4.inputField = targetNode.querySelector(_this4.selector);
-                inputComponent(_this4);
-                eventEmitter(_this4.inputField, null, "connect");
-                _this4.init();
+                _this5.inputField = targetNode.querySelector(_this5.selector);
+                inputComponent(_this5);
+                eventEmitter(_this5.inputField, null, "connect");
+                _this5.init();
               }
             }
           } catch (err) {

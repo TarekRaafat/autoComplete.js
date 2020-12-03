@@ -8,7 +8,7 @@ document.querySelector("#autoCompleteJS").addEventListener("init", function (eve
 });
 // autoComplete.js input eventListener on data response event
 document.querySelector("#autoCompleteJS").addEventListener("fetch", function (event) {
-  console.log(event.detail);
+  console.log("Fetch", event.detail);
 });
 // autoComplete.js input eventListener on search results event
 document.querySelector("#autoCompleteJS").addEventListener("results", function (event) {
