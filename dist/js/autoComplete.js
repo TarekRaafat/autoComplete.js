@@ -224,7 +224,7 @@
     }));
   });
 
-  var navigate = function navigate(config, results, dataFeedback) {
+  var navigate = function navigate(config, dataFeedback) {
     var currentFocus = -1;
     var update = function update(event, list, state, config) {
       event.preventDefault();
@@ -238,8 +238,7 @@
       eventEmitter(event.srcElement, _objectSpread2(_objectSpread2({
         event: event
       }, dataFeedback), {}, {
-        matches: results,
-        selection: results[currentFocus]
+        selection: dataFeedback.results[currentFocus]
       }), "navigation");
     };
     var removeActive = function removeActive(list) {
@@ -492,7 +491,7 @@
         if (!this.resultsList.render) return this.feedback(dataFeedback);
         var list = results.length ? generateList(this, dataFeedback, results) : null;
         eventEmitter(this.inputField, dataFeedback, "rendered");
-        navigate(this, results, dataFeedback);
+        navigate(this, dataFeedback);
         document.addEventListener("click", function (event) {
           return closeAllLists(_this.inputField, event.target);
         });

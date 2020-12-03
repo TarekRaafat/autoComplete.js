@@ -7,7 +7,7 @@ import eventEmitter from "../utils/eventEmitter";
  * @param {Object} config - autoCompleteJS configurations
  *
  */
-const navigate = (config, results, dataFeedback) => {
+const navigate = (config, dataFeedback) => {
   // Reset focus state
   let currentFocus = -1;
 
@@ -38,7 +38,7 @@ const navigate = (config, results, dataFeedback) => {
      **/
     eventEmitter(
       event.srcElement,
-      { event, ...dataFeedback, matches: results, selection: results[currentFocus] },
+      { event, ...dataFeedback, selection: dataFeedback.results[currentFocus] },
       "navigation"
     );
   };
