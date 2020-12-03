@@ -46,11 +46,11 @@ const autoComplete = new autoCompleteJS({
     key: ["food", "cities", "animals"],
     cache: true,
   },
-  query: {
-    manipulate: function (query) {
-      return `${query}`;
-    },
-  },
+  // query: {
+  //   manipulate: function (query) {
+  //     return `${query}`;
+  //   },
+  // },
   searchEngine: "strict",
   placeHolder: "Search for Food & Drinks!",
   maxResults: 5,

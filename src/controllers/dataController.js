@@ -20,7 +20,9 @@ const getInputValue = (inputField) => {
  * @return queryValue
  */
 const prepareQueryValue = (inputValue, query) => {
-  return query && query.manipulate ? query.manipulate(inputValue) : inputValue;
+  return query && query.manipulate
+    ? query.manipulate(inputValue)
+    : inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 };
 
 /**

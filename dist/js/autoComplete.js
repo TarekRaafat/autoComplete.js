@@ -308,7 +308,7 @@
     return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value.toLowerCase() : inputField.innerHTML.toLowerCase();
   };
   var prepareQueryValue = function prepareQueryValue(inputValue, query) {
-    return query && query.manipulate ? query.manipulate(inputValue) : inputValue;
+    return query && query.manipulate ? query.manipulate(inputValue) : inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   };
   var checkTriggerCondition = function checkTriggerCondition(config, queryValue) {
     return config.trigger.condition ? config.trigger.condition(queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
