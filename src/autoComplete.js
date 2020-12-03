@@ -156,7 +156,7 @@ export default class autoCompleteJS {
     // 3- Check triggering condition
     if (triggerCondition) {
       // 4- Prepare the data
-      !this.data.cache ? await this.dataStore() : this.data.cache && !this.data.store ? await this.dataStore() : null;
+      !this.data.cache ? await this.dataStore() : !this.data.store ? await this.dataStore() : null;
       // 5- Close all open lists
       closeAllLists(this.inputField);
       // 6- Start autoCompleteJS engine

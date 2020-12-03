@@ -534,7 +534,7 @@
                 return _this3.dataStore().then($return, $error);
               }
               return new Promise(function ($return, $error) {
-                if (_this3.data.cache && !_this3.data.store) {
+                if (!_this3.data.store) {
                   return _this3.dataStore().then($return, $error);
                 }
                 return $return(null);
