@@ -484,17 +484,14 @@
         var dataFeedback = {
           input: input,
           query: query,
+          matches: results,
           results: results.slice(0, this.maxResults)
         };
-        eventEmitter(this.inputField, _objectSpread2(_objectSpread2({}, dataFeedback), {}, {
-          matches: results
-        }), "results");
+        eventEmitter(this.inputField, dataFeedback, "results");
         if (!results.length) return this.noResults ? this.noResults(dataFeedback, generateList) : null;
         if (!this.resultsList.render) return this.feedback(dataFeedback);
         var list = results.length ? generateList(this, dataFeedback, results) : null;
-        eventEmitter(this.inputField, _objectSpread2(_objectSpread2({}, dataFeedback), {}, {
-          matches: results
-        }), "rendered");
+        eventEmitter(this.inputField, dataFeedback, "rendered");
         navigate(this, results, dataFeedback);
         document.addEventListener("click", function (event) {
           return closeAllLists(_this.inputField, event.target);

@@ -108,11 +108,11 @@ export default class autoCompleteJS {
     // - Match query with existing value
     const results = listMatchingResults(this, query, data);
     // - Prepare data feedback object
-    const dataFeedback = { input, query, results: results.slice(0, this.maxResults) };
+    const dataFeedback = { input, query, matches: results, results: results.slice(0, this.maxResults) };
     /**
      * @emits {response} Emits Event on search response
      **/
-    eventEmitter(this.inputField, { ...dataFeedback, matches: results }, "results");
+    eventEmitter(this.inputField, dataFeedback, "results");
     // - Checks if there are NO results
     // Runs noResults action function
     if (!results.length) return this.noResults ? this.noResults(dataFeedback, generateList) : null;
@@ -123,7 +123,7 @@ export default class autoCompleteJS {
     /**
      * @emits {rendered} Emits Event after results list rendering
      **/
-    eventEmitter(this.inputField, { ...dataFeedback, matches: results }, "rendered");
+    eventEmitter(this.inputField, dataFeedback, "rendered");
     // - Initialize navigation
     navigate(this, results, dataFeedback);
     /**
