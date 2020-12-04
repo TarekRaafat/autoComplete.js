@@ -39,16 +39,28 @@ const autoCompleteJS = new autoComplete({
     src: async () => {
       // Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
-      // Fetch External Data Source
-      const source = await fetch("./db/generic.json");
-      const data = await source.json();
+
+      if (!JSON.parse(localStorage.getItem("acData"))) {
+        // Fetch External Data Source
+        const source = await fetch("./db/generic.json");
+        const data = await source.json();
+        // Saves the fetched data into local storage
+        localStorage.setItem("acData", JSON.stringify(data));
+        // Retrieve the cached data from local storage
+        const localData = JSON.parse(localStorage.getItem("acData"));
+        // Post Loading placeholder text
+        document.querySelector("#autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
+        // Returns Fetched data
+        return localData;
+      }
+
       // Post Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
-      // Returns Fetched data
-      return data;
+
+      return JSON.parse(localStorage.getItem("acData"));
     },
     key: ["food", "cities", "animals"],
-    cache: false,
+    cache: true,
   },
   searchEngine: "strict",
   placeHolder: "Search for Food & Drinks!",
