@@ -12,6 +12,8 @@ const autoCompleteJS = new autoComplete({
       // Fetch External Data Source
       const source = await fetch("../demo/db/generic.json");
       const data = await source.json();
+      // Post Loading placeholder text
+      document.querySelector("#autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
       // Returns Fetched data
       return data;
     },
@@ -84,17 +86,3 @@ const action = function (action) {
     footer.style.opacity = 0.1;
   }
 };
-
-// Toggle event for search input
-// showing & hiding results list onfocus/blur
-["focus", "blur"].forEach(function (eventType) {
-  document.querySelector("#autoComplete").addEventListener(eventType, function () {
-    // Hide results list & show other elements
-    if (eventType === "blur") {
-      action("dim");
-    } else if (eventType === "focus") {
-      // Show results list & hide other elements
-      action("light");
-    }
-  });
-});
