@@ -63,6 +63,7 @@ const autoCompleteJS = new autoComplete({
     cache: true,
   },
   searchEngine: "strict",
+  diacritics: true,
   placeHolder: "Search for Food & Drinks!",
   maxResults: 5,
   sort: (a, b) => {

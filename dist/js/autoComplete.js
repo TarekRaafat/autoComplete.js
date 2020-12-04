@@ -278,7 +278,7 @@
   };
 
   var searchEngine = (function (query, record, config) {
-    var recordLowerCase = record.toLowerCase();
+    var recordLowerCase = config.diacritics ? record.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : record.toLowerCase();
     if (config.searchEngine === "loose") {
       query = query.replace(/ /g, "");
       var match = [];
@@ -395,6 +395,8 @@
           condition = _config$trigger$condi === void 0 ? false : _config$trigger$condi,
           _config$searchEngine = config.searchEngine,
           searchEngine = _config$searchEngine === void 0 ? "strict" : _config$searchEngine,
+          _config$diacritics = config.diacritics,
+          diacritics = _config$diacritics === void 0 ? false : _config$diacritics,
           _config$threshold = config.threshold,
           threshold = _config$threshold === void 0 ? 1 : _config$threshold,
           _config$debounce = config.debounce,
@@ -450,6 +452,7 @@
         condition: condition
       };
       this.searchEngine = searchEngine;
+      this.diacritics = diacritics;
       this.threshold = threshold;
       this.debounce = debounce;
       this.resultsList = {

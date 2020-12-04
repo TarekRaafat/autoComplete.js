@@ -9,7 +9,12 @@
  */
 export default (query, record, config) => {
   // Current record value toLowerCase
-  const recordLowerCase = record.toLowerCase();
+  const recordLowerCase = config.diacritics
+    ? record
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+    : record.toLowerCase();
   // Loose mode
   if (config.searchEngine === "loose") {
     // Search query string sanitized & normalized

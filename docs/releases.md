@@ -26,26 +26,26 @@ Release flags:
 
 ## Release Notes
 
-- v8.0.0 :sparkles:
-  - Whole new more modern architecture design
-  - Added: high quality accessibility ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/examples/combobox/combobox-autocomplete-both.html)) support
-  - Added: life cycle events (Thanks 👍 @zippy84 )
-  - Added: init/unInit methods  (Thanks 👍 @Keagel )
-  - Added: input field observing functionality
-  - Added: Diacritics support (Thanks 👍 @batcaverna )
-  - Added: API for controlling Classes and IDs (Thanks 👍 @xtellurian, @Lirux)
-  - Added: new neutral/non-opinionated style (Thanks 👍 @luizbills )
-  - Enhanced: autoComplete.js internal flow
-  - Enhanced: data fetching
-  - Enhanced: data storing
-  - Enhanced: resultsList navigation
-  - Enhanced: resultsList rendering
-  - Fixed: resultsList element visibility in idle state (Thanks 👍 @digiiitalmb)
-  - Fixed: query threshold length
-  - Fixed: calling data src on each trigger (Thanks 👍 @thomasphilibert)
-  - Fixed: right click behavior on resultsList (Thanks 👍 @drankje)
-  - Fixed: cursor relocation on keyboard interactions (Thanks 👍 @cadday)
-  - Fixed: data as a Number parsing issue (Thanks 👍 @andresfdel17)
+- v8.0.0 :sparkles: #141
+  - Whole New More Modern Architecture Design
+  - Added: High Quality Accessibility ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/examples/combobox/combobox-autocomplete-both.html)) Support
+  - Added: Life Cycle Events (Thanks 👍 @zippy84) #89
+  - Added: `init/unInit` methods  (Thanks 👍 @Keagel) #115
+  - Added: Input Field Observing Functionality
+  - Added: `Diacritics` 2 way Support (Thanks 👍 @batcaverna, @svkmedia) #77 #93
+  - Added: API for Controlling `Classes` & `IDs` (Thanks 👍 @xtellurian, @Lirux) #73
+  - Added: New neutral/non-opinionated Style (Thanks 👍 @luizbills) #92
+  - Enhanced: autoComplete.js Internal Flow
+  - Enhanced: `data` Fetching
+  - Enhanced: `data` Storing
+  - Enhanced: `resultsList` Navigation
+  - Enhanced: `resultsList` Rendering (Thanks 👍 @eballeste) #105 #139 #126
+  - Fixed: `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb)
+  - Fixed: `query` threshold length accuracy
+  - Fixed: Calling `dataSrc` on each trigger (Thanks 👍 @thomasphilibert) #106
+  - Fixed: Right click behavior on `resultsList` (Thanks 👍 @drankje) #94
+  - Fixed: Cursor relocation on keyboard `keyUp` or `keyDown` (Thanks 👍 @cadday) #117
+  - Fixed: `data` as a `Number` parsing issue (Thanks 👍 @andresfdel17) #132
 
 - v7.2.0
   - Added support to `textarea` input field (Thanks 👍 @EmilStenstrom)

@@ -33,6 +33,7 @@ export default class autoComplete {
         condition = false, // condition trigger
       } = {},
       searchEngine = "strict", // Search engine type
+      diacritics = false, // Diacritics to be ignored
       threshold = 1, // Minimum characters length before engine starts rendering
       debounce = 0, // Minimum duration for API calls debounce
       resultsList: {
@@ -75,6 +76,7 @@ export default class autoComplete {
       condition,
     };
     this.searchEngine = searchEngine;
+    this.diacritics = diacritics;
     this.threshold = threshold;
     this.debounce = debounce;
     this.resultsList = {
