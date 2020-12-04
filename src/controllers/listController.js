@@ -4,22 +4,22 @@ import createItem from "../components/Item";
 /**
  * Close all open lists
  *
+ * @param {Object} config - autoComplete configurations
  * @param {Element} element - Current selected element
- * @param {Element} inputField - autoComplete input field
  */
-const closeAllLists = (inputField, element) => {
+const closeAllLists = (config, element) => {
   // Get all autoComplete lists
-  const list = document.getElementsByClassName("autoComplete_list");
+  const list = document.getElementsByClassName(config.resultsList.className);
   // Iterate over all autoComplete open lists in the document
   for (let index = 0; index < list.length; index++) {
     // Close all lists
     // except the ones passed as an argument
-    if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
+    if (element !== list[index] && element !== config.inputField) list[index].parentNode.removeChild(list[index]);
   }
   // Remove active descendant
-  inputField.removeAttribute("aria-activedescendant");
+  config.inputField.removeAttribute("aria-activedescendant");
   // Set list to closed
-  inputField.setAttribute("aria-expanded", false);
+  config.inputField.setAttribute("aria-expanded", false);
 };
 
 /**

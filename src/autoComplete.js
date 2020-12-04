@@ -134,7 +134,7 @@ export default class autoComplete {
      * and closes this menu if clicked outside the list and input field
      * @listens {click} Listens to all `click` events on the document
      **/
-    document.addEventListener("click", (event) => closeAllLists(this.inputField, event.target));
+    document.addEventListener("click", (event) => closeAllLists(this, event.target));
   }
 
   async dataStore() {
@@ -162,12 +162,12 @@ export default class autoComplete {
       // 4- Prepare the data
       await this.dataStore();
       // 5- Close all open lists
-      closeAllLists(this.inputField);
+      closeAllLists(this);
       // 6- Start autoComplete engine
       this.start(input, query);
     } else {
       // 4- Close all open lists
-      closeAllLists(this.inputField);
+      closeAllLists(this);
     }
   }
 

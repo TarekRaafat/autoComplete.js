@@ -182,13 +182,13 @@
     return result;
   });
 
-  var closeAllLists = function closeAllLists(inputField, element) {
-    var list = document.getElementsByClassName("autoComplete_list");
+  var closeAllLists = function closeAllLists(config, element) {
+    var list = document.getElementsByClassName(config.resultsList.className);
     for (var index = 0; index < list.length; index++) {
-      if (element !== list[index] && element !== inputField) list[index].parentNode.removeChild(list[index]);
+      if (element !== list[index] && element !== config.inputField) list[index].parentNode.removeChild(list[index]);
     }
-    inputField.removeAttribute("aria-activedescendant");
-    inputField.setAttribute("aria-expanded", false);
+    config.inputField.removeAttribute("aria-activedescendant");
+    config.inputField.setAttribute("aria-expanded", false);
   };
   var generateList = function generateList(config, data, matches) {
     var list = createList(config);
@@ -261,7 +261,7 @@
       list = list.getElementsByTagName(config.resultItem.element);
       if (event.keyCode === 27) {
         config.inputField.value = "";
-        closeAllLists(event.target);
+        closeAllLists(config);
       } else if (event.keyCode === 40 || event.keyCode === 9) {
         update(event, list, true, config);
       } else if (event.keyCode === 38 || event.keyCode === 9) {
@@ -495,7 +495,7 @@
         eventEmitter(this.inputField, dataFeedback, "rendered");
         navigate(this, dataFeedback);
         document.addEventListener("click", function (event) {
-          return closeAllLists(_this.inputField, event.target);
+          return closeAllLists(_this, event.target);
         });
       }
     }, {
@@ -532,7 +532,7 @@
           if (triggerCondition) {
             return _this3.dataStore().then(function ($await_6) {
               try {
-                closeAllLists(_this3.inputField);
+                closeAllLists(_this3);
                 _this3.start(input, query);
                 return $If_3.call(_this3);
               } catch ($boundEx) {
@@ -540,7 +540,7 @@
               }
             }, $error);
           } else {
-            closeAllLists(_this3.inputField);
+            closeAllLists(_this3);
             return $If_3.call(_this3);
           }
           function $If_3() {
