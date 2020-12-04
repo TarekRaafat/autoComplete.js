@@ -32,7 +32,7 @@
 
 ## v8 API breaking changes
 
-- Library class name changed from `autoComplete` to `autoCompleteJS`
+- Library class name changed back from `autoCompleteJS` to `autoComplete`
 - New events `connect`, `init`, `fetch`, `results`, `rendered`, `navigation`, `unInit` (Subject to change in final release)
 
 ## v8 TODO
