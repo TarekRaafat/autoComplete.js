@@ -27,7 +27,7 @@ Release flags:
 ## Release Notes
 
 - v8.0.0 :sparkles:
-  - Whole new architecture design
+  - Whole new more modern architecture design
   - Added: high quality accessibility ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/examples/combobox/combobox-autocomplete-both.html)) support
   - Added: life cycle events (Thanks 👍 @zippy84 )
   - Added: init/unInit methods  (Thanks 👍 @Keagel )

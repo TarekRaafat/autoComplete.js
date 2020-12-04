@@ -92,7 +92,7 @@ const autoCompleteJS = new autoComplete({
     const result = document.createElement("li");
     result.setAttribute("class", "no_result");
     result.setAttribute("tabindex", "1");
-    result.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${feedback.query}"</span>`;
+    result.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${dataFeedback.query}"</span>`;
     document.querySelector(`#${autoCompleteJS.resultsList.idName}`).appendChild(result);
   },
   feedback: (data) => {
