@@ -25,7 +25,7 @@ export default class autoComplete {
         src, // Data src selection
         key, // Data src key selection
         cache = false, // Flag to cache data src
-        store,
+        store, // Data feedback store
       },
       query, // Query interceptor function
       trigger: {
