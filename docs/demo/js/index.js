@@ -21,9 +21,9 @@ const autoCompleteJS = new autoComplete({
   searchEngine: "strict",
   highlight: true,
   maxResults: 5,
-  noResults: (feedback, generateList) => {
+  noResults: (dataFeedback, generateList) => {
     // Generate autoComplete List
-    generateList(autoCompleteJS, feedback, feedback.results);
+    generateList(autoCompleteJS, dataFeedback, dataFeedback.results);
     // No Results List Item
     const result = document.createElement("li");
     result.setAttribute("class", "no_result");
