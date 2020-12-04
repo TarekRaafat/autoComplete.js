@@ -11,16 +11,16 @@ import debouncer from "./utils/debouncer";
 import eventEmitter from "./utils/eventEmitter";
 
 /**
- * @desc This is autoCompleteJS
+ * @desc This is autoComplete
  * @version 8.0.0
- * @example let autoComplete = new autoCompleteJS({config});
+ * @example let autoCompleteJS = new autoComplete({config});
  */
-export default class autoCompleteJS {
+export default class autoComplete {
   constructor(config) {
     // Deconstructing config values
     const {
       name = "Search",
-      selector = "#autoCompleteJS", // User input selector
+      selector = "#autoComplete", // User input selector
       data: {
         src, // Data src selection
         key, // Data src key selection
@@ -29,7 +29,7 @@ export default class autoCompleteJS {
       },
       query, // Query interceptor function
       trigger: {
-        event = ["input"], // autoCompleteJS event
+        event = ["input"], // autoComplete event
         condition = false, // condition trigger
       } = {},
       searchEngine = "strict", // Search engine type
@@ -41,8 +41,8 @@ export default class autoCompleteJS {
         destination, // Results list selector
         position = "afterend", // Results list position
         element: resultsListElement = "ul", // Results list element tag
-        idName: resultsListId = "autoCompleteJS_list",
-        className: resultsListClass = "autoCompleteJS_list",
+        idName: resultsListId = "autoComplete_list",
+        className: resultsListClass = "autoComplete_list",
         navigation = false, // Results list navigation
       } = {},
       sort = false, // Sorting results list
@@ -51,8 +51,8 @@ export default class autoCompleteJS {
       resultItem: {
         content = false, // Result item function
         element: resultItemElement = "li", // Result item element tag
-        idName: resultItemId = "autoCompleteJS_result",
-        className: resultItemClass = "autoCompleteJS_result",
+        idName: resultItemId = "autoComplete_result",
+        className: resultItemClass = "autoComplete_result",
       } = {},
       noResults, // No results action
       highlight = false, // Highlighting matching results
@@ -101,11 +101,11 @@ export default class autoCompleteJS {
     this.feedback = feedback;
     this.onSelection = onSelection;
     // Invoking preInit automatically
-    // when autoCompleteJS instance gets initiated
+    // when autoComplete instance gets initiated
     this.preInit();
   }
 
-  // Run autoCompleteJS processes
+  // Run autoComplete processes
   start(input, query) {
     // - Match query with existing value
     const results = listMatchingResults(this, query);
@@ -149,7 +149,7 @@ export default class autoCompleteJS {
     eventEmitter(this.inputField, this.data.store, "fetch");
   }
 
-  // Run autoCompleteJS composer
+  // Run autoComplete composer
   async compose() {
     // 0- Prepare raw input value
     const input = getInputValue(this.inputField);
@@ -163,7 +163,7 @@ export default class autoCompleteJS {
       await this.dataStore();
       // 5- Close all open lists
       closeAllLists(this.inputField);
-      // 6- Start autoCompleteJS engine
+      // 6- Start autoComplete engine
       this.start(input, query);
     } else {
       // 4- Close all open lists
@@ -177,7 +177,7 @@ export default class autoCompleteJS {
     if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
     // Run executer
     this.hook = debouncer(() => {
-      // - Prepare autoCompleteJS processes
+      // - Prepare autoComplete processes
       this.compose();
     }, this.debounce);
     /**
@@ -212,7 +212,7 @@ export default class autoCompleteJS {
            * @emits {connect} Emits Event on connection
            **/
           eventEmitter(this.inputField, null, "connect");
-          // Initiate autoCompleteJS
+          // Initiate autoComplete
           this.init();
         }
       }
@@ -223,7 +223,7 @@ export default class autoCompleteJS {
     observer.observe(targetNode, config);
   }
 
-  // Un-initialize autoCompleteJS
+  // Un-initialize autoComplete
   unInit() {
     this.inputField.removeEventListener("input", this.hook);
     /**

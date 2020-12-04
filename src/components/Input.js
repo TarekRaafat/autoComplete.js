@@ -1,7 +1,7 @@
 /**
  * Input field element
  *
- * @param {Object} config - autoCompleteJS configurations
+ * @param {Object} config - autoComplete configurations
  *
  */
 export default (config) => {

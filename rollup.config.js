@@ -10,7 +10,7 @@ import serve from "rollup-plugin-serve";
 import livereload from "rollup-plugin-livereload";
 
 // Library Name
-const libName = "autoCompleteJS";
+const libName = "autoComplete";
 // Library Max. Size Allowed
 const limitBytes = 3 * 1024 * 1024;
 // Library Size Analyzer

@@ -1,45 +1,45 @@
 // autoComplete.js input eventListener on connect event
-document.querySelector("#autoCompleteJS").addEventListener("connect", function (event) {
+document.querySelector("#autoComplete").addEventListener("connect", function (event) {
   console.log(event);
 });
 // // autoComplete.js input eventListener on initialization event
-// document.querySelector("#autoCompleteJS").addEventListener("init", function (event) {
+// document.querySelector("#autoComplete").addEventListener("init", function (event) {
 //   console.log(event);
 // });
 // // autoComplete.js input eventListener on data response event
-// document.querySelector("#autoCompleteJS").addEventListener("fetch", function (event) {
+// document.querySelector("#autoComplete").addEventListener("fetch", function (event) {
 //   console.log(event.detail);
 // });
 // // autoComplete.js input eventListener on search results event
-// document.querySelector("#autoCompleteJS").addEventListener("results", function (event) {
+// document.querySelector("#autoComplete").addEventListener("results", function (event) {
 //   console.log(event.detail);
 // });
 // // autoComplete.js input eventListener on post results list rendering event
-// document.querySelector("#autoCompleteJS").addEventListener("rendered", function (event) {
+// document.querySelector("#autoComplete").addEventListener("rendered", function (event) {
 //   console.log(event.detail);
 // });
 // // autoComplete.js input eventListener on results list navigation
-// document.querySelector("#autoCompleteJS").addEventListener("navigation", function (event) {
+// document.querySelector("#autoComplete").addEventListener("navigation", function (event) {
 //   console.log(event.detail);
 // });
 // // autoComplete.js input eventListener on post un-initialization event
-// document.querySelector("#autoCompleteJS").addEventListener("unInit", function (event) {
+// document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
 //   console.log(event);
 // });
 
 // The autoComplete.js Engine instance creator
-const autoComplete = new autoCompleteJS({
+const autoCompleteJS = new autoComplete({
   name: "food & drinks",
-  selector: "#autoCompleteJS",
+  selector: "#autoComplete",
   data: {
     src: async () => {
       // Loading placeholder text
-      document.querySelector("#autoCompleteJS").setAttribute("placeholder", "Loading...");
+      document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
       // Fetch External Data Source
       const source = await fetch("./db/generic.json");
       const data = await source.json();
       // Post Loading placeholder text
-      document.querySelector("#autoCompleteJS").setAttribute("placeholder", autoComplete.placeHolder);
+      document.querySelector("#autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
       // Returns Fetched data
       return data;
     },
@@ -65,26 +65,26 @@ const autoComplete = new autoCompleteJS({
     },
   },
   noResults: (feedback, generateList) => {
-    // Generate autoCompleteJS List
-    generateList(autoComplete, feedback, feedback.results);
+    // Generate autoComplete List
+    generateList(autoCompleteJS, feedback, feedback.results);
     // No Results List Item
     const result = document.createElement("li");
     result.setAttribute("class", "no_result");
     result.setAttribute("tabindex", "1");
     result.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${feedback.query}"</span>`;
-    document.querySelector(`#${autoComplete.resultsList.idName}`).appendChild(result);
+    document.querySelector(`#${autoCompleteJS.resultsList.idName}`).appendChild(result);
   },
   feedback: (data) => {
     console.log(data);
   },
   onSelection: (feedback) => {
-    document.querySelector("#autoCompleteJS").blur();
+    document.querySelector("#autoComplete").blur();
     // Prepare User's Selected Value
     const selection = feedback.selection.value[feedback.selection.key];
     // Render selected choice to selection div
     document.querySelector(".selection").innerHTML = selection;
     // Replace Input value with the selected value
-    document.querySelector("#autoCompleteJS").value = selection;
+    document.querySelector("#autoComplete").value = selection;
     // Console log autoComplete data feedback
     console.log(feedback);
   },
@@ -101,12 +101,12 @@ document.querySelector(".toggler").addEventListener("click", function () {
     // Set Search Engine mode to Loose
     document.querySelector(".toggle").style.justifyContent = "flex-end";
     document.querySelector(".toggler").innerHTML = "Loose";
-    autoComplete.searchEngine = "loose";
+    autoCompleteJS.searchEngine = "loose";
   } else {
     // Set Search Engine mode to Strict
     document.querySelector(".toggle").style.justifyContent = "flex-start";
     document.querySelector(".toggler").innerHTML = "Strict";
-    autoComplete.searchEngine = "strict";
+    autoCompleteJS.searchEngine = "strict";
   }
 });
 
@@ -136,7 +136,7 @@ const action = function (action) {
 // Toggle event for search input
 // showing & hiding results list onfocus/blur
 ["focus", "blur"].forEach(function (eventType) {
-  document.querySelector("#autoCompleteJS").addEventListener(eventType, function () {
+  document.querySelector("#autoComplete").addEventListener(eventType, function () {
     // Hide results list & show other elements
     if (eventType === "blur") {
       action("dim");

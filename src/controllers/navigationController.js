@@ -4,7 +4,7 @@ import eventEmitter from "../utils/eventEmitter";
 /**
  * List navigation function initializer
  *
- * @param {Object} config - autoCompleteJS configurations
+ * @param {Object} config - autoComplete configurations
  *
  */
 const navigate = (config, dataFeedback) => {
@@ -16,7 +16,7 @@ const navigate = (config, dataFeedback) => {
    *
    * @param {Object} event - The `keydown` event Object
    * @param {Array <elements>} list - The array of list items
-   * @param {Object} config - autoCompleteJS configurations
+   * @param {Object} config - autoComplete configurations
    *
    */
   const update = (event, list, state, config) => {
@@ -55,7 +55,7 @@ const navigate = (config, dataFeedback) => {
       // Remove "active" class from the item
       list[index].removeAttribute("aria-selected");
       // list[index].setAttribute("aria-selected", "false");
-      list[index].classList.remove("autoCompleteJS_selected");
+      list[index].classList.remove("autoComplete_selected");
     }
   };
 
@@ -74,7 +74,7 @@ const navigate = (config, dataFeedback) => {
     if (currentFocus < 0) currentFocus = list.length - 1;
     // Add "active" class to the item
     list[currentFocus].setAttribute("aria-selected", "true");
-    list[currentFocus].classList.add("autoCompleteJS_selected");
+    list[currentFocus].classList.add("autoComplete_selected");
   };
 
   /**

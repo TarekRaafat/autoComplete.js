@@ -5,12 +5,12 @@ import createItem from "../components/Item";
  * Close all open lists
  *
  * @param {Element} element - Current selected element
- * @param {Element} inputField - autoCompleteJS input field
+ * @param {Element} inputField - autoComplete input field
  */
 const closeAllLists = (inputField, element) => {
-  // Get all autoCompleteJS lists
-  const list = document.getElementsByClassName("autoCompleteJS_list");
-  // Iterate over all autoCompleteJS open lists in the document
+  // Get all autoComplete lists
+  const list = document.getElementsByClassName("autoComplete_list");
+  // Iterate over all autoComplete open lists in the document
   for (let index = 0; index < list.length; index++) {
     // Close all lists
     // except the ones passed as an argument
@@ -26,7 +26,7 @@ const closeAllLists = (inputField, element) => {
  * List all matching results
  *
  * @param {Object} data - The available data object
- * @param {Object} config - autoCompleteJS configurations
+ * @param {Object} config - autoComplete configurations
  */
 const generateList = (config, data, matches) => {
   // Initiate creating list process

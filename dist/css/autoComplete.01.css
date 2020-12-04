@@ -1,10 +1,10 @@
-.autoCompleteJS_wrapper {
+.autoComplete_wrapper {
   position: relative;
   display: inline-block;
   width: 370px;
 }
 
-#autoCompleteJS {
+#autoComplete {
   width: 95%;
   height: 40px;
   padding-left: 10px;
@@ -16,12 +16,12 @@
   background-color: rgba(123, 123, 123, 0.1);
 }
 
-#autoCompleteJS::placeholder {
+#autoComplete::placeholder {
   color: rgba(123, 123, 123, 0.5);
   transition: all 0.3s ease;
 }
 
-#autoCompleteJS_list {
+#autoComplete_list {
   position: absolute;
   top: 100%;
   left: 0;
@@ -36,7 +36,7 @@
   outline: none;
 }
 
-.autoCompleteJS_result {
+.autoComplete_result {
   margin: 0.3rem;
   padding: 0.3rem 0.5rem;
   list-style: none;
@@ -52,55 +52,55 @@
   transition: all 0.2s ease;
 }
 
-.autoCompleteJS_result::selection {
+.autoComplete_result::selection {
   color: rgba(#ffffff, 0);
   background-color: rgba(#ffffff, 0);
 }
 
-.autoCompleteJS_result:hover {
+.autoComplete_result:hover {
   cursor: pointer;
   background-color: rgba(123, 123, 123, 0.1);
 }
 
-.autoCompleteJS_highlighted {
+.autoComplete_highlighted {
   color: rgba(123, 123, 123, 0.5);
   font-weight: bold;
 }
 
-.autoCompleteJS_highlighted::selection {
+.autoComplete_highlighted::selection {
   color: rgba(#ffffff, 0);
   background-color: rgba(#ffffff, 0);
 }
 
-.autoCompleteJS_selected {
+.autoComplete_selected {
   cursor: pointer;
   background-color: rgba(123, 123, 123, 0.1);
 }
 
 @media only screen and (max-width: 600px) {
-  .autoCompleteJS_wrapper {
+  .autoComplete_wrapper {
     width: 320px;
   }
 
-  #autoCompleteJS {
+  #autoComplete {
     width: 18rem;
     background-size: 1.6rem;
     background-position: left 1.1rem top 0.75rem;
   }
 
-  #autoCompleteJS_list {
+  #autoComplete_list {
     margin: 10px;
   }
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  #autoCompleteJS {
+  #autoComplete {
     border-width: 1px;
   }
 }
 
 @-moz-document url-prefix() {
-  #autoCompleteJS {
+  #autoComplete {
     background-size: 1.2rem;
     background-origin: border-box;
     border-width: 1px;

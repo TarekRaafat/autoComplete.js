@@ -1,7 +1,7 @@
 /**
  * List element creator
  *
- * @param {Object} config - autoCompleteJS configurations
+ * @param {Object} config - autoComplete configurations
  *
  * @return {Element} list - The created list element
  */
@@ -14,7 +14,7 @@ export default (config) => {
   list.setAttribute("role", "listbox");
   list.setAttribute("tabindex", "-1");
   if (config.resultsList.container) config.resultsList.container(list);
-  // Append the DIV element as a child of autoCompleteJS container
+  // Append the DIV element as a child of autoComplete container
   config.inputField.parentNode.appendChild(list);
   return list;
 };
