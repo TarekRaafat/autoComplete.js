@@ -51,8 +51,8 @@ const generateList = (config, data, matches) => {
           index,
         },
       };
-      // Returns the selected value onSelection
-      config.onSelection(dataFeedback);
+      // Returns the selected value onSelection if set
+      if (config.onSelection) config.onSelection(dataFeedback);
     });
     // Add result to the list
     list.appendChild(resultItem);

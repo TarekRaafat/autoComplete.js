@@ -206,7 +206,7 @@
             index: index
           })
         };
-        config.onSelection(dataFeedback);
+        if (config.onSelection) config.onSelection(dataFeedback);
       });
       list.appendChild(resultItem);
     };

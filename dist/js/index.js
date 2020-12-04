@@ -6,6 +6,10 @@ document.querySelector("#autoComplete").addEventListener("connect", function (ev
 // document.querySelector("#autoComplete").addEventListener("init", function (event) {
 //   console.log(event);
 // });
+// // autoComplete.js input eventListener on input event
+// document.querySelector("#autoComplete").addEventListener("input", function (event) {
+//   console.log(event);
+// });
 // // autoComplete.js input eventListener on data response event
 // document.querySelector("#autoComplete").addEventListener("fetch", function (event) {
 //   console.log(event.detail);
