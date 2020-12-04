@@ -1,17 +1,7 @@
 {
   "name": "@tarekraafat/autocomplete.js",
-  "version": "7.2.0",
+  "version": "8.0.0",
   "description": "Simple autocomplete pure vanilla Javascript library.",
-  "main": "dist/js/autoComplete.js",
-  "browser": "dist/js/autoComplete.min.js",
-  "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w & ws --rewrite '/* -> /dist/$1'  --spa ./dist/index.html"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TarekRaafat/autoComplete.js.git"
-  },
   "keywords": [
     "simple",
     "autocomplete",
@@ -24,30 +14,47 @@
     "lightning",
     "lightweight",
     "modern",
-    "versitle",
+    "versatile",
     "customizable",
     "hackable",
     "easy",
     "intuitive",
     "scalable",
     "extensible",
-    "autoCompletejs",
+    "autoCompleteJS",
     "autosuggestion",
     "autosuggest",
     "search",
     "dropdown"
   ],
+  "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
+  "bugs": {
+    "url": "https://github.com/TarekRaafat/autoComplete.js/issues",
+    "email": "tarek.m.raafat@gmail.com"
+  },
+  "license": "Apache-2.0",
   "author": {
     "name": "Tarek Raafat",
     "email": "tarek.m.raafat@gmail.com",
     "url": "http://www.tarekraafat.com"
   },
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/TarekRaafat/autoComplete.js/issues"
+  "files": [
+    "dist/js/autoComplete.js"
+  ],
+  "main": "dist/js/autoComplete.js",
+  "browser": "dist/js/autoComplete.min.js",
+  "unpkg": "dist/js/autoComplete.min.js",
+  "module": "dist/js/autoComplete.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TarekRaafat/autoComplete.js.git"
   },
-  "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
   "devDependencies": {
+<<<<<<< HEAD
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "acorn": "^8.0.4",
@@ -57,7 +64,24 @@
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-eslint": "^7.0.0",
+=======
+    "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.12.7",
+    "@rollup/plugin-babel": "^5.2.2",
+    "acorn": "^8.0.4",
+    "rollup": "^2.34.1",
+    "rollup-plugin-analyzer": "^3.3.0",
+    "rollup-plugin-cleanup": "^3.2.1",
+>>>>>>> origin/v8.0.0
     "rollup-plugin-gzip": "^2.5.0",
+    "rollup-plugin-livereload": "^2.0.0",
+    "rollup-plugin-nodent": "^0.2.2",
+    "rollup-plugin-serve": "^1.1.0",
+    "rollup-plugin-sizes": "^1.0.3",
     "rollup-plugin-uglify": "^6.0.4"
+  },
+  "engines": {
+    "node": "12",
+    "npm": "6"
   }
 }

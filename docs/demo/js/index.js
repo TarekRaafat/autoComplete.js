@@ -2,15 +2,11 @@
 const currentDate = document.querySelector("#currentDate");
 currentDate.textContent = new Date(Date.now()).getUTCFullYear();
 
-// autoComplete.js on type event emitter
-document.querySelector("#autoComplete").addEventListener("autoComplete", function(event) {
-  console.log(event.detail);
-});
-
 // The autoComplete.js Engine instance creator
-const autoCompletejs = new autoComplete({
+const autoCompleteJS = new autoComplete({
+  name: "food & drinks",
   data: {
-    src: async function() {
+    src: async function () {
       // Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
       // Fetch External Data Source
@@ -21,62 +17,53 @@ const autoCompletejs = new autoComplete({
     },
     key: ["food", "cities", "animals"],
   },
-  query: {
-    manipulate: function(query) {
-      return query.replace("@pizza", "burger");
-    },
-  },
-  trigger: {
-    event: ["input", "focusin", "focusout"]
-  },
-  placeHolder: "Food & Drinks",
+  placeHolder: "Search for Food & Drinks!",
   searchEngine: "strict",
   highlight: true,
   maxResults: 5,
-  resultsList: {
-    render: true
-  },
-  noResults: function() {
+  noResults: (dataFeedback, generateList) => {
+    // Generate autoComplete List
+    generateList(autoCompleteJS, dataFeedback, dataFeedback.results);
+    // No Results List Item
     const result = document.createElement("li");
     result.setAttribute("class", "no_result");
     result.setAttribute("tabindex", "1");
-    result.innerHTML = "No Results";
-    document.querySelector("#autoComplete_list").appendChild(result);
+    result.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${dataFeedback.query}"</span>`;
+    document.querySelector(`#${autoCompleteJS.resultsList.idName}`).appendChild(result);
   },
-  onSelection: function(feedback) {
+  onSelection: (feedback) => {
     document.querySelector("#autoComplete").blur();
-    const selection = feedback.selection.value.food;
+    // Prepare User's Selected Value
+    const selection = feedback.selection.value[feedback.selection.key];
     // Render selected choice to selection div
     document.querySelector(".selection").innerHTML = selection;
-    // Clear Input
-    document.querySelector("#autoComplete").value = "";
-    // Change placeholder with the selected value
-    document.querySelector("#autoComplete").setAttribute("placeholder", selection);
-    // Concole log autoComplete data feedback
+    // Replace Input value with the selected value
+    document.querySelector("#autoComplete").value = selection;
+    // Console log autoComplete data feedback
     console.log(feedback);
   },
 });
 
 // Toggle Search Engine Type/Mode
-document.querySelector(".toggeler").addEventListener("click", function() {
-  // Holdes the toggle buttin alignment
-  const toggele = document.querySelector(".toggele").style.justifyContent;
+document.querySelector(".toggler").addEventListener("click", function () {
+  // Holds the toggle button alignment
+  const toggle = document.querySelector(".toggle").style.justifyContent;
 
-  if (toggele === "flex-start" || toggele === "") {
+  if (toggle === "flex-start" || toggle === "") {
     // Set Search Engine mode to Loose
-    document.querySelector(".toggele").style.justifyContent = "flex-end";
-    document.querySelector(".toggeler").innerHTML = "Loose";
-    autoCompletejs.searchEngine = "loose";
+    document.querySelector(".toggle").style.justifyContent = "flex-end";
+    document.querySelector(".toggler").innerHTML = "Loose";
+    autoCompleteJS.searchEngine = "loose";
   } else {
     // Set Search Engine mode to Strict
-    document.querySelector(".toggele").style.justifyContent = "flex-start";
-    document.querySelector(".toggeler").innerHTML = "Strict";
-    autoCompletejs.searchEngine = "strict";
+    document.querySelector(".toggle").style.justifyContent = "flex-start";
+    document.querySelector(".toggler").innerHTML = "Strict";
+    autoCompleteJS.searchEngine = "strict";
   }
 });
 
 // Toggle results list and other elements
-const action = function(action) {
+const action = function (action) {
   const github = document.querySelector(".github-corner");
   const title = document.querySelector("h1");
   const mode = document.querySelector(".mode");
@@ -99,19 +86,15 @@ const action = function(action) {
 };
 
 // Toggle event for search input
-// showing & hidding results list onfocus / blur
-["focus", "blur"].forEach(function(eventType) {
-  const resultsList = document.querySelector("#autoComplete_list");
-
-  document.querySelector("#autoComplete").addEventListener(eventType, function() {
-    // Hide results list & show other elemennts
+// showing & hiding results list onfocus/blur
+["focus", "blur"].forEach(function (eventType) {
+  document.querySelector("#autoComplete").addEventListener(eventType, function () {
+    // Hide results list & show other elements
     if (eventType === "blur") {
       action("dim");
-      resultsList.style.display = "none";
     } else if (eventType === "focus") {
-      // Show results list & hide other elemennts
+      // Show results list & hide other elements
       action("light");
-      resultsList.style.display = "block";
     }
   });
 });

@@ -26,7 +26,28 @@ Release flags:
 
 ## Release Notes
 
-- v7.2.0 :sparkles:
+- v8.0.0 :sparkles: #141
+  - Whole New More Modern Architecture Design
+  - Added: High Quality Accessibility ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/examples/combobox/combobox-autocomplete-both.html)) Support
+  - Added: Life Cycle Events (Thanks 👍 @zippy84) #89
+  - Added: `init/unInit` methods  (Thanks 👍 @Keagel) #115
+  - Added: Input Field Observing Functionality
+  - Added: `Diacritics` 2 way Support (Thanks 👍 @batcaverna, @svkmedia) #77 #93
+  - Added: API for Controlling `Classes` & `IDs` (Thanks 👍 @xtellurian, @Lirux) #73
+  - Added: New neutral/non-opinionated Style (Thanks 👍 @luizbills) #92
+  - Enhanced: autoComplete.js Internal Flow
+  - Enhanced: `data` Fetching
+  - Enhanced: `data` Storing
+  - Enhanced: `resultsList` Navigation
+  - Enhanced: `resultsList` Rendering (Thanks 👍 @eballeste) #105 #139 #126
+  - Fixed: `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb)
+  - Fixed: `query` threshold length accuracy
+  - Fixed: Calling `dataSrc` on each trigger (Thanks 👍 @thomasphilibert) #106
+  - Fixed: Right click behavior on `resultsList` (Thanks 👍 @drankje) #94
+  - Fixed: Cursor relocation on keyboard `keyUp` or `keyDown` (Thanks 👍 @cadday) #117
+  - Fixed: `data` as a `Number` parsing issue (Thanks 👍 @andresfdel17) #132
+
+- v7.2.0
   - Added support to `textarea` input field (Thanks 👍 @EmilStenstrom)
 
 
@@ -104,7 +125,6 @@ Release flags:
   - HTML elements `ContentEditable` Input Support (Thanks @philippejadin)
 
 - v5.0.0
-
   - Large datasets handeling (Thanks @Johann-S)
   - API Data fetching & Dynamic Data reloading (Thanks @Brostafa)
   - Debouncing API Calls
@@ -113,7 +133,6 @@ Release flags:
   - Code Clean Up
 
 -   v4.0.0
-
     -   Multiple searchable `keys` for data `src` (Thanks @Johann-S)
     -   Rendered `results` in original case (Thanks @nickbp12)
     -   Improved Development Environment (Thanks @ziishaned)
@@ -133,30 +152,24 @@ Release flags:
     -   Code Clean Up
 
 -   v3.2.2
-
     -   Fixed bug with `hightlight` API default value during `strict` engine mode
     -   Fixed bug with `resultsList` API default value when not configured
 
 -   v3.2.1
-
     -   Isolated `resultsList` value for multiple instances **(Thanks @albu77)**
 
 -   v3.2.0
-
     -   API Enhancements over rendered results list container `resultsList > container` function **(Thanks @albu77)**
 
 -   v3.1.0
-
     -   Added API for rendered results list container `resultsList > container` function **(Thanks @albu77)**
     -   API Enhancements
 
 -   v3.0.0
-
     -   Added API for rendered result item `resultItem` function
     -   `renderResults` API name changed to `resultsList` `[Changed]`
 
 -   v2.1.0
-
     -   Added support for Keyboard `(Arrow)` & `(Tab)` Navigation
     -   Selection event object returns in data feedback **(Thanks @alvaaz)**
     -   Added `Function` support to `selector` for detached DOM rendering **(Thanks @mikob)**
@@ -171,14 +184,12 @@ Release flags:
     -   Style Enhancements
 
 -   v2.0.1
-
     -   Fixed multiple space input issue **(Thanks @DevOsamaMohamed)**
     -   Fixed remote data source excessive requests **(Thanks @DevOsamaMohamed)**
     -   Optimizations for performance enhancements
     -   Reduced Weight
 
 -   v2.0.0
-
     -   Added support for array of `Objects` & `JSON` as data source with `Key` selection
     -   Added support for external data source via `Promises` & `Async/Await` function
     -   Added more comprehensive and usable data feedback on user selection `(User Input, Results List, User Selection)` Object
@@ -188,18 +199,15 @@ Release flags:
     -   Scroll Infinite results style in [Demo](https://tarekraafat.github.io/autoComplete.js/demo/)
 
 -   v1.5.4
-
     -   Gzipped options for both builds are ready `(2KB) non-minified` & `(1KB) minified`
     -   Fixed styling issue with selections last selection child on mobile devices
 
 -   v1.5.3
-
     -   Added `threshold` for minimum characters length before Engine starts rendering suggestions
     -   Optimizations for better performance
     -   Reduced Weight to `(3KB)` minified
 
 -   v1.5.2
-
     -   Fixed `onSelection` null action issue
     -   Placeholder keeps value of last selection `[Removed]`
     -   Fully isolated UI from Logic
@@ -207,11 +215,9 @@ Release flags:
     -   Reduced Weight
 
 -   v1.5.1
-
     -   Bug fixes
 
 -   v1.5.0
-
     -   Ability to change results destination & position `renderResults`
     -   Optimizations for faster performance & lighter weight
     -   Enhanced error handling capabilities
@@ -219,53 +225,43 @@ Release flags:
     -   Added detailed documentation
 
 -   v1.4.1
-
     -   Bug Fixes
 
 -   v1.4.0
-
     -   Added new type/mode of Search Engine `strict`
     -   Detached the results list style behavior from code
     -   `Placeholder max. length` option `[Removed]`
     -   Optimizations for higher performance & lighter weight
 
 -   v1.3.1
-
     -   Refactored for higher speed & smaller footprint
     -   Bug fixes & Optimizations
 
 -   v1.3.0
-
     -   Added new `datasrc` a function that returns `Array`
 
 -   v1.2.1
-
     -   Added Placeholder text maximum length option `[Experimental]`
     -   Added new style sheet variation
 
 -   v1.2.0
-
     -   Redesigned the entire search engine for better results & experience
     -   Added support for Multi-keyword search
     -   Fixed issue with Capital letters reflects in results
 
 -   v1.1.0
-
     -   Reduced the library size 97% `(101KB -> 4KB)`
     -   Introducing 2 different versions of the library `(pure, minified)`
     -   Replaced webpack with Rollup for better bundling
     -   Fixed some bugs caused problems with node apps
 
 -   v1.0.3
-
     -   Refactored & Optimized to reduce size and enhance performance
 
 -   v1.0.2
-
     -   Fixed the library name in the webpack.config.js file
 
 -   v1.0.1
-
     -   Optimizations Reduced the library weight by 1KB
 
 -   v1.0.0
