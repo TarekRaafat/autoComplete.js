@@ -15,7 +15,6 @@
   font-size: 1rem;
   text-overflow: ellipsis;
   color: rgba(255, 122, 122, 0.3);
-  /* caret-color: rgb(255, 122, 122); */
   outline: none;
   border-radius: 10rem;
   border: 0;
@@ -65,7 +64,6 @@
 #autoCompleteJS:focus {
   color: rgba(255, 122, 122, 1);
   border: 0.06rem solid rgba(255, 122, 122, 0.8);
-  /* box-shadow: 0 0 30px 5px rgba(255, 122, 122, 0.15); */
 }
 
 #autoCompleteJS_list {
@@ -77,8 +75,6 @@
   margin-top: 0.5rem;
   border-radius: 0.6rem;
   background-color: #fff;
-  /* box-shadow: 0 20px 50px 20px rgba(123, 123, 123, 0.15); */
-  /* box-shadow: 0 10px 30px 0 rgba(123, 123, 123, 0.15); */
   box-shadow: 0 3px 6px rgba(149, 157, 165, 0.15);
   border: 1px solid rgba(33, 33, 33, 0.07);
   z-index: 1000;
@@ -98,7 +94,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  /* border-bottom: 1px solid #eaecef; */
   transition: all 0.2s ease;
 }
 
@@ -125,7 +120,6 @@
 
 .autoCompleteJS_selected {
   cursor: pointer;
-  /* background-color: #eee; */
   background-color: rgba(255, 122, 122, 0.15);
 }
 
