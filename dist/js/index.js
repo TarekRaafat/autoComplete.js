@@ -6,10 +6,10 @@ document.querySelector("#autoCompleteJS").addEventListener("connect", function (
 // document.querySelector("#autoCompleteJS").addEventListener("init", function (event) {
 //   console.log(event);
 // });
-// autoComplete.js input eventListener on data response event
-document.querySelector("#autoCompleteJS").addEventListener("fetch", function (event) {
-  console.log(event.detail);
-});
+// // autoComplete.js input eventListener on data response event
+// document.querySelector("#autoCompleteJS").addEventListener("fetch", function (event) {
+//   console.log(event.detail);
+// });
 // // autoComplete.js input eventListener on search results event
 // document.querySelector("#autoCompleteJS").addEventListener("results", function (event) {
 //   console.log(event.detail);
