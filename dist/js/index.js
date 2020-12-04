@@ -65,6 +65,11 @@ const autoCompleteJS = new autoComplete({
   searchEngine: "strict",
   placeHolder: "Search for Food & Drinks!",
   maxResults: 5,
+  sort: (a, b) => {
+    if (a.match < b.match) return -1;
+    if (a.match > b.match) return 1;
+    return 0;
+  },
   highlight: true,
   debounce: 300,
   threshold: 1,

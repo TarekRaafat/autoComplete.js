@@ -4,6 +4,7 @@ currentDate.textContent = new Date(Date.now()).getUTCFullYear();
 
 // The autoComplete.js Engine instance creator
 const autoCompleteJS = new autoComplete({
+  name: "food & drinks",
   data: {
     src: async function () {
       // Loading placeholder text
@@ -15,9 +16,6 @@ const autoCompleteJS = new autoComplete({
       return data;
     },
     key: ["food", "cities", "animals"],
-  },
-  trigger: {
-    event: ["input", "focusin", "focusout"],
   },
   placeHolder: "Search for Food & Drinks!",
   searchEngine: "strict",
