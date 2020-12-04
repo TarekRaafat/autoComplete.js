@@ -6,10 +6,10 @@ document.querySelector("#autoCompleteJS").addEventListener("connect", function (
 // document.querySelector("#autoCompleteJS").addEventListener("init", function (event) {
 //   console.log(event);
 // });
-// // autoComplete.js input eventListener on data response event
-// document.querySelector("#autoCompleteJS").addEventListener("fetch", function (event) {
-//   console.log(event.detail);
-// });
+// autoComplete.js input eventListener on data response event
+document.querySelector("#autoCompleteJS").addEventListener("fetch", function (event) {
+  console.log(event.detail);
+});
 // // autoComplete.js input eventListener on search results event
 // document.querySelector("#autoCompleteJS").addEventListener("results", function (event) {
 //   console.log(event.detail);
@@ -44,25 +44,14 @@ const autoComplete = new autoCompleteJS({
       return data;
     },
     key: ["food", "cities", "animals"],
-    cache: true,
+    cache: false,
   },
-  // query: {
-  //   manipulate: function (query) {
-  //     return `${query}`;
-  //   },
-  // },
   searchEngine: "strict",
   placeHolder: "Search for Food & Drinks!",
   maxResults: 5,
   highlight: true,
   debounce: 300,
   threshold: 1,
-  resultsList: {
-    render: true,
-    // container: (element) => {
-    //   // console.log(element);
-    // },
-  },
   resultItem: {
     content: (data, element) => {
       // Prepare Value's Key
@@ -145,7 +134,7 @@ const action = function (action) {
 };
 
 // Toggle event for search input
-// showing & hiding results list onfocus / blur
+// showing & hiding results list onfocus/blur
 ["focus", "blur"].forEach(function (eventType) {
   document.querySelector("#autoCompleteJS").addEventListener(eventType, function () {
     // Hide results list & show other elements

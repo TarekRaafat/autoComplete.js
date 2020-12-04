@@ -24,7 +24,7 @@ export default class autoCompleteJS {
       data: {
         src, // Data src selection
         key, // Data src key selection
-        cache = true, // Flag to cache data src
+        cache = false, // Flag to cache data src
         store,
       },
       query, // Query interceptor function
@@ -33,7 +33,7 @@ export default class autoCompleteJS {
         condition = false, // condition trigger
       } = {},
       searchEngine = "strict", // Search engine type
-      threshold = 0, // Minimum characters length before engine starts rendering
+      threshold = 1, // Minimum characters length before engine starts rendering
       debounce = 0, // Minimum duration for API calls debounce
       resultsList: {
         render = true,
@@ -138,6 +138,10 @@ export default class autoCompleteJS {
   }
 
   async dataStore() {
+    // Check if cache is NOT true
+    // and store is empty
+    if (this.data.cache && this.data.store) return null;
+    // Fetch new data from source and store it
     this.data.store = typeof this.data.src === "function" ? await this.data.src() : this.data.src;
     /**
      * @emits {request} Emits Event on data response
@@ -156,7 +160,7 @@ export default class autoCompleteJS {
     // 3- Check triggering condition
     if (triggerCondition) {
       // 4- Prepare the data
-      !this.data.cache ? await this.dataStore() : !this.data.store ? await this.dataStore() : null;
+      await this.dataStore();
       // 5- Close all open lists
       closeAllLists(this.inputField);
       // 6- Start autoCompleteJS engine
@@ -179,7 +183,7 @@ export default class autoCompleteJS {
     /**
      * @listens {input} Listens to all `input` events on the input field
      **/
-    this.inputField.addEventListener("input", this.hook);
+    this.inputField.addEventListener(this.trigger.event, this.hook);
     /**
      * @emits {init} Emits Event on Initialization
      **/

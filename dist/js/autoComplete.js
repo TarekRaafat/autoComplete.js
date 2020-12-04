@@ -384,7 +384,7 @@
           src = _config$data.src,
           key = _config$data.key,
           _config$data$cache = _config$data.cache,
-          cache = _config$data$cache === void 0 ? true : _config$data$cache,
+          cache = _config$data$cache === void 0 ? false : _config$data$cache,
           store = _config$data.store,
           query = config.query,
           _config$trigger = config.trigger;
@@ -396,7 +396,7 @@
           _config$searchEngine = config.searchEngine,
           searchEngine = _config$searchEngine === void 0 ? "strict" : _config$searchEngine,
           _config$threshold = config.threshold,
-          threshold = _config$threshold === void 0 ? 0 : _config$threshold,
+          threshold = _config$threshold === void 0 ? 1 : _config$threshold,
           _config$debounce = config.debounce,
           debounce = _config$debounce === void 0 ? 0 : _config$debounce,
           _config$resultsList = config.resultsList;
@@ -503,14 +503,15 @@
       value: function dataStore() {
         var _this2 = this;
         return new Promise(function ($return, $error) {
+          if (_this2.data.cache && _this2.data.store) return $return(null);
           return new Promise(function ($return, $error) {
             if (typeof _this2.data.src === "function") {
               return _this2.data.src().then($return, $error);
             }
             return $return(_this2.data.src);
-          }).then(function ($await_9) {
+          }).then(function ($await_5) {
             try {
-              _this2.data.store = $await_9;
+              _this2.data.store = $await_5;
               eventEmitter(_this2.inputField, _this2.data.store, "fetch");
               return $return();
             } catch ($boundEx) {
@@ -529,30 +530,20 @@
           query = prepareQueryValue(input, _this3.query);
           triggerCondition = checkTriggerCondition(_this3, query);
           if (triggerCondition) {
-            return new Promise(function ($return, $error) {
-              if (!_this3.data.cache) {
-                return _this3.dataStore().then($return, $error);
-              }
-              return new Promise(function ($return, $error) {
-                if (!_this3.data.store) {
-                  return _this3.dataStore().then($return, $error);
-                }
-                return $return(null);
-              }).then($return, $error);
-            }).then(function ($await_13) {
+            return _this3.dataStore().then(function ($await_6) {
               try {
                 closeAllLists(_this3.inputField);
                 _this3.start(input, query);
-                return $If_5.call(_this3);
+                return $If_3.call(_this3);
               } catch ($boundEx) {
                 return $error($boundEx);
               }
             }, $error);
           } else {
             closeAllLists(_this3.inputField);
-            return $If_5.call(_this3);
+            return $If_3.call(_this3);
           }
-          function $If_5() {
+          function $If_3() {
             return $return();
           }
         });
@@ -565,7 +556,7 @@
         this.hook = debouncer(function () {
           _this4.compose();
         }, this.debounce);
-        this.inputField.addEventListener("input", this.hook);
+        this.inputField.addEventListener(this.trigger.event, this.hook);
         eventEmitter(this.inputField, null, "init");
       }
     }, {
