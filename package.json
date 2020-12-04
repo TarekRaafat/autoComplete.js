@@ -54,17 +54,6 @@
     "dev": "rollup -c -w"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
-    "acorn": "^8.0.4",
-    "babel-eslint": "^10.1.0",
-    "local-web-server": "^4.2.1",
-    "rollup": "^2.32.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-cleanup": "^3.2.1",
-    "rollup-plugin-eslint": "^7.0.0",
-=======
     "@babel/core": "^7.12.9",
     "@babel/preset-env": "^7.12.7",
     "@rollup/plugin-babel": "^5.2.2",
@@ -72,7 +61,6 @@
     "rollup": "^2.34.1",
     "rollup-plugin-analyzer": "^3.3.0",
     "rollup-plugin-cleanup": "^3.2.1",
->>>>>>> origin/v8.0.0
     "rollup-plugin-gzip": "^2.5.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-nodent": "^0.2.2",
