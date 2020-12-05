@@ -238,6 +238,18 @@ new autoComplete({
 
 * * *
 
+### Life Cycle Events:
+
+1. `init`
+2. `input`
+3. `fetch`
+4. `results`
+5. `rendered`
+6. `navigation`
+7. `unInit`
+
+* * *
+
 ## 2. Examples
 
 -   Live working [Demo]
