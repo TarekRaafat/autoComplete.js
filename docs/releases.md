@@ -40,7 +40,7 @@ Release flags:
   - Enhanced: `data` Storing
   - Enhanced: `resultsList` Navigation
   - Enhanced: `resultsList` Rendering (Thanks 👍 @eballeste) #105 #139 #126
-  - Fixed: `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb)
+  - Fixed: `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb) #100 #126
   - Fixed: `query` threshold length accuracy #142
   - Fixed: Calling `dataSrc` on each trigger (Thanks 👍 @thomasphilibert) #106
   - Fixed: Right-click behavior on `resultsList` (Thanks 👍 @drankje) #94
