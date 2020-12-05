@@ -82,3 +82,17 @@ const action = function (action) {
     footer.style.opacity = 0.1;
   }
 };
+
+// Toggle event for search input
+// showing & hiding results list onfocus/blur
+["focus", "blur"].forEach(function (eventType) {
+  document.querySelector("#autoComplete").addEventListener(eventType, function () {
+    // Hide results list & show other elements
+    if (eventType === "blur") {
+      action("dim");
+    } else if (eventType === "focus") {
+      // Show results list & hide other elements
+      action("light");
+    }
+  });
+});
