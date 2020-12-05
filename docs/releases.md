@@ -47,6 +47,7 @@ Release flags:
   - Fixed: Cursor relocation on keyboard `keyUp` or `keyDown` (Thanks 👍 @cadday) #117
   - Fixed: `data` as a `Number` parsing issue (Thanks 👍 @andresfdel17) #132
   - Fixed: `autoComplete.js` interference with native keyboard events (Thanks 👍 @eballeste) #104
+  - Fixed: Keyboard events stops working when `onSelection` not defined (Thanks 👍 @AustinGrey) #130
 
 - v7.2.0
   - Added support to `textarea` input field (Thanks 👍 @EmilStenstrom)
