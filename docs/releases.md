@@ -41,9 +41,9 @@ Release flags:
   - Enhanced: `resultsList` Navigation
   - Enhanced: `resultsList` Rendering (Thanks 👍 @eballeste) #105 #139 #126
   - Fixed: `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb)
-  - Fixed: `query` threshold length accuracy
+  - Fixed: `query` threshold length accuracy #142
   - Fixed: Calling `dataSrc` on each trigger (Thanks 👍 @thomasphilibert) #106
-  - Fixed: Right click behavior on `resultsList` (Thanks 👍 @drankje) #94
+  - Fixed: Right-click behavior on `resultsList` (Thanks 👍 @drankje) #94
   - Fixed: Cursor relocation on keyboard `keyUp` or `keyDown` (Thanks 👍 @cadday) #117
   - Fixed: `data` as a `Number` parsing issue (Thanks 👍 @andresfdel17) #132
 
