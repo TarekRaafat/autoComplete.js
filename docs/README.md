@@ -240,13 +240,13 @@ new autoComplete({
 
 ### Life Cycle Events:
 
-1. `init`
-2. `input`
-3. `fetch`
-4. `results`
-5. `rendered`
-6. `navigation`
-7. `unInit`
+1. `init`: Fires after "autoComplete.js" engine is initialized
+2. `fetch`: Fires after fetching data is complete
+3. `input`: Fires on every user input
+4. `results`: Fires after search is done and marching results are ready 
+5. `rendered`: Fires after rendering the results list
+6. `navigation`: Fires on every "resultsList" navigation interaction
+7. `unInit`: Fires after "autoComplete.js" engine is un-initialized
 
 * * *
 
