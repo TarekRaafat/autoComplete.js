@@ -35,17 +35,18 @@ Release flags:
   - Added: `Diacritics` 2 way Support (Thanks 👍 @batcaverna, @svkmedia) #77 #93
   - Added: API for Controlling `Classes` & `IDs` (Thanks 👍 @xtellurian, @Lirux) #73
   - Added: New neutral/non-opinionated Style (Thanks 👍 @luizbills) #92
-  - Enhanced: autoComplete.js Internal Flow
+  - Enhanced: `autoComplete.js` Internal Flow
   - Enhanced: `data` Fetching
   - Enhanced: `data` Storing
   - Enhanced: `resultsList` Navigation
   - Enhanced: `resultsList` Rendering (Thanks 👍 @eballeste) #105 #139 #126
-  - Fixed: `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb) #100 #126
+  - Fixed: `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb) #100
   - Fixed: `query` threshold length accuracy #142
   - Fixed: Calling `dataSrc` on each trigger (Thanks 👍 @thomasphilibert) #106
   - Fixed: Right-click behavior on `resultsList` (Thanks 👍 @drankje) #94
   - Fixed: Cursor relocation on keyboard `keyUp` or `keyDown` (Thanks 👍 @cadday) #117
   - Fixed: `data` as a `Number` parsing issue (Thanks 👍 @andresfdel17) #132
+  - Fixed: `autoComplete.js` interference with native keyboard events (Thanks 👍 @eballeste) #104
 
 - v7.2.0
   - Added support to `textarea` input field (Thanks 👍 @EmilStenstrom)
