@@ -216,7 +216,7 @@ export default class autoComplete {
            * @emits {connect} Emits Event on connection
            **/
           eventEmitter(inputField, null, "connect");
-          // Initiate autoComplete
+          // Initialize autoComplete
           this.init();
         }
       }
