@@ -561,7 +561,9 @@
         this.hook = debouncer(function () {
           _this4.compose();
         }, this.debounce);
-        this.inputField.addEventListener(this.trigger.event, this.hook);
+        this.trigger.event.forEach(function (eventType) {
+          _this4.inputField.addEventListener(eventType, _this4.hook);
+        });
         eventEmitter(this.inputField, null, "init");
       }
     }, {

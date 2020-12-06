@@ -74,6 +74,9 @@ const autoCompleteJS = new autoComplete({
   highlight: true,
   debounce: 300,
   threshold: 1,
+  trigger: {
+    event: ["input", "focus"],
+  },
   resultItem: {
     content: (data, element) => {
       // Prepare Value's Key
