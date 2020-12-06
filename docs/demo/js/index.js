@@ -15,6 +15,9 @@ const autoCompleteJS = new autoComplete({
     },
     key: ["food", "cities", "animals"],
   },
+  trigger: {
+    event: ["input", "focus"],
+  },
   placeHolder: "Search for Food & Drinks!",
   searchEngine: "strict",
   highlight: true,
