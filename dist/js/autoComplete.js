@@ -555,6 +555,8 @@
       key: "init",
       value: function init() {
         var _this4 = this;
+        this.inputField = document.querySelector(this.selector);
+        inputComponent(this);
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
         this.hook = debouncer(function () {
           _this4.compose();
@@ -572,16 +574,15 @@
           subtree: true
         };
         var callback = function callback(mutationsList, observer) {
+          var inputField = targetNode.querySelector(_this5.selector);
           var _iterator = _createForOfIteratorHelper(mutationsList),
               _step;
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
               var mutation = _step.value;
-              if (targetNode.querySelector(_this5.selector)) {
+              if (inputField) {
                 observer.disconnect();
-                _this5.inputField = targetNode.querySelector(_this5.selector);
-                inputComponent(_this5);
-                eventEmitter(_this5.inputField, null, "connect");
+                eventEmitter(inputField, null, "connect");
                 _this5.init();
               }
             }

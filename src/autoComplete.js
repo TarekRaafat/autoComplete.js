@@ -175,6 +175,10 @@ export default class autoComplete {
 
   // Initialization stage
   init() {
+    // Assign the input field selector
+    this.inputField = document.querySelector(this.selector);
+    // Set input field attributes
+    inputComponent(this);
     // Set placeholder attribute value
     if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
     // Run executer
@@ -201,19 +205,17 @@ export default class autoComplete {
     const config = { childList: true, subtree: true };
     // Callback function to execute when mutations are observed
     const callback = (mutationsList, observer) => {
+      const inputField = targetNode.querySelector(this.selector);
       // Traditional 'for loops' for IE 11
       for (let mutation of mutationsList) {
         // Check if this is the selected input field
-        if (targetNode.querySelector(this.selector)) {
+        if (inputField) {
           // If yes disconnect the observer
           observer.disconnect();
-          // Assign the input field selector
-          this.inputField = targetNode.querySelector(this.selector);
-          inputComponent(this);
           /**
            * @emits {connect} Emits Event on connection
            **/
-          eventEmitter(this.inputField, null, "connect");
+          eventEmitter(inputField, null, "connect");
           // Initiate autoComplete
           this.init();
         }
