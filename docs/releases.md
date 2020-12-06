@@ -26,7 +26,14 @@ Release flags:
 
 ## Release Notes
 
-- v8.0.0 :sparkles: #141
+- v8.0.2 :sparkles:
+  - Enhanced: Input Field Assignment Order
+  - Fixed: Trigger Event API
+
+- v8.0.1
+  - Build Update
+
+- v8.0.0
   - Whole New More Modern Architecture Design
   - Added: High Quality Accessibility ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/examples/combobox/combobox-autocomplete-both.html)) Support
   - Added: Life Cycle Events (Thanks 👍 @zippy84) #89
