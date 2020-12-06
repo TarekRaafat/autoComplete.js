@@ -72,7 +72,7 @@ const autoCompleteJS = new autoComplete({
     return 0;
   },
   highlight: true,
-  debounce: 300,
+  debounce: 100,
   threshold: 1,
   trigger: {
     event: ["input", "focus"],
