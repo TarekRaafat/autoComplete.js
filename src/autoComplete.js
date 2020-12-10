@@ -190,6 +190,7 @@ export default class autoComplete {
      * @listens {input} Listens to all `input` events on the input field
      **/
     this.trigger.event.forEach((eventType) => {
+      this.inputField.removeEventListener(eventType, this.hook);
       this.inputField.addEventListener(eventType, this.hook);
     });
     /**
