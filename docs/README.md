@@ -182,7 +182,7 @@ new autoComplete({
 		container: source => {
 			source.setAttribute("id", "food_list");
 		},
-		destination: document.querySelector("#autoComplete"),
+		destination: "#autoComplete",
 		position: "afterend",
 		element: "ul"
 	},
