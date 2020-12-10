@@ -168,7 +168,8 @@
     list.setAttribute("role", "listbox");
     list.setAttribute("tabindex", "-1");
     if (config.resultsList.container) config.resultsList.container(list);
-    config.inputField.parentNode.appendChild(list);
+    var destination = document.querySelector(config.resultsList.destination);
+    destination.insertAdjacentElement(config.resultsList.position, list);
     return list;
   });
 
@@ -458,7 +459,7 @@
       this.resultsList = {
         render: render,
         container: container,
-        destination: destination || this.inputField,
+        destination: destination || this.selector,
         position: position,
         element: resultsListElement,
         idName: resultsListId,

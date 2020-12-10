@@ -82,7 +82,7 @@ export default class autoComplete {
     this.resultsList = {
       render,
       container,
-      destination: destination || this.inputField,
+      destination: destination || this.selector,
       position,
       element: resultsListElement,
       idName: resultsListId,

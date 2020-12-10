@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v8.0.2 :sparkles:
+- v8.0.3 :sparkles:
+  - Fixed: Custom results list rendering destination (Thanks 👍 @RobinLawinsky) #150
+
+- v8.0.2
   - Enhanced: Input Field Assignment Order
   - Fixed: Trigger Event API
 
