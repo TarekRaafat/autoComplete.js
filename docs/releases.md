@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v8.0.3 :sparkles:
+- v8.0.4 :sparkles:
+  - Fixed: Remove prior event listeners before adding new one in `init` (Thanks 👍 @RobinLawinsky) #153
+
+- v8.0.3
   - Fixed: Custom results list rendering destination (Thanks 👍 @RobinLawinsky) #150
 
 - v8.0.2
