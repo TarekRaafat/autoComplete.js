@@ -7,7 +7,7 @@
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 ![npm](https://img.shields.io/npm/dm/@tarekraafat/autocomplete.js?label=npm)
 ![\[Zero Dependencies\]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
-![\[Size\]()](https://img.shields.io/badge/Size-9%20KB-green.svg)
+![\[Size\]()](https://img.shields.io/badge/Size-10%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
 
 <br>
