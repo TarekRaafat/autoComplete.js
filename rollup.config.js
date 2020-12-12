@@ -42,6 +42,7 @@ export default [
         exclude: "node_modules/**",
         presets: ["@babel/preset-env"],
       }),
+      cleanup(),
       uglify({
         compress: {
           toplevel: true,
@@ -74,12 +75,14 @@ export default [
       }),
       cleanup(),
       gzipPlugin(),
+      // Analyzer
       analyze({
         onAnalysis,
         summaryOnly: true,
         showExports: true,
       }),
       sizes(),
+      // Server
       serve({
         open: true,
         openPage: "/index.html",
@@ -88,7 +91,8 @@ export default [
         verbose: true,
         contentBase: "./dist",
       }),
-      livereload({ watch: "./dist" }),
+      // // Live Reload
+      // livereload({ watch: "./dist" }),
     ],
   },
 ];

@@ -1,11 +1,11 @@
-// autoComplete.js input eventListener on connect event
-document.querySelector("#autoComplete").addEventListener("connect", function (event) {
-  console.log(event);
-});
-// // autoComplete.js input eventListener on initialization event
-// document.querySelector("#autoComplete").addEventListener("init", function (event) {
+// // autoComplete.js input eventListener on connect event
+// document.querySelector("#autoComplete").addEventListener("connect", function (event) {
 //   console.log(event);
 // });
+// autoComplete.js input eventListener on initialization event
+document.querySelector("#autoComplete").addEventListener("init", function (event) {
+  console.log(event);
+});
 // // autoComplete.js input eventListener on input event
 // document.querySelector("#autoComplete").addEventListener("input", function (event) {
 //   console.log(event);
@@ -35,6 +35,7 @@ document.querySelector("#autoComplete").addEventListener("connect", function (ev
 const autoCompleteJS = new autoComplete({
   name: "food & drinks",
   selector: "#autoComplete",
+  observer: false,
   data: {
     src: async () => {
       // Loading placeholder text

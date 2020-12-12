@@ -12,7 +12,7 @@ import eventEmitter from "./utils/eventEmitter";
 
 /**
  * @desc This is autoComplete
- * @version 8.0.0
+ * @version 8.1.0
  * @example let autoCompleteJS = new autoComplete({config});
  */
 export default class autoComplete {
@@ -21,6 +21,7 @@ export default class autoComplete {
     const {
       name = "Search",
       selector = "#autoComplete", // User input selector
+      observer = false, // Input field Observer
       data: {
         src, // Data src selection
         key, // Data src key selection
@@ -64,6 +65,7 @@ export default class autoComplete {
     // Assigning config values to properties
     this.name = name;
     this.selector = selector;
+    this.observer = observer;
     this.data = {
       src,
       key,
@@ -102,9 +104,9 @@ export default class autoComplete {
     this.highlight = highlight;
     this.feedback = feedback;
     this.onSelection = onSelection;
-    // Invoking preInit automatically
-    // when autoComplete instance gets initiated
-    this.preInit();
+    // Invoking preInit if enabled
+    // or initiate autoComplete instance directly
+    this.observer ? this.preInit() : this.init();
   }
 
   // Run autoComplete processes

@@ -1,5 +1,3 @@
-
-(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -381,6 +379,8 @@
           name = _config$name === void 0 ? "Search" : _config$name,
           _config$selector = config.selector,
           selector = _config$selector === void 0 ? "#autoComplete" : _config$selector,
+          _config$observer = config.observer,
+          observer = _config$observer === void 0 ? false : _config$observer,
           _config$data = config.data,
           src = _config$data.src,
           key = _config$data.key,
@@ -441,6 +441,7 @@
           onSelection = config.onSelection;
       this.name = name;
       this.selector = selector;
+      this.observer = observer;
       this.data = {
         src: src,
         key: key,
@@ -479,7 +480,7 @@
       this.highlight = highlight;
       this.feedback = feedback;
       this.onSelection = onSelection;
-      this.preInit();
+      this.observer ? this.preInit() : this.init();
     }
     _createClass(autoComplete, [{
       key: "start",

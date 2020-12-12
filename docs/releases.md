@@ -26,7 +26,12 @@ Release flags:
 
 ## Release Notes
 
-- v8.0.4 :sparkles:
+- v8.1.0 ✨
+  - ➕ Added: `observer` Controller API [Turned off by default] #149
+  - ➕ Added: New Light Style [autoComplete.02.css]
+  - 🔧 Fixed: Main build `live reload` issue (Thanks 👍 @lougroshek) #155
+
+- v8.0.4
   - Fixed: Remove prior event listeners before adding new one in `init` (Thanks 👍 @RobinLawinsky) #153
 
 - v8.0.3

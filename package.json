@@ -1,6 +1,6 @@
 {
   "name": "@tarekraafat/autocomplete.js",
-  "version": "8.0.4",
+  "version": "8.1.0",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "keywords": [
     "simple",
@@ -42,6 +42,7 @@
     "dist/js/autoComplete.js",
     "dist/css/autoComplete.css",
     "dist/css/autoComplete.01.css",
+    "dist/css/autoComplete.02.css",
     "dist/css/images/search.svg"
   ],
   "main": "dist/js/autoComplete.js",

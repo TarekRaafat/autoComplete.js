@@ -1,10 +1,10 @@
 # Introduction
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Build Status](https://travis-ci.com/TarekRaafat/autoComplete.js.svg?branch=master)](https://travis-ci.com/TarekRaafat/autoComplete.js)
 [![GitHub version](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js.svg)](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js)
 [![npm version](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js.svg)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
+![npm](https://img.shields.io/npm/dm/@tarekraafat/autocomplete.js?label=npm)
 ![\[Zero Dependencies\]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
 ![\[Size\]()](https://img.shields.io/badge/Size-10%20KB-green.svg)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
@@ -14,7 +14,7 @@
 
 <h1>autoComplete.js</h1>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v8.0**
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v8.1**
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with a wide range of projects & systems, made for users and developers in mind.
 
@@ -67,13 +67,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.0.2/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.1.0/dist/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.0.2/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.1.0/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="./img/logos/html_logo.png" alt="HTML Logo" width="40px"> HTML Local load
@@ -121,7 +121,7 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ```html
 <link rel="stylesheet" href="./css/autoComplete.css">
 OR
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.0.2/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.1.0/dist/css/autoComplete.min.css">
 ```
 
 2.  Assign the default `id` value `"autoComplete"` to the desired input field or use any custom `id/class` and configure the API selector accordingly in `Step 4`
@@ -136,7 +136,7 @@ OR
 <script src="./js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 OR
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.0.2/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.1.0/dist/js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 ```
 
@@ -174,6 +174,7 @@ new autoComplete({
     },
 	placeHolder: "Food & Drinks...",	 // Place Holder text 				| (Optional)
     selector: "#autoComplete",		   // Input field selector 			 | (Optional)
+    observer: true,                       //    Input field observer | (Optional)
 	threshold: 3,						// Min. Chars length to start Engine | (Optional)
 	debounce: 300,					   // Post duration for engine to start | (Optional)
     searchEngine: "strict",			  // Search Engine type/mode 		  | (Optional)
@@ -222,10 +223,11 @@ new autoComplete({
 | `sort`         | Sort rendered results                                              | **-** `Function` with (firstResult, secondResult) parameters                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | `false` **(Random Results)**                                                                                                                                                                                                                                           |
 | `placeHolder`  | Place Holder text                                                  | **-** `String`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Blank / Empty                                                                                                                                                                                                                                                          |
 | `selector`     | Input field selector                                               | **-** `String` `id`/`class` <br>**OR**<br> **-** `Function` ( ) =>  `document.querySelector("")`                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `"#autoComplete"`                                                                                                                                                                                                                                                      |
+| `observer`     | Input field observer                                               | **-** `Boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `false`                                                                                                                                                                                                                                                                |
 | `threshold`    | Minimum characters length before engine starts rendering results   | **-** `Number`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `1`                                                                                                                                                                                                                                                                    |
 | `debounce`     | Minimum duration after typing idle state for engine to kick in     | **-** `Number` <br> Milliseconds value <br> debounce: `300`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | `0`                                                                                                                                                                                                                                                                    |
 | `searchEngine` | Search Engine Type/Mode                                            | **-** `"strict"` lowerCase string <br>**OR**<br> **-** `"loose"` lowerCase string <br>**OR**<br> **-** customEngine `Function` with (query, record) parameters, returns each match individually                                                                                                                                                                                                                                                                                                                                                           | `"strict"`                                                                                                                                                                                                                                                             |
-| `diacritics`   | Search Engine Diacritics handler                                   | **-** `Boolean"`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | `false`                                                                                                                                                                                                                                                                |
+| `diacritics`   | Search Engine Diacritics handler                                   | **-** `Boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `false`                                                                                                                                                                                                                                                                |
 | `resultsList`  | Rendered results list destination,  position, element & navigation | **-** `Object` with 8 methods<br> 1- render: `Boolean` <br> 2- container: <br> `Function` with (source) parameter<br> 3- destination: `"#targetID"`<br> 4- position:<br> `"beforebegin"`, `"afterbegin"`, `"beforeend"`, `"afterend"` lowerCase string <br>**OR**<br>**-** `Function` ( ) => `{destination: "...", position: "..."}` <br> 5- element: <br> `"ul", "span", "div" or Custom`  <br> 6- idName: `"id"` <br> 7- className: `"class"` <br> 8- navigation: `Function` with `(event, input, resListElement, onSelection, resListData)` parameters | 1- render: `false` <br> 2- container: `(source) => { ... }` <br> 3- destination: `"#autoComplete"` <br> 4- position: `"afterend"` <br> 5- element: `"ul"` <br> 6- idName: `"autoComplete_list"` <br> 7- className: `"autoComplete_list"` <br> 8- navigation: `default` |
 | `resultItem`   | Rendered result Item content & element                             | **-** `Object` with 4 methods<br> 1- content: <br>**-** `Function` with (data, source) parameters <br> **-** `data.match` has to be used for **Highlighted** result <br> 2- element: <br> `"li", "span", "div" or Custom` <br> 3- idName: `"id`  <br> 4- className: `"class`                                                                                                                                                                                                                                                                              | 1- content: `(data, source) => { ... }` <br> 2- element: `"li"` <br> 3- idName: `"autoComplete_result"` <br> 4- className: `"autoComplete_result"`                                                                                                                     |
 | `noResults`    | Action script on noResults found                                   | **-** `Function` with (dataFeedback, generateList) parameters                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | No Action                                                                                                                                                                                                                                                              |
@@ -288,7 +290,7 @@ it with [autoComplete.js][so tag].
 
 * * *
 
-## 5. What's New in v8.0?
+## 5. What's New in v8.1?
 
 Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 
@@ -354,6 +356,12 @@ Check out <a href="#/releases?id=versioning">Releases</a> Information :sparkles:
 -   [ ] Results List Category Separator
 -   [ ] `IndexedDB` for large data sets handling & offline usage
 -   [ ] Themes / Styles & Interactions
+
+### Styles:
+
+-   [x] autoComplete.js default style
+-   [x] Neutral style [01]
+-   [x] Light style [02]
 
 ### Reported Issues:
 
