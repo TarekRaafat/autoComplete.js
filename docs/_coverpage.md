@@ -12,6 +12,8 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 
 <div class="sharethis-inline-share-buttons"></div>
 
+<br>
+
 <iframe src="https://ghbtns.com/github-btn.html?user=TarekRaafat&repo=autoComplete.js&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
 
 [GitHub](https://github.com/TarekRaafat/autoComplete.js)
