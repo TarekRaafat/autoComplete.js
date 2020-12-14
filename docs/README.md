@@ -1,12 +1,14 @@
 # Introduction
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![GitHub version](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js.svg)](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js)
-[![npm version](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js.svg)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
+[![GitHub package.json version](https://img.shields.io/github/package-json/v/TarekRaafat/autoComplete.js)](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js)
+[![npm](https://img.shields.io/npm/v/@tarekraafat/autocomplete.js)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
+![GitHub top language](https://img.shields.io/github/languages/top/TarekRaafat/autoComplete.js?color=yellow)
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 ![npm](https://img.shields.io/npm/dm/@tarekraafat/autocomplete.js?label=npm)
 ![\[Zero Dependencies\]()](https://img.shields.io/badge/Dependencies-0-blue.svg)
 ![\[Size\]()](https://img.shields.io/badge/Size-10%20KB-green.svg)
+![Maintained](https://img.shields.io/badge/Maintained%3F-yes-success)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
 
 <br>
