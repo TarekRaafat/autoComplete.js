@@ -63,6 +63,7 @@ typings/
 
 # Experimental folder
 .exp
+.vscode
 
 # Distribution folder
 # dist/
