@@ -181,7 +181,6 @@ new autoComplete({
 	debounce: 300,					   // Post duration for engine to start | (Optional)
     searchEngine: "strict",			  // Search Engine type/mode 		  | (Optional)
     resultsList: {					   // Rendered results list object 	 | (Optional)
-        render: true,
 		container: source => {
 			source.setAttribute("id", "food_list");
 		},
