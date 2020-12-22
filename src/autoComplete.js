@@ -178,7 +178,7 @@ export default class autoComplete {
   // Initialization stage
   init() {
     // Assign the input field selector
-    this.inputField = document.querySelector(this.selector);
+    this.inputField = typeof this.selector === 'string' ? document.querySelector(this.selector) : this.selector();
     // Set input field attributes
     inputComponent(this);
     // Set placeholder attribute value
