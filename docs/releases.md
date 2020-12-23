@@ -26,7 +26,11 @@ Release flags:
 
 ## Release Notes
 
-- v8.1.0 ✨
+- v8.1.1 ✨
+  - 🔧 Fixed: `selector` API to accept function (Thanks 👍 @goaround) #160 #161
+  - 🔧 Fixed: `resultsList` destination API to accept function (Thanks 👍 @goaround) #160 #162
+
+- v8.1.0
   - ➕ Added: `observer` Controller API [Turned off by default] #149
   - ➕ Added: New Light Style [autoComplete.02.css]
   - 🔧 Fixed: Main build `live reload` issue (Thanks 👍 @lougroshek) #155

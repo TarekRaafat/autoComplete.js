@@ -166,7 +166,7 @@
     list.setAttribute("role", "listbox");
     list.setAttribute("tabindex", "-1");
     if (config.resultsList.container) config.resultsList.container(list);
-    var destination = document.querySelector(config.resultsList.destination);
+    var destination = "string" === typeof config.resultsList.destination ? document.querySelector(config.resultsList.destination) : config.resultsList.destination();
     destination.insertAdjacentElement(config.resultsList.position, list);
     return list;
   });
@@ -557,7 +557,7 @@
       key: "init",
       value: function init() {
         var _this4 = this;
-        this.inputField = document.querySelector(this.selector);
+        this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();
         inputComponent(this);
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
         this.hook = debouncer(function () {

@@ -14,7 +14,10 @@ export default (config) => {
   list.setAttribute("role", "listbox");
   list.setAttribute("tabindex", "-1");
   if (config.resultsList.container) config.resultsList.container(list);
-  const destination = 'string' === typeof config.resultsList.destination ? document.querySelector(config.resultsList.destination) : config.resultsList.destination();
+  const destination =
+    "string" === typeof config.resultsList.destination
+      ? document.querySelector(config.resultsList.destination)
+      : config.resultsList.destination();
   // Append the DIV element as a child of autoComplete container
   destination.insertAdjacentElement(config.resultsList.position, list);
   return list;
