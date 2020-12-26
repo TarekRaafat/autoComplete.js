@@ -14,6 +14,6 @@ export default (item, index, config) => {
   result.setAttribute("class", config.resultItem.className);
   result.setAttribute("role", "option");
   result.innerHTML = item.match;
-  if (config.resultItem.content) config.resultItem.content(item.value, result);
+  if (config.resultItem.content) config.resultItem.content(item, result);
   return result;
 };

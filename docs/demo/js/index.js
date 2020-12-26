@@ -14,6 +14,14 @@ const autoCompleteJS = new autoComplete({
       return data;
     },
     key: ["food", "cities", "animals"],
+    results: (list) => {
+      // Filter duplicates
+      const filteredResults = Array.from(new Set(list.map((value) => value.match))).map((food) => {
+        return list.find((value) => value.match === food);
+      });
+
+      return filteredResults;
+    },
   },
   trigger: {
     event: ["input", "focus"],
@@ -25,7 +33,7 @@ const autoCompleteJS = new autoComplete({
   resultItem: {
     content: (data, element) => {
       // Prepare Value's Key
-      const key = Object.keys(data).find((key) => data[key] === element.innerText);
+      const key = Object.keys(data.value).find((key) => data.value[key] === element.innerText);
       // Modify Results Item
       element.style = "display: flex; justify-content: space-between;";
       element.innerHTML = `<span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">

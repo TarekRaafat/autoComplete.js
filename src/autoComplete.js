@@ -11,8 +11,8 @@ import debouncer from "./utils/debouncer";
 import eventEmitter from "./utils/eventEmitter";
 
 /**
- * @desc This is autoComplete
- * @version 8.1.0
+ * @desc This is autoComplete.js
+ * @version 8.2.0
  * @example let autoCompleteJS = new autoComplete({config});
  */
 export default class autoComplete {
@@ -27,6 +27,7 @@ export default class autoComplete {
         key, // Data src key selection
         cache = false, // Flag to cache data src
         store, // Data feedback store
+        results, // Data feedback matching results
       },
       query, // Query interceptor function
       trigger: {
@@ -71,6 +72,7 @@ export default class autoComplete {
       key,
       cache,
       store,
+      results,
     };
     this.query = query;
     this.trigger = {
@@ -112,7 +114,10 @@ export default class autoComplete {
   // Run autoComplete processes
   start(input, query) {
     // - Match query with existing value
-    const results = listMatchingResults(this, query);
+    // Returns matching results list
+    const results = this.data.results
+      ? this.data.results(listMatchingResults(this, query))
+      : listMatchingResults(this, query);
     // - Prepare data feedback object
     const dataFeedback = { input, query, matches: results, results: results.slice(0, this.maxResults) };
     /**

@@ -177,7 +177,7 @@
     result.setAttribute("class", config.resultItem.className);
     result.setAttribute("role", "option");
     result.innerHTML = item.match;
-    if (config.resultItem.content) config.resultItem.content(item.value, result);
+    if (config.resultItem.content) config.resultItem.content(item, result);
     return result;
   });
 
@@ -387,6 +387,7 @@
           _config$data$cache = _config$data.cache,
           cache = _config$data$cache === void 0 ? false : _config$data$cache,
           store = _config$data.store,
+          results = _config$data.results,
           query = config.query,
           _config$trigger = config.trigger;
       _config$trigger = _config$trigger === void 0 ? {} : _config$trigger;
@@ -446,7 +447,8 @@
         src: src,
         key: key,
         cache: cache,
-        store: store
+        store: store,
+        results: results
       };
       this.query = query;
       this.trigger = {
@@ -486,7 +488,7 @@
       key: "start",
       value: function start(input, query) {
         var _this = this;
-        var results = listMatchingResults(this, query);
+        var results = this.data.results ? this.data.results(listMatchingResults(this, query)) : listMatchingResults(this, query);
         var dataFeedback = {
           input: input,
           query: query,

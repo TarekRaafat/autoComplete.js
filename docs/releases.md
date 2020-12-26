@@ -26,7 +26,11 @@ Release flags:
 
 ## Release Notes
 
-- v8.1.1 ✨
+- v8.2.0 ✨
+  - ➕ Added: `data.results` API to access and manipulate data feedback matching results
+  - 🔧 Fixed: `resultItem.content` API `data` params to pass the entire item data (Thanks 👍 @jwendel) #163
+
+- v8.1.1
   - 🔧 Fixed: `selector` API to accept function (Thanks 👍 @goaround) #160 #161
   - 🔧 Fixed: `resultsList` destination API to accept function (Thanks 👍 @goaround) #160 #162
 
