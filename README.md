@@ -81,6 +81,13 @@ yarn add @tarekraafat/autocomplete.js
 
 -   For more details check out **autoComplete.js** <a href="https://tarekraafat.github.io/autoComplete.js/">**docs** :notebook_with_decorative_cover:</a>
 
+<!-- * * * -->
+
+## Third-Party Plugins:
+
+-   [Contao autoComplete.js Bundle](https://github.com/heimrichhannot/contao-autocompletejs-bundle) by @heimrichhannot
+-   [Contentful Fontawesome autoComplete Field](https://github.com/ModiiMedia/contentful-fontawesome-autocomplete-field) by @ModiiMedia
+
 * * *
 
 ## Support
