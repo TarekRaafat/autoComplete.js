@@ -73,7 +73,7 @@
     "rollup-plugin-uglify": "^6.0.4"
   },
   "engines": {
-    "node": "12",
+    "node": ">=12",
     "npm": "6"
   }
 }
