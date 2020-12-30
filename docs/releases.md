@@ -26,7 +26,11 @@ Release flags:
 
 ## Release Notes
 
-- v8.2.0 ✨
+- v8.2.1 ✨
+  - 🔝 Updated: `package.json` node engine version from `12` to `>=12` (Thanks 👍 @mynameisbogdan) #164
+  - 🔝 Updated: `package.json` npm engine version from `6` to `>=6`
+
+- v8.2.0
   - ➕ Added: `data.results` API to access and manipulate data feedback matching results
   - 🔧 Fixed: `resultItem.content` API `data` params to pass the entire item data (Thanks 👍 @jwendel) #163
 
