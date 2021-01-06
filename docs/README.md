@@ -83,13 +83,27 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/8.2.1/css/autoComplete.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/8.2.1/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/8.2.1/js/autoComplete.min.js"></script>
+```
+
+-   <a href="https://unpkg.com/browse/@tarekraafat/autocomplete.js@8.2.1/"><img src="./img/logos/unpkg_logo.png" alt="unpkg Logo" width="100px"></a> CDN
+
+`CSS`
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@tarekraafat/autocomplete.js@8.2.1/dist/css/autoComplete.css">
+```
+
+`JS`
+
+```html
+<script src="https://unpkg.com/@tarekraafat/autocomplete.js@8.2.1/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="./img/logos/html_logo.png" alt="HTML Logo" width="40px"> HTML Local load
