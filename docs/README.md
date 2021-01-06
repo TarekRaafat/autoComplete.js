@@ -64,7 +64,7 @@ npm run build
 
 ### Installation:
 
--   <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="./img/logos/jsdeliver_logo.png" alt="jsDelivr Logo" width="100px"></a> CDN
+-   <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="./img/logos/jsdelivr_logo.png" alt="jsDelivr Logo" width="100px"></a> CDN
 
 `CSS`
 
@@ -76,6 +76,20 @@ npm run build
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.2.1/dist/js/autoComplete.min.js"></script>
+```
+
+-   <a href="https://cdnjs.com/libraries/tarekraafat-autocomplete.js"><img src="./img/logos/cdnjs_logo.png" alt="cdnjs Logo" width="100px"></a> CDN
+
+`CSS`
+
+```html
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/8.2.1/css/autoComplete.css">
+```
+
+`JS`
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/8.2.1/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="./img/logos/html_logo.png" alt="HTML Logo" width="40px"> HTML Local load
