@@ -32,14 +32,16 @@ const autoCompleteJS = new autoComplete({
   maxResults: 5,
   resultItem: {
     content: (data, element) => {
-      // Prepare Value's Key
-      const key = Object.keys(data.value).find((key) => data.value[key] === element.innerText);
-      // Modify Results Item
+      // Modify Results Item Style
       element.style = "display: flex; justify-content: space-between;";
-      element.innerHTML = `<span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
-        ${element.innerHTML}</span>
+      // Modify Results Item Content
+      element.innerHTML = `
+        <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+            ${data.match}
+        </span>
         <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
-      ${key}</span>`;
+            ${data.key}
+        </span>`;
     },
   },
   noResults: (dataFeedback, generateList) => {
