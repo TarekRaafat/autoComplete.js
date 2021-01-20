@@ -62,7 +62,7 @@
     "@babel/preset-env": "^7.12.11",
     "@rollup/plugin-babel": "^5.2.2",
     "acorn": "^8.0.4",
-    "rollup": "^2.37.0",
+    "rollup": "^2.37.1",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-gzip": "^2.5.0",
