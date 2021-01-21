@@ -27,7 +27,7 @@ Release flags:
 ## Release Notes
 
 - v8.2.2 ✨
-  - 🔝 Fix: `diacritics` composite characters do not match (Thanks 👍 @ikemo3 @Michin0suke @bravik) #169
+  - 🔧 Fix: `diacritics` composite characters do not match (Thanks 👍 @ikemo3 @Michin0suke @bravik) #169
 
 - v8.2.1
   - 🔝 Updated: `package.json` node engine version from `12` to `>=12` (Thanks 👍 @mynameisbogdan) #164
