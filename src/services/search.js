@@ -3,7 +3,7 @@
  *
  * @param {String} query - User's search query value after manipulation
  * @param {String} record - The data item string to be compared
- * @param {Object{searchEngine: String, highlight: Boolean}} config - The search engine configurations
+ * @param {Object {searchEngine: String, highlight: Boolean}} config - The search engine configurations
  *
  * @returns {String} - The matched data item string
  */
