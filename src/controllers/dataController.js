@@ -17,17 +17,19 @@ const getInputValue = (inputField) => {
  * Intercept query value
  *
  * @param {String} inputValue - User's raw search query value
- * @param {Object} query - Query Object with the Manipulate function
+ * @param {Object} config - autoComplete configurations
  *
  * @returns {String} - Manipulated Query Value
  */
-const prepareQueryValue = (inputValue, query) => {
-  return query && query.manipulate
-    ? query.manipulate(inputValue)
-    : inputValue
+const prepareQueryValue = (inputValue, config) => {
+  return config.query && config.query.manipulate
+    ? config.query.manipulate(inputValue)
+    : config.diacritics
+    ? inputValue
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
-        .normalize("NFC");
+        .normalize("NFC")
+    : inputValue;
 };
 
 /**

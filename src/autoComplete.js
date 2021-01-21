@@ -163,7 +163,7 @@ export default class autoComplete {
     // 0- Prepare raw input value
     const input = getInputValue(this.inputField);
     // 1- Prepare manipulated query input value
-    const query = prepareQueryValue(input, this.query);
+    const query = prepareQueryValue(input, this);
     // 2- Get trigger condition
     const triggerCondition = checkTriggerCondition(this, query);
     // 3- Check triggering condition

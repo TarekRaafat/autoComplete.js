@@ -306,8 +306,8 @@
   var getInputValue = function getInputValue(inputField) {
     return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value.toLowerCase() : inputField.innerHTML.toLowerCase();
   };
-  var prepareQueryValue = function prepareQueryValue(inputValue, query) {
-    return query && query.manipulate ? query.manipulate(inputValue) : inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC");
+  var prepareQueryValue = function prepareQueryValue(inputValue, config) {
+    return config.query && config.query.manipulate ? config.query.manipulate(inputValue) : config.diacritics ? inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : inputValue;
   };
   var checkTriggerCondition = function checkTriggerCondition(config, queryValue) {
     return config.trigger.condition ? config.trigger.condition(queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
@@ -534,7 +534,7 @@
         return new Promise(function ($return, $error) {
           var input, query, triggerCondition;
           input = getInputValue(_this3.inputField);
-          query = prepareQueryValue(input, _this3.query);
+          query = prepareQueryValue(input, _this3);
           triggerCondition = checkTriggerCondition(_this3, query);
           if (triggerCondition) {
             return _this3.dataStore().then(function ($await_6) {
