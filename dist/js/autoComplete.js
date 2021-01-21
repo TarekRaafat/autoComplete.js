@@ -277,7 +277,7 @@
   };
 
   var searchEngine = (function (query, record, config) {
-    var recordLowerCase = config.diacritics ? record.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : record.toLowerCase();
+    var recordLowerCase = config.diacritics ? record.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : record.toLowerCase();
     if (config.searchEngine === "loose") {
       query = query.replace(/ /g, "");
       var match = [];
@@ -307,7 +307,7 @@
     return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value.toLowerCase() : inputField.innerHTML.toLowerCase();
   };
   var prepareQueryValue = function prepareQueryValue(inputValue, query) {
-    return query && query.manipulate ? query.manipulate(inputValue) : inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return query && query.manipulate ? query.manipulate(inputValue) : inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC");
   };
   var checkTriggerCondition = function checkTriggerCondition(config, queryValue) {
     return config.trigger.condition ? config.trigger.condition(queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;

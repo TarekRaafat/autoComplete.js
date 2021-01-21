@@ -4,7 +4,7 @@ import searchEngine from "../services/search";
  * Gets the input search value "query"
  *
  * @param {Element} inputField - autoComplete input field or textarea element
- * 
+ *
  * @returns {String} - Raw input value as a string
  */
 const getInputValue = (inputField) => {
@@ -24,7 +24,10 @@ const getInputValue = (inputField) => {
 const prepareQueryValue = (inputValue, query) => {
   return query && query.manipulate
     ? query.manipulate(inputValue)
-    : inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC");
+    : inputValue
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .normalize("NFC");
 };
 
 /**
