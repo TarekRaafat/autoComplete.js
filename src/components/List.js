@@ -3,7 +3,7 @@
  *
  * @param {Object} config - autoComplete configurations
  *
- * @return {Element} list - The created list element
+ * @returns {Element} - The created list element
  */
 export default (config) => {
   // Create a DIV element that will contain the results items
@@ -20,5 +20,6 @@ export default (config) => {
       : config.resultsList.destination();
   // Append the DIV element as a child of autoComplete container
   destination.insertAdjacentElement(config.resultsList.position, list);
+
   return list;
 };

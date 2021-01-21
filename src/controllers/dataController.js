@@ -4,6 +4,8 @@ import searchEngine from "../services/search";
  * Gets the input search value "query"
  *
  * @param {Element} inputField - autoComplete input field or textarea element
+ * 
+ * @returns {String} - Raw input value as a string
  */
 const getInputValue = (inputField) => {
   return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement
@@ -14,10 +16,10 @@ const getInputValue = (inputField) => {
 /**
  * Intercept query value
  *
- * @param {Element} inputField - autoComplete input field
- * @param {String} query - User's search query value
+ * @param {String} inputValue - User's raw search query value
+ * @param {Object} query - Query Object with the Manipulate function
  *
- * @return queryValue
+ * @returns {String} - Manipulated Query Value
  */
 const prepareQueryValue = (inputValue, query) => {
   return query && query.manipulate
@@ -28,11 +30,10 @@ const prepareQueryValue = (inputValue, query) => {
 /**
  * App triggering condition
  *
- * @param {Object} trigger - Trigger Object with the condition function
+ * @param {Object} config - Trigger Object with the Trigger function
  * @param {String} queryValue - User's search query value string after manipulation
- * @param {Number} threshold - The threshold value number
  *
- * @return triggerCondition
+ * @returns {Boolean} triggerCondition - For autoComplete trigger decision
  */
 const checkTriggerCondition = (config, queryValue) => {
   return config.trigger.condition
@@ -45,9 +46,8 @@ const checkTriggerCondition = (config, queryValue) => {
  *
  * @param {Object} config - The search engine configurations
  * @param {String} query - User's search query string
- * @param {Object} data - The available data object
  *
- * @return {Array} - The matching results list array
+ * @returns {Array} - The matching results list array
  */
 const listMatchingResults = (config, query) => {
   // Final highlighted results list

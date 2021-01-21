@@ -6,6 +6,7 @@ import createItem from "../components/Item";
  *
  * @param {Object} config - autoComplete configurations
  * @param {Element} element - Current selected element
+ * 
  */
 const closeAllLists = (config, element) => {
   // Get all autoComplete lists
@@ -25,8 +26,11 @@ const closeAllLists = (config, element) => {
 /**
  * List all matching results
  *
- * @param {Object} data - The available data object
  * @param {Object} config - autoComplete configurations
+ * @param {Object|Array} data - The available data object
+ * @param {Array} matches - autoComplete configurations
+ * 
+ * @return {Component} - The matching results list component
  */
 const generateList = (config, data, matches) => {
   // Initiate creating list process

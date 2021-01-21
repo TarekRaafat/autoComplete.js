@@ -5,7 +5,7 @@
  * @param {String} record - The data item string to be compared
  * @param {Object{searchEngine: String, highlight: Boolean}} config - The search engine configurations
  *
- * @return {String} match - The matched data item string
+ * @returns {String} - The matched data item string
  */
 export default (query, record, config) => {
   // Current record value toLowerCase

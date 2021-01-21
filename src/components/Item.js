@@ -2,10 +2,10 @@
  * List Item element creator
  *
  * @param {String} itemValue - The item string value
- * @param {String} itemClass - The item class string value
  * @param {Number} resultIndex - The result item index
+ * @param {Object} config - autoComplete configurations
  *
- * @return {Element} result - The created item element
+ * @returns {Element} - The created result item element
  */
 export default (item, index, config) => {
   // Create a DIV element for each matching result item
@@ -15,5 +15,6 @@ export default (item, index, config) => {
   result.setAttribute("role", "option");
   result.innerHTML = item.match;
   if (config.resultItem.content) config.resultItem.content(item, result);
+
   return result;
 };

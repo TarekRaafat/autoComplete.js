@@ -5,6 +5,7 @@ import eventEmitter from "../utils/eventEmitter";
  * List navigation function initializer
  *
  * @param {Object} config - autoComplete configurations
+ * @param {Object} dataFeedback - The available data object
  *
  */
 const navigate = (config, dataFeedback) => {
@@ -16,6 +17,7 @@ const navigate = (config, dataFeedback) => {
    *
    * @param {Object} event - The `keydown` event Object
    * @param {Array <elements>} list - The array of list items
+   * @param {Boolean} state - Of the arrow Down/Up
    * @param {Object} config - autoComplete configurations
    *
    */
