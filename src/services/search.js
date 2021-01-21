@@ -14,6 +14,7 @@ export default (query, record, config) => {
         .toLowerCase()
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
+        .normalize("NFC")
     : record.toLowerCase();
   // Loose mode
   if (config.searchEngine === "loose") {

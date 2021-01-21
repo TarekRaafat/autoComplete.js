@@ -24,7 +24,7 @@ const getInputValue = (inputField) => {
 const prepareQueryValue = (inputValue, query) => {
   return query && query.manipulate
     ? query.manipulate(inputValue)
-    : inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    : inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC");
 };
 
 /**
