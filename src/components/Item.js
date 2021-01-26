@@ -10,7 +10,7 @@
 export default (item, index, config) => {
   // Create a DIV element for each matching result item
   const result = document.createElement(config.resultItem.element);
-  result.setAttribute("id", `${config.resultItem.className}_${index}`);
+  result.setAttribute("id", `${config.resultItem.idName}_${index}`);
   result.setAttribute("class", config.resultItem.className);
   result.setAttribute("role", "option");
   result.innerHTML = item.match;
