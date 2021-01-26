@@ -498,7 +498,7 @@
         eventEmitter(this.inputField, dataFeedback, "results");
         if (!results.length) return this.noResults ? this.noResults(dataFeedback, generateList) : null;
         if (!this.resultsList.render) return this.feedback(dataFeedback);
-        var list = results.length ? generateList(this, dataFeedback, results) : null;
+        results.length ? generateList(this, dataFeedback, results) : null;
         eventEmitter(this.inputField, dataFeedback, "rendered");
         navigate(this, dataFeedback);
         document.addEventListener("click", function (event) {
