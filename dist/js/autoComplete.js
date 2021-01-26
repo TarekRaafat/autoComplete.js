@@ -173,7 +173,7 @@
 
   var createItem = (function (item, index, config) {
     var result = document.createElement(config.resultItem.element);
-    result.setAttribute("id", "".concat(config.resultItem.className, "_").concat(index));
+    result.setAttribute("id", "".concat(config.resultItem.idName, "_").concat(index));
     result.setAttribute("class", config.resultItem.className);
     result.setAttribute("role", "option");
     result.innerHTML = item.match;

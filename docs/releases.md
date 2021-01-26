@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v8.2.2 ✨
+- v8.2.3 ✨
+  - 🔧 Fix: `resultItem` ID `setAttribute` to be `idName` instead of `className` (Thanks 👍 @marsimeau) #173
+
+- v8.2.2
   - 🔧 Fix: `diacritics` composite characters do not match (Thanks 👍 @ikemo3 @Michin0suke @bravik) #169 #171
 
 - v8.2.1
