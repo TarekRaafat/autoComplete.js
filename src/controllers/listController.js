@@ -43,11 +43,12 @@ const generateList = (config, data, matches) => {
     // create result item
     const resultItem = createItem(item, index, config);
     // Listen to clicks on this item
-    resultItem.addEventListener("click", () => {
+    resultItem.addEventListener("click", (e) => {
       // Prepare onSelection feedback data object
       const dataFeedback = {
         matches,
         input: data.input,
+        event: e,
         query: data.query,
         results: data.results,
         selection: {
