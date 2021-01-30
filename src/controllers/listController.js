@@ -6,7 +6,7 @@ import createItem from "../components/Item";
  *
  * @param {Object} config - autoComplete configurations
  * @param {Element} element - Current selected element
- * 
+ *
  */
 const closeAllLists = (config, element) => {
   // Get all autoComplete lists
@@ -29,7 +29,7 @@ const closeAllLists = (config, element) => {
  * @param {Object} config - autoComplete configurations
  * @param {Object|Array} data - The available data object
  * @param {Array} matches - autoComplete configurations
- * 
+ *
  * @return {Component} - The matching results list component
  */
 const generateList = (config, data, matches) => {
@@ -43,12 +43,12 @@ const generateList = (config, data, matches) => {
     // create result item
     const resultItem = createItem(item, index, config);
     // Listen to clicks on this item
-    resultItem.addEventListener("click", (e) => {
+    resultItem.addEventListener("click", (event) => {
       // Prepare onSelection feedback data object
       const dataFeedback = {
+        event,
         matches,
         input: data.input,
-        event: e,
         query: data.query,
         results: data.results,
         selection: {

@@ -195,8 +195,9 @@
     var _loop = function _loop(index) {
       var item = data.results[index];
       var resultItem = createItem(item, index, config);
-      resultItem.addEventListener("click", function () {
+      resultItem.addEventListener("click", function (event) {
         var dataFeedback = {
+          event: event,
           matches: matches,
           input: data.input,
           query: data.query,

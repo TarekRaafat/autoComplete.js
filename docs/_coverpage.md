@@ -2,7 +2,7 @@
 	<img src="./img/autoComplete.js.svg" alt= "autoComplete.js Logo" style="padding-bottom: 50px; width: 250px;">
 </a>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a> **v8.2**
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a> **v8.3**
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed,<br>high versatility and seamless integration with a wide range of projects & systems.
 
