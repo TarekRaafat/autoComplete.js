@@ -118,8 +118,9 @@ const navigate = (config, dataFeedback) => {
   const navigate = config.resultsList.navigation || navigation;
 
   // Remove previous keydown listener
-  if (config.inputField.autoCompleteNavigate) config.inputField.removeEventListener("keydown", config.inputField.autoCompleteNavigate)
-  config.inputField.autoCompleteNavigate = navigate
+  if (config.inputField.autoCompleteNavigate)
+    config.inputField.removeEventListener("keydown", config.inputField.autoCompleteNavigate);
+  config.inputField.autoCompleteNavigate = navigate;
 
   /**
    * @listens {keydown} Listens to all `keydown` events on the input field

@@ -274,6 +274,8 @@
       }
     };
     var navigate = config.resultsList.navigation || navigation;
+    if (config.inputField.autoCompleteNavigate) config.inputField.removeEventListener("keydown", config.inputField.autoCompleteNavigate);
+    config.inputField.autoCompleteNavigate = navigate;
     config.inputField.addEventListener("keydown", navigate);
   };
 
