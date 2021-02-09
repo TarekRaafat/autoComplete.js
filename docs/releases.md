@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v8.3.0 ✨
+- v8.3.1 ✨
+  - 🔧 Fix: Keyboard navigation selection reset (Thanks 👍 @marsimeau) #177
+
+- v8.3.0
   - ➕ Added: `event` object to the `onSelection` data `feedback` (Thanks 👍 @Liano) #176
 
 - v8.2.3
