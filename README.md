@@ -86,7 +86,6 @@ yarn add @tarekraafat/autocomplete.js
 ## Third-Party Plugins:
 
 -   [Contao autoComplete.js Bundle](https://github.com/heimrichhannot/contao-autocompletejs-bundle) by [@heimrichhannot](https://github.com/heimrichhannot)
--   [Contentful Fontawesome autoComplete Field](https://github.com/ModiiMedia/contentful-fontawesome-autocomplete-field) by [@ModiiMedia](https://github.com/ModiiMedia)
 
 * * *
 
