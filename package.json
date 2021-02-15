@@ -71,7 +71,7 @@
     "rollup-plugin-nodent": "^0.2.2",
     "rollup-plugin-serve": "^1.1.0",
     "rollup-plugin-sizes": "^1.0.3",
-    "rollup-plugin-uglify": "^6.0.4"
+    "rollup-plugin-uglify": "^5.0.2"
   },
   "engines": {
     "node": ">=12",
