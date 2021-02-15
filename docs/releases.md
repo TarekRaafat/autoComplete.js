@@ -26,7 +26,10 @@ Release flags:
 
 ## Release Notes
 
-- v8.3.1 ✨
+- v8.3.2 ✨
+  - 🔧 Fix: `selector` as a function breaks when `observer` is true (Thanks 👍 @brunobg) #179
+
+- v8.3.1
   - 🔧 Fix: Keyboard navigation selection reset (Thanks 👍 @marsimeau) #177
 
 - v8.3.0

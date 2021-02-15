@@ -69,13 +69,13 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.1/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.2/dist/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.1/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.2/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <a href="https://cdnjs.com/libraries/tarekraafat-autocomplete.js"><img src="./img/logos/cdnjs_logo.png" alt="cdnjs Logo" width="100px"></a> CDN
@@ -83,27 +83,27 @@ npm run build
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/8.3.1/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/8.3.2/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/8.3.1/js/autoComplete.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/8.3.2/js/autoComplete.min.js"></script>
 ```
 
--   <a href="https://unpkg.com/browse/@tarekraafat/autocomplete.js@8.3.1/"><img src="./img/logos/unpkg_logo.png" alt="unpkg Logo" width="100px"></a> CDN
+-   <a href="https://unpkg.com/browse/@tarekraafat/autocomplete.js@8.3.2/"><img src="./img/logos/unpkg_logo.png" alt="unpkg Logo" width="100px"></a> CDN
 
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/@tarekraafat/autocomplete.js@8.3.1/dist/css/autoComplete.css">
+<link rel="stylesheet" href="https://unpkg.com/@tarekraafat/autocomplete.js@8.3.2/dist/css/autoComplete.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://unpkg.com/@tarekraafat/autocomplete.js@8.3.1/dist/js/autoComplete.min.js"></script>
+<script src="https://unpkg.com/@tarekraafat/autocomplete.js@8.3.2/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <img src="./img/logos/html_logo.png" alt="HTML Logo" width="40px"> HTML Local load
@@ -151,7 +151,7 @@ const autoComplete = require("@tarekraafat/autocomplete.js/dist/js/autoComplete"
 ```html
 <link rel="stylesheet" href="./css/autoComplete.css">
 OR
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.1/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.2/dist/css/autoComplete.min.css">
 ```
 
 2.  Assign the default `id` value `"autoComplete"` to the desired input field or use any custom `id/class` and configure the API selector accordingly in `Step 4`
@@ -166,7 +166,7 @@ OR
 <script src="./js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 OR
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.1/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.2/dist/js/autoComplete.min.js"></script>
 <script src="./js/index.js"></script>
 ```
 

@@ -485,6 +485,7 @@
       this.highlight = highlight;
       this.feedback = feedback;
       this.onSelection = onSelection;
+      this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();
       this.observer ? this.preInit() : this.init();
     }
     _createClass(autoComplete, [{
@@ -562,7 +563,6 @@
       key: "init",
       value: function init() {
         var _this4 = this;
-        this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();
         inputComponent(this);
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
         this.hook = debouncer(function () {
@@ -578,21 +578,19 @@
       key: "preInit",
       value: function preInit() {
         var _this5 = this;
-        var targetNode = document;
         var config = {
           childList: true,
           subtree: true
         };
         var callback = function callback(mutationsList, observer) {
-          var inputField = targetNode.querySelector(_this5.selector);
           var _iterator = _createForOfIteratorHelper(mutationsList),
               _step;
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
               var mutation = _step.value;
-              if (inputField) {
+              if (_this5.inputField) {
                 observer.disconnect();
-                eventEmitter(inputField, null, "connect");
+                eventEmitter(_this5.inputField, null, "connect");
                 _this5.init();
               }
             }
@@ -603,7 +601,7 @@
           }
         };
         var observer = new MutationObserver(callback);
-        observer.observe(targetNode, config);
+        observer.observe(document, config);
       }
     }, {
       key: "unInit",

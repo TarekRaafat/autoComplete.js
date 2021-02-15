@@ -12,7 +12,7 @@ import eventEmitter from "./utils/eventEmitter";
 
 /**
  * @desc This is autoComplete.js
- * @version 8.2.0
+ * @version 8.3.2
  * @example let autoCompleteJS = new autoComplete({config});
  */
 export default class autoComplete {
@@ -106,7 +106,9 @@ export default class autoComplete {
     this.highlight = highlight;
     this.feedback = feedback;
     this.onSelection = onSelection;
-    // Invoking preInit if enabled
+    // Assign the input field selector
+    this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();
+    // Invoke preInit if enabled
     // or initiate autoComplete instance directly
     this.observer ? this.preInit() : this.init();
   }
@@ -182,8 +184,6 @@ export default class autoComplete {
 
   // Initialization stage
   init() {
-    // Assign the input field selector
-    this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();
     // Set input field attributes
     inputComponent(this);
     // Set placeholder attribute value
@@ -209,23 +209,20 @@ export default class autoComplete {
   // Pre-Initialization stage
   preInit() {
     // Observe DOM changes
-    // The entire document will be observed for mutations
-    const targetNode = document;
     // Options for the observer (which mutations to observe)
     const config = { childList: true, subtree: true };
     // Callback function to execute when mutations are observed
     const callback = (mutationsList, observer) => {
-      const inputField = targetNode.querySelector(this.selector);
       // Traditional 'for loops' for IE 11
       for (let mutation of mutationsList) {
         // Check if this is the selected input field
-        if (inputField) {
+        if (this.inputField) {
           // If yes disconnect the observer
           observer.disconnect();
           /**
            * @emits {connect} Emits Event on connection
            **/
-          eventEmitter(inputField, null, "connect");
+          eventEmitter(this.inputField, null, "connect");
           // Initialize autoComplete
           this.init();
         }
@@ -234,7 +231,8 @@ export default class autoComplete {
     // Create an observer instance linked to the callback function
     const observer = new MutationObserver(callback);
     // Start observing the target node for configured mutations
-    observer.observe(targetNode, config);
+    // The entire document will be observed for mutations
+    observer.observe(document, config);
   }
 
   // Un-initialize autoComplete
