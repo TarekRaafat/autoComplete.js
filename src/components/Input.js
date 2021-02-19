@@ -6,7 +6,6 @@
  */
 export default (config) => {
   // General attributes
-  config.inputField.setAttribute("type", "text");
   // ARIA attributes
   config.inputField.setAttribute("role", "combobox");
   config.inputField.setAttribute("aria-haspopup", true);
