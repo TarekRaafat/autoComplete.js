@@ -150,7 +150,6 @@
   }
 
   var inputComponent = (function (config) {
-    config.inputField.setAttribute("type", "text");
     config.inputField.setAttribute("role", "combobox");
     config.inputField.setAttribute("aria-haspopup", true);
     config.inputField.setAttribute("aria-expanded", false);
