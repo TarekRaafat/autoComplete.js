@@ -59,18 +59,18 @@
     "dev": "rollup -c -w"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.13",
-    "@babel/preset-env": "^7.12.13",
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
     "@rollup/plugin-babel": "^5.2.3",
-    "acorn": "^8.0.5",
-    "rollup": "^2.38.5",
+    "acorn": "^8.1.0",
+    "rollup": "^2.41.0",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-cleanup": "^3.2.1",
     "rollup-plugin-gzip": "^2.5.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-nodent": "^0.2.2",
     "rollup-plugin-serve": "^1.1.0",
-    "rollup-plugin-sizes": "^1.0.3",
+    "rollup-plugin-sizes": "^1.0.4",
     "rollup-plugin-uglify": "^5.0.2"
   },
   "engines": {
