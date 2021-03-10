@@ -274,7 +274,7 @@ new autoComplete({
 1. `init`: Fires after "autoComplete.js" engine is initialized
 2. `fetch`: Fires after fetching data is complete
 3. `input`: Fires on every user input
-4. `results`: Fires after search is done and marching results are ready 
+4. `results`: Fires after search is done and matching results are ready 
 5. `rendered`: Fires after rendering the results list
 6. `navigation`: Fires on every "resultsList" navigation interaction
 7. `unInit`: Fires after "autoComplete.js" engine is un-initialized
