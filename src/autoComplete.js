@@ -39,7 +39,7 @@ export default class autoComplete {
       threshold = 1, // Minimum characters length before engine starts rendering
       debounce = 0, // Minimum duration for API calls debounce
       resultsList: {
-        render = true,
+        render: resultsListRender = true,
         container = false,
         destination, // Results list selector
         position = "afterend", // Results list position
@@ -58,7 +58,13 @@ export default class autoComplete {
         className: resultItemClass = "autoComplete_result",
       } = {},
       noResults, // No results action
-      highlight = false, // Highlighting matching results
+      selection: {
+        className: selectionClass = "autoComplete_selected",
+      } = {},
+      highlight: {
+        render: highlightRender = false,
+        className: highlightClass = "autoComplete_highlighted",
+      } = {},
       feedback, // Data feedback
       onSelection, // Action function on result selection
     } = config;
@@ -84,7 +90,7 @@ export default class autoComplete {
     this.threshold = threshold;
     this.debounce = debounce;
     this.resultsList = {
-      render,
+      render: resultsListRender,
       container,
       destination: destination || this.selector,
       position,
@@ -103,7 +109,13 @@ export default class autoComplete {
       className: resultItemClass,
     };
     this.noResults = noResults;
-    this.highlight = highlight;
+    this.selection = {
+      className: selectionClass,
+    };
+    this.highlight = {
+      render: highlightRender,
+      className: highlightClass,
+    }
     this.feedback = feedback;
     this.onSelection = onSelection;
     // Assign the input field selector
