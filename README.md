@@ -21,7 +21,7 @@
 <br>
 <br>
 
-> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v8.3**
+> Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v9.0**
 
 autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with a wide range of projects & systems, made for users and developers in mind.
 
@@ -54,13 +54,13 @@ git clone https://github.com/TarekRaafat/autoComplete.js.git
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.2/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/css/autoComplete.min.css">
 ```
 
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@8.3.2/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/js/autoComplete.min.js"></script>
 ```
 
 -   <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js">npm</a> install `(Node Package Manager)`

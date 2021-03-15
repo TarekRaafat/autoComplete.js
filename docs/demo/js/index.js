@@ -28,7 +28,9 @@ const autoCompleteJS = new autoComplete({
   },
   placeHolder: "Search for Food & Drinks!",
   searchEngine: "strict",
-  highlight: true,
+  highlight: {
+    render: true,
+  },
   maxResults: 5,
   resultItem: {
     content: (data, element) => {

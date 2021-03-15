@@ -20,13 +20,20 @@ Release flags:
 -   `[Experimental]`: Under testing and might be deprecated at any point
 -   `[Deprecated]`: Not developed / supported anymore, might be removed at any point
 -   `[Removed]`: Completely gone, no longer exists
--   `[Changed]`: A change in the API
+-   `[Changed]`: Breaking change in the API or the core library
+-   `[Updated]`: Non-breaking change in the API or the core library
+-   `[Added]`: New feature
 
 * * *
 
 ## Release Notes
 
-- v8.3.2 ✨
+- v9.0.0 ✨
+  - ➕ Added: `selection` & `highlight` custom `className` API (Thanks 👍 @jerrykan) #184
+  - 🔧 Fixed: `Esc` key doesn't work in some cases when there's no `noResults` (Thanks 👍 @sunshineplan) #157
+  - 🌀 Changed: `highlight` API from `String` to `Object` [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
+
+- v8.3.2
   - 🔧 Fix: `selector` as a function breaks when `observer` is true (Thanks 👍 @brunobg) #179
 
 - v8.3.1
@@ -65,7 +72,7 @@ Release flags:
   - Fixed: Custom results list rendering destination (Thanks 👍 @RobinLawinsky) #150
 
 - v8.0.2
-  - Enhanced: Input Field Assignment Order
+  - Updated: Input Field Assignment Order
   - Fixed: Trigger Event API
 
 - v8.0.1
@@ -80,11 +87,11 @@ Release flags:
   - Added: `Diacritics` 2 way Support (Thanks 👍 @batcaverna, @svkmedia) #77 #93
   - Added: API for Controlling `Classes` & `IDs` (Thanks 👍 @xtellurian, @Lirux) #73
   - Added: New neutral/non-opinionated Style (Thanks 👍 @luizbills) #92
-  - Enhanced: `autoComplete.js` Internal Flow
-  - Enhanced: `data` Fetching
-  - Enhanced: `data` Storing
-  - Enhanced: `resultsList` Navigation
-  - Enhanced: `resultsList` Rendering (Thanks 👍 @eballeste) #105 #139 #126
+  - Changed: `autoComplete.js` Internal Flow
+  - Changed: `data` Fetching
+  - Changed: `data` Storing
+  - Changed: `resultsList` Navigation
+  - Changed: `resultsList` Rendering (Thanks 👍 @eballeste) #105 #139 #126
   - Fixed: `resultsList` element visibility in idle state (Thanks 👍 @digiiitalmb) #100
   - Fixed: `query` threshold length accuracy #142
   - Fixed: Calling `dataSrc` on each trigger (Thanks 👍 @thomasphilibert) #106

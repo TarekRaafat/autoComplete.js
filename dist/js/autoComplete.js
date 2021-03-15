@@ -243,7 +243,7 @@
     var removeActive = function removeActive(list) {
       for (var index = 0; index < list.length; index++) {
         list[index].removeAttribute("aria-selected");
-        list[index].classList.remove("autoComplete_selected");
+        if (config.selection.className) list[index].classList.remove(config.selection.className);
       }
     };
     var addActive = function addActive(list) {
@@ -252,7 +252,7 @@
       if (currentFocus >= list.length) currentFocus = 0;
       if (currentFocus < 0) currentFocus = list.length - 1;
       list[currentFocus].setAttribute("aria-selected", "true");
-      list[currentFocus].classList.add("autoComplete_selected");
+      if (config.selection.className) list[currentFocus].classList.add(config.selection.className);
     };
     var navigation = function navigation(event) {
       var list = document.getElementById(config.resultsList.idName);
@@ -287,7 +287,7 @@
       for (var number = 0; number < recordLowerCase.length; number++) {
         var recordChar = record[number];
         if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-          recordChar = config.highlight ? "<span class=\"autoComplete_highlighted\">".concat(recordChar, "</span>") : recordChar;
+          recordChar = config.highlight.render ? "<span class=\"".concat(config.highlight.className, "\">").concat(recordChar, "</span>") : recordChar;
           searchPosition++;
         }
         match.push(recordChar);
@@ -299,7 +299,7 @@
       if (recordLowerCase.includes(query)) {
         var pattern = new RegExp("".concat(query), "i");
         query = pattern.exec(record);
-        var _match = config.highlight ? record.replace(query, "<span class=\"autoComplete_highlighted\">".concat(query, "</span>")) : record;
+        var _match = config.highlight.render ? record.replace(query, "<span class=\"".concat(config.highlight.className, "\">").concat(query, "</span>")) : record;
         return _match;
       }
     }
@@ -408,7 +408,7 @@
           _config$resultsList = config.resultsList;
       _config$resultsList = _config$resultsList === void 0 ? {} : _config$resultsList;
       var _config$resultsList$r = _config$resultsList.render,
-          render = _config$resultsList$r === void 0 ? true : _config$resultsList$r,
+          resultsListRender = _config$resultsList$r === void 0 ? true : _config$resultsList$r,
           _config$resultsList$c = _config$resultsList.container,
           container = _config$resultsList$c === void 0 ? false : _config$resultsList$c,
           destination = _config$resultsList.destination,
@@ -438,8 +438,16 @@
           _config$resultItem$cl = _config$resultItem.className,
           resultItemClass = _config$resultItem$cl === void 0 ? "autoComplete_result" : _config$resultItem$cl,
           noResults = config.noResults,
-          _config$highlight = config.highlight,
-          highlight = _config$highlight === void 0 ? false : _config$highlight,
+          _config$selection = config.selection;
+      _config$selection = _config$selection === void 0 ? {} : _config$selection;
+      var _config$selection$cla = _config$selection.className,
+          selectionClass = _config$selection$cla === void 0 ? "autoComplete_selected" : _config$selection$cla,
+          _config$highlight = config.highlight;
+      _config$highlight = _config$highlight === void 0 ? {} : _config$highlight;
+      var _config$highlight$ren = _config$highlight.render,
+          highlightRender = _config$highlight$ren === void 0 ? false : _config$highlight$ren,
+          _config$highlight$cla = _config$highlight.className,
+          highlightClass = _config$highlight$cla === void 0 ? "autoComplete_highlighted" : _config$highlight$cla,
           feedback = config.feedback,
           onSelection = config.onSelection;
       this.name = name;
@@ -462,7 +470,7 @@
       this.threshold = threshold;
       this.debounce = debounce;
       this.resultsList = {
-        render: render,
+        render: resultsListRender,
         container: container,
         destination: destination || this.selector,
         position: position,
@@ -481,7 +489,13 @@
         className: resultItemClass
       };
       this.noResults = noResults;
-      this.highlight = highlight;
+      this.selection = {
+        className: selectionClass
+      };
+      this.highlight = {
+        render: highlightRender,
+        className: highlightClass
+      };
       this.feedback = feedback;
       this.onSelection = onSelection;
       this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();

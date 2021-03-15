@@ -20,71 +20,48 @@ export default class autoComplete {
     // Deconstructing config values
     const {
       name = "Search",
-      selector = "#autoComplete", // User input selector
-      observer = false, // Input field Observer
-      data: {
-        src, // Data src selection
-        key, // Data src key selection
-        cache = false, // Flag to cache data src
-        store, // Data feedback store
-        results, // Data feedback matching results
-      },
-      query, // Query interceptor function
-      trigger: {
-        event = ["input"], // autoComplete event
-        condition = false, // condition trigger
-      } = {},
-      searchEngine = "strict", // Search engine type
-      diacritics = false, // Diacritics to be ignored
-      threshold = 1, // Minimum characters length before engine starts rendering
-      debounce = 0, // Minimum duration for API calls debounce
+      selector = "#autoComplete",
+      observer = false,
+      data: { src, key, cache = false, store, results },
+      query,
+      trigger: { event = ["input"], condition = false } = {},
+      searchEngine = "strict",
+      diacritics = false,
+      threshold = 1,
+      debounce = 0,
       resultsList: {
         render: resultsListRender = true,
         container = false,
-        destination, // Results list selector
-        position = "afterend", // Results list position
-        element: resultsListElement = "ul", // Results list element tag
+        destination,
+        position = "afterend",
+        element: resultsListElement = "ul",
         idName: resultsListId = "autoComplete_list",
         className: resultsListClass = "autoComplete_list",
-        navigation = false, // Results list navigation
+        navigation = false,
       } = {},
-      sort = false, // Sorting results list
-      placeHolder, // Placeholder text
-      maxResults = 5, // Maximum number of results to show
+      sort = false,
+      placeHolder,
+      maxResults = 5,
       resultItem: {
-        content = false, // Result item function
-        element: resultItemElement = "li", // Result item element tag
+        content = false,
+        element: resultItemElement = "li",
         idName: resultItemId = "autoComplete_result",
         className: resultItemClass = "autoComplete_result",
       } = {},
-      noResults, // No results action
-      selection: {
-        className: selectionClass = "autoComplete_selected",
-      } = {},
-      highlight: {
-        render: highlightRender = false,
-        className: highlightClass = "autoComplete_highlighted",
-      } = {},
-      feedback, // Data feedback
-      onSelection, // Action function on result selection
+      noResults,
+      selection: { className: selectionClass = "autoComplete_selected" } = {},
+      highlight: { render: highlightRender = false, className: highlightClass = "autoComplete_highlighted" } = {},
+      feedback,
+      onSelection,
     } = config;
 
     // Assigning config values to properties
     this.name = name;
     this.selector = selector;
     this.observer = observer;
-    this.data = {
-      src,
-      key,
-      cache,
-      store,
-      results,
-    };
+    this.data = { src, key, cache, store, results };
     this.query = query;
-    this.trigger = {
-      event,
-      condition,
-    };
+    this.trigger = { event, condition };
     this.searchEngine = searchEngine;
     this.diacritics = diacritics;
     this.threshold = threshold;
@@ -102,22 +79,13 @@ export default class autoComplete {
     this.sort = sort;
     this.placeHolder = placeHolder;
     this.maxResults = maxResults;
-    this.resultItem = {
-      content,
-      element: resultItemElement,
-      idName: resultItemId,
-      className: resultItemClass,
-    };
+    this.resultItem = { content, element: resultItemElement, idName: resultItemId, className: resultItemClass };
     this.noResults = noResults;
-    this.selection = {
-      className: selectionClass,
-    };
-    this.highlight = {
-      render: highlightRender,
-      className: highlightClass,
-    }
+    this.selection = { className: selectionClass };
+    this.highlight = { render: highlightRender, className: highlightClass };
     this.feedback = feedback;
     this.onSelection = onSelection;
+
     // Assign the input field selector
     this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();
     // Invoke preInit if enabled

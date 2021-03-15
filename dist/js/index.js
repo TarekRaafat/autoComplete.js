@@ -79,7 +79,9 @@ const autoCompleteJS = new autoComplete({
     if (a.match > b.match) return 1;
     return 0;
   },
-  highlight: true,
+  highlight: {
+    render: true,
+  },
   debounce: 100,
   threshold: 1,
   trigger: {

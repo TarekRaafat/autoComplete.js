@@ -57,9 +57,7 @@ const navigate = (config, dataFeedback) => {
       // Remove "active" class from the item
       list[index].removeAttribute("aria-selected");
       // list[index].setAttribute("aria-selected", "false");
-      if (config.selection.className !== "") {
-        list[index].classList.remove(config.selection.className);
-      }
+      if (config.selection.className) list[index].classList.remove(config.selection.className);
     }
   };
 
@@ -78,9 +76,7 @@ const navigate = (config, dataFeedback) => {
     if (currentFocus < 0) currentFocus = list.length - 1;
     // Add "active" class to the item
     list[currentFocus].setAttribute("aria-selected", "true");
-    if (config.selection.className !== "") {
-      list[currentFocus].classList.add(config.selection.className);
-    }
+    if (config.selection.className) list[currentFocus].classList.add(config.selection.className);
   };
 
   /**
