@@ -1,3 +1,7 @@
+function escapeRegex(string) {
+  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
 /**
  * Search common characters within record
  *
@@ -49,7 +53,7 @@ export default (query, record, config) => {
   } else {
     if (recordLowerCase.includes(query)) {
       // Regular Expression Query Pattern Ignores caseSensitive
-      const pattern = new RegExp(`${query}`, "i");
+      const pattern = new RegExp(escapeRegex(query), "i");
       // Search for a match Query in Record
       query = pattern.exec(record);
       const match = config.highlight.render
