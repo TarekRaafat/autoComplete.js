@@ -1,7 +1,3 @@
-function escapeRegex(string) {
-  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-}
-
 /**
  * Search common characters within record
  *
@@ -35,13 +31,9 @@ export default (query, record, config) => {
       // Matching case
       if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
         // Highlight matching character
-<<<<<<< HEAD
         recordChar = config.highlight.render
-          ? `<span class="${config.highlight.className}">${recordChar}</span>`
+          ? `<mark class="${config.highlight.className}">${recordChar}</mark>`
           : recordChar;
-=======
-        recordChar = config.highlight.render ? `<mark class="${config.highlight.className}">${recordChar}</mark>` : recordChar;
->>>>>>> d7700764e8a20aa291861e6495742a76cd9e1b4b
         // Increment search position
         searchPosition++;
       }
@@ -57,7 +49,7 @@ export default (query, record, config) => {
   } else {
     if (recordLowerCase.includes(query)) {
       // Regular Expression Query Pattern Ignores caseSensitive
-      const pattern = new RegExp(escapeRegex(query), "i");
+      const pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
       // Search for a match Query in Record
       query = pattern.exec(record);
       const match = config.highlight.render
