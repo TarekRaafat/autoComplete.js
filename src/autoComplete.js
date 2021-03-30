@@ -141,14 +141,14 @@ export default class autoComplete {
   }
 
   // Run autoComplete composer
-  async compose() {
+  async compose(event) {
     // 0- Prepare raw input value
     const input = getInputValue(this.inputField);
     // 1- Prepare manipulated query input value
     const query = prepareQueryValue(input, this);
     // 2- Get trigger condition
-    const triggerCondition = checkTriggerCondition(this, query);
-    // 3- Check triggering condition
+    const triggerCondition = checkTriggerCondition(this, event, query);
+    // 3- Check trigger condition
     if (triggerCondition) {
       // 4- Prepare the data
       await this.dataStore();
@@ -169,9 +169,9 @@ export default class autoComplete {
     // Set placeholder attribute value
     if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
     // Run executer
-    this.hook = debouncer(() => {
+    this.hook = debouncer((event) => {
       // - Prepare autoComplete processes
-      this.compose();
+      this.compose(event);
     }, this.debounce);
     /**
      * @listens {input} Listens to all `input` events on the input field

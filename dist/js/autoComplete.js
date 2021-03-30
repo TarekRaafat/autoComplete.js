@@ -297,7 +297,7 @@
       }
     } else {
       if (recordLowerCase.includes(query)) {
-        var pattern = new RegExp("".concat(query), "i");
+        var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
         query = pattern.exec(record);
         var _match = config.highlight.render ? record.replace(query, "<span class=\"".concat(config.highlight.className, "\">").concat(query, "</span>")) : record;
         return _match;
@@ -311,8 +311,8 @@
   var prepareQueryValue = function prepareQueryValue(inputValue, config) {
     return config.query && config.query.manipulate ? config.query.manipulate(inputValue) : config.diacritics ? inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : inputValue;
   };
-  var checkTriggerCondition = function checkTriggerCondition(config, queryValue) {
-    return config.trigger.condition ? config.trigger.condition(queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
+  var checkTriggerCondition = function checkTriggerCondition(config, event, queryValue) {
+    return config.trigger.condition ? config.trigger.condition(event, queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
   };
   var listMatchingResults = function listMatchingResults(config, query) {
     var resList = [];
@@ -546,13 +546,13 @@
       }
     }, {
       key: "compose",
-      value: function compose() {
+      value: function compose(event) {
         var _this3 = this;
         return new Promise(function ($return, $error) {
           var input, query, triggerCondition;
           input = getInputValue(_this3.inputField);
           query = prepareQueryValue(input, _this3);
-          triggerCondition = checkTriggerCondition(_this3, query);
+          triggerCondition = checkTriggerCondition(_this3, event, query);
           if (triggerCondition) {
             return _this3.dataStore().then(function ($await_6) {
               try {
@@ -578,8 +578,8 @@
         var _this4 = this;
         inputComponent(this);
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-        this.hook = debouncer(function () {
-          _this4.compose();
+        this.hook = debouncer(function (event) {
+          _this4.compose(event);
         }, this.debounce);
         this.trigger.event.forEach(function (eventType) {
           _this4.inputField.removeEventListener(eventType, _this4.hook);

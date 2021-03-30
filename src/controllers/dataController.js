@@ -40,9 +40,9 @@ const prepareQueryValue = (inputValue, config) => {
  *
  * @returns {Boolean} triggerCondition - For autoComplete trigger decision
  */
-const checkTriggerCondition = (config, queryValue) => {
+const checkTriggerCondition = (config, event, queryValue) => {
   return config.trigger.condition
-    ? config.trigger.condition(queryValue)
+    ? config.trigger.condition(event, queryValue)
     : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
 };
 

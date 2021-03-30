@@ -30,7 +30,8 @@ Release flags:
 
 - v9.0.0 ✨
   - ➕ Added: `selection` & `highlight` custom `className` API (Thanks 👍 @jerrykan) #184
-  - 🔧 Fixed: `Esc` key doesn't work in some cases when there's no `noResults` (Thanks 👍 @sunshineplan) #157
+  - ➕ Added: `eventEmitter` for `resultsList` fires on list `close` event (Thanks 👍 @yliharma) #188
+  <!-- - ➕ Added: `event` parameter to `trigger.event` function (Thanks 👍 @nornes) #189 -->
   - 🌀 Changed: `highlight` API from `String` to `Object` [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
 
 - v8.3.2
