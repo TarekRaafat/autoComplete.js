@@ -35,7 +35,7 @@ export default (query, record, config) => {
       // Matching case
       if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
         // Highlight matching character
-        recordChar = config.highlight.render ? `<span class="${config.highlight.className}">${recordChar}</span>` : recordChar;
+        recordChar = config.highlight.render ? `<mark class="${config.highlight.className}">${recordChar}</mark>` : recordChar;
         // Increment search position
         searchPosition++;
       }
@@ -55,7 +55,7 @@ export default (query, record, config) => {
       // Search for a match Query in Record
       query = pattern.exec(record);
       const match = config.highlight.render
-        ? record.replace(query, `<span class="${config.highlight.className}">${query}</span>`)
+        ? record.replace(query, `<mark class="${config.highlight.className}">${query}</mark>`)
         : record;
       // Returns the match
       return match;
