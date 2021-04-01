@@ -1,7 +1,7 @@
 import nodent from "rollup-plugin-nodent";
 import babel from "@rollup/plugin-babel";
 import cleanup from "rollup-plugin-cleanup";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from "rollup-plugin-terser";
 import pkg from "./package.json";
 import gzipPlugin from "rollup-plugin-gzip";
 import analyze from "rollup-plugin-analyzer";
@@ -43,12 +43,11 @@ export default [
         presets: ["@babel/preset-env"],
       }),
       cleanup(),
-      uglify({
+      terser({
         compress: {
-          toplevel: true,
           drop_console: true,
         },
-        sourcemap: true,
+        toplevel: true,
       }),
       gzipPlugin(),
     ],
