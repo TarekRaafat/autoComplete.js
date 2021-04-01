@@ -26,6 +26,10 @@ document.querySelector("#autoComplete").addEventListener("init", function (event
 // document.querySelector("#autoComplete").addEventListener("navigation", function (event) {
 //   console.log(event.detail);
 // });
+// autoComplete.js input eventListener on results list navigation
+document.querySelector("#autoComplete").addEventListener("close", function (event) {
+  console.log(event);
+});
 // // autoComplete.js input eventListener on post un-initialization event
 // document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
 //   console.log(event);
@@ -45,14 +49,10 @@ const autoCompleteJS = new autoComplete({
         // Fetch External Data Source
         const source = await fetch("./db/generic.json");
         const data = await source.json();
-        // Saves the fetched data into local storage
-        localStorage.setItem("acData", JSON.stringify(data));
-        // Retrieve the cached data from local storage
-        const localData = JSON.parse(localStorage.getItem("acData"));
         // Post Loading placeholder text
         document.querySelector("#autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
         // Returns Fetched data
-        return localData;
+        return data;
       }
 
       // Post Loading placeholder text
@@ -101,15 +101,13 @@ const autoCompleteJS = new autoComplete({
         </span>`;
     },
   },
-  noResults: (dataFeedback, generateList) => {
-    // Generate autoComplete List
-    generateList(autoCompleteJS, dataFeedback, dataFeedback.results);
-    // No Results List Item
-    const result = document.createElement("li");
-    result.setAttribute("class", "no_result");
-    result.setAttribute("tabindex", "1");
-    result.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${dataFeedback.query}"</span>`;
-    document.querySelector(`#${autoCompleteJS.resultsList.idName}`).appendChild(result);
+  noResults: (list, query) => {
+    // No Results List Message
+    const message = document.createElement("li");
+    message.setAttribute("class", "no_result");
+    message.setAttribute("tabindex", "1");
+    message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
+    list.appendChild(message);
   },
   feedback: (data) => {
     console.log(data);

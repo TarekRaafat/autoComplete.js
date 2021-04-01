@@ -29,10 +29,17 @@ Release flags:
 ## Release Notes
 
 - v9.0.0 ✨
-  - ➕ Added: `selection` & `highlight` custom `className` API (Thanks 👍 @jerrykan) #184
+  - 🔧 Fixed: `esc` button not working with `noResults` in some cases (Thanks 👍 @sunshineplan) #157
+  - ➕ Added: `selection` & `highlight` custom `className` API methods (Thanks 👍 @jerrykan) #184
   - ➕ Added: `eventEmitter` for `resultsList` fires on list `close` event (Thanks 👍 @yliharma) #188
-  <!-- - ➕ Added: `event` parameter to `trigger.event` function (Thanks 👍 @nornes) #189 -->
+  - ➕ Added: `event` parameter to `trigger.event` API method (Thanks 👍 @nornes) #189
+  - 🌀 Changed: Refactored `closeAllLists` to be `closeList`
+  - 🌀 Changed: Refactored `generateList` stage
+  - 🌀 Changed: Refactored `start` stage
+  - 🌀 Changed: Refactored `noResults` API method [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
   - 🌀 Changed: `highlight` API from `String` to `Object` [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
+  - 🔝 Updated: Replaced `Uglify` with `Terser`
+  - 🔝 Updated: Development dependencies
 
 - v8.3.2
   - 🔧 Fix: `selector` as a function breaks when `observer` is true (Thanks 👍 @brunobg) #179

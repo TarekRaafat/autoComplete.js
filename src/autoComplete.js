@@ -1,5 +1,5 @@
 import inputComponent from "./components/Input";
-import { generateList, closeAllLists } from "./controllers/listController";
+import { generateList, closeList } from "./controllers/listController";
 import { navigate } from "./controllers/navigationController";
 import {
   getInputValue,
@@ -106,26 +106,16 @@ export default class autoComplete {
      * @emits {response} Emits Event on search response
      **/
     eventEmitter(this.inputField, dataFeedback, "results");
-    // - Checks if there are NO results
-    // Runs noResults action function
-    if (!results.length) return this.noResults ? this.noResults(dataFeedback, generateList) : null;
+    // - Initialize navigation controls
+    navigate(this, dataFeedback);
     // - If resultsList set not to render
     if (!this.resultsList.render) return this.feedback(dataFeedback);
     // - Generate & Render results list
-    const list = results.length ? generateList(this, dataFeedback, results) : null;
+    generateList(this, dataFeedback, results);
     /**
      * @emits {rendered} Emits Event after results list rendering
      **/
     eventEmitter(this.inputField, dataFeedback, "rendered");
-    // - Initialize navigation
-    navigate(this, dataFeedback);
-    /**
-     * @desc
-     * Listens for all `click` events in the document
-     * and closes this menu if clicked outside the list and input field
-     * @listens {click} Listens to all `click` events on the document
-     **/
-    document.addEventListener("click", (event) => closeAllLists(this, event.target));
   }
 
   async dataStore() {
@@ -152,13 +142,11 @@ export default class autoComplete {
     if (triggerCondition) {
       // 4- Prepare the data
       await this.dataStore();
-      // 5- Close all open lists
-      closeAllLists(this);
-      // 6- Start autoComplete engine
+      // 5- Start autoComplete engine
       this.start(input, query);
     } else {
-      // 4- Close all open lists
-      closeAllLists(this);
+      // 4- Close open list
+      closeList(this);
     }
   }
 
@@ -219,7 +207,7 @@ export default class autoComplete {
   unInit() {
     this.inputField.removeEventListener("input", this.hook);
     /**
-     * @emits {detached} Emits Event on input eventListener detachment
+     * @emits {unInit} Emits Event on input eventListener detachment
      **/
     eventEmitter(this.inputField, null, "unInit");
   }

@@ -180,41 +180,6 @@
     return result;
   });
 
-  var closeAllLists = function closeAllLists(config, element) {
-    var list = document.getElementsByClassName(config.resultsList.className);
-    for (var index = 0; index < list.length; index++) {
-      if (element !== list[index] && element !== config.inputField) list[index].parentNode.removeChild(list[index]);
-    }
-    config.inputField.removeAttribute("aria-activedescendant");
-    config.inputField.setAttribute("aria-expanded", false);
-  };
-  var generateList = function generateList(config, data, matches) {
-    var list = createList(config);
-    config.inputField.setAttribute("aria-expanded", true);
-    var _loop = function _loop(index) {
-      var item = data.results[index];
-      var resultItem = createItem(item, index, config);
-      resultItem.addEventListener("click", function (event) {
-        var dataFeedback = {
-          event: event,
-          matches: matches,
-          input: data.input,
-          query: data.query,
-          results: data.results,
-          selection: _objectSpread2(_objectSpread2({}, item), {}, {
-            index: index
-          })
-        };
-        if (config.onSelection) config.onSelection(dataFeedback);
-      });
-      list.appendChild(resultItem);
-    };
-    for (var index = 0; index < data.results.length; index++) {
-      _loop(index);
-    }
-    return list;
-  };
-
   var eventEmitter = (function (target, detail, name) {
     target.dispatchEvent(new CustomEvent(name, {
       bubbles: true,
@@ -223,6 +188,51 @@
     }));
   });
 
+  var closeList = function closeList(config) {
+    var list = document.getElementById(config.resultsList.idName);
+    if (list) {
+      list.remove();
+      config.inputField.removeAttribute("aria-activedescendant");
+      config.inputField.setAttribute("aria-expanded", false);
+      eventEmitter(config.inputField, null, "close");
+    }
+  };
+  var generateList = function generateList(config, data, matches) {
+    var list = document.getElementById(config.resultsList.idName);
+    if (list) {
+      list.innerHTML = "";
+    } else {
+      list = createList(config);
+    }
+    config.inputField.setAttribute("aria-expanded", true);
+    if (matches.length) {
+      var _loop = function _loop(index) {
+        var item = data.results[index];
+        var resultItem = createItem(item, index, config);
+        resultItem.addEventListener("click", function (event) {
+          var dataFeedback = {
+            event: event,
+            matches: matches,
+            input: data.input,
+            query: data.query,
+            results: data.results,
+            selection: _objectSpread2(_objectSpread2({}, item), {}, {
+              index: index
+            })
+          };
+          if (config.onSelection) config.onSelection(dataFeedback);
+        });
+        list.appendChild(resultItem);
+      };
+      for (var index = 0; index < data.results.length; index++) {
+        _loop(index);
+      }
+    } else {
+      config.noResults(list, data.query);
+    }
+  };
+
+  var keyboardEvent = "keydown";
   var navigate = function navigate(config, dataFeedback) {
     var currentFocus = -1;
     var update = function update(event, list, state, config) {
@@ -256,26 +266,27 @@
     };
     var navigation = function navigation(event) {
       var list = document.getElementById(config.resultsList.idName);
-      if (!list) return config.inputField.removeEventListener("keydown", navigate);
+      if (!list) return config.inputField.removeEventListener(keyboardEvent, navigate);
       list = list.getElementsByTagName(config.resultItem.element);
       if (event.keyCode === 27) {
         config.inputField.value = "";
-        closeAllLists(config);
+        closeList(config);
       } else if (event.keyCode === 40 || event.keyCode === 9) {
         update(event, list, true, config);
       } else if (event.keyCode === 38 || event.keyCode === 9) {
         update(event, list, false, config);
       } else if (event.keyCode === 13) {
         event.preventDefault();
-        if (currentFocus > -1) {
-          if (list) list[currentFocus].click();
+        if (currentFocus > -1 && list) {
+          list[currentFocus].click();
+          closeList(config);
         }
       }
     };
     var navigate = config.resultsList.navigation || navigation;
-    if (config.inputField.autoCompleteNavigate) config.inputField.removeEventListener("keydown", config.inputField.autoCompleteNavigate);
+    if (config.inputField.autoCompleteNavigate) config.inputField.removeEventListener(keyboardEvent, config.inputField.autoCompleteNavigate);
     config.inputField.autoCompleteNavigate = navigate;
-    config.inputField.addEventListener("keydown", navigate);
+    config.inputField.addEventListener(keyboardEvent, navigate);
   };
 
   var searchEngine = (function (query, record, config) {
@@ -504,7 +515,6 @@
     _createClass(autoComplete, [{
       key: "start",
       value: function start(input, query) {
-        var _this = this;
         var results = this.data.results ? this.data.results(listMatchingResults(this, query)) : listMatchingResults(this, query);
         var dataFeedback = {
           input: input,
@@ -513,30 +523,26 @@
           results: results.slice(0, this.maxResults)
         };
         eventEmitter(this.inputField, dataFeedback, "results");
-        if (!results.length) return this.noResults ? this.noResults(dataFeedback, generateList) : null;
-        if (!this.resultsList.render) return this.feedback(dataFeedback);
-        results.length ? generateList(this, dataFeedback, results) : null;
-        eventEmitter(this.inputField, dataFeedback, "rendered");
         navigate(this, dataFeedback);
-        document.addEventListener("click", function (event) {
-          return closeAllLists(_this, event.target);
-        });
+        if (!this.resultsList.render) return this.feedback(dataFeedback);
+        generateList(this, dataFeedback, results);
+        eventEmitter(this.inputField, dataFeedback, "rendered");
       }
     }, {
       key: "dataStore",
       value: function dataStore() {
-        var _this2 = this;
+        var _this = this;
         return new Promise(function ($return, $error) {
-          if (_this2.data.cache && _this2.data.store) return $return(null);
+          if (_this.data.cache && _this.data.store) return $return(null);
           return new Promise(function ($return, $error) {
-            if (typeof _this2.data.src === "function") {
-              return _this2.data.src().then($return, $error);
+            if (typeof _this.data.src === "function") {
+              return _this.data.src().then($return, $error);
             }
-            return $return(_this2.data.src);
+            return $return(_this.data.src);
           }).then(function ($await_5) {
             try {
-              _this2.data.store = $await_5;
-              eventEmitter(_this2.inputField, _this2.data.store, "fetch");
+              _this.data.store = $await_5;
+              eventEmitter(_this.inputField, _this.data.store, "fetch");
               return $return();
             } catch ($boundEx) {
               return $error($boundEx);
@@ -547,25 +553,24 @@
     }, {
       key: "compose",
       value: function compose(event) {
-        var _this3 = this;
+        var _this2 = this;
         return new Promise(function ($return, $error) {
           var input, query, triggerCondition;
-          input = getInputValue(_this3.inputField);
-          query = prepareQueryValue(input, _this3);
-          triggerCondition = checkTriggerCondition(_this3, event, query);
+          input = getInputValue(_this2.inputField);
+          query = prepareQueryValue(input, _this2);
+          triggerCondition = checkTriggerCondition(_this2, event, query);
           if (triggerCondition) {
-            return _this3.dataStore().then(function ($await_6) {
+            return _this2.dataStore().then(function ($await_6) {
               try {
-                closeAllLists(_this3);
-                _this3.start(input, query);
-                return $If_3.call(_this3);
+                _this2.start(input, query);
+                return $If_3.call(_this2);
               } catch ($boundEx) {
                 return $error($boundEx);
               }
             }, $error);
           } else {
-            closeAllLists(_this3);
-            return $If_3.call(_this3);
+            closeList(_this2);
+            return $If_3.call(_this2);
           }
           function $If_3() {
             return $return();
@@ -575,22 +580,22 @@
     }, {
       key: "init",
       value: function init() {
-        var _this4 = this;
+        var _this3 = this;
         inputComponent(this);
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
         this.hook = debouncer(function (event) {
-          _this4.compose(event);
+          _this3.compose(event);
         }, this.debounce);
         this.trigger.event.forEach(function (eventType) {
-          _this4.inputField.removeEventListener(eventType, _this4.hook);
-          _this4.inputField.addEventListener(eventType, _this4.hook);
+          _this3.inputField.removeEventListener(eventType, _this3.hook);
+          _this3.inputField.addEventListener(eventType, _this3.hook);
         });
         eventEmitter(this.inputField, null, "init");
       }
     }, {
       key: "preInit",
       value: function preInit() {
-        var _this5 = this;
+        var _this4 = this;
         var config = {
           childList: true,
           subtree: true
@@ -601,10 +606,10 @@
           try {
             for (_iterator.s(); !(_step = _iterator.n()).done;) {
               var mutation = _step.value;
-              if (_this5.inputField) {
+              if (_this4.inputField) {
                 observer.disconnect();
-                eventEmitter(_this5.inputField, null, "connect");
-                _this5.init();
+                eventEmitter(_this4.inputField, null, "connect");
+                _this4.init();
               }
             }
           } catch (err) {

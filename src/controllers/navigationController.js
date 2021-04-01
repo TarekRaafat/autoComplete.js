@@ -1,5 +1,8 @@
-import { closeAllLists } from "./listController";
+import { closeList } from "./listController";
 import eventEmitter from "../utils/eventEmitter";
+
+// Navigation keyboard event type
+const keyboardEvent = "keydown";
 
 /**
  * List navigation function initializer
@@ -88,7 +91,7 @@ const navigate = (config, dataFeedback) => {
   const navigation = (event) => {
     let list = document.getElementById(config.resultsList.idName);
 
-    if (!list) return config.inputField.removeEventListener("keydown", navigate);
+    if (!list) return config.inputField.removeEventListener(keyboardEvent, navigate);
 
     list = list.getElementsByTagName(config.resultItem.element);
 
@@ -96,8 +99,8 @@ const navigate = (config, dataFeedback) => {
       // If the ESC key is pressed
       // Clear Input value
       config.inputField.value = "";
-      // Closes open lists
-      closeAllLists(config);
+      // Closes open list
+      closeList(config);
     } else if (event.keyCode === 40 || event.keyCode === 9) {
       // Update list items state
       update(event, list, true, config);
@@ -108,9 +111,11 @@ const navigate = (config, dataFeedback) => {
       // If the ENTER key is pressed
       // prevent the form from its default behaviour "being submitted"
       event.preventDefault();
-      if (currentFocus > -1) {
-        // and simulate a click on the selected "active" item
-        if (list) list[currentFocus].click();
+      if (currentFocus > -1 && list) {
+        // Simulate a click on the selected "active" item
+        list[currentFocus].click();
+        // Closes open list
+        closeList(config);
       }
     }
   };
@@ -119,13 +124,13 @@ const navigate = (config, dataFeedback) => {
 
   // Remove previous keydown listener
   if (config.inputField.autoCompleteNavigate)
-    config.inputField.removeEventListener("keydown", config.inputField.autoCompleteNavigate);
+    config.inputField.removeEventListener(keyboardEvent, config.inputField.autoCompleteNavigate);
   config.inputField.autoCompleteNavigate = navigate;
 
   /**
    * @listens {keydown} Listens to all `keydown` events on the input field
    **/
-  config.inputField.addEventListener("keydown", navigate);
+  config.inputField.addEventListener(keyboardEvent, navigate);
 };
 
 export { navigate };
