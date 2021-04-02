@@ -95,23 +95,22 @@ export default class autoComplete {
 
   // Run autoComplete processes
   start(input, query) {
-    // - Match query with existing value
-    // Returns matching results list
+    // 1- Get matching results list
     const results = this.data.results
       ? this.data.results(listMatchingResults(this, query))
       : listMatchingResults(this, query);
-    // - Prepare data feedback object
+    // 2- Prepare data feedback object
     const dataFeedback = { input, query, matches: results, results: results.slice(0, this.maxResults) };
     /**
      * @emits {results} Emits Event on search response with results
      **/
     eventEmitter(this.inputField, dataFeedback, "results");
-    // - Initialize navigation controls
-    navigate(this, dataFeedback);
-    // - If resultsList set not to render
+    // 3- If resultsList set not to render
     if (!this.resultsList.render) return this.feedback(dataFeedback);
-    // - Generate & Render results list
+    // 4- Generate & Render results list
     generateList(this, dataFeedback, results);
+    // 5- Initialize list navigation controls
+    navigate(this, dataFeedback);
     /**
      * @emits {open} Emits Event after results list is opened
      **/
@@ -139,33 +138,33 @@ export default class autoComplete {
 
   // Run autoComplete composer
   async compose(event) {
-    // 0- Prepare raw input value
+    // 1- Prepare raw input value
     const input = getInputValue(this.inputField);
-    // 1- Prepare manipulated query input value
+    // 2- Prepare manipulated query input value
     const query = prepareQueryValue(input, this);
-    // 2- Get trigger condition
+    // 3- Get trigger condition
     const triggerCondition = checkTriggerCondition(this, event, query);
-    // 3- Check trigger condition
+    // 4- Check trigger condition
     if (triggerCondition) {
-      // 4- Prepare the data
+      // 5- Prepare the data
       await this.dataStore();
-      // 5- Start autoComplete engine
+      // 6- Start autoComplete engine
       this.start(input, query);
     } else {
-      // 4- Close open list
+      // 5- Close open list
       closeList(this);
     }
   }
 
   // Initialization stage
   init() {
-    // Set input field attributes
+    // 1- Set input field attributes
     inputComponent(this);
-    // Set placeholder attribute value
+    // 2- Set placeholder attribute value
     if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-    // Run executer
+    // 3- Run executer
     this.hook = debouncer((event) => {
-      // - Prepare autoComplete processes
+      // Prepare autoComplete processes
       this.compose(event);
     }, this.debounce);
     /**
@@ -183,10 +182,10 @@ export default class autoComplete {
 
   // Pre-Initialization stage
   preInit() {
-    // Observe DOM changes
+    // 1- Observe DOM changes
     // Options for the observer (which mutations to observe)
     const config = { childList: true, subtree: true };
-    // Callback function to execute when mutations are observed
+    // 2- Callback function to execute when mutations are observed
     const callback = (mutationsList, observer) => {
       // Traditional 'for loops' for IE 11
       for (let mutation of mutationsList) {
@@ -199,15 +198,16 @@ export default class autoComplete {
         }
       }
     };
-    // Create an observer instance linked to the callback function
+    // 3- Create an observer instance linked to the callback function
     const observer = new MutationObserver(callback);
-    // Start observing the target node for configured mutations
+    // 4- Start observing the target node for configured mutations
     // The entire document will be observed for mutations
     observer.observe(document, config);
   }
 
   // Un-initialize autoComplete
   unInit() {
+    // 1- Removes autoComplete input main eventListener
     this.inputField.removeEventListener("input", this.hook);
     /**
      * @emits {unInit} Emits Event on input eventListener detachment

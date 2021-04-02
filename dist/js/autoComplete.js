@@ -527,9 +527,9 @@
           results: results.slice(0, this.maxResults)
         };
         eventEmitter(this.inputField, dataFeedback, "results");
-        navigate(this, dataFeedback);
         if (!this.resultsList.render) return this.feedback(dataFeedback);
         generateList(this, dataFeedback, results);
+        navigate(this, dataFeedback);
         eventEmitter(this.inputField, dataFeedback, "open");
         document.addEventListener("click", function (event) {
           return closeList(_this);
