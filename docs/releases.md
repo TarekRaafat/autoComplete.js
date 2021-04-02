@@ -22,6 +22,7 @@ Release flags:
 -   `[Removed]`: Completely gone, no longer exists
 -   `[Changed]`: Breaking change in the API or the core library
 -   `[Updated]`: Non-breaking change in the API or the core library
+-   `[Fixed]`: Bug or Issue that was fixed and no longer exists
 -   `[Added]`: New feature
 
 * * *
