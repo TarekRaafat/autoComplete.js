@@ -12,7 +12,7 @@ import eventEmitter from "./utils/eventEmitter";
 
 /**
  * @desc This is autoComplete.js
- * @version 8.3.2
+ * @version 9.0
  * @example let autoCompleteJS = new autoComplete({config});
  */
 export default class autoComplete {
