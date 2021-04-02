@@ -33,16 +33,16 @@ Release flags:
   - ➕ Added: `selection` & `highlight` custom `className` API methods (Thanks 👍 @jerrykan) #184
   - ➕ Added: `eventEmitter` for `resultsList` fires on list `close` event (Thanks 👍 @yliharma) #188
   - ➕ Added: `event` parameter to `trigger.event` API method (Thanks 👍 @nornes) #189
-  - 🌀 Changed: `eventEmitter` name of `preInit` stage that fires on `connect` to `ready`
-  - 🌀 Changed: `eventEmitter` name of `resultsList` that fires on `rendered` to `open`
-  - 🌀 Changed: `eventEmitter` name of `resultsList` that fires on `navigation` to `navigate`
-  - 🌀 Changed: Refactored `closeAllLists` to be `closeList`
-  - 🌀 Changed: Refactored `generateList` stage
-  - 🌀 Changed: Refactored `start` stage
-  - 🌀 Changed: Refactored `noResults` API method [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
+  - 🌀 Changed: The name of `rendered` `eventEmitter` to `open`
+  - 🌀 Changed: The name of `navigation` `eventEmitter` to `navigate`
+  - 🌀 Changed: `closeAllLists` refactored and renamed to `closeList`
+  - 🌀 Changed: `generateList` stage with some refactoring
+  - 🌀 Changed: `start` stage with some refactoring
+  - 🌀 Changed: `noResults` API method with some refactoring [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
   - 🌀 Changed: `highlight` API from `String` to `Object` [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
   - 🔝 Updated: Replaced `Uglify` with `Terser`
   - 🔝 Updated: Development dependencies
+  - ❗ Removed: `connect` `eventEmitter` from the `preInit` stage
 
 - v8.3.2
   - 🔧 Fix: `selector` as a function breaks when `observer` is true (Thanks 👍 @brunobg) #179

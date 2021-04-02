@@ -91,35 +91,42 @@ const navigate = (config, dataFeedback) => {
   const navigation = (event) => {
     let list = document.getElementById(config.resultsList.idName);
 
-    if (!list) return config.inputField.removeEventListener(keyboardEvent, navigate);
+    // Check if list is not opened
+    if (!list) {
+      // Remove keyboard event listener
+      config.inputField.removeEventListener(keyboardEvent, navigate);
+    } else {
+      // Get list items
+      list = list.getElementsByTagName(config.resultItem.element);
 
-    list = list.getElementsByTagName(config.resultItem.element);
-
-    if (event.keyCode === 27) {
-      // If the ESC key is pressed
-      // Clear Input value
-      config.inputField.value = "";
-      // Closes open list
-      closeList(config);
-    } else if (event.keyCode === 40 || event.keyCode === 9) {
-      // Update list items state
-      update(event, list, true, config);
-    } else if (event.keyCode === 38 || event.keyCode === 9) {
-      // Update list items state
-      update(event, list, false, config);
-    } else if (event.keyCode === 13) {
-      // If the ENTER key is pressed
-      // prevent the form from its default behaviour "being submitted"
-      event.preventDefault();
-      if (currentFocus > -1 && list) {
-        // Simulate a click on the selected "active" item
-        list[currentFocus].click();
+      // Check pressed key
+      if (event.keyCode === 27) {
+        // If the ESC key is pressed
+        // Clear Input value
+        config.inputField.value = "";
         // Closes open list
         closeList(config);
+      } else if (event.keyCode === 40 || event.keyCode === 9) {
+        // Update list items state
+        update(event, list, true, config);
+      } else if (event.keyCode === 38 || event.keyCode === 9) {
+        // Update list items state
+        update(event, list, false, config);
+      } else if (event.keyCode === 13) {
+        // If the ENTER key is pressed
+        // prevent the form from its default behaviour "being submitted"
+        event.preventDefault();
+        if (currentFocus > -1) {
+          // Simulate a click on the selected "active" item
+          list[currentFocus].click();
+          // Closes open list
+          closeList(config);
+        }
       }
     }
   };
 
+  // Navigator pointer
   const navigate = config.resultsList.navigation || navigation;
 
   // Remove previous keydown listener

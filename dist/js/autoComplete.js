@@ -266,20 +266,23 @@
     };
     var navigation = function navigation(event) {
       var list = document.getElementById(config.resultsList.idName);
-      if (!list) return config.inputField.removeEventListener(keyboardEvent, navigate);
-      list = list.getElementsByTagName(config.resultItem.element);
-      if (event.keyCode === 27) {
-        config.inputField.value = "";
-        closeList(config);
-      } else if (event.keyCode === 40 || event.keyCode === 9) {
-        update(event, list, true, config);
-      } else if (event.keyCode === 38 || event.keyCode === 9) {
-        update(event, list, false, config);
-      } else if (event.keyCode === 13) {
-        event.preventDefault();
-        if (currentFocus > -1 && list) {
-          list[currentFocus].click();
+      if (!list) {
+        config.inputField.removeEventListener(keyboardEvent, navigate);
+      } else {
+        list = list.getElementsByTagName(config.resultItem.element);
+        if (event.keyCode === 27) {
+          config.inputField.value = "";
           closeList(config);
+        } else if (event.keyCode === 40 || event.keyCode === 9) {
+          update(event, list, true, config);
+        } else if (event.keyCode === 38 || event.keyCode === 9) {
+          update(event, list, false, config);
+        } else if (event.keyCode === 13) {
+          event.preventDefault();
+          if (currentFocus > -1) {
+            list[currentFocus].click();
+            closeList(config);
+          }
         }
       }
     };
@@ -612,7 +615,6 @@
               var mutation = _step.value;
               if (_this5.inputField) {
                 observer.disconnect();
-                eventEmitter(_this5.inputField, null, "ready");
                 _this5.init();
               }
             }

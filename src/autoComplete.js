@@ -194,10 +194,6 @@ export default class autoComplete {
         if (this.inputField) {
           // If yes disconnect the observer
           observer.disconnect();
-          /**
-           * @emits {ready} Emits Event on connection
-           **/
-          eventEmitter(this.inputField, null, "ready");
           // Initialize autoComplete
           this.init();
         }
