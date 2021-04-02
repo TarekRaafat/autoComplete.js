@@ -33,6 +33,9 @@ Release flags:
   - ➕ Added: `selection` & `highlight` custom `className` API methods (Thanks 👍 @jerrykan) #184
   - ➕ Added: `eventEmitter` for `resultsList` fires on list `close` event (Thanks 👍 @yliharma) #188
   - ➕ Added: `event` parameter to `trigger.event` API method (Thanks 👍 @nornes) #189
+  - 🌀 Changed: `eventEmitter` name of `preInit` stage that fires on `connect` to `ready`
+  - 🌀 Changed: `eventEmitter` name of `resultsList` that fires on `rendered` to `open`
+  - 🌀 Changed: `eventEmitter` name of `resultsList` that fires on `navigation` to `navigate`
   - 🌀 Changed: Refactored `closeAllLists` to be `closeList`
   - 🌀 Changed: Refactored `generateList` stage
   - 🌀 Changed: Refactored `start` stage

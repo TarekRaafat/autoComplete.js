@@ -103,7 +103,7 @@ export default class autoComplete {
     // - Prepare data feedback object
     const dataFeedback = { input, query, matches: results, results: results.slice(0, this.maxResults) };
     /**
-     * @emits {response} Emits Event on search response
+     * @emits {results} Emits Event on search response with results
      **/
     eventEmitter(this.inputField, dataFeedback, "results");
     // - Initialize navigation controls
@@ -113,9 +113,16 @@ export default class autoComplete {
     // - Generate & Render results list
     generateList(this, dataFeedback, results);
     /**
-     * @emits {rendered} Emits Event after results list rendering
+     * @emits {open} Emits Event after results list is opened
      **/
-    eventEmitter(this.inputField, dataFeedback, "rendered");
+    eventEmitter(this.inputField, dataFeedback, "open");
+    /**
+     * @desc
+     * Listens for all `click` events in the document
+     * and closes this menu if clicked outside the list and input field
+     * @listens {click} Listens to all `click` events on the document
+     **/
+    document.addEventListener("click", (event) => closeList(this));
   }
 
   async dataStore() {
@@ -125,7 +132,7 @@ export default class autoComplete {
     // Fetch new data from source and store it
     this.data.store = typeof this.data.src === "function" ? await this.data.src() : this.data.src;
     /**
-     * @emits {request} Emits Event on data response
+     * @emits {fetch} Emits Event on data request
      **/
     eventEmitter(this.inputField, this.data.store, "fetch");
   }
@@ -188,9 +195,9 @@ export default class autoComplete {
           // If yes disconnect the observer
           observer.disconnect();
           /**
-           * @emits {connect} Emits Event on connection
+           * @emits {ready} Emits Event on connection
            **/
-          eventEmitter(this.inputField, null, "connect");
+          eventEmitter(this.inputField, null, "ready");
           // Initialize autoComplete
           this.init();
         }

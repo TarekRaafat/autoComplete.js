@@ -39,12 +39,12 @@ const navigate = (config, dataFeedback) => {
     addActive(list);
     config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
     /**
-     * @emits {navigation} Emits Event on results list navigation
+     * @emits {navigate} Emits Event on results list navigation
      **/
     eventEmitter(
       event.srcElement,
       { event, ...dataFeedback, selection: dataFeedback.results[currentFocus] },
-      "navigation"
+      "navigate"
     );
   };
 

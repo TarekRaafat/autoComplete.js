@@ -1,5 +1,5 @@
-// // autoComplete.js input eventListener on connect event
-// document.querySelector("#autoComplete").addEventListener("connect", function (event) {
+// // autoComplete.js input eventListener on ready event after successful connection
+// document.querySelector("#autoComplete").addEventListener("ready", function (event) {
 //   console.log(event);
 // });
 // autoComplete.js input eventListener on initialization event
@@ -18,12 +18,12 @@ document.querySelector("#autoComplete").addEventListener("init", function (event
 // document.querySelector("#autoComplete").addEventListener("results", function (event) {
 //   console.log(event.detail);
 // });
-// // autoComplete.js input eventListener on post results list rendering event
-// document.querySelector("#autoComplete").addEventListener("rendered", function (event) {
-//   console.log(event.detail);
+// // autoComplete.js input eventListener on results list opening event
+// document.querySelector("#autoComplete").addEventListener("open", function (event) {
+//   console.log(event);
 // });
 // // autoComplete.js input eventListener on results list navigation
-// document.querySelector("#autoComplete").addEventListener("navigation", function (event) {
+// document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
 //   console.log(event.detail);
 // });
 // autoComplete.js input eventListener on results list navigation
