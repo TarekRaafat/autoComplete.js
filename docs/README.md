@@ -219,7 +219,7 @@ new autoComplete({
 	maxResults: 5,						 // Max. number of rendered results | (Optional)
     highlight: {
         render: true,                    // Highlight matching results        | (Optional)
-    }
+    },
 	resultItem: {	  					// Rendered result item 		   | (Optional)
 		content: (data, source) => {
 			source.innerHTML = data.match;
