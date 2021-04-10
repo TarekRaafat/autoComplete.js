@@ -1,6 +1,5 @@
 // The autoComplete.js Engine instance creator
 const autoCompleteJS = new autoComplete({
-  name: "food & drinks",
   data: {
     src: async function () {
       // Loading placeholder text
@@ -31,7 +30,16 @@ const autoCompleteJS = new autoComplete({
   highlight: {
     render: true,
   },
-  maxResults: 5,
+  resultsList: {
+    noResults: (list, query) => {
+      // No Results List Message
+      const message = document.createElement("li");
+      message.setAttribute("class", "no_result");
+      message.setAttribute("tabindex", "1");
+      message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
+      list.appendChild(message);
+    },
+  },
   resultItem: {
     content: (data, element) => {
       // Modify Results Item Style
@@ -45,16 +53,6 @@ const autoCompleteJS = new autoComplete({
             ${data.key}
         </span>`;
     },
-  },
-  noResults: (dataFeedback, generateList) => {
-    // Generate autoComplete List
-    generateList(autoCompleteJS, dataFeedback, dataFeedback.results);
-    // No Results List Item
-    const result = document.createElement("li");
-    result.setAttribute("class", "no_result");
-    result.setAttribute("tabindex", "1");
-    result.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${dataFeedback.query}"</span>`;
-    document.querySelector(`#${autoCompleteJS.resultsList.idName}`).appendChild(result);
   },
   onSelection: (feedback) => {
     document.querySelector("#autoComplete").blur();

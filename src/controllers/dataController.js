@@ -100,10 +100,8 @@ const listMatchingResults = (config, query) => {
       search();
     }
   }
-  // Sorting / Slicing final results list
-  const list = config.sort ? resList.sort(config.sort) : resList;
   // Returns rendered list
-  return list;
+  return resList;
 };
 
 export { getInputValue, prepareQueryValue, checkTriggerCondition, listMatchingResults };

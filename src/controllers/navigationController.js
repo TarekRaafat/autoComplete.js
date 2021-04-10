@@ -21,10 +21,9 @@ const navigate = (config, dataFeedback) => {
    * @param {Object} event - The `keydown` event Object
    * @param {Array <elements>} list - The array of list items
    * @param {Boolean} state - Of the arrow Down/Up
-   * @param {Object} config - autoComplete configurations
    *
    */
-  const update = (event, list, state, config) => {
+  const update = (event, list, state) => {
     event.preventDefault();
     if (state) {
       // If the arrow DOWN or TAB key is pressed
@@ -60,7 +59,7 @@ const navigate = (config, dataFeedback) => {
       // Remove "active" class from the item
       list[index].removeAttribute("aria-selected");
       // list[index].setAttribute("aria-selected", "false");
-      if (config.selection.className) list[index].classList.remove(config.selection.className);
+      if (config.resultItem.selected.className) list[index].classList.remove(config.resultItem.selected.className);
     }
   };
 
@@ -79,7 +78,7 @@ const navigate = (config, dataFeedback) => {
     if (currentFocus < 0) currentFocus = list.length - 1;
     // Add "active" class to the item
     list[currentFocus].setAttribute("aria-selected", "true");
-    if (config.selection.className) list[currentFocus].classList.add(config.selection.className);
+    if (config.resultItem.selected.className) list[currentFocus].classList.add(config.resultItem.selected.className);
   };
 
   /**
@@ -100,28 +99,34 @@ const navigate = (config, dataFeedback) => {
       list = list.getElementsByTagName(config.resultItem.element);
 
       // Check pressed key
-      if (event.keyCode === 27) {
-        // If the ESC key is pressed
-        // Clear Input value
-        config.inputField.value = "";
-        // Closes open list
-        closeList(config);
-      } else if (event.keyCode === 40 || event.keyCode === 9) {
-        // Update list items state
-        update(event, list, true, config);
-      } else if (event.keyCode === 38 || event.keyCode === 9) {
-        // Update list items state
-        update(event, list, false, config);
-      } else if (event.keyCode === 13) {
-        // If the ENTER key is pressed
-        // prevent the form from its default behaviour "being submitted"
-        event.preventDefault();
-        if (currentFocus > -1) {
-          // Simulate a click on the selected "active" item
-          list[currentFocus].click();
+      switch (event.keyCode) {
+        case 27:
+          // If the ESC key is pressed
+          // Clear Input value
+          config.inputField.value = "";
           // Closes open list
           closeList(config);
-        }
+          break;
+        case 9:
+        case 40:
+          // Update list items state
+          update(event, list, true);
+          break;
+        case 38:
+          // Update list items state
+          update(event, list, false);
+          break;
+        case 13:
+          // If the ENTER key is pressed
+          // prevent the form from its default behaviour "being submitted"
+          event.preventDefault();
+          if (currentFocus > -1) {
+            // Simulate a click on the selected "active" item
+            list[currentFocus].click();
+            // Closes open list
+            closeList(config);
+          }
+          break;
       }
     }
   };

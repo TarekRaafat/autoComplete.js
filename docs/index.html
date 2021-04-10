@@ -1,75 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>autoComplete.js - Vanilla Javascript library</title>
-        <meta name=”description" content=”Simple autocomplete pure vanilla Javascript library that's designed for speed, high versatility and seamless integration with wide range of projects and systems.”>
-        <meta name="keywords" content="autoComplete.js, autocomplete, easy-to-use, simple, pure, vanilla, javascript, js, library, speed, lightning, blazing, fast, search, suggestions, versatile, customizable, hackable, developer friendly, zero dependencies, lightweight, high integration, scalable, scalability, open source, github">
-        <meta name="subject" content="autoComplete Javascript Library">
-        <meta name="author" content="Tarek Raafat">
-        <meta name="copyright" content="Tarek Raafat">
-        <meta name="owner" content="Tarek Raafat">
-        <meta property="og:site_name" content="autoComplete.js">
-        <meta property="og:title" content="autoComplete.js">
-        <meta property="og:description" content="Simple autocomplete pure vanilla Javascript library.">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://tarekraafat.github.io/autoComplete.js/demo/">
-        <meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_Preview.png">
-        <meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_WidePreview.png">
-        <meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.init.png">
-        <meta property="og:image:type" content="image/png">
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="1200">
-        <meta property="fb:app_id" content="1482373115226718">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="description" content="Simple autocomplete pure vanilla Javascript library.">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <link rel="manifest" href="./manifest.json">
-        <link rel="apple-touch-icon" sizes="57x57" href="./img/icons/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="./img/icons/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="./img/icons/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="./img/icons/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="./img/icons/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="./img/icons/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="./img/icons/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="./img/icons/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="./img/icons/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="./img/icons/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="./img/icons/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="./img/icons/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="./img/icons/favicon-16x16.png">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="./img/icons/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
-        <meta name="google-site-verification" content="UphDCSqXKDBZF8Uyot7RJpQUxqsdrp2GDZXgiORHwgs" />
-        <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
-        <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
-        <style>
-            .app-name-link>img {
-                width: 200px;
-                padding-bottom: 20px;
-            }
-        </style>
-        <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=5c213660c276020011d38212&product=inline-share-buttons' async='async'></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>autoComplete.js - Vanilla Javascript library</title>
+    <meta name=”description" content=”Simple autocomplete pure vanilla Javascript library that's designed for speed,
+        high versatility and seamless integration with wide range of projects and systems.”>
+    <meta name="keywords"
+        content="autocomplete.js,autocomplete,easy-to-use,simple,pure,vanilla,javascript,js,library,speed,lightning,blazing,fast,search,suggestions,versatile,customizable,hackable,developer friendly,zero dependencies,lightweight,high integration,scalable,scalability,open source,github,javascript autocomplete,autocomplete javascript,autocompletejs,vanilla javascript library,easy to use autocomplete javascript library,fastest autocomplete javascript library,best autocomplete javascript library">
+    <meta name="subject" content="autoComplete Javascript Library">
+    <meta name="author" content="Tarek Raafat">
+    <meta name="copyright" content="Tarek Raafat">
+    <meta name="owner" content="Tarek Raafat">
+    <meta property="og:site_name" content="autoComplete.js">
+    <meta property="og:title" content="autoComplete.js">
+    <meta property="og:description" content="Simple autocomplete pure vanilla Javascript library.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tarekraafat.github.io/autoComplete.js/demo/">
+    <meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_Preview.png">
+    <meta property="og:image"
+        content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_WidePreview.png">
+    <meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.init.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="fb:app_id" content="1482373115226718">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="Simple autocomplete pure vanilla Javascript library.">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" sizes="57x57" href="./img/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="./img/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="./img/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="./img/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="./img/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="./img/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="./img/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="./img/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="./img/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="./img/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/icons/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="./img/icons/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="google-site-verification" content="UphDCSqXKDBZF8Uyot7RJpQUxqsdrp2GDZXgiORHwgs" />
+    <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+    <link rel="stylesheet" href="assets/ps-icon-pack.min.css">
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
+    <style>
+        #introduction {
+            display: none;
+        }
 
-    <body>
-        <div id="app"></div>
-        <script>
-            window.$docsify = {
-                ga: 'UA-129399191-2',
-                name: 'autoComplete.js',
-                logo: './img/autoComplete.js.svg',
-                repo: 'https://github.com/TarekRaafat/autoComplete.js',
-                coverpage: true,
-                themeColor: '#64CEAA',
-            }
-        </script>
-        <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
-        <script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
-        <script src="//unpkg.com/docsify-copy-code"></script>
-        <script defer src="https://buttons.github.io/buttons.js"></script>
-    </body>
+        .app-name-link>img {
+            width: 150px !important;
+            padding-bottom: 0 !important;
+        }
+
+        .sidebar-toggle {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .content {
+            padding-top: 0;
+        }
+
+        #logo {
+            width: 220px;
+            margin: 30px 0;
+        }
+
+        #demo {
+            color: inherit;
+            border-bottom: 2px solid #42b983;
+            text-decoration: none;
+            font-weight: normal;
+            transition: color .3s;
+        }
+
+        #demo:hover {
+            color: #42b983;
+        }
+
+        .search input[type="search"] {
+            background-color: transparent;
+            background-image: url("data:image/svg+xml,%3Csvg height='20px' width='20px' viewBox='0 0 24 24' fill='none' stroke='rgba(0, 0, 0, 0.3)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' preserveAspectRatio='xMidYMid meet' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10.5' cy='10.5' r='7.5' vector-effect='non-scaling-stroke'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='15.8' y2='15.8' vector-effect='non-scaling-stroke'%3E%3C/line%3E%3C/svg%3E");
+            background-position: 10px center;
+            background-repeat: no-repeat;
+            text-align: center;
+            border-radius: 50rem;
+        }
+
+        .docsify-tabs__tab {
+            outline: none;
+            cursor: pointer;
+        }
+
+        .app-name-link>img {
+            width: 200px;
+            padding-bottom: 20px;
+        }
+
+        .title {
+            color: #aaaaaa;
+        }
+
+        summary {
+            outline: none;
+        }
+
+        .no_result {
+            margin: 0.3rem;
+            padding: 0.3rem 0.5rem;
+            list-style: none;
+            text-align: left;
+            font-size: 1rem;
+            color: #212121;
+            transition: all 0.1s ease-in-out;
+            border-radius: 0.35rem;
+            background-color: rgba(255, 255, 255, 1);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .no_result>span {
+            display: flex;
+            align-items: center;
+            font-weight: 100;
+            color: rgba(0, 0, 0, .2);
+        }
+    </style>
+    <script type="text/javascript"
+        src="//platform-api.sharethis.com/js/sharethis.js#property=5c213660c276020011d38212&product=inline-share-buttons"
+        async="async"></script>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@latest/dist/css/autoComplete.min.css">
+</head>
+
+<body>
+    <div id="app"></div>
+    <script>
+        const date = new Date().getFullYear();
+
+        window.$docsify = {
+            // GENERAL
+            // -----------------------------------------------------------------
+            name: "autoComplete.js",
+            logo: "./img/autoComplete.js.svg",
+            repo: "https://github.com/TarekRaafat/autoComplete.js",
+            homepage: "index.md",
+            themeColor: "#64CEAA",
+            loadSidebar: true,
+            autoHeader: true,
+            onlyCover: true,
+            notFoundPage: true,
+            // NAVIGATION
+            // -----------------------------------------------------------------
+            auto2top: true,
+            maxLevel: 6,
+            subMaxLevel: 2,
+            externalLinkTarget: "_blank",
+            // PLUGINS
+            // -----------------------------------------------------------------
+            executeScript: true,
+            ga: "UA-129399191-2",
+            search: {
+                placeholder: "Search...",
+                maxAge: 86400000,
+                depth: 6,
+                noData: "No results found!",
+                hideOtherSidebarContent: true,
+            },
+            tabs: {
+                persist: true,
+                sync: true,
+                theme: "classic",
+                tabComments: true,
+                tabHeadings: true
+            },
+            pagination: {
+                crossChapter: true,
+                crossChapterText: true,
+            },
+        }
+    </script>
+    <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+    <script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
+    <script src="//unpkg.com/docsify-copy-code"></script>
+    <script src="//cdn.jsdelivr.net/npm/codeblock-iframe@latest/dist/index.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-codeblock-iframe@latest/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@latest/dist/js/autoComplete.min.js"></script>
+</body>
 
 </html>

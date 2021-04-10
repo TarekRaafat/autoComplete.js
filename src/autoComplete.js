@@ -19,16 +19,17 @@ export default class autoComplete {
   constructor(config) {
     // Deconstructing config values
     const {
-      name = "Search",
       selector = "#autoComplete",
+      placeHolder,
       observer = false,
       data: { src, key, cache = false, store, results },
       query,
       trigger: { event = ["input"], condition = false } = {},
-      searchEngine = "strict",
-      diacritics = false,
       threshold = 1,
       debounce = 0,
+      diacritics = false,
+      searchEngine = "strict",
+      feedback,
       resultsList: {
         render: resultsListRender = true,
         container = false,
@@ -37,35 +38,33 @@ export default class autoComplete {
         element: resultsListElement = "ul",
         idName: resultsListId = "autoComplete_list",
         className: resultsListClass = "autoComplete_list",
+        maxResults = 5,
         navigation = false,
+        noResults,
       } = {},
-      sort = false,
-      placeHolder,
-      maxResults = 5,
       resultItem: {
         content = false,
         element: resultItemElement = "li",
-        idName: resultItemId = "autoComplete_result",
+        idName: resultItemId,
         className: resultItemClass = "autoComplete_result",
+        highlight: { render: highlightRender = false, className: highlightClass = "autoComplete_highlighted" } = {},
+        selected: { className: selectedClass = "autoComplete_selected" } = {},
       } = {},
-      noResults,
-      selection: { className: selectionClass = "autoComplete_selected" } = {},
-      highlight: { render: highlightRender = false, className: highlightClass = "autoComplete_highlighted" } = {},
-      feedback,
-      onSelection,
+      onSelection, // Action function on result selection
     } = config;
 
     // Assigning config values to properties
-    this.name = name;
     this.selector = selector;
     this.observer = observer;
+    this.placeHolder = placeHolder;
     this.data = { src, key, cache, store, results };
     this.query = query;
     this.trigger = { event, condition };
-    this.searchEngine = searchEngine;
-    this.diacritics = diacritics;
     this.threshold = threshold;
     this.debounce = debounce;
+    this.diacritics = diacritics;
+    this.searchEngine = searchEngine;
+    this.feedback = feedback;
     this.resultsList = {
       render: resultsListRender,
       container,
@@ -74,16 +73,18 @@ export default class autoComplete {
       element: resultsListElement,
       idName: resultsListId,
       className: resultsListClass,
+      maxResults: maxResults,
       navigation,
+      noResults: noResults,
     };
-    this.sort = sort;
-    this.placeHolder = placeHolder;
-    this.maxResults = maxResults;
-    this.resultItem = { content, element: resultItemElement, idName: resultItemId, className: resultItemClass };
-    this.noResults = noResults;
-    this.selection = { className: selectionClass };
-    this.highlight = { render: highlightRender, className: highlightClass };
-    this.feedback = feedback;
+    this.resultItem = {
+      content,
+      element: resultItemElement,
+      idName: resultItemId,
+      className: resultItemClass,
+      highlight: { render: highlightRender, className: highlightClass },
+      selected: { className: selectedClass },
+    };
     this.onSelection = onSelection;
 
     // Assign the input field selector
@@ -100,7 +101,7 @@ export default class autoComplete {
       ? this.data.results(listMatchingResults(this, query))
       : listMatchingResults(this, query);
     // 2- Prepare data feedback object
-    const dataFeedback = { input, query, matches: results, results: results.slice(0, this.maxResults) };
+    const dataFeedback = { input, query, matches: results, results: results.slice(0, this.resultsList.maxResults) };
     /**
      * @emits {results} Emits Event on search response with results
      **/
@@ -118,10 +119,10 @@ export default class autoComplete {
     /**
      * @desc
      * Listens for all `click` events in the document
-     * and closes this menu if clicked outside the list and input field
+     * and closes list if clicked outside the list and inputField
      * @listens {click} Listens to all `click` events on the document
      **/
-    document.addEventListener("click", (event) => closeList(this));
+    document.addEventListener("click", (event) => closeList(this, event.target));
   }
 
   async dataStore() {

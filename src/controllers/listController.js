@@ -9,10 +9,10 @@ import eventEmitter from "../utils/eventEmitter";
  * @param {Element} element - Current selected element
  *
  */
-const closeList = (config) => {
-  // Get all autoComplete lists
+const closeList = (config, element) => {
+  // Get autoComplete list
   const list = document.getElementById(config.resultsList.idName);
-  if (list) {
+  if (list && element !== config.inputField) {
     // Remove open list
     list.remove();
     // Remove active descendant
@@ -36,6 +36,7 @@ const closeList = (config) => {
  * @return {Component} - The matching results list component
  */
 const generateList = (config, data, matches) => {
+  // Results list element
   let list = document.getElementById(config.resultsList.idName);
 
   // Check if there is a rendered list
@@ -78,7 +79,11 @@ const generateList = (config, data, matches) => {
   } else {
     // Check if there are NO results
     // Run noResults action function
-    config.noResults(list, data.query);
+    if (!config.resultsList.noResults) {
+      list.remove();
+    } else {
+      config.resultsList.noResults(list, data.query);
+    }
   }
 };
 

@@ -14,6 +14,7 @@ export default (item, index, config) => {
   result.setAttribute("class", config.resultItem.className);
   result.setAttribute("role", "option");
   result.innerHTML = item.match;
+  // If custom content set pass params
   if (config.resultItem.content) config.resultItem.content(item, result);
 
   return result;

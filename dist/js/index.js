@@ -1,67 +1,18 @@
-// // autoComplete.js input eventListener on ready event after successful connection
-// document.querySelector("#autoComplete").addEventListener("ready", function (event) {
-//   console.log(event);
-// });
-// autoComplete.js input eventListener on initialization event
-document.querySelector("#autoComplete").addEventListener("init", function (event) {
-  console.log(event);
-});
-// // autoComplete.js input eventListener on input event
-// document.querySelector("#autoComplete").addEventListener("input", function (event) {
-//   console.log(event);
-// });
-// // autoComplete.js input eventListener on data response event
-// document.querySelector("#autoComplete").addEventListener("fetch", function (event) {
-//   console.log(event.detail);
-// });
-// // autoComplete.js input eventListener on search results event
-// document.querySelector("#autoComplete").addEventListener("results", function (event) {
-//   console.log(event.detail);
-// });
-// // autoComplete.js input eventListener on results list opening event
-// document.querySelector("#autoComplete").addEventListener("open", function (event) {
-//   console.log(event);
-// });
-// // autoComplete.js input eventListener on results list navigation
-// document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
-//   console.log(event.detail);
-// });
-// autoComplete.js input eventListener on results list navigation
-document.querySelector("#autoComplete").addEventListener("close", function (event) {
-  console.log(event);
-});
-// // autoComplete.js input eventListener on post un-initialization event
-// document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
-//   console.log(event);
-// });
-
 // The autoComplete.js Engine instance creator
 const autoCompleteJS = new autoComplete({
-  name: "food & drinks",
-  selector: "#autoComplete",
-  observer: false,
   data: {
     src: async () => {
       // Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
-
-      if (!JSON.parse(localStorage.getItem("acData"))) {
-        // Fetch External Data Source
-        const source = await fetch("./db/generic.json");
-        const data = await source.json();
-        // Post Loading placeholder text
-        document.querySelector("#autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
-        // Returns Fetched data
-        return data;
-      }
-
+      // Fetch External Data Source
+      const source = await fetch("./db/generic.json");
+      const data = await source.json();
       // Post Loading placeholder text
       document.querySelector("#autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
-
-      return JSON.parse(localStorage.getItem("acData"));
+      // Returns Fetched data
+      return data;
     },
     key: ["food", "cities", "animals"],
-    cache: true,
     results: (list) => {
       // Filter duplicates
       const filteredResults = Array.from(new Set(list.map((value) => value.match))).map((food) => {
@@ -73,19 +24,20 @@ const autoCompleteJS = new autoComplete({
   },
   searchEngine: "strict",
   placeHolder: "Search for Food & Drinks!",
-  maxResults: 5,
-  sort: (a, b) => {
-    if (a.match < b.match) return -1;
-    if (a.match > b.match) return 1;
-    return 0;
-  },
-  highlight: {
-    render: true,
-  },
   debounce: 100,
   threshold: 1,
   trigger: {
     event: ["input", "focus"],
+  },
+  resultsList: {
+    noResults: (list, query) => {
+      // No Results List Message
+      const message = document.createElement("li");
+      message.setAttribute("class", "no_result");
+      message.setAttribute("tabindex", "1");
+      message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
+      list.appendChild(message);
+    },
   },
   resultItem: {
     content: (data, element) => {
@@ -93,25 +45,20 @@ const autoCompleteJS = new autoComplete({
       element.style = "display: flex; justify-content: space-between;";
       // Modify Results Item Content
       element.innerHTML = `
-        <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
-            ${data.match}
-        </span>
-        <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
-            ${data.key}
-        </span>`;
+      <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+        ${data.match}
+      </span>
+      <span style="display: flex; align-items: center; font-size: 13px; font-weight: 100; text-transform: uppercase; color: rgba(0,0,0,.2);">
+        ${data.key}
+      </span>`;
+    },
+    highlight: {
+      render: true,
     },
   },
-  noResults: (list, query) => {
-    // No Results List Message
-    const message = document.createElement("li");
-    message.setAttribute("class", "no_result");
-    message.setAttribute("tabindex", "1");
-    message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
-    list.appendChild(message);
-  },
-  feedback: (data) => {
-    console.log(data);
-  },
+  // feedback: (data) => {
+  //   console.log(data);
+  // },
   onSelection: (feedback) => {
     document.querySelector("#autoComplete").blur();
     // Prepare User's Selected Value

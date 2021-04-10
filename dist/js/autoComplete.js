@@ -160,7 +160,6 @@
   var createList = (function (config) {
     var list = document.createElement(config.resultsList.element);
     list.setAttribute("id", config.resultsList.idName);
-    list.setAttribute("aria-label", config.name);
     list.setAttribute("class", config.resultsList.className);
     list.setAttribute("role", "listbox");
     list.setAttribute("tabindex", "-1");
@@ -188,9 +187,9 @@
     }));
   });
 
-  var closeList = function closeList(config) {
+  var closeList = function closeList(config, element) {
     var list = document.getElementById(config.resultsList.idName);
-    if (list) {
+    if (list && element !== config.inputField) {
       list.remove();
       config.inputField.removeAttribute("aria-activedescendant");
       config.inputField.setAttribute("aria-expanded", false);
@@ -228,14 +227,18 @@
         _loop(index);
       }
     } else {
-      config.noResults(list, data.query);
+      if (!config.resultsList.noResults) {
+        list.remove();
+      } else {
+        config.resultsList.noResults(list, data.query);
+      }
     }
   };
 
   var keyboardEvent = "keydown";
   var navigate = function navigate(config, dataFeedback) {
     var currentFocus = -1;
-    var update = function update(event, list, state, config) {
+    var update = function update(event, list, state) {
       event.preventDefault();
       if (state) {
         currentFocus++;
@@ -253,7 +256,7 @@
     var removeActive = function removeActive(list) {
       for (var index = 0; index < list.length; index++) {
         list[index].removeAttribute("aria-selected");
-        if (config.selection.className) list[index].classList.remove(config.selection.className);
+        if (config.resultItem.selected.className) list[index].classList.remove(config.resultItem.selected.className);
       }
     };
     var addActive = function addActive(list) {
@@ -262,7 +265,7 @@
       if (currentFocus >= list.length) currentFocus = 0;
       if (currentFocus < 0) currentFocus = list.length - 1;
       list[currentFocus].setAttribute("aria-selected", "true");
-      if (config.selection.className) list[currentFocus].classList.add(config.selection.className);
+      if (config.resultItem.selected.className) list[currentFocus].classList.add(config.resultItem.selected.className);
     };
     var navigation = function navigation(event) {
       var list = document.getElementById(config.resultsList.idName);
@@ -270,19 +273,25 @@
         config.inputField.removeEventListener(keyboardEvent, navigate);
       } else {
         list = list.getElementsByTagName(config.resultItem.element);
-        if (event.keyCode === 27) {
-          config.inputField.value = "";
-          closeList(config);
-        } else if (event.keyCode === 40 || event.keyCode === 9) {
-          update(event, list, true, config);
-        } else if (event.keyCode === 38 || event.keyCode === 9) {
-          update(event, list, false, config);
-        } else if (event.keyCode === 13) {
-          event.preventDefault();
-          if (currentFocus > -1) {
-            list[currentFocus].click();
+        switch (event.keyCode) {
+          case 27:
+            config.inputField.value = "";
             closeList(config);
-          }
+            break;
+          case 9:
+          case 40:
+            update(event, list, true);
+            break;
+          case 38:
+            update(event, list, false);
+            break;
+          case 13:
+            event.preventDefault();
+            if (currentFocus > -1) {
+              list[currentFocus].click();
+              closeList(config);
+            }
+            break;
         }
       }
     };
@@ -301,7 +310,7 @@
       for (var number = 0; number < recordLowerCase.length; number++) {
         var recordChar = record[number];
         if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-          recordChar = config.highlight.render ? "<span class=\"".concat(config.highlight.className, "\">").concat(recordChar, "</span>") : recordChar;
+          recordChar = config.resultItem.highlight.render ? "<span class=\"".concat(config.resultItem.highlight.className, "\">").concat(recordChar, "</span>") : recordChar;
           searchPosition++;
         }
         match.push(recordChar);
@@ -313,7 +322,7 @@
       if (recordLowerCase.includes(query)) {
         var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
         query = pattern.exec(record);
-        var _match = config.highlight.render ? record.replace(query, "<span class=\"".concat(config.highlight.className, "\">").concat(query, "</span>")) : record;
+        var _match = config.resultItem.highlight.render ? record.replace(query, "<span class=\"".concat(config.resultItem.highlight.className, "\">").concat(query, "</span>")) : record;
         return _match;
       }
     }
@@ -372,8 +381,7 @@
     for (var index = 0; index < config.data.store.length; index++) {
       _loop(index);
     }
-    var list = config.sort ? resList.sort(config.sort) : resList;
-    return list;
+    return resList;
   };
 
   var debouncer = (function (callback, delay) {
@@ -391,10 +399,9 @@
   var autoComplete = function () {
     function autoComplete(config) {
       _classCallCheck(this, autoComplete);
-      var _config$name = config.name,
-          name = _config$name === void 0 ? "Search" : _config$name,
-          _config$selector = config.selector,
+      var _config$selector = config.selector,
           selector = _config$selector === void 0 ? "#autoComplete" : _config$selector,
+          placeHolder = config.placeHolder,
           _config$observer = config.observer,
           observer = _config$observer === void 0 ? false : _config$observer,
           _config$data = config.data,
@@ -411,14 +418,15 @@
           event = _config$trigger$event === void 0 ? ["input"] : _config$trigger$event,
           _config$trigger$condi = _config$trigger.condition,
           condition = _config$trigger$condi === void 0 ? false : _config$trigger$condi,
-          _config$searchEngine = config.searchEngine,
-          searchEngine = _config$searchEngine === void 0 ? "strict" : _config$searchEngine,
-          _config$diacritics = config.diacritics,
-          diacritics = _config$diacritics === void 0 ? false : _config$diacritics,
           _config$threshold = config.threshold,
           threshold = _config$threshold === void 0 ? 1 : _config$threshold,
           _config$debounce = config.debounce,
           debounce = _config$debounce === void 0 ? 0 : _config$debounce,
+          _config$diacritics = config.diacritics,
+          diacritics = _config$diacritics === void 0 ? false : _config$diacritics,
+          _config$searchEngine = config.searchEngine,
+          searchEngine = _config$searchEngine === void 0 ? "strict" : _config$searchEngine,
+          feedback = config.feedback,
           _config$resultsList = config.resultsList;
       _config$resultsList = _config$resultsList === void 0 ? {} : _config$resultsList;
       var _config$resultsList$r = _config$resultsList.render,
@@ -434,39 +442,34 @@
           resultsListId = _config$resultsList$i === void 0 ? "autoComplete_list" : _config$resultsList$i,
           _config$resultsList$c2 = _config$resultsList.className,
           resultsListClass = _config$resultsList$c2 === void 0 ? "autoComplete_list" : _config$resultsList$c2,
+          _config$resultsList$m = _config$resultsList.maxResults,
+          maxResults = _config$resultsList$m === void 0 ? 5 : _config$resultsList$m,
           _config$resultsList$n = _config$resultsList.navigation,
           navigation = _config$resultsList$n === void 0 ? false : _config$resultsList$n,
-          _config$sort = config.sort,
-          sort = _config$sort === void 0 ? false : _config$sort,
-          placeHolder = config.placeHolder,
-          _config$maxResults = config.maxResults,
-          maxResults = _config$maxResults === void 0 ? 5 : _config$maxResults,
+          noResults = _config$resultsList.noResults,
           _config$resultItem = config.resultItem;
       _config$resultItem = _config$resultItem === void 0 ? {} : _config$resultItem;
       var _config$resultItem$co = _config$resultItem.content,
           content = _config$resultItem$co === void 0 ? false : _config$resultItem$co,
           _config$resultItem$el = _config$resultItem.element,
           resultItemElement = _config$resultItem$el === void 0 ? "li" : _config$resultItem$el,
-          _config$resultItem$id = _config$resultItem.idName,
-          resultItemId = _config$resultItem$id === void 0 ? "autoComplete_result" : _config$resultItem$id,
+          resultItemId = _config$resultItem.idName,
           _config$resultItem$cl = _config$resultItem.className,
           resultItemClass = _config$resultItem$cl === void 0 ? "autoComplete_result" : _config$resultItem$cl,
-          noResults = config.noResults,
-          _config$selection = config.selection;
-      _config$selection = _config$selection === void 0 ? {} : _config$selection;
-      var _config$selection$cla = _config$selection.className,
-          selectionClass = _config$selection$cla === void 0 ? "autoComplete_selected" : _config$selection$cla,
-          _config$highlight = config.highlight;
-      _config$highlight = _config$highlight === void 0 ? {} : _config$highlight;
-      var _config$highlight$ren = _config$highlight.render,
-          highlightRender = _config$highlight$ren === void 0 ? false : _config$highlight$ren,
-          _config$highlight$cla = _config$highlight.className,
-          highlightClass = _config$highlight$cla === void 0 ? "autoComplete_highlighted" : _config$highlight$cla,
-          feedback = config.feedback,
+          _config$resultItem$hi = _config$resultItem.highlight;
+      _config$resultItem$hi = _config$resultItem$hi === void 0 ? {} : _config$resultItem$hi;
+      var _config$resultItem$hi2 = _config$resultItem$hi.render,
+          highlightRender = _config$resultItem$hi2 === void 0 ? false : _config$resultItem$hi2,
+          _config$resultItem$hi3 = _config$resultItem$hi.className,
+          highlightClass = _config$resultItem$hi3 === void 0 ? "autoComplete_highlighted" : _config$resultItem$hi3,
+          _config$resultItem$se = _config$resultItem.selected;
+      _config$resultItem$se = _config$resultItem$se === void 0 ? {} : _config$resultItem$se;
+      var _config$resultItem$se2 = _config$resultItem$se.className,
+          selectedClass = _config$resultItem$se2 === void 0 ? "autoComplete_selected" : _config$resultItem$se2,
           onSelection = config.onSelection;
-      this.name = name;
       this.selector = selector;
       this.observer = observer;
+      this.placeHolder = placeHolder;
       this.data = {
         src: src,
         key: key,
@@ -479,10 +482,11 @@
         event: event,
         condition: condition
       };
-      this.searchEngine = searchEngine;
-      this.diacritics = diacritics;
       this.threshold = threshold;
       this.debounce = debounce;
+      this.diacritics = diacritics;
+      this.searchEngine = searchEngine;
+      this.feedback = feedback;
       this.resultsList = {
         render: resultsListRender,
         container: container,
@@ -491,26 +495,23 @@
         element: resultsListElement,
         idName: resultsListId,
         className: resultsListClass,
-        navigation: navigation
+        maxResults: maxResults,
+        navigation: navigation,
+        noResults: noResults
       };
-      this.sort = sort;
-      this.placeHolder = placeHolder;
-      this.maxResults = maxResults;
       this.resultItem = {
         content: content,
         element: resultItemElement,
         idName: resultItemId,
-        className: resultItemClass
+        className: resultItemClass,
+        highlight: {
+          render: highlightRender,
+          className: highlightClass
+        },
+        selected: {
+          className: selectedClass
+        }
       };
-      this.noResults = noResults;
-      this.selection = {
-        className: selectionClass
-      };
-      this.highlight = {
-        render: highlightRender,
-        className: highlightClass
-      };
-      this.feedback = feedback;
       this.onSelection = onSelection;
       this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();
       this.observer ? this.preInit() : this.init();
@@ -524,7 +525,7 @@
           input: input,
           query: query,
           matches: results,
-          results: results.slice(0, this.maxResults)
+          results: results.slice(0, this.resultsList.maxResults)
         };
         eventEmitter(this.inputField, dataFeedback, "results");
         if (!this.resultsList.render) return this.feedback(dataFeedback);
@@ -532,7 +533,7 @@
         navigate(this, dataFeedback);
         eventEmitter(this.inputField, dataFeedback, "open");
         document.addEventListener("click", function (event) {
-          return closeList(_this);
+          return closeList(_this, event.target);
         });
       }
     }, {
