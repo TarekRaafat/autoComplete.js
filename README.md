@@ -94,7 +94,7 @@ yarn add @tarekraafat/autocomplete.js
 For general questions about autoComplete.js, tweet at [@TarekRaafat].
 
 For technical questions, you should post a question on [Stack Overflow] and tag
-it with [autoComplete.js][so tag].
+it with [autoCompletejs][stackoverflow].
 
 <!-- section links -->
 
@@ -102,7 +102,7 @@ it with [autoComplete.js][so tag].
 
 [@tarekraafat]: https://twitter.com/TarekRaafat
 
-[so tag]: https://stackoverflow.com/questions/tagged/autoComplete.js
+[stackoverflow]: https://stackoverflow.com/questions/tagged/autoCompletejs
 
 * * *
 
