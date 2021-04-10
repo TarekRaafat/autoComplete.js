@@ -1,6 +1,6 @@
 # Usage
 
-autoComplete.js simple usage setup
+autoComplete.js usage guide in detailed steps
 
 ## Steps
 
@@ -8,19 +8,27 @@ autoComplete.js simple usage setup
 
 ***
 
-Add an `<input>` tag to your html page:
+Add an [`<input>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input) or [`<textarea>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea) tag to your html page:
 
 <!-- tabs:start -->
 #### ** Basic **
 ```html
-<input id="autoCompleteJS">
+<input id="autoComplete">
+
+<!-- OR -->
+
+<textarea id="autoComplete">
 ```
 #### ** Advanced **
 ```html
-<input id="autoCompleteJS" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" maxlength="2048" tabindex="1">
+<input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" maxlength="2048" tabindex="1">
+
+<!-- OR -->
+
+<textarea id="autoComplete" rows="4" cols="50" maxlength="2048" tabindex="1">
 ```
 <!-- tabs:end -->
-> <div class="ps-icon ps-icon-bubble"></div><strong>Tip:</strong> you can put the < input > inside < div class="autoComplete_wrapper" > to make sure results list always attached and aligned.
+> <div class="ps-icon ps-icon-bubble"></div><strong>Tip:</strong> wrap < input > or < textarea > inside < div class="autoComplete_wrapper" > to make sure results list always attached and aligned.
 
 ### 2. Script
 
@@ -160,7 +168,7 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
 ***
 
 <div class="autoComplete_wrapper">
-    <input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">
+    <input type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">
 </div>
 
 <br><br>
@@ -178,7 +186,7 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
 
 <body>
     <div class="autoComplete_wrapper">
-        <input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">
+        <input type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/js/autoComplete.min.js"></script>

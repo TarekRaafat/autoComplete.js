@@ -59,8 +59,7 @@ selector: () => {
 
 ```js
 data: {
-    src: ["Sauce - Thousand Island", "Wild Boar - Tenderloin", "Goat - Whole Cut"],
-    cache: false
+    src: ["Sauce - Thousand Island", "Wild Boar - Tenderloin", "Goat - Whole Cut"]
 },
 ```
 
@@ -73,8 +72,7 @@ data: {
         { "food": "Wild Boar - Tenderloin" },
         { "food": "Goat - Whole Cut" }
     ],
-    key: ["food"],
-    cache: false
+    key: ["food"]
 },
 ```
 
@@ -82,11 +80,8 @@ data: {
 
 ```js
 data: {
-    src: () => {
-        
-    },
-    key: ["food"],
-    cache: false
+    src: () => { ... },
+    key: ["food"]
 },
 ```
 

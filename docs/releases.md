@@ -50,7 +50,6 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: `noResults` API method with some refactoring [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
   - 🌀 Changed: `highlight` API from `String` to `Object` [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
   - ❗ Removed: `sort` API
-  - ❗ Removed: `data.results` API
   - ❗ Removed: `connect` `eventEmitter` from the `preInit` stage
   - 🔝 Updated: Replaced `Uglify` with `Terser`
   - 🔝 Updated: Development dependencies
