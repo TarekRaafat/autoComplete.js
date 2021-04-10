@@ -1,5 +1,5 @@
-# Releases
-Find release notes and guides on versioning
+# Release Notes
+Find release notes/changelog and guides on versioning guidelines
 
 
 ## Versioning
@@ -30,7 +30,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 * * *
 
-## Release Notes
+## Releases
 
 #### v9.0.0 ✨
   > <div class="ps-icon ps-icon-important"></div> This version has breaking changes, kindly check the list

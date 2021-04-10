@@ -13,5 +13,5 @@
 - <div class="title">References</div>
 - 
   - [<div class="ps-icon ps-icon-headset"></div> Support](support.md "Support | autoComplete.js")
-  - [<div class="ps-icon ps-icon-organisation"></div> Releases](releases.md "Releases | autoComplete.js")
+  - [<div class="ps-icon ps-icon-organisation"></div> Release Notes](release-notes.md "Release Notes | autoComplete.js")
   - [<div class="ps-icon ps-icon-wand"></div> Contributions](contributions.md "Contributions | autoComplete.js")
