@@ -1,4 +1,4 @@
-# Usage
+# Usage <!-- {docsify-ignore} -->
 
 autoComplete.js usage guide in detailed steps
 
