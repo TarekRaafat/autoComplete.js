@@ -49,7 +49,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: `start` stage with some refactoring
   - 🌀 Changed: `noResults` API method with some refactoring [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
   - 🌀 Changed: `highlight` API from `String` to `Object` [details](https://tarekraafat.github.io/autoComplete.js/#/?id=api-configuration)
-  - ❗ Removed: `sort` API
+  - ❗ Removed: `sort` API due to its redundancy [`data.results`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=data-required) could be used instead
   - ❗ Removed: `connect` `eventEmitter` from the `preInit` stage
   - 🔝 Updated: Replaced `Uglify` with `Terser`
   - 🔝 Updated: Development dependencies
