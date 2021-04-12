@@ -2,7 +2,7 @@
 
 * * *
 
-#### Package Manager
+## Package Manager
 [![npm](https://img.shields.io/npm/v/@tarekraafat/autocomplete.js)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
 ![npm](https://img.shields.io/npm/dm/@tarekraafat/autocomplete.js?label=downloads)
 <!-- tabs:start -->
@@ -26,7 +26,7 @@ yarn add @tarekraafat/autocomplete.js
 
 <!-- tabs:end -->
 
-#### CDN
+## CDN
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 <!-- tabs:start -->
 
@@ -80,7 +80,7 @@ yarn add @tarekraafat/autocomplete.js
 
 <!-- tabs:end -->
 
-#### Direct
+## Direct
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/TarekRaafat/autoComplete.js)](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js)
 <!-- tabs:start -->
 
