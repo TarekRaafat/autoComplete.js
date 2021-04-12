@@ -2,7 +2,7 @@
 
 Add functionality and customize your autoComplete.js with plugins built by our amazing developer community
 
-## Third-Party Plugins
+## Community Plugins
 
 ***
 
