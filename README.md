@@ -23,7 +23,7 @@
 
 > Simple autocomplete pure vanilla Javascript library. <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">:rocket: Live Demo</a> **v9.0**
 
-autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with a wide range of projects & systems, made for users and developers in mind.
+autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed, high versatility and seamless integration with a wide range of projects & systems. <sub><sup>(Made for a better developers experience)</sub></pub>
 
 ## Features
 
@@ -33,35 +33,29 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 -   Extremely Lightweight
 -   Blazing Fast
 -   Versatile
--   Hackable & highly customizable
+-   Hackable & Highly Customizable
+-   Well Documented
 
-## [![autoComplete.js Code Example](./docs/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW?editors=0010)
+[![autoComplete.js Code Example](./docs/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW?editors=0010)
 
-## Get Started
-
-### Clone:
-
--   Clone autoComplete.js to your local machine
-
-```shell
-git clone https://github.com/TarekRaafat/autoComplete.js.git
-```
+## Getting Started
 
 ### Installation:
 
--   <a href="https://www.jsdelivr.com/package/gh/TarekRaafat/autoComplete.js"><img src="https://www.jsdelivr.com/img/logo@2x.png" alt="jsDelivr" width="100px"></a> CDN
-
-`CSS`
-
-```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/css/autoComplete.min.css">
-```
+#### CDN
 
 `JS`
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/js/autoComplete.min.js"></script>
 ```
+
+`CSS`
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/css/autoComplete.min.css">
+```
+#### Package Manager
 
 -   <a href="https://www.npmjs.com/package/@tarekraafat/autocomplete.js">npm</a> install `(Node Package Manager)`
 
@@ -79,11 +73,11 @@ yarn add @tarekraafat/autocomplete.js
 
 ## Documentation:
 
--   For more details check out **autoComplete.js** <a href="https://tarekraafat.github.io/autoComplete.js/">**docs** :notebook_with_decorative_cover:</a>
+-   For usage & configuration details check out **autoComplete.js** <a href="https://tarekraafat.github.io/autoComplete.js/">**docs** :notebook_with_decorative_cover:</a>
 
 <!-- * * * -->
 
-## Third-Party Plugins:
+## Community Plugins:
 
 -   [Contao autoComplete.js Bundle](https://github.com/heimrichhannot/contao-autocompletejs-bundle) by [@heimrichhannot](https://github.com/heimrichhannot)
 
@@ -91,17 +85,17 @@ yarn add @tarekraafat/autocomplete.js
 
 ## Support
 
-For general questions about autoComplete.js, tweet at [@TarekRaafat].
+Technical questions and support, please post your question on Stack Overflow using the below tag
 
-For technical questions, you should post a question on [Stack Overflow] and tag
-it with [autoCompletejs][stackoverflow].
+- Stack Overflow [autoCompletejs][stackOverflow]
+
+
+General questions or new ideas for `autoComplete.js` please start a discussion on Github using the below link
+
+- Github [Discussions]
 
 <!-- section links -->
-
-[stack overflow]: https://stackoverflow.com/
-
-[@tarekraafat]: https://twitter.com/TarekRaafat
-
+[Discussions]: https://github.com/TarekRaafat/autoComplete.js/discussions
 [stackoverflow]: https://stackoverflow.com/questions/tagged/autoCompletejs
 
 * * *
@@ -111,13 +105,13 @@ it with [autoCompletejs][stackoverflow].
 **Tarek Raafat**
 
 -   Email: tarek.m.raafat@gmail.com
--   Website: <http://www.tarekraafat.com/>
--   Github: <https://github.com/TarekRaafat/>
-
-Distributed under the Apache 2.0 license. See `Apache 2.0` for more information.
+-   Website: [tarekraafat.com](http://www.tarekraafat.com/)
+-   Github: [github.com/TarekRaafat](https://github.com/TarekRaafat/)
 
 * * *
 
 ## License
 
-Apache 2.0 © [Tarek Raafat](http://www.tarekraafat.com)
+Released under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
+
+© 2021 [Tarek Raafat](http://www.tarekraafat.com)

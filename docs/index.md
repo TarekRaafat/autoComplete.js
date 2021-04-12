@@ -41,8 +41,8 @@
 <div class="ps-icon ps-icon-guy-big-smile"></div> <b>Tarek Raafat</b>
 
 - Email: tarek.m.raafat@gmail.com
-- Website: <http://www.tarekraafat.com/>
-- Github: <https://github.com/TarekRaafat/>
+- Website: [tarekraafat.com](http://www.tarekraafat.com/)
+- Github: [github.com/TarekRaafat](https://github.com/TarekRaafat/)
 
 ## License <!-- {docsify-ignore} -->
 
