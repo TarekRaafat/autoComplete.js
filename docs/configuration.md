@@ -4,7 +4,7 @@ API configuration options and events
 
 ## Options
 
-#### selector (optional)
+### selector <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -32,7 +32,7 @@ selector: () => {
 
 <!-- tabs:end -->
 
-#### data (required)
+### data <sub><sup>(required)</sup></sub>
 
 ***
 
@@ -103,7 +103,7 @@ data: {
 ```
 <!-- tabs:end -->
 
-#### trigger (optional)
+### trigger <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -130,7 +130,7 @@ trigger: {
 },
 ```
 
-#### query (optional)
+### query <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -154,7 +154,7 @@ query: {
 },
 ```
 
-#### placeHolder (optional)
+### placeHolder <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -170,7 +170,7 @@ query: {
 placeHolder: "Search...",
 ```
 
-#### observer (optional)
+### observer <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -186,7 +186,7 @@ placeHolder: "Search...",
 observer: false,
 ```
 
-#### threshold (optional)
+### threshold <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -202,7 +202,7 @@ observer: false,
 threshold: 2,
 ```
 
-#### debounce (optional)
+### debounce <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -218,7 +218,7 @@ threshold: 2,
 debounce: 300, // Milliseconds value
 ```
 
-#### searchEngine (optional)
+### searchEngine <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -236,7 +236,7 @@ debounce: 300, // Milliseconds value
 searchEngine: "strict",
 ```
 
-#### diacritics (optional)
+### diacritics <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -252,7 +252,7 @@ searchEngine: "strict",
 diacritics: "strict",
 ```
 
-#### resultsList (optional)
+### resultsList <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -314,7 +314,7 @@ resultsList: {
 },
 ```
 
-#### resultItem (optional)
+### resultItem <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -364,7 +364,7 @@ resultItem: {
 },
 ```
 
-#### feedback (optional)
+### feedback <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -383,7 +383,7 @@ feedback: (data) => {
 },
 ```
 
-#### onSelection (optional)
+#### onSelection <sub><sup>(optional)</sup></sub>
 
 ***
 
@@ -404,7 +404,7 @@ onSelection: (feedback) => {
 
 ## Events
 
-#### init
+### init
 
 ***
 
@@ -418,7 +418,7 @@ document.querySelector("#autoComplete").addEventListener("init", function (event
 });
 ```
 
-#### fetch
+### fetch
 
 ***
 
@@ -432,7 +432,7 @@ document.querySelector("#autoComplete").addEventListener("fetch", function (even
 });
 ```
 
-#### input
+### input
 
 ***
 
@@ -446,7 +446,7 @@ document.querySelector("#autoComplete").addEventListener("input", function (even
 });
 ```
 
-#### results
+### results
 
 ***
 
@@ -460,7 +460,7 @@ document.querySelector("#autoComplete").addEventListener("results", function (ev
 });
 ```
 
-#### open
+### open
 
 ***
 
@@ -474,7 +474,7 @@ document.querySelector("#autoComplete").addEventListener("open", function (event
 });
 ```
 
-#### navigate
+### navigate
 
 ***
 
@@ -488,7 +488,7 @@ document.querySelector("#autoComplete").addEventListener("navigate", function (e
 });
 ```
 
-#### close
+### close
 
 ***
 
@@ -502,7 +502,7 @@ document.querySelector("#autoComplete").addEventListener("close", function (even
 });
 ```
 
-#### unInit
+### unInit
 
 ***
 
