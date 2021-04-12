@@ -41,7 +41,7 @@ Add an [`<input>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/inp
 
 ```html
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/js/autoComplete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/js/autoComplete.min.js"></script>
 </body>
 ```
 #### ** Javascript **
@@ -64,7 +64,7 @@ import autoComplete from "@tarekraafat/autocomplete.js";
 
 ```html
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/js/autoComplete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/js/autoComplete.min.js"></script>
 
     <script>
         const autoCompleteJS = new autoComplete({ config });
@@ -150,7 +150,7 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
 
 ```html
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/css/autoComplete.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/css/autoComplete.min.css">
 </head>
 ```
 
@@ -181,7 +181,7 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/css/autoComplete.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/css/autoComplete.min.css">
 </head>
 
 <body>
@@ -189,7 +189,7 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
         <input type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/js/autoComplete.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/js/autoComplete.min.js"></script>
     <script>
         new autoComplete({
             selector: "#autoComplete",

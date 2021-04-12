@@ -37,13 +37,13 @@ yarn add @tarekraafat/autocomplete.js
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/js/autoComplete.min.js"></script>
 ```
 
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.0/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/css/autoComplete.min.css">
 ```
 
 #### ** cdnjs **
@@ -53,29 +53,29 @@ yarn add @tarekraafat/autocomplete.js
 `JS`
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/9.0.0/js/autoComplete.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/{{version}}/js/autoComplete.min.js"></script>
 ```
 
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/9.0.0/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/{{version}}/css/autoComplete.min.css">
 ```
 
 #### ** UNPKG **
 
-<a href="https://unpkg.com/browse/@tarekraafat/autocomplete.js@9.0.0/"><img src="./img/logos/unpkg_logo.png" alt="unpkg Logo" width="100px"></a>
+<a href="https://unpkg.com/browse/@tarekraafat/autocomplete.js@{{version}}/"><img src="./img/logos/unpkg_logo.png" alt="unpkg Logo" width="100px"></a>
 
 `JS`
 
 ```html
-<script src="https://unpkg.com/@tarekraafat/autocomplete.js@9.0.0/dist/js/autoComplete.min.js"></script>
+<script src="https://unpkg.com/@tarekraafat/autocomplete.js@{{version}}/dist/js/autoComplete.min.js"></script>
 ```
 
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/@tarekraafat/autocomplete.js@9.0.0/dist/css/autoComplete.css">
+<link rel="stylesheet" href="https://unpkg.com/@tarekraafat/autocomplete.js@{{version}}/dist/css/autoComplete.css">
 ```
 
 <!-- tabs:end -->

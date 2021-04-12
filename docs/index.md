@@ -2,7 +2,7 @@
 
 <img src="./img/autoComplete.js.svg" alt= "autoComplete.js Logo" id="logo">
 
-<p style="font-size: 24px; color: #34495e;">Simple autocomplete pure vanilla Javascript library. :rocket: <a href="/autoComplete.js/demo/" target="\_blank" id="demo">Live Demo</a> <strong>v9.0</strong></p>
+<p style="font-size: 24px; color: #34495e;">Simple autocomplete pure vanilla Javascript library. :rocket: <a href="/autoComplete.js/demo/" target="\_blank" id="demo">Live Demo</a> <strong>v{{minVersion}}</strong></p>
 
 <p style="max-width: 710px;">autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed,<br>high versatility and seamless integration with a wide range of projects & systems.</p>
 

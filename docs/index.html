@@ -7,7 +7,7 @@
     <meta name=”description" content=”Simple autocomplete pure vanilla Javascript library that's designed for speed,
         high versatility and seamless integration with wide range of projects and systems.”>
     <meta name="keywords"
-        content="autocomplete.js,autocomplete,easy-to-use,simple,pure,vanilla,javascript,js,library,speed,lightning,blazing,fast,search,suggestions,versatile,customizable,hackable,developer friendly,zero dependencies,lightweight,high integration,scalable,scalability,open source,github,javascript autocomplete,autocomplete javascript,autocompletejs,vanilla javascript library,easy to use autocomplete javascript library,fastest autocomplete javascript library,best autocomplete javascript library">
+        content="autocomplete.js,autocomplete,simple autocomplete,pure vanilla javascript,vanilla js,javascript,js,library,speed,lightning fast,blazing fast,fast,search,suggestions,select,versatile,customizable,hackable,developer friendly,zero dependencies,lightweight,high integration,scalable,scalability,open source,github,javascript autocomplete,autocomplete javascript,autocompletejs,vanilla javascript library,easy to use autocomplete javascript library,fastest autocomplete javascript library,best autocomplete javascript library">
     <meta name="subject" content="autoComplete Javascript Library">
     <meta name="author" content="Tarek Raafat">
     <meta name="copyright" content="Tarek Raafat">
@@ -189,10 +189,17 @@
                 crossChapter: true,
                 crossChapterText: true,
             },
+            mustache: {
+                data: ["../package.json", {
+                    minVersion: "9.0",
+                    version: "9.0.0"
+                }]
+            }
         }
     </script>
     <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
     <script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify-mustache"></script>
     <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify-tabs@1"></script>
