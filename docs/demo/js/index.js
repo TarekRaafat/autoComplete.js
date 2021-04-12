@@ -53,6 +53,9 @@ const autoCompleteJS = new autoComplete({
             ${data.key}
         </span>`;
     },
+    highlight: {
+      render: true,
+    },
   },
   onSelection: (feedback) => {
     document.querySelector("#autoComplete").blur();
