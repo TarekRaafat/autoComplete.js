@@ -30,7 +30,8 @@
 -  Extremely Lightweight
 -  Blazing Fast
 -  Versatile
--  Hackable & highly customizable
+-  Hackable & Highly Customizable
+-  Well Documented
 
 
 ## Author <!-- {docsify-ignore} -->
