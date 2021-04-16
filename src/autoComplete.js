@@ -122,7 +122,7 @@ export default class autoComplete {
      * and closes list if clicked outside the list and inputField
      * @listens {click} Listens to all `click` events on the document
      **/
-    document.addEventListener("click", (event) => closeList(this, event.target));
+    document.addEventListener("focusout", () => closeList(this));
   }
 
   async dataStore() {

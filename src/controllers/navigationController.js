@@ -102,17 +102,18 @@ const navigate = (config, dataFeedback) => {
       switch (event.keyCode) {
         case 27:
           // If the ESC key is pressed
-          // Clear Input value
+          // Clears Input field
           config.inputField.value = "";
           // Closes open list
           closeList(config);
           break;
-        case 9:
         case 40:
+          // If the DOWN key is pressed
           // Update list items state
           update(event, list, true);
           break;
         case 38:
+          // If the UP key is pressed
           // Update list items state
           update(event, list, false);
           break;

@@ -3,16 +3,15 @@ import createItem from "../components/Item";
 import eventEmitter from "../utils/eventEmitter";
 
 /**
- * Close all open lists
+ * Close open list
  *
  * @param {Object} config - autoComplete configurations
- * @param {Element} element - Current selected element
  *
  */
-const closeList = (config, element) => {
+const closeList = (config) => {
   // Get autoComplete list
   const list = document.getElementById(config.resultsList.idName);
-  if (list && element !== config.inputField) {
+  if (list) {
     // Remove open list
     list.remove();
     // Remove active descendant

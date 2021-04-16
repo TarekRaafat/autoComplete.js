@@ -34,7 +34,11 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v9.0.0 ✨
+### v9.0.1 ✨
+  - 🔧 Fixed: `resultItem.idName` issue
+  - 🔝 Updated: [`Tab`](https://adamsilver.io/blog/building-an-accessible-autocomplete-control/#composite-controls-should-have-a-single-tab-stop) button behavior (Thanks 👍 @ronmichael @codyjames) #175 #202
+
+### v9.0.0
   > <div class="ps-icon ps-icon-important"></div> This version has breaking changes, kindly check the list
   - 🔧 Fixed: `esc` button not working with `noResults` in some cases (Thanks 👍 @sunshineplan) #157
   - ➕ Added: `selection` & `highlight` custom `className` API methods (Thanks 👍 @jerrykan) #184

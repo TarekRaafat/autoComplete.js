@@ -162,7 +162,6 @@
     list.setAttribute("id", config.resultsList.idName);
     list.setAttribute("class", config.resultsList.className);
     list.setAttribute("role", "listbox");
-    list.setAttribute("tabindex", "-1");
     if (config.resultsList.container) config.resultsList.container(list);
     var destination = "string" === typeof config.resultsList.destination ? document.querySelector(config.resultsList.destination) : config.resultsList.destination();
     destination.insertAdjacentElement(config.resultsList.position, list);
@@ -187,9 +186,9 @@
     }));
   });
 
-  var closeList = function closeList(config, element) {
+  var closeList = function closeList(config) {
     var list = document.getElementById(config.resultsList.idName);
-    if (list && element !== config.inputField) {
+    if (list) {
       list.remove();
       config.inputField.removeAttribute("aria-activedescendant");
       config.inputField.setAttribute("aria-expanded", false);
@@ -278,7 +277,6 @@
             config.inputField.value = "";
             closeList(config);
             break;
-          case 9:
           case 40:
             update(event, list, true);
             break;
@@ -532,8 +530,8 @@
         generateList(this, dataFeedback, results);
         navigate(this, dataFeedback);
         eventEmitter(this.inputField, dataFeedback, "open");
-        document.addEventListener("click", function (event) {
-          return closeList(_this, event.target);
+        document.addEventListener("focusout", function () {
+          return closeList(_this);
         });
       }
     }, {
