@@ -8,10 +8,10 @@ import eventEmitter from "../utils/eventEmitter";
  * @param {Object} config - autoComplete configurations
  *
  */
-const closeList = (config) => {
+const closeList = (config, target) => {
   // Get autoComplete list
   const list = document.getElementById(config.resultsList.idName);
-  if (list) {
+  if (list && target !== config.inputField) {
     // Remove open list
     list.remove();
     // Remove active descendant
@@ -19,7 +19,7 @@ const closeList = (config) => {
     // Set list to closed
     config.inputField.setAttribute("aria-expanded", false);
     /**
-     * @emits {close} Emits Event on list close
+     * @emit {close} Emit Event on list close
      **/
     eventEmitter(config.inputField, null, "close");
   }
@@ -84,6 +84,13 @@ const generateList = (config, data, matches) => {
       config.resultsList.noResults(list, data.query);
     }
   }
+  /**
+   * @desc
+   * Listen for all `click` events in the document
+   * and close list if clicked outside the list and inputField
+   * @listen {click} Listen to all `click` events on the document
+   **/
+  document.addEventListener("click", (event) => closeList(config, event.target));
 };
 
 export { generateList, closeList };

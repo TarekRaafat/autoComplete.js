@@ -103,7 +103,7 @@ export default class autoComplete {
     // 2- Prepare data feedback object
     const dataFeedback = { input, query, matches: results, results: results.slice(0, this.resultsList.maxResults) };
     /**
-     * @emits {results} Emits Event on search response with results
+     * @emit {results} Emit Event on search response with results
      **/
     eventEmitter(this.inputField, dataFeedback, "results");
     // 3- If resultsList set not to render
@@ -113,16 +113,9 @@ export default class autoComplete {
     // 5- Initialize list navigation controls
     navigate(this, dataFeedback);
     /**
-     * @emits {open} Emits Event after results list is opened
+     * @emit {open} Emit Event after results list is opened
      **/
     eventEmitter(this.inputField, dataFeedback, "open");
-    /**
-     * @desc
-     * Listens for all `click` events in the document
-     * and closes list if clicked outside the list and inputField
-     * @listens {click} Listens to all `click` events on the document
-     **/
-    document.addEventListener("click", () => closeList(this));
   }
 
   async dataStore() {
@@ -132,7 +125,7 @@ export default class autoComplete {
     // Fetch new data from source and store it
     this.data.store = typeof this.data.src === "function" ? await this.data.src() : this.data.src;
     /**
-     * @emits {fetch} Emits Event on data request
+     * @emit {fetch} Emit Event on data request
      **/
     eventEmitter(this.inputField, this.data.store, "fetch");
   }
@@ -169,14 +162,14 @@ export default class autoComplete {
       this.compose(event);
     }, this.debounce);
     /**
-     * @listens {input} Listens to all `input` events on the input field
+     * @listen {input} Listen to all `input` events on the input field
      **/
     this.trigger.event.forEach((eventType) => {
       this.inputField.removeEventListener(eventType, this.hook);
       this.inputField.addEventListener(eventType, this.hook);
     });
     /**
-     * @emits {init} Emits Event on Initialization
+     * @emit {init} Emit Event on Initialization
      **/
     eventEmitter(this.inputField, null, "init");
   }
@@ -211,7 +204,7 @@ export default class autoComplete {
     // 1- Removes autoComplete input main eventListener
     this.inputField.removeEventListener("input", this.hook);
     /**
-     * @emits {unInit} Emits Event on input eventListener detachment
+     * @emit {unInit} Emit Event on input eventListener detachment
      **/
     eventEmitter(this.inputField, null, "unInit");
   }

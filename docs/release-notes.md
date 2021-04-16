@@ -34,12 +34,16 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v9.0.2 ✨
+### v9.0.3 ✨
+  - 🔧 Fixed: `TAB` button behavior
+  - 🔧 Fixed: `resultsList` close behavior on `inputField` double click
+
+### v9.0.2
   - 🔧 Fixed: Unexpected behavior `onClick` (Thanks 👍 @iNalgiev) #205
 
 ### v9.0.1
   - 🔧 Fixed: `resultItem.idName` issue
-  - 🔝 Updated: [`Tab`](https://adamsilver.io/blog/building-an-accessible-autocomplete-control/#composite-controls-should-have-a-single-tab-stop) button behavior (Thanks 👍 @ronmichael @codyjames) #175 #202
+  - 🔝 Updated: [`TAB`](https://adamsilver.io/blog/building-an-accessible-autocomplete-control/#composite-controls-should-have-a-single-tab-stop) button behavior (Thanks 👍 @ronmichael @codyjames) #175 #202
 
 ### v9.0.0
   > <div class="ps-icon ps-icon-important"></div> This version has breaking changes, kindly check the list

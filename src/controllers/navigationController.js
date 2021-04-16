@@ -24,13 +24,14 @@ const navigate = (config, dataFeedback) => {
    *
    */
   const update = (event, list, state) => {
+    // prevent default behaviour
     event.preventDefault();
     if (state) {
-      // If the arrow DOWN or TAB key is pressed
+      // If the arrow `DOWN` key is pressed
       // increase the currentFocus
       currentFocus++;
     } else {
-      // If the arrow UP or TAB key is pressed
+      // Else if the arrow `UP` key is pressed
       // decrease the currentFocus
       currentFocus--;
     }
@@ -38,7 +39,7 @@ const navigate = (config, dataFeedback) => {
     addActive(list);
     config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
     /**
-     * @emits {navigate} Emits Event on results list navigation
+     * @emit {navigate} Emit Event on results list navigation
      **/
     eventEmitter(
       event.srcElement,
@@ -100,33 +101,36 @@ const navigate = (config, dataFeedback) => {
 
       // Check pressed key
       switch (event.keyCode) {
-        case 27:
-          // If the ESC key is pressed
-          // Clears Input field
-          config.inputField.value = "";
-          // Closes open list
-          closeList(config);
-          break;
         case 40:
-          // If the DOWN key is pressed
+          // If the `DOWN` key is pressed
           // Update list items state
           update(event, list, true);
           break;
         case 38:
-          // If the UP key is pressed
+          // If the `UP` key is pressed
           // Update list items state
           update(event, list, false);
           break;
+        case 27:
+          // If the `ESC` key is pressed
+          // Clear Input field
+          config.inputField.value = "";
+          // Close open list
+          closeList(config);
+          break;
         case 13:
-          // If the ENTER key is pressed
-          // prevent the form from its default behaviour "being submitted"
+          // If the `ENTER` key is pressed
+          // prevent default behaviour
           event.preventDefault();
-          if (currentFocus > -1) {
-            // Simulate a click on the selected "active" item
-            list[currentFocus].click();
-            // Closes open list
-            closeList(config);
-          }
+          // Simulate a click on the selected "active" item
+          list[currentFocus].click();
+          // Close open list
+          closeList(config);
+          break;
+        case 9:
+          // If the `TAB` key is pressed
+          // Close open list
+          closeList(config);
           break;
       }
     }
@@ -141,7 +145,7 @@ const navigate = (config, dataFeedback) => {
   config.inputField.autoCompleteNavigate = navigate;
 
   /**
-   * @listens {keydown} Listens to all `keydown` events on the input field
+   * @listen {keydown} Listen to all `keydown` events on the input field
    **/
   config.inputField.addEventListener(keyboardEvent, navigate);
 };
