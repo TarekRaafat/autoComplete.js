@@ -530,7 +530,7 @@
         generateList(this, dataFeedback, results);
         navigate(this, dataFeedback);
         eventEmitter(this.inputField, dataFeedback, "open");
-        document.addEventListener("focusout", function () {
+        document.addEventListener("click", function () {
           return closeList(_this);
         });
       }
