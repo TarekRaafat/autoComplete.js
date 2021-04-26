@@ -47,13 +47,13 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.4/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.5/dist/js/autoComplete.min.js"></script>
 ```
 
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.4/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@9.0.5/dist/css/autoComplete.min.css">
 ```
 #### Package Manager
 

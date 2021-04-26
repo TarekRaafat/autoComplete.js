@@ -202,7 +202,6 @@
       list = createList(config);
     }
     config.inputField.setAttribute("aria-expanded", true);
-    if (config.resultsList.container) config.resultsList.container(list);
     if (matches.length) {
       var _loop = function _loop(index) {
         var item = data.results[index];
@@ -232,6 +231,7 @@
         config.resultsList.noResults(list, data.query);
       }
     }
+    if (config.resultsList.container) config.resultsList.container(list);
     document.addEventListener("click", function (event) {
       return closeList(config, event.target);
     });

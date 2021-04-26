@@ -34,7 +34,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v9.0.4 ✨
+### v9.0.5 ✨
+  - 🔧 Fixed: `resultsList.container` hierarchy comes after list rendering instead of before
+
+### v9.0.4
   - 🔧 Fixed: `resultsList.container` is removed on second input (Thanks 👍 @folknor) #206
 
 ### v9.0.3
