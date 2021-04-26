@@ -34,6 +34,9 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
+### v9.0.4 ✨
+  - 🔧 Fixed: `resultsList.container` is removed on second input (Thanks 👍 @folknor) #206
+
 ### v9.0.3 ✨
   - 🔧 Fixed: `TAB` button behavior
   - 🔧 Fixed: `resultsList` close behavior on `inputField` double click

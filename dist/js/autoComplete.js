@@ -162,7 +162,6 @@
     list.setAttribute("id", config.resultsList.idName);
     list.setAttribute("class", config.resultsList.className);
     list.setAttribute("role", "listbox");
-    if (config.resultsList.container) config.resultsList.container(list);
     var destination = "string" === typeof config.resultsList.destination ? document.querySelector(config.resultsList.destination) : config.resultsList.destination();
     destination.insertAdjacentElement(config.resultsList.position, list);
     return list;
@@ -203,6 +202,7 @@
       list = createList(config);
     }
     config.inputField.setAttribute("aria-expanded", true);
+    if (config.resultsList.container) config.resultsList.container(list);
     if (matches.length) {
       var _loop = function _loop(index) {
         var item = data.results[index];

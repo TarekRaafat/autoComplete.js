@@ -48,6 +48,9 @@ const generateList = (config, data, matches) => {
   }
   // Set list to opened
   config.inputField.setAttribute("aria-expanded", true);
+  // If custom container is set pass the list
+  if (config.resultsList.container) config.resultsList.container(list);
+
   // Check if there are results
   if (matches.length) {
     // Iterate over the data

@@ -11,8 +11,6 @@ export default (config) => {
   list.setAttribute("id", config.resultsList.idName);
   list.setAttribute("class", config.resultsList.className);
   list.setAttribute("role", "listbox");
-  // If custom container set pass the list
-  if (config.resultsList.container) config.resultsList.container(list);
   // List rendering destination
   const destination =
     "string" === typeof config.resultsList.destination
