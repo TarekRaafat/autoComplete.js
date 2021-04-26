@@ -383,7 +383,7 @@ feedback: (data) => {
 },
 ```
 
-#### onSelection <sub><sup>(optional)</sup></sub>
+### onSelection <sub><sup>(optional)</sup></sub>
 
 ***
 
