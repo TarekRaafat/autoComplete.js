@@ -198,6 +198,7 @@
     var list = document.getElementById(config.resultsList.idName);
     if (list) {
       list.innerHTML = "";
+      config.inputField.removeAttribute("aria-activedescendant");
     } else {
       list = createList(config);
     }
@@ -231,7 +232,7 @@
         config.resultsList.noResults(list, data.query);
       }
     }
-    if (config.resultsList.container) config.resultsList.container(list);
+    if (config.resultsList.container) config.resultsList.container(list, matches);
     document.addEventListener("click", function (event) {
       return closeList(config, event.target);
     });
@@ -242,18 +243,20 @@
     var currentFocus = -1;
     var update = function update(event, list, state) {
       event.preventDefault();
-      if (state) {
-        currentFocus++;
-      } else {
-        currentFocus--;
+      if (list.length) {
+        if (state) {
+          currentFocus++;
+        } else {
+          currentFocus--;
+        }
+        addActive(list);
+        config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
+        eventEmitter(event.srcElement, _objectSpread2(_objectSpread2({
+          event: event
+        }, dataFeedback), {}, {
+          selection: dataFeedback.results[currentFocus]
+        }), "navigate");
       }
-      addActive(list);
-      config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
-      eventEmitter(event.srcElement, _objectSpread2(_objectSpread2({
-        event: event
-      }, dataFeedback), {}, {
-        selection: dataFeedback.results[currentFocus]
-      }), "navigate");
     };
     var removeActive = function removeActive(list) {
       for (var index = 0; index < list.length; index++) {
@@ -262,7 +265,6 @@
       }
     };
     var addActive = function addActive(list) {
-      if (!list) return false;
       removeActive(list);
       if (currentFocus >= list.length) currentFocus = 0;
       if (currentFocus < 0) currentFocus = list.length - 1;
@@ -288,8 +290,10 @@
             break;
           case 13:
             event.preventDefault();
-            list[currentFocus].click();
-            closeList(config);
+            if (currentFocus >= 0) {
+              list[currentFocus].click();
+              closeList(config);
+            }
             break;
           case 9:
             closeList(config);

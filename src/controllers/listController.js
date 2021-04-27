@@ -42,6 +42,8 @@ const generateList = (config, data, matches) => {
   if (list) {
     // Clear list
     list.innerHTML = "";
+    // Remove active descendant
+    config.inputField.removeAttribute("aria-activedescendant");
   } else {
     // Create new list
     list = createList(config);
@@ -86,7 +88,7 @@ const generateList = (config, data, matches) => {
     }
   }
   // If custom container is set pass the list
-  if (config.resultsList.container) config.resultsList.container(list);
+  if (config.resultsList.container) config.resultsList.container(list, matches);
 
   /**
    * @desc

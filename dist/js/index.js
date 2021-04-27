@@ -30,11 +30,16 @@ const autoCompleteJS = new autoComplete({
     event: ["input", "focus"],
   },
   resultsList: {
+    container: (element, results) => {
+      // console.log(results.splice(0, 5));
+      const info = document.createElement("p");
+      info.innerHTML = `Found ${results.length} results`;
+      element.prepend(info);
+    },
     noResults: (list, query) => {
       // No Results List Message
-      const message = document.createElement("li");
+      const message = document.createElement("div");
       message.setAttribute("class", "no_result");
-      message.setAttribute("tabindex", "1");
       message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
       list.appendChild(message);
     },

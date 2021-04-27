@@ -26,26 +26,29 @@ const navigate = (config, dataFeedback) => {
   const update = (event, list, state) => {
     // prevent default behaviour
     event.preventDefault();
-    if (state) {
+    // If list is NOT empty
+    if (list.length) {
       // If the arrow `DOWN` key is pressed
-      // increase the currentFocus
-      currentFocus++;
-    } else {
-      // Else if the arrow `UP` key is pressed
-      // decrease the currentFocus
-      currentFocus--;
+      if (state) {
+        // increase the currentFocus
+        currentFocus++;
+      } else {
+        // Else if the arrow `UP` key is pressed
+        // decrease the currentFocus
+        currentFocus--;
+      }
+      // and add "active" class to the list item
+      addActive(list);
+      config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
+      /**
+       * @emit {navigate} Emit Event on results list navigation
+       **/
+      eventEmitter(
+        event.srcElement,
+        { event, ...dataFeedback, selection: dataFeedback.results[currentFocus] },
+        "navigate"
+      );
     }
-    // and add "active" class to the list item
-    addActive(list);
-    config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
-    /**
-     * @emit {navigate} Emit Event on results list navigation
-     **/
-    eventEmitter(
-      event.srcElement,
-      { event, ...dataFeedback, selection: dataFeedback.results[currentFocus] },
-      "navigate"
-    );
   };
 
   /**
@@ -71,14 +74,15 @@ const navigate = (config, dataFeedback) => {
    *
    */
   const addActive = (list) => {
-    // Add "active" class to a list item
-    if (!list) return false;
     // Remove "active" class from all list items
     removeActive(list);
+    // Reset selection to first item
     if (currentFocus >= list.length) currentFocus = 0;
+    // Move selection to the next item
     if (currentFocus < 0) currentFocus = list.length - 1;
-    // Add "active" class to the item
+    // Add "active" class to the current item
     list[currentFocus].setAttribute("aria-selected", "true");
+    // Add "selected" class to the current item
     if (config.resultItem.selected.className) list[currentFocus].classList.add(config.resultItem.selected.className);
   };
 
@@ -122,10 +126,13 @@ const navigate = (config, dataFeedback) => {
           // If the `ENTER` key is pressed
           // prevent default behaviour
           event.preventDefault();
-          // Simulate a click on the selected "active" item
-          list[currentFocus].click();
-          // Close open list
-          closeList(config);
+          // If focus cursor moved
+          if (currentFocus >= 0) {
+            // Simulate a click on the selected "active" item
+            list[currentFocus].click();
+            // Close open list
+            closeList(config);
+          }
           break;
         case 9:
           // If the `TAB` key is pressed

@@ -268,7 +268,7 @@ diacritics: "strict",
   - destination: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` <small>(optional)</small>
   - position: `String` of [position](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement#parameters) <small>(optional)</small>
   - container: `Function` <small>(optional)</small>
-    - 1 parameter (element) with no return
+    - 2 parameter (element, results) with no return
   - maxResults: `Integer` <small>(optional)</small>
   - navigation: `Function` <small>(optional)</small>
     - 1 parameter (event) with no return
@@ -298,14 +298,13 @@ resultsList: {
     destination: "#autoComplete",
     position: "afterend",
     maxResults: 5,
-    container: (element) => {
+    container: (element, results) => {
         element.setAttribute("data-parent", "food-list");
     },
     noResults: (list, query) => {
         // Create no results element
-        const message = document.createElement("li");
+        const message = document.createElement("div");
         message.setAttribute("class", "no_result");
-        message.setAttribute("tabindex", "1");
         // Add text content
         message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
         // Append message to results list

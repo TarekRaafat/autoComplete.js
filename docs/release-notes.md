@@ -34,7 +34,13 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v9.0.5 ✨
+### v9.1.0 ✨
+  - 🔝 Updated: [`resultsList.container`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) method and added `results` parameter with all search matching results
+  - 🔧 Fixed: `resultsList` error on `Enter` key press without selection
+  - 🔧 Fixed: `activedescendant` was not removed on each `resultsList` regeneration
+  - 🔧 Fixed: `noResults` error on `Enter` key press
+
+### v9.0.5
   - 🔧 Fixed: `resultsList.container` hierarchy comes after list rendering instead of before
 
 ### v9.0.4
