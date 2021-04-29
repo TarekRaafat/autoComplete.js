@@ -15,7 +15,7 @@ const ariaActive = "aria-activedescendant";
  */
 export default (config, dataFeedback) => {
   // Remove previous keyboard Event listener
-  if (config.nav) config.inputField.removeEventListener(keyboardEvent, config.nav);
+  config.inputField.removeEventListener(keyboardEvent, config.nav);
 
   // Reset cursor state
   let cursor = -1;

@@ -205,7 +205,7 @@
   var ariaSelected = "aria-selected";
   var ariaActive$1 = "aria-activedescendant";
   var navigation = (function (config, dataFeedback) {
-    if (config.nav) config.inputField.removeEventListener(keyboardEvent, config.nav);
+    config.inputField.removeEventListener(keyboardEvent, config.nav);
     var cursor = -1;
     var update = function update(event, list, state) {
       event.preventDefault();
