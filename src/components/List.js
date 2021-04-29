@@ -3,7 +3,7 @@
  *
  * @param {Object} config - autoComplete configurations
  *
- * @returns {Element} - The created list element
+ * @return {Element} - The created list element
  */
 export default (config) => {
   // Create a DIV element that will contain the results items

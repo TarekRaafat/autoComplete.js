@@ -5,7 +5,7 @@
  * @param {Number} resultIndex - The result item index
  * @param {Object} config - autoComplete configurations
  *
- * @returns {Element} - The created result item element
+ * @return {Element} - The created result item element
  */
 export default (item, index, config) => {
   // Create a DIV element for each matching result item

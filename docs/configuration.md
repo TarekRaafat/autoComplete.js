@@ -268,10 +268,10 @@ diacritics: "strict",
   - destination: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` <small>(optional)</small>
   - position: `String` of [position](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement#parameters) <small>(optional)</small>
   - container: `Function` <small>(optional)</small>
-    - 2 parameter (element, results) with no return
+    - 2 parameter (element, data) with no return
   - maxResults: `Integer` <small>(optional)</small>
   - navigation: `Function` <small>(optional)</small>
-    - 1 parameter (event) with no return
+    - 1 parameter (list) with no return
   - noResults: `Function` <small>(optional)</small>
     - 2 parameters (list, query) with no return
 
@@ -279,7 +279,7 @@ diacritics: "strict",
   - render: `true`
   - element: `ul`
   - idName: `autoComplete_list`
-  - className: `autoComplete_list`
+  - className: `undefined`
   - destination: `#autoComplete`
   - position: `afterend`
   - container: `Function`
@@ -294,7 +294,7 @@ resultsList: {
     render: true,
     element: "ul",
     idName: "autoComplete_list",
-    className: "autoComplete_list",
+    className: "results_list",
     destination: "#autoComplete",
     position: "afterend",
     maxResults: 5,
@@ -302,12 +302,13 @@ resultsList: {
         element.setAttribute("data-parent", "food-list");
     },
     noResults: (list, query) => {
-        // Create no results element
+        // Create "No Results" message element
         const message = document.createElement("div");
+        // Add class to the created element
         message.setAttribute("class", "no_result");
-        // Add text content
-        message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
-        // Append message to results list
+        // Add message text content
+        message.innerHTML = `<span>Found No Results for "${query}"</span>`;
+        // Append message element to the results list
         list.appendChild(message);
     },
 },

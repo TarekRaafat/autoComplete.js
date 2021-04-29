@@ -1,8 +1,10 @@
 import { closeList } from "./listController";
 import eventEmitter from "../utils/eventEmitter";
 
-// Navigation keyboard event type
+// String holders
 const keyboardEvent = "keydown";
+const ariaSelected = "aria-selected";
+const ariaActive = "aria-activedescendant";
 
 /**
  * List navigation function initializer
@@ -11,9 +13,12 @@ const keyboardEvent = "keydown";
  * @param {Object} dataFeedback - The available data object
  *
  */
-const navigate = (config, dataFeedback) => {
-  // Reset focus state
-  let currentFocus = -1;
+export default (config, dataFeedback) => {
+  // Remove previous keyboard Event listener
+  if (config.nav) config.inputField.removeEventListener(keyboardEvent, config.nav);
+
+  // Reset cursor state
+  let cursor = -1;
 
   /**
    * Update list item state
@@ -30,24 +35,20 @@ const navigate = (config, dataFeedback) => {
     if (list.length) {
       // If the arrow `DOWN` key is pressed
       if (state) {
-        // increase the currentFocus
-        currentFocus++;
+        // increase the cursor
+        cursor++;
       } else {
         // Else if the arrow `UP` key is pressed
-        // decrease the currentFocus
-        currentFocus--;
+        // decrease the cursor
+        cursor--;
       }
       // and add "active" class to the list item
       addActive(list);
-      config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
+      config.inputField.setAttribute(ariaActive, list[cursor].id);
       /**
        * @emit {navigate} Emit Event on results list navigation
        **/
-      eventEmitter(
-        event.srcElement,
-        { event, ...dataFeedback, selection: dataFeedback.results[currentFocus] },
-        "navigate"
-      );
+      eventEmitter(event.srcElement, { event, ...dataFeedback, selection: dataFeedback.results[cursor] }, "navigate");
     }
   };
 
@@ -61,8 +62,8 @@ const navigate = (config, dataFeedback) => {
     // Remove "active" class from all list items
     for (let index = 0; index < list.length; index++) {
       // Remove "active" class from the item
-      list[index].removeAttribute("aria-selected");
-      // list[index].setAttribute("aria-selected", "false");
+      list[index].removeAttribute(ariaSelected);
+      // Remove "selected" class from the item
       if (config.resultItem.selected.className) list[index].classList.remove(config.resultItem.selected.className);
     }
   };
@@ -77,13 +78,13 @@ const navigate = (config, dataFeedback) => {
     // Remove "active" class from all list items
     removeActive(list);
     // Reset selection to first item
-    if (currentFocus >= list.length) currentFocus = 0;
+    if (cursor >= list.length) cursor = 0;
     // Move selection to the next item
-    if (currentFocus < 0) currentFocus = list.length - 1;
+    if (cursor < 0) cursor = list.length - 1;
     // Add "active" class to the current item
-    list[currentFocus].setAttribute("aria-selected", "true");
+    list[cursor].setAttribute(ariaSelected, true);
     // Add "selected" class to the current item
-    if (config.resultItem.selected.className) list[currentFocus].classList.add(config.resultItem.selected.className);
+    if (config.resultItem.selected.className) list[cursor].classList.add(config.resultItem.selected.className);
   };
 
   /**
@@ -91,15 +92,13 @@ const navigate = (config, dataFeedback) => {
    *
    * @param {Object} event - The `keydown` event Object
    *
+   * @return {void}
    */
-  const navigation = (event) => {
+  config.nav = (event) => {
     let list = document.getElementById(config.resultsList.idName);
 
     // Check if list is not opened
-    if (!list) {
-      // Remove keyboard event listener
-      config.inputField.removeEventListener(keyboardEvent, navigate);
-    } else {
+    if (list) {
       // Get list items
       list = list.getElementsByTagName(config.resultItem.element);
 
@@ -108,12 +107,12 @@ const navigate = (config, dataFeedback) => {
         case 40:
           // If the `DOWN` key is pressed
           // Update list items state
-          update(event, list, true);
+          update(event, list, 1);
           break;
         case 38:
           // If the `UP` key is pressed
           // Update list items state
-          update(event, list, false);
+          update(event, list);
           break;
         case 27:
           // If the `ESC` key is pressed
@@ -126,12 +125,10 @@ const navigate = (config, dataFeedback) => {
           // If the `ENTER` key is pressed
           // prevent default behaviour
           event.preventDefault();
-          // If focus cursor moved
-          if (currentFocus >= 0) {
+          // If cursor moved
+          if (cursor >= 0) {
             // Simulate a click on the selected "active" item
-            list[currentFocus].click();
-            // Close open list
-            closeList(config);
+            list[cursor].click();
           }
           break;
         case 9:
@@ -143,18 +140,8 @@ const navigate = (config, dataFeedback) => {
     }
   };
 
-  // Navigator pointer
-  const navigate = config.resultsList.navigation || navigation;
-
-  // Remove previous keydown listener
-  if (config.inputField.autoCompleteNavigate)
-    config.inputField.removeEventListener(keyboardEvent, config.inputField.autoCompleteNavigate);
-  config.inputField.autoCompleteNavigate = navigate;
-
   /**
    * @listen {keydown} Listen to all `keydown` events on the input field
    **/
-  config.inputField.addEventListener(keyboardEvent, navigate);
+  config.inputField.addEventListener(keyboardEvent, config.nav);
 };
-
-export { navigate };

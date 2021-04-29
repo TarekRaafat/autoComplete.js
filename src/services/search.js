@@ -1,3 +1,6 @@
+// Result item constructor
+const item = (className, value) => `<span class="${className}">${value}</span>`;
+
 /**
  * Search common characters within record
  *
@@ -5,7 +8,7 @@
  * @param {String} record - The data item string to be compared
  * @param {Object {searchEngine: String, highlight: Boolean}} config - The search engine configurations
  *
- * @returns {String} - The matched data item string
+ * @return {String} - The matched data item string
  */
 export default (query, record, config) => {
   // Current record value toLowerCase
@@ -32,7 +35,7 @@ export default (query, record, config) => {
       if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
         // Highlight matching character
         recordChar = config.resultItem.highlight.render
-          ? `<span class="${config.resultItem.highlight.className}">${recordChar}</span>`
+          ? item(config.resultItem.highlight.className, recordChar)
           : recordChar;
         // Increment search position
         searchPosition++;
@@ -53,7 +56,7 @@ export default (query, record, config) => {
       // Search for a match Query in Record
       query = pattern.exec(record);
       const match = config.resultItem.highlight.render
-        ? record.replace(query, `<span class="${config.resultItem.highlight.className}">${query}</span>`)
+        ? record.replace(query, item(config.resultItem.highlight.className, query))
         : record;
       // Returns the match
       return match;

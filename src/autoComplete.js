@@ -1,19 +1,16 @@
 import inputComponent from "./components/Input";
-import { generateList, closeList } from "./controllers/listController";
-import { navigate } from "./controllers/navigationController";
-import {
-  getInputValue,
-  prepareQueryValue,
-  checkTriggerCondition,
-  listMatchingResults,
-} from "./controllers/dataController";
+import { closeList } from "./controllers/listController";
+import resultsList from "./controllers/resultsController";
+import { getInputValue, prepareQueryValue } from "./controllers/inputController";
+import findMatches from "./controllers/dataController";
+import checkTriggerCondition from "./controllers/triggerController";
 import debouncer from "./utils/debouncer";
 import eventEmitter from "./utils/eventEmitter";
 
 /**
  * @desc This is autoComplete.js
- * @version 9.0
- * @example let autoCompleteJS = new autoComplete({config});
+ * @version 9.1
+ * @example const autoCompleteJS = new autoComplete({config});
  */
 export default class autoComplete {
   constructor(config) {
@@ -21,33 +18,33 @@ export default class autoComplete {
     const {
       selector = "#autoComplete",
       placeHolder,
-      observer = false,
-      data: { src, key, cache = false, store, results },
+      observer,
+      data: { src, key, cache, store, results },
       query,
-      trigger: { event = ["input"], condition = false } = {},
+      trigger: { event = ["input"], condition } = {},
       threshold = 1,
       debounce = 0,
-      diacritics = false,
-      searchEngine = "strict",
+      diacritics,
+      searchEngine,
       feedback,
       resultsList: {
         render: resultsListRender = true,
-        container = false,
-        destination,
+        container,
+        destination = selector,
         position = "afterend",
         element: resultsListElement = "ul",
         idName: resultsListId = "autoComplete_list",
-        className: resultsListClass = "autoComplete_list",
+        className: resultsListClass,
         maxResults = 5,
-        navigation = false,
+        navigation,
         noResults,
       } = {},
       resultItem: {
-        content = false,
+        content,
         element: resultItemElement = "li",
         idName: resultItemId,
         className: resultItemClass = "autoComplete_result",
-        highlight: { render: highlightRender = false, className: highlightClass = "autoComplete_highlighted" } = {},
+        highlight: { render: highlightRender, className: highlightClass = "autoComplete_highlighted" } = {},
         selected: { className: selectedClass = "autoComplete_selected" } = {},
       } = {},
       onSelection, // Action function on result selection
@@ -68,7 +65,7 @@ export default class autoComplete {
     this.resultsList = {
       render: resultsListRender,
       container,
-      destination: destination || this.selector,
+      destination: destination,
       position,
       element: resultsListElement,
       idName: resultsListId,
@@ -94,12 +91,17 @@ export default class autoComplete {
     this.observer ? this.preInit() : this.init();
   }
 
-  // Run autoComplete processes
+  /**
+   * Run autoComplete processes
+   *
+   * @param {String} - Raw input value as a string
+   * @param {Object} config - autoComplete configurations
+   *
+   * @return {void}
+   */
   start(input, query) {
     // 1- Get matching results list
-    const results = this.data.results
-      ? this.data.results(listMatchingResults(this, query))
-      : listMatchingResults(this, query);
+    const results = this.data.results ? this.data.results(findMatches(this, query)) : findMatches(this, query);
     // 2- Prepare data feedback object
     const dataFeedback = { input, query, matches: results, results: results.slice(0, this.resultsList.maxResults) };
     /**
@@ -109,9 +111,7 @@ export default class autoComplete {
     // 3- If resultsList set not to render
     if (!this.resultsList.render) return this.feedback(dataFeedback);
     // 4- Generate & Render results list
-    generateList(this, dataFeedback, results);
-    // 5- Initialize list navigation controls
-    navigate(this, dataFeedback);
+    resultsList(this, dataFeedback);
     /**
      * @emit {open} Emit Event after results list is opened
      **/
@@ -119,9 +119,10 @@ export default class autoComplete {
   }
 
   async dataStore() {
-    // Check if cache is NOT true
-    // and store is empty
+    // Check if cache is set
+    // and store is NOT empty
     if (this.data.cache && this.data.store) return null;
+    // Else
     // Fetch new data from source and store it
     this.data.store = typeof this.data.src === "function" ? await this.data.src() : this.data.src;
     /**
@@ -130,7 +131,13 @@ export default class autoComplete {
     eventEmitter(this.inputField, this.data.store, "fetch");
   }
 
-  // Run autoComplete composer
+  /**
+   * Run autoComplete composer
+   *
+   * @param {Object} event - The trigger event Object
+   *
+   * @return {void}
+   */
   async compose(event) {
     // 1- Prepare raw input value
     const input = getInputValue(this.inputField);

@@ -1,12 +1,16 @@
-import createList from "../components/List";
-import createItem from "../components/Item";
 import eventEmitter from "../utils/eventEmitter";
+
+// String holders
+const ariaActive = "aria-activedescendant";
+const ariaExpanded = "aria-expanded";
 
 /**
  * Close open list
  *
  * @param {Object} config - autoComplete configurations
+ * @param {String} target - autoComplete input field ID
  *
+ * @return {void}
  */
 const closeList = (config, target) => {
   // Get autoComplete list
@@ -15,9 +19,9 @@ const closeList = (config, target) => {
     // Remove open list
     list.remove();
     // Remove active descendant
-    config.inputField.removeAttribute("aria-activedescendant");
+    config.inputField.removeAttribute(ariaActive);
     // Set list to closed
-    config.inputField.setAttribute("aria-expanded", false);
+    config.inputField.setAttribute(ariaExpanded, false);
     /**
      * @emit {close} Emit Event on list close
      **/
@@ -25,78 +29,4 @@ const closeList = (config, target) => {
   }
 };
 
-/**
- * List all matching results
- *
- * @param {Object} config - autoComplete configurations
- * @param {Object|Array} data - The available data object
- * @param {Array} matches - autoComplete configurations
- *
- * @return {Component} - The matching results list component
- */
-const generateList = (config, data, matches) => {
-  // Results list element
-  let list = document.getElementById(config.resultsList.idName);
-
-  // Check if there is a rendered list
-  if (list) {
-    // Clear list
-    list.innerHTML = "";
-    // Remove active descendant
-    config.inputField.removeAttribute("aria-activedescendant");
-  } else {
-    // Create new list
-    list = createList(config);
-  }
-  // Set list to opened
-  config.inputField.setAttribute("aria-expanded", true);
-
-  // Check if there are results
-  if (matches.length) {
-    // Iterate over the data
-    for (let index = 0; index < data.results.length; index++) {
-      const item = data.results[index];
-      // create result item
-      const resultItem = createItem(item, index, config);
-      // Listen to clicks on this item
-      resultItem.addEventListener("click", (event) => {
-        // Prepare onSelection feedback data object
-        const dataFeedback = {
-          event,
-          matches,
-          input: data.input,
-          query: data.query,
-          results: data.results,
-          selection: {
-            ...item,
-            index,
-          },
-        };
-        // Returns the selected value onSelection if set
-        if (config.onSelection) config.onSelection(dataFeedback);
-      });
-      // Add result to the list
-      list.appendChild(resultItem);
-    }
-  } else {
-    // Check if there are NO results
-    // Run noResults action function
-    if (!config.resultsList.noResults) {
-      list.remove();
-    } else {
-      config.resultsList.noResults(list, data.query);
-    }
-  }
-  // If custom container is set pass the list
-  if (config.resultsList.container) config.resultsList.container(list, matches);
-
-  /**
-   * @desc
-   * Listen for all `click` events in the document
-   * and close list if clicked outside the list and inputField
-   * @listen {click} Listen to all `click` events on the document
-   **/
-  document.addEventListener("click", (event) => closeList(config, event.target));
-};
-
-export { generateList, closeList };
+export { closeList };

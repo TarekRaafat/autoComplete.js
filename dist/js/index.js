@@ -30,19 +30,16 @@ const autoCompleteJS = new autoComplete({
     event: ["input", "focus"],
   },
   resultsList: {
-    container: (element, results) => {
-      // console.log(results.splice(0, 5));
+    container: (element, data) => {
       const info = document.createElement("p");
-      info.innerHTML = `Found ${results.length} results`;
+      if (data.results.length > 0) {
+        info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results`;
+      } else {
+        info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong`;
+      }
       element.prepend(info);
     },
-    noResults: (list, query) => {
-      // No Results List Message
-      const message = document.createElement("div");
-      message.setAttribute("class", "no_result");
-      message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
-      list.appendChild(message);
-    },
+    noResults: () => {},
   },
   resultItem: {
     content: (data, element) => {

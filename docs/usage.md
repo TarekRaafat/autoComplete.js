@@ -199,12 +199,13 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
             },
             resultsList: {
                 noResults: (list, query) => {
-                    // Create "No Results" message list element
-                    const message = document.createElement("li");
+                    // Create "No Results" message element
+                    const message = document.createElement("div");
+                    // Add class to the created element
                     message.setAttribute("class", "no_result");
                     // Add message text content
                     message.innerHTML = `<span>Found No Results for "${query}"</span>`;
-                    // Add message list element to the list
+                    // Append message element to the results list
                     list.appendChild(message);
                 },
             },

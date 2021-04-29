@@ -35,10 +35,14 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 ***
 
 ### v9.1.0 ✨
-  - 🔝 Updated: [`resultsList.container`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) method and added `results` parameter with all search matching results
+  > <div class="ps-icon ps-icon-warning"></div> "noResults" API will be removed next major release, to be replaced with "resultsList.container"
+  - 🔝 Updated: [`resultsList.container`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) method with `data` parameter contains (input, query, matches, results) values
+  - 🔝 Updated: [`resultsList.container.className`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) default value to be `undefined`
+  - 🔝 Updated: Code with some refactoring & cleanup
   - 🔧 Fixed: `resultsList` error on `Enter` key press without selection
-  - 🔧 Fixed: `activedescendant` was not removed on each `resultsList` regeneration
+  - 🔧 Fixed: Input field `aria-activedescendant` was not removed on each `resultsList` regeneration
   - 🔧 Fixed: `noResults` error on `Enter` key press
+  - 🔧 Fixed: Input field `aria-expanded` set to `true` when `noResults` not set
 
 ### v9.0.5
   - 🔧 Fixed: `resultsList.container` hierarchy comes after list rendering instead of before

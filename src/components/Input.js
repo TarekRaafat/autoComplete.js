@@ -2,7 +2,8 @@
  * Input field element
  *
  * @param {Object} config - autoComplete configurations
- *
+ * 
+ * @return {void}
  */
 export default (config) => {
   // General attributes

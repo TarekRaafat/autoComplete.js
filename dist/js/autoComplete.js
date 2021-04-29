@@ -157,6 +157,26 @@
     config.inputField.setAttribute("aria-autocomplete", "both");
   });
 
+  var eventEmitter = (function (target, detail, name) {
+    target.dispatchEvent(new CustomEvent(name, {
+      bubbles: true,
+      detail: detail,
+      cancelable: true
+    }));
+  });
+
+  var ariaActive$2 = "aria-activedescendant";
+  var ariaExpanded$1 = "aria-expanded";
+  var closeList = function closeList(config, target) {
+    var list = document.getElementById(config.resultsList.idName);
+    if (list && target !== config.inputField) {
+      list.remove();
+      config.inputField.removeAttribute(ariaActive$2);
+      config.inputField.setAttribute(ariaExpanded$1, false);
+      eventEmitter(config.inputField, null, "close");
+    }
+  };
+
   var createList = (function (config) {
     var list = document.createElement(config.resultsList.element);
     list.setAttribute("id", config.resultsList.idName);
@@ -177,112 +197,52 @@
     return result;
   });
 
-  var eventEmitter = (function (target, detail, name) {
-    target.dispatchEvent(new CustomEvent(name, {
-      bubbles: true,
-      detail: detail,
-      cancelable: true
-    }));
-  });
-
-  var closeList = function closeList(config, target) {
-    var list = document.getElementById(config.resultsList.idName);
-    if (list && target !== config.inputField) {
-      list.remove();
-      config.inputField.removeAttribute("aria-activedescendant");
-      config.inputField.setAttribute("aria-expanded", false);
-      eventEmitter(config.inputField, null, "close");
-    }
-  };
-  var generateList = function generateList(config, data, matches) {
-    var list = document.getElementById(config.resultsList.idName);
-    if (list) {
-      list.innerHTML = "";
-      config.inputField.removeAttribute("aria-activedescendant");
-    } else {
-      list = createList(config);
-    }
-    config.inputField.setAttribute("aria-expanded", true);
-    if (matches.length) {
-      var _loop = function _loop(index) {
-        var item = data.results[index];
-        var resultItem = createItem(item, index, config);
-        resultItem.addEventListener("click", function (event) {
-          var dataFeedback = {
-            event: event,
-            matches: matches,
-            input: data.input,
-            query: data.query,
-            results: data.results,
-            selection: _objectSpread2(_objectSpread2({}, item), {}, {
-              index: index
-            })
-          };
-          if (config.onSelection) config.onSelection(dataFeedback);
-        });
-        list.appendChild(resultItem);
-      };
-      for (var index = 0; index < data.results.length; index++) {
-        _loop(index);
-      }
-    } else {
-      if (!config.resultsList.noResults) {
-        list.remove();
-      } else {
-        config.resultsList.noResults(list, data.query);
-      }
-    }
-    if (config.resultsList.container) config.resultsList.container(list, matches);
-    document.addEventListener("click", function (event) {
-      return closeList(config, event.target);
-    });
-  };
-
   var keyboardEvent = "keydown";
-  var navigate = function navigate(config, dataFeedback) {
-    var currentFocus = -1;
+  var ariaSelected = "aria-selected";
+  var ariaActive$1 = "aria-activedescendant";
+  var navigation = (function (config, dataFeedback) {
+    if (config.nav) config.inputField.removeEventListener(keyboardEvent, config.nav);
+    var cursor = -1;
     var update = function update(event, list, state) {
       event.preventDefault();
       if (list.length) {
         if (state) {
-          currentFocus++;
+          cursor++;
         } else {
-          currentFocus--;
+          cursor--;
         }
         addActive(list);
-        config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
+        config.inputField.setAttribute(ariaActive$1, list[cursor].id);
         eventEmitter(event.srcElement, _objectSpread2(_objectSpread2({
           event: event
         }, dataFeedback), {}, {
-          selection: dataFeedback.results[currentFocus]
+          selection: dataFeedback.results[cursor]
         }), "navigate");
       }
     };
     var removeActive = function removeActive(list) {
       for (var index = 0; index < list.length; index++) {
-        list[index].removeAttribute("aria-selected");
+        list[index].removeAttribute(ariaSelected);
         if (config.resultItem.selected.className) list[index].classList.remove(config.resultItem.selected.className);
       }
     };
     var addActive = function addActive(list) {
       removeActive(list);
-      if (currentFocus >= list.length) currentFocus = 0;
-      if (currentFocus < 0) currentFocus = list.length - 1;
-      list[currentFocus].setAttribute("aria-selected", "true");
-      if (config.resultItem.selected.className) list[currentFocus].classList.add(config.resultItem.selected.className);
+      if (cursor >= list.length) cursor = 0;
+      if (cursor < 0) cursor = list.length - 1;
+      list[cursor].setAttribute(ariaSelected, true);
+      if (config.resultItem.selected.className) list[cursor].classList.add(config.resultItem.selected.className);
     };
-    var navigation = function navigation(event) {
+    config.nav = function (event) {
       var list = document.getElementById(config.resultsList.idName);
-      if (!list) {
-        config.inputField.removeEventListener(keyboardEvent, navigate);
-      } else {
+      if (list) {
         list = list.getElementsByTagName(config.resultItem.element);
         switch (event.keyCode) {
           case 40:
-            update(event, list, true);
+            update(event, list, 1);
             break;
           case 38:
-            update(event, list, false);
+            update(event, list);
             break;
           case 27:
             config.inputField.value = "";
@@ -290,9 +250,8 @@
             break;
           case 13:
             event.preventDefault();
-            if (currentFocus >= 0) {
-              list[currentFocus].click();
-              closeList(config);
+            if (cursor >= 0) {
+              list[cursor].click();
             }
             break;
           case 9:
@@ -301,12 +260,66 @@
         }
       }
     };
-    var navigate = config.resultsList.navigation || navigation;
-    if (config.inputField.autoCompleteNavigate) config.inputField.removeEventListener(keyboardEvent, config.inputField.autoCompleteNavigate);
-    config.inputField.autoCompleteNavigate = navigate;
-    config.inputField.addEventListener(keyboardEvent, navigate);
+    config.inputField.addEventListener(keyboardEvent, config.nav);
+  });
+
+  var clickEvent = "click";
+  var ariaExpanded = "aria-expanded";
+  var ariaActive = "aria-activedescendant";
+  var resultsList = (function (config, data) {
+    data.input;
+        var query = data.query,
+        matches = data.matches,
+        results = data.results;
+    var list = document.getElementById(config.resultsList.idName);
+    if (list) {
+      list.innerHTML = "";
+      config.inputField.removeAttribute(ariaActive);
+    } else {
+      list = createList(config);
+    }
+    config.inputField.setAttribute(ariaExpanded, true);
+    if (matches.length) {
+      results.forEach(function (item, index) {
+        var resultItem = createItem(item, index, config);
+        resultItem.addEventListener(clickEvent, function (event) {
+          var dataFeedback = _objectSpread2(_objectSpread2({
+            event: event
+          }, data), {}, {
+            selection: _objectSpread2(_objectSpread2({}, item), {}, {
+              index: index
+            })
+          });
+          if (config.onSelection) config.onSelection(dataFeedback);
+        });
+        list.appendChild(resultItem);
+      });
+    } else {
+      if (!config.resultsList.noResults) {
+        list.remove();
+        config.inputField.setAttribute(ariaExpanded, false);
+      } else {
+        config.resultsList.noResults(list, query);
+      }
+    }
+    if (config.resultsList.container) config.resultsList.container(list, data);
+    config.resultsList.navigation ? config.resultsList.navigation(list) : navigation(config, data);
+    document.addEventListener(clickEvent, function (event) {
+      return closeList(config, event.target);
+    });
+    return list;
+  });
+
+  var getInputValue = function getInputValue(inputField) {
+    return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value.toLowerCase() : inputField.innerHTML.toLowerCase();
+  };
+  var prepareQueryValue = function prepareQueryValue(inputValue, config) {
+    return config.query && config.query.manipulate ? config.query.manipulate(inputValue) : config.diacritics ? inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : inputValue;
   };
 
+  var item = function item(className, value) {
+    return "<span class=\"".concat(className, "\">").concat(value, "</span>");
+  };
   var searchEngine = (function (query, record, config) {
     var recordLowerCase = config.diacritics ? record.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : record.toLowerCase();
     if (config.searchEngine === "loose") {
@@ -316,7 +329,7 @@
       for (var number = 0; number < recordLowerCase.length; number++) {
         var recordChar = record[number];
         if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-          recordChar = config.resultItem.highlight.render ? "<span class=\"".concat(config.resultItem.highlight.className, "\">").concat(recordChar, "</span>") : recordChar;
+          recordChar = config.resultItem.highlight.render ? item(config.resultItem.highlight.className, recordChar) : recordChar;
           searchPosition++;
         }
         match.push(recordChar);
@@ -328,38 +341,30 @@
       if (recordLowerCase.includes(query)) {
         var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
         query = pattern.exec(record);
-        var _match = config.resultItem.highlight.render ? record.replace(query, "<span class=\"".concat(config.resultItem.highlight.className, "\">").concat(query, "</span>")) : record;
+        var _match = config.resultItem.highlight.render ? record.replace(query, item(config.resultItem.highlight.className, query)) : record;
         return _match;
       }
     }
   });
 
-  var getInputValue = function getInputValue(inputField) {
-    return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value.toLowerCase() : inputField.innerHTML.toLowerCase();
-  };
-  var prepareQueryValue = function prepareQueryValue(inputValue, config) {
-    return config.query && config.query.manipulate ? config.query.manipulate(inputValue) : config.diacritics ? inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : inputValue;
-  };
-  var checkTriggerCondition = function checkTriggerCondition(config, event, queryValue) {
-    return config.trigger.condition ? config.trigger.condition(event, queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
-  };
-  var listMatchingResults = function listMatchingResults(config, query) {
-    var resList = [];
-    var _loop = function _loop(index) {
-      var record = config.data.store[index];
+  var findMatches = (function (config, query) {
+    var data = config.data,
+        customSearchEngine = config.searchEngine;
+    var results = [];
+    data.store.forEach(function (record, index) {
       var search = function search(key) {
         var recordValue = (key ? record[key] : record).toString();
         if (recordValue) {
-          var match = typeof config.searchEngine === "function" ? config.searchEngine(query, recordValue) : searchEngine(query, recordValue, config);
+          var match = typeof customSearchEngine === "function" ? customSearchEngine(query, recordValue) : searchEngine(query, recordValue, config);
           if (match && key) {
-            resList.push({
+            results.push({
               key: key,
               index: index,
               match: match,
               value: record
             });
           } else if (match && !key) {
-            resList.push({
+            results.push({
               index: index,
               match: match,
               value: record
@@ -367,8 +372,8 @@
           }
         }
       };
-      if (config.data.key) {
-        var _iterator = _createForOfIteratorHelper(config.data.key),
+      if (data.key) {
+        var _iterator = _createForOfIteratorHelper(data.key),
             _step;
         try {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -383,12 +388,13 @@
       } else {
         search();
       }
-    };
-    for (var index = 0; index < config.data.store.length; index++) {
-      _loop(index);
-    }
-    return resList;
-  };
+    });
+    return results;
+  });
+
+  var checkTriggerCondition = (function (config, event, queryValue) {
+    return config.trigger.condition ? config.trigger.condition(event, queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
+  });
 
   var debouncer = (function (callback, delay) {
     var inDebounce;
@@ -408,13 +414,11 @@
       var _config$selector = config.selector,
           selector = _config$selector === void 0 ? "#autoComplete" : _config$selector,
           placeHolder = config.placeHolder,
-          _config$observer = config.observer,
-          observer = _config$observer === void 0 ? false : _config$observer,
+          observer = config.observer,
           _config$data = config.data,
           src = _config$data.src,
           key = _config$data.key,
-          _config$data$cache = _config$data.cache,
-          cache = _config$data$cache === void 0 ? false : _config$data$cache,
+          cache = _config$data.cache,
           store = _config$data.store,
           results = _config$data.results,
           query = config.query,
@@ -422,41 +426,35 @@
       _config$trigger = _config$trigger === void 0 ? {} : _config$trigger;
       var _config$trigger$event = _config$trigger.event,
           event = _config$trigger$event === void 0 ? ["input"] : _config$trigger$event,
-          _config$trigger$condi = _config$trigger.condition,
-          condition = _config$trigger$condi === void 0 ? false : _config$trigger$condi,
+          condition = _config$trigger.condition,
           _config$threshold = config.threshold,
           threshold = _config$threshold === void 0 ? 1 : _config$threshold,
           _config$debounce = config.debounce,
           debounce = _config$debounce === void 0 ? 0 : _config$debounce,
-          _config$diacritics = config.diacritics,
-          diacritics = _config$diacritics === void 0 ? false : _config$diacritics,
-          _config$searchEngine = config.searchEngine,
-          searchEngine = _config$searchEngine === void 0 ? "strict" : _config$searchEngine,
+          diacritics = config.diacritics,
+          searchEngine = config.searchEngine,
           feedback = config.feedback,
           _config$resultsList = config.resultsList;
       _config$resultsList = _config$resultsList === void 0 ? {} : _config$resultsList;
       var _config$resultsList$r = _config$resultsList.render,
           resultsListRender = _config$resultsList$r === void 0 ? true : _config$resultsList$r,
-          _config$resultsList$c = _config$resultsList.container,
-          container = _config$resultsList$c === void 0 ? false : _config$resultsList$c,
-          destination = _config$resultsList.destination,
+          container = _config$resultsList.container,
+          _config$resultsList$d = _config$resultsList.destination,
+          destination = _config$resultsList$d === void 0 ? selector : _config$resultsList$d,
           _config$resultsList$p = _config$resultsList.position,
           position = _config$resultsList$p === void 0 ? "afterend" : _config$resultsList$p,
           _config$resultsList$e = _config$resultsList.element,
           resultsListElement = _config$resultsList$e === void 0 ? "ul" : _config$resultsList$e,
           _config$resultsList$i = _config$resultsList.idName,
           resultsListId = _config$resultsList$i === void 0 ? "autoComplete_list" : _config$resultsList$i,
-          _config$resultsList$c2 = _config$resultsList.className,
-          resultsListClass = _config$resultsList$c2 === void 0 ? "autoComplete_list" : _config$resultsList$c2,
+          resultsListClass = _config$resultsList.className,
           _config$resultsList$m = _config$resultsList.maxResults,
           maxResults = _config$resultsList$m === void 0 ? 5 : _config$resultsList$m,
-          _config$resultsList$n = _config$resultsList.navigation,
-          navigation = _config$resultsList$n === void 0 ? false : _config$resultsList$n,
+          navigation = _config$resultsList.navigation,
           noResults = _config$resultsList.noResults,
           _config$resultItem = config.resultItem;
       _config$resultItem = _config$resultItem === void 0 ? {} : _config$resultItem;
-      var _config$resultItem$co = _config$resultItem.content,
-          content = _config$resultItem$co === void 0 ? false : _config$resultItem$co,
+      var content = _config$resultItem.content,
           _config$resultItem$el = _config$resultItem.element,
           resultItemElement = _config$resultItem$el === void 0 ? "li" : _config$resultItem$el,
           resultItemId = _config$resultItem.idName,
@@ -464,10 +462,9 @@
           resultItemClass = _config$resultItem$cl === void 0 ? "autoComplete_result" : _config$resultItem$cl,
           _config$resultItem$hi = _config$resultItem.highlight;
       _config$resultItem$hi = _config$resultItem$hi === void 0 ? {} : _config$resultItem$hi;
-      var _config$resultItem$hi2 = _config$resultItem$hi.render,
-          highlightRender = _config$resultItem$hi2 === void 0 ? false : _config$resultItem$hi2,
-          _config$resultItem$hi3 = _config$resultItem$hi.className,
-          highlightClass = _config$resultItem$hi3 === void 0 ? "autoComplete_highlighted" : _config$resultItem$hi3,
+      var highlightRender = _config$resultItem$hi.render,
+          _config$resultItem$hi2 = _config$resultItem$hi.className,
+          highlightClass = _config$resultItem$hi2 === void 0 ? "autoComplete_highlighted" : _config$resultItem$hi2,
           _config$resultItem$se = _config$resultItem.selected;
       _config$resultItem$se = _config$resultItem$se === void 0 ? {} : _config$resultItem$se;
       var _config$resultItem$se2 = _config$resultItem$se.className,
@@ -496,7 +493,7 @@
       this.resultsList = {
         render: resultsListRender,
         container: container,
-        destination: destination || this.selector,
+        destination: destination,
         position: position,
         element: resultsListElement,
         idName: resultsListId,
@@ -525,7 +522,7 @@
     _createClass(autoComplete, [{
       key: "start",
       value: function start(input, query) {
-        var results = this.data.results ? this.data.results(listMatchingResults(this, query)) : listMatchingResults(this, query);
+        var results = this.data.results ? this.data.results(findMatches(this, query)) : findMatches(this, query);
         var dataFeedback = {
           input: input,
           query: query,
@@ -534,8 +531,7 @@
         };
         eventEmitter(this.inputField, dataFeedback, "results");
         if (!this.resultsList.render) return this.feedback(dataFeedback);
-        generateList(this, dataFeedback, results);
-        navigate(this, dataFeedback);
+        resultsList(this, dataFeedback);
         eventEmitter(this.inputField, dataFeedback, "open");
       }
     }, {
