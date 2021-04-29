@@ -36,7 +36,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ### v9.1.0 ✨
   > <div class="ps-icon ps-icon-warning"></div> "noResults" API will accept "Boolean" instead of function starting next major release to be replaced with "resultsList.container"
-  - 🔝 Updated: [`resultsList.container`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) method with `data` parameter contains (input, query, matches, results) values
+  - ➕ Added: New `data` parameter to [`resultsList.container`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) method that contains (input, query, matches, results) values
   - 🔝 Updated: [`resultsList.container.className`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) default value to be `undefined`
   - 🔝 Updated: Code with some refactoring & cleanup
   - 🔧 Fixed: `resultsList` error on `Enter` key press without selection
