@@ -2,6 +2,7 @@ import createList from "../components/List";
 import createItem from "../components/Item";
 import navigation from "./navigationController";
 import { closeList } from "./listController";
+import eventEmitter from "../utils/eventEmitter";
 
 // String holders
 const clickEvent = "click";
@@ -58,11 +59,15 @@ export default (config, data) => {
       // Add result to the list
       list.appendChild(resultItem);
     });
+    /**
+     * @emit {open} Emit Event after results list is opened
+     **/
+    eventEmitter(config.inputField, data, "open");
   } else {
     // Check if there are NO results
     if (!config.resultsList.noResults) {
-      // Remove list
-      list.remove();
+      // Close list
+      closeList(config)
       // Set list to closed
       config.inputField.setAttribute(ariaExpanded, false);
     } else {
@@ -83,7 +88,4 @@ export default (config, data) => {
    * @listen {click} Listen to all `click` events on the document
    **/
   document.addEventListener(clickEvent, (event) => closeList(config, event.target));
-
-  // Return results list
-  return list;
 };

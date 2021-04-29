@@ -8,7 +8,7 @@ const ariaExpanded = "aria-expanded";
  * Close open list
  *
  * @param {Object} config - autoComplete configurations
- * @param {String} target - autoComplete input field ID
+ * @param {String} target - autoComplete inputField ID
  *
  * @return {void}
  */

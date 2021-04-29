@@ -1,9 +1,9 @@
 /**
- * Gets the input search value "query"
+ * Gets the inputField search value "query"
  *
- * @param {Element} inputField - autoComplete input field or textarea element
+ * @param {Element} inputField - autoComplete inputField or textarea element
  *
- * @return {String} - Raw input value as a string
+ * @return {String} - Raw inputField value as a string
  */
 const getInputValue = (inputField) => {
   return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement

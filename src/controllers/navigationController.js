@@ -116,7 +116,7 @@ export default (config, dataFeedback) => {
           break;
         case 27:
           // If the `ESC` key is pressed
-          // Clear Input field
+          // Clear inputField
           config.inputField.value = "";
           // Close open list
           closeList(config);
@@ -141,7 +141,7 @@ export default (config, dataFeedback) => {
   };
 
   /**
-   * @listen {keydown} Listen to all `keydown` events on the input field
+   * @listen {keydown} Listen to all `keydown` events on the inputField
    **/
   config.inputField.addEventListener(keyboardEvent, config.nav);
 };

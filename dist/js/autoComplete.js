@@ -4,6 +4,44 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.autoComplete = factory());
 }(this, (function () { 'use strict';
 
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+
+      if (enumerableOnly) {
+        symbols = symbols.filter(function (sym) {
+          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+        });
+      }
+
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(Object(source), true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(Object(source)).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -39,40 +77,6 @@
     }
 
     return obj;
-  }
-
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-      keys.push.apply(keys, symbols);
-    }
-
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-
-    return target;
   }
 
   function _unsupportedIterableToArray(o, minLen) {
@@ -149,7 +153,7 @@
     };
   }
 
-  var inputComponent = (function (config) {
+  var prepareInputField = (function (config) {
     config.inputField.setAttribute("role", "combobox");
     config.inputField.setAttribute("aria-haspopup", true);
     config.inputField.setAttribute("aria-expanded", false);
@@ -294,9 +298,10 @@
         });
         list.appendChild(resultItem);
       });
+      eventEmitter(config.inputField, data, "open");
     } else {
       if (!config.resultsList.noResults) {
-        list.remove();
+        closeList(config);
         config.inputField.setAttribute(ariaExpanded, false);
       } else {
         config.resultsList.noResults(list, query);
@@ -307,7 +312,6 @@
     document.addEventListener(clickEvent, function (event) {
       return closeList(config, event.target);
     });
-    return list;
   });
 
   var getInputValue = function getInputValue(inputField) {
@@ -532,7 +536,6 @@
         eventEmitter(this.inputField, dataFeedback, "results");
         if (!this.resultsList.render) return this.feedback(dataFeedback);
         resultsList(this, dataFeedback);
-        eventEmitter(this.inputField, dataFeedback, "open");
       }
     }, {
       key: "dataStore",
@@ -587,13 +590,12 @@
       key: "init",
       value: function init() {
         var _this3 = this;
-        inputComponent(this);
+        prepareInputField(this);
         if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
         this.hook = debouncer(function (event) {
           _this3.compose(event);
         }, this.debounce);
         this.trigger.event.forEach(function (eventType) {
-          _this3.inputField.removeEventListener(eventType, _this3.hook);
           _this3.inputField.addEventListener(eventType, _this3.hook);
         });
         eventEmitter(this.inputField, null, "init");
@@ -606,22 +608,13 @@
           childList: true,
           subtree: true
         };
-        var callback = function callback(mutationsList, observer) {
-          var _iterator = _createForOfIteratorHelper(mutationsList),
-              _step;
-          try {
-            for (_iterator.s(); !(_step = _iterator.n()).done;) {
-              var mutation = _step.value;
-              if (_this4.inputField) {
-                observer.disconnect();
-                _this4.init();
-              }
+        var callback = function callback(mutations, observer) {
+          mutations.forEach(function (mutation) {
+            if (_this4.inputField) {
+              observer.disconnect();
+              _this4.init();
             }
-          } catch (err) {
-            _iterator.e(err);
-          } finally {
-            _iterator.f();
-          }
+          });
         };
         var observer = new MutationObserver(callback);
         observer.observe(document, config);
@@ -629,7 +622,10 @@
     }, {
       key: "unInit",
       value: function unInit() {
-        this.inputField.removeEventListener("input", this.hook);
+        var _this5 = this;
+        this.trigger.event.forEach(function (eventType) {
+          _this5.inputField.removeEventListener(eventType, _this5.hook);
+        });
         eventEmitter(this.inputField, null, "unInit");
       }
     }]);

@@ -1,5 +1,5 @@
 /**
- * Input field element
+ * InputField element
  *
  * @param {Object} config - autoComplete configurations
  * 
