@@ -27,9 +27,6 @@ const autoCompleteJS = new autoComplete({
   },
   placeHolder: "Search for Food & Drinks!",
   searchEngine: "strict",
-  highlight: {
-    render: true,
-  },
   resultsList: {
     noResults: (list, query) => {
       // No Results List Message
