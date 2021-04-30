@@ -191,14 +191,14 @@
     return list;
   });
 
-  var createItem = (function (item, index, config) {
-    var result = document.createElement(config.resultItem.element);
-    result.setAttribute("id", "".concat(config.resultItem.idName, "_").concat(index));
-    result.setAttribute("class", config.resultItem.className);
-    result.setAttribute("role", "option");
-    result.innerHTML = item.match;
-    if (config.resultItem.content) config.resultItem.content(item, result);
-    return result;
+  var createItem = (function (data, index, config) {
+    var item = document.createElement(config.resultItem.element);
+    item.setAttribute("id", "".concat(config.resultItem.idName, "_").concat(index));
+    item.setAttribute("class", config.resultItem.className);
+    item.setAttribute("role", "option");
+    item.innerHTML = data.match;
+    if (config.resultItem.content) config.resultItem.content(data, item);
+    return item;
   });
 
   var keyboardEvent = "keydown";

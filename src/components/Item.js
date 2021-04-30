@@ -7,16 +7,16 @@
  *
  * @return {Element} - The created result item element
  */
-export default (item, index, config) => {
+export default (data, index, config) => {
   // Create a DIV element for each matching result item
-  const result = document.createElement(config.resultItem.element);
-  result.setAttribute("id", `${config.resultItem.idName}_${index}`);
-  result.setAttribute("class", config.resultItem.className);
-  result.setAttribute("role", "option");
-  result.innerHTML = item.match;
+  const item = document.createElement(config.resultItem.element);
+  item.setAttribute("id", `${config.resultItem.idName}_${index}`);
+  item.setAttribute("class", config.resultItem.className);
+  item.setAttribute("role", "option");
+  item.innerHTML = data.match;
   // If custom content set pass params
-  if (config.resultItem.content) config.resultItem.content(item, result);
+  if (config.resultItem.content) config.resultItem.content(data, item);
 
   // Return the result item element
-  return result;
+  return item;
 };

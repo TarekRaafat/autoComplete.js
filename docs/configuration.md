@@ -351,7 +351,7 @@ resultsList: {
 resultItem: {
     element: "li",
     className: "autoComplete_result",
-    content: (item, element) => {
+    content: (data, element) => {
         element.setAttribute("data-parent", "food-item");
     },
     highlight: {
