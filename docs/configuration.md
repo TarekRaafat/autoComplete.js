@@ -327,7 +327,7 @@ resultsList: {
   - idName: `String` of id value <small>(optional)</small>
   - className: `String` of class value <small>(optional)</small>
   - content: `Function` <small>(optional)</small>
-    - 2 parameters (item, element) with no return
+    - 2 parameters (data, element) with no return
   - highlight: `Object` <small>(optional)</small>
     - render: `Boolean` <small>(optional)</small>
     - className: `String` of class value <small>(optional)</small>
