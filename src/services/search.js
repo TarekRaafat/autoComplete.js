@@ -11,7 +11,6 @@ const item = (className, value) => `<span class="${className}">${value}</span>`;
  * @return {String} - The matched data item string
  */
 export default (query, record, config) => {
-  // Current record value toLowerCase
   const recordLowerCase = config.diacritics
     ? record
         .toLowerCase()
@@ -19,7 +18,7 @@ export default (query, record, config) => {
         .replace(/[\u0300-\u036f]/g, "")
         .normalize("NFC")
     : record.toLowerCase();
-  // Loose mode
+
   if (config.searchEngine === "loose") {
     // Search query string sanitized & normalized
     query = query.replace(/ /g, "");
@@ -37,7 +36,6 @@ export default (query, record, config) => {
         recordChar = config.resultItem.highlight.render
           ? item(config.resultItem.highlight.className, recordChar)
           : recordChar;
-        // Increment search position
         searchPosition++;
       }
       // Adds matching character to the matching list
@@ -48,8 +46,8 @@ export default (query, record, config) => {
       // Return the joined match
       return match.join("");
     }
-    // Strict mode
-  } else {
+    
+  } else { // Strict mode
     if (recordLowerCase.includes(query)) {
       // Regular Expression Query Pattern Ignores caseSensitive
       const pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");

@@ -18,6 +18,5 @@ export default (config) => {
   // Append the DIV element as a child of autoComplete container
   destination.insertAdjacentElement(config.resultsList.position, list);
 
-  // Return the results list element container
   return list;
 };

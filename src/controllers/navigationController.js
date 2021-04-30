@@ -104,26 +104,17 @@ export default (config, dataFeedback) => {
 
       // Check pressed key
       switch (event.keyCode) {
-        case 40:
-          // If the `DOWN` key is pressed
-          // Update list items state
+        case 40: // Down arrow
           update(event, list, 1);
           break;
-        case 38:
-          // If the `UP` key is pressed
-          // Update list items state
+        case 38: // Up arrow
           update(event, list);
           break;
-        case 27:
-          // If the `ESC` key is pressed
-          // Clear inputField
+        case 27: // Esc
           config.inputField.value = "";
-          // Close open list
           closeList(config);
           break;
-        case 13:
-          // If the `ENTER` key is pressed
-          // prevent default behaviour
+        case 13: // Enter
           event.preventDefault();
           // If cursor moved
           if (cursor >= 0) {
@@ -131,9 +122,7 @@ export default (config, dataFeedback) => {
             list[cursor].click();
           }
           break;
-        case 9:
-          // If the `TAB` key is pressed
-          // Close open list
+        case 9: // Tab
           closeList(config);
           break;
       }
