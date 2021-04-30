@@ -298,7 +298,7 @@ resultsList: {
     destination: "#autoComplete",
     position: "afterend",
     maxResults: 5,
-    container: (element, results) => {
+    container: (element, data) => {
         element.setAttribute("data-parent", "food-list");
     },
     noResults: (list, query) => {
