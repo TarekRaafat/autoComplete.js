@@ -8,7 +8,7 @@
  * @return {Boolean} triggerCondition - For autoComplete trigger decision
  */
 export default (config, event, queryValue) => {
-  return config.trigger.condition
-    ? config.trigger.condition(event, queryValue)
-    : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
+  if (config.trigger.condition)
+    return config.trigger.condition(event, queryValue);
+  return queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
 };

@@ -88,7 +88,10 @@ export default class autoComplete {
     this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();
     // Invoke preInit if enabled
     // or initiate autoComplete instance directly
-    this.observer ? this.preInit() : this.init();
+    if (this.observer) 
+      this.preInit()
+    else 
+      this.init();
   }
 
   /**
@@ -100,26 +103,24 @@ export default class autoComplete {
    * @return {void}
    */
   start(input, query) {
-    // 1- Get matching results list
-    const results = this.data.results ? this.data.results(findMatches(this, query)) : findMatches(this, query);
-    // 2- Prepare data feedback object
+    const results = this.data.results 
+      ? this.data.results(findMatches(this, query)) 
+      : findMatches(this, query);
+    // Prepare data feedback object
     const dataFeedback = { input, query, matches: results, results: results.slice(0, this.resultsList.maxResults) };
     /**
      * @emit {results} Emit Event on search response with results
      **/
     eventEmitter(this.inputField, dataFeedback, "results");
-    // 3- If resultsList set not to render
+    // If resultsList set not to render
     if (!this.resultsList.render) return this.feedback(dataFeedback);
-    // 4- Generate & Render results list
+    // Generate & Render results list
     resultsList(this, dataFeedback);
   }
 
   async dataStore() {
-    // Check if cache is set
-    // and store is NOT empty
     if (this.data.cache && this.data.store) return null;
-    // Else
-    // Fetch new data from source and store it
+
     this.data.store = typeof this.data.src === "function" ? await this.data.src() : this.data.src;
     /**
      * @emit {fetch} Emit Event on data request
@@ -135,31 +136,31 @@ export default class autoComplete {
    * @return {void}
    */
   async compose(event) {
-    // 1- Prepare raw inputField value
+    // Prepare raw inputField value
     const input = getInputValue(this.inputField);
-    // 2- Prepare manipulated query inputField value
+    // Prepare manipulated query inputField value
     const query = prepareQueryValue(input, this);
-    // 3- Get trigger condition value
+    // Get trigger condition value
     const triggerCondition = checkTriggerCondition(this, event, query);
-    // 4- Validate trigger condition
+    // Validate trigger condition
     if (triggerCondition) {
-      // 5- Prepare the data
+      // Prepare the data
       await this.dataStore();
-      // 6- Start autoComplete engine
+      // Start autoComplete engine
       this.start(input, query);
     } else {
-      // 5- Close open list
+      // Close open list
       closeList(this);
     }
   }
 
   // Initialization stage
   init() {
-    // 1- Set inputField attributes
+    // Set inputField attributes
     prepareInputField(this);
-    // 2- Set placeholder attribute value
+    // Set placeholder attribute value
     if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-    // 3- Run executer
+    // Run executer
     this.hook = debouncer((event) => {
       // Prepare autoComplete processes
       this.compose(event);
@@ -178,10 +179,7 @@ export default class autoComplete {
 
   // Pre-Initialization stage
   preInit() {
-    // 1- Observe DOM changes
-    // Options for the observer (which mutations to observe)
-    const config = { childList: true, subtree: true };
-    // 2- Callback function to execute when mutations are observed
+    // Callback function to execute when mutations are observed
     const callback = (mutations, observer) => {
       // Go though each mutation
       mutations.forEach((mutation) => {
@@ -194,16 +192,16 @@ export default class autoComplete {
         }
       });
     };
-    // 3- Create an observer instance linked to the callback function
+    // Create an observer instance linked to the callback function
     const observer = new MutationObserver(callback);
-    // 4- Start observing the entire DOM until inputField is present
+    // Start observing the entire DOM until inputField is present
     // The entire document will be observed for all changes
-    observer.observe(document, config);
+    observer.observe(document, { childList: true, subtree: true });
   }
 
   // Un-initialize autoComplete
   unInit() {
-    // 1- Remove all autoComplete inputField eventListeners
+    // Remove all autoComplete inputField eventListeners
     this.trigger.event.forEach((eventType) => {
       this.inputField.removeEventListener(eventType, this.hook);
     });

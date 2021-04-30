@@ -20,14 +20,14 @@ const getInputValue = (inputField) => {
  * @return {String} - Manipulated Query Value
  */
 const prepareQueryValue = (inputValue, config) => {
-  return config.query && config.query.manipulate
-    ? config.query.manipulate(inputValue)
-    : config.diacritics
-    ? inputValue
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .normalize("NFC")
-    : inputValue;
+  if (config.query && config.query.manipulate)
+    return config.query.manipulate(inputValue);
+  else
+  {
+    return config.diacritics
+      ? inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC")
+      : inputValue
+  }
 };
 
 export { getInputValue, prepareQueryValue };

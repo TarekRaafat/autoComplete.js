@@ -12,13 +12,11 @@ export default (config) => {
   list.setAttribute("class", config.resultsList.className);
   list.setAttribute("role", "listbox");
   // List rendering destination
-  const destination =
-    "string" === typeof config.resultsList.destination
-      ? document.querySelector(config.resultsList.destination)
-      : config.resultsList.destination();
+  const destination = "string" === typeof config.resultsList.destination
+    ? document.querySelector(config.resultsList.destination)
+    : config.resultsList.destination();
   // Append the DIV element as a child of autoComplete container
   destination.insertAdjacentElement(config.resultsList.position, list);
 
-  // Return the results list element container
   return list;
 };
