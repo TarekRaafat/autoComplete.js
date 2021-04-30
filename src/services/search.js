@@ -58,7 +58,7 @@ export default (query, record, config) => {
       const match = config.resultItem.highlight.render
         ? record.replace(query, item(config.resultItem.highlight.className, query))
         : record;
-      // Returns the match
+      // Return the match
       return match;
     }
   }

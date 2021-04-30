@@ -58,6 +58,6 @@ export default (config, query) => {
     }
   });
 
-  // Returns rendered list
+  // Return matching results list
   return results;
 };

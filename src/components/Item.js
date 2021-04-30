@@ -17,5 +17,6 @@ export default (item, index, config) => {
   // If custom content set pass params
   if (config.resultItem.content) config.resultItem.content(item, result);
 
+  // Return the result item element
   return result;
 };
