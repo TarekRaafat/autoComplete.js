@@ -281,6 +281,7 @@
       config.inputField.removeAttribute(ariaActive);
     } else {
       list = createList(config);
+      eventEmitter(config.inputField, data, "open");
     }
     config.inputField.setAttribute(ariaExpanded, true);
     if (matches.length) {
@@ -298,7 +299,6 @@
         });
         list.appendChild(resultItem);
       });
-      eventEmitter(config.inputField, data, "open");
     } else {
       if (!config.resultsList.noResults) {
         closeList(config);

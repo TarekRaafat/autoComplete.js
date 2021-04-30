@@ -39,7 +39,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   >
   >> Starting next major release:
   > 1. "noResults" API will accept "Boolean" instead of function to be replaced with "resultsList.container"
-  > 2. "fetch" EventEmitter will be renamed to "response"
+  > 2. "fetch" eventEmitter will be renamed to "response"
   
   - ➕ Added: New `data` parameter to [`resultsList.container`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) method that contains (input, query, matches, results) values
   - 🔝 Updated: [`resultsList.container.className`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) default value to be `undefined`
@@ -51,6 +51,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🔧 Fixed: Input field `aria-expanded` set to `true` when `noResults` not set
   - 🔧 Fixed: `resultsList` on `close` event did not fire when there is no results
   - 🔧 Fixed: `unInit` method did not remove all `inputField` event listeners except for `input` event
+  - 🔧 Fixed: `open` eventEmitter used to fire on each trigger event
 
 ### v9.0.5
   - 🔧 Fixed: `resultsList.container` hierarchy comes after list rendering instead of before

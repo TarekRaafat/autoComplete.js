@@ -32,6 +32,10 @@ export default (config, data) => {
   } else {
     // Create new list
     list = createList(config);
+    /**
+     * @emit {open} Emit Event after results list is opened
+     **/
+    eventEmitter(config.inputField, data, "open");
   }
   // Set list to opened
   config.inputField.setAttribute(ariaExpanded, true);
@@ -59,15 +63,11 @@ export default (config, data) => {
       // Add result to the list
       list.appendChild(resultItem);
     });
-    /**
-     * @emit {open} Emit Event after results list is opened
-     **/
-    eventEmitter(config.inputField, data, "open");
   } else {
     // Check if there are NO results
     if (!config.resultsList.noResults) {
       // Close list
-      closeList(config)
+      closeList(config);
       // Set list to closed
       config.inputField.setAttribute(ariaExpanded, false);
     } else {
