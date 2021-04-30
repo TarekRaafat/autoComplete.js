@@ -33,9 +33,8 @@ const autoCompleteJS = new autoComplete({
   resultsList: {
     noResults: (list, query) => {
       // No Results List Message
-      const message = document.createElement("li");
+      const message = document.createElement("div");
       message.setAttribute("class", "no_result");
-      message.setAttribute("tabindex", "1");
       message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
       list.appendChild(message);
     },
