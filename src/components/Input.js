@@ -8,9 +8,10 @@
 export default (config) => {
   // General attributes
   // ARIA attributes
-  config.inputField.setAttribute("role", "combobox");
-  config.inputField.setAttribute("aria-haspopup", true);
-  config.inputField.setAttribute("aria-expanded", false);
-  config.inputField.setAttribute("aria-controls", config.resultsList.idName);
-  config.inputField.setAttribute("aria-autocomplete", "both");
+  let inf = config.inputField;
+  inf.setAttribute("role", "combobox");
+  inf.setAttribute("aria-haspopup", true);
+  inf.setAttribute("aria-expanded", false);
+  inf.setAttribute("aria-controls", config.resultsList.idName);
+  inf.setAttribute("aria-autocomplete", "both");
 };
