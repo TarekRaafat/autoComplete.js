@@ -45,13 +45,13 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🔝 Updated: [`resultsList.container.className`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=resultslist-optional) default value to be `undefined`
   - 🔝 Updated: Code with some refactoring & cleanup
   - 🔝 Updated: Development dependencies
-  - 🔧 Fixed: `resultsList` error on `Enter` key press without selection
+  - 🔧 Fixed: `resultsList` error on `Enter` key press with no selection
   - 🔧 Fixed: Input field `aria-activedescendant` was not removed on each `resultsList` regeneration
   - 🔧 Fixed: `noResults` error on `Enter` key press
-  - 🔧 Fixed: Input field `aria-expanded` set to `true` when `noResults` not set
-  - 🔧 Fixed: `resultsList` on `close` event did not fire when there is no results
-  - 🔧 Fixed: `unInit` method did not remove all `inputField` event listeners except for `input` event
-  - 🔧 Fixed: `open` eventEmitter used to fire on each trigger event
+  - 🔧 Fixed: Input field `aria-expanded` set to `true` even when `noResults` was not active
+  - 🔧 Fixed: `resultsList` on `close` event did not fire when `noResults` was active
+  - 🔧 Fixed: `unInit` method did not remove all `inputField` set event listeners except for `input` event
+  - 🔧 Fixed: `open` eventEmitter unexpected behavior that used to fire on each trigger event
 
 ### v9.0.5
   - 🔧 Fixed: `resultsList.container` hierarchy comes after list rendering instead of before

@@ -63,7 +63,6 @@ typings/
 
 # Experimental folder
 .exp
-.vscode/
 
 # Distribution folder
 # dist/
@@ -87,8 +86,4 @@ Thumbs.db
 *.ipr
 
 # VS Code related files
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
