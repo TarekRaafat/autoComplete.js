@@ -17,26 +17,20 @@ export default (config, query) => {
   data.store.forEach((record, index) => {
     const search = (key) => {
       const recordValue = (key ? record[key] : record).toString();
-      if (recordValue) {
-        const match = typeof customSearchEngine === "function"
-            ? customSearchEngine(query, recordValue)
-            : searchEngine(query, recordValue, config);
+      if (!recordValue) return;
+      
+      const match = typeof customSearchEngine === "function"
+          ? customSearchEngine(query, recordValue)
+          : searchEngine(query, recordValue, config);
+      if (!match) return;
 
-        if (match && key) {
-          results.push({
-            key,
-            index,
-            match,
-            value: record,
-          });
-        } else if (match && !key) {
-          results.push({
-            index,
-            match,
-            value: record,
-          });
-        }
-      }
+      let result = {
+        index,
+        match,
+        value: record,
+      };
+      if (key) result.key = key
+      results.push(result);
     };
     if (data.key) {
       for (const key of data.key) {
