@@ -101,7 +101,9 @@ export default class autoComplete {
    */
   start(input, query) {
     // 1- Get matching results list
-    const results = this.data.results ? this.data.results(findMatches(this, query)) : findMatches(this, query);
+    const results = this.data.results 
+      ? this.data.results(findMatches(this, query)) 
+      : findMatches(this, query);
     // 2- Prepare data feedback object
     const dataFeedback = { input, query, matches: results, results: results.slice(0, this.resultsList.maxResults) };
     /**

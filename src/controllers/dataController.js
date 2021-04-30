@@ -24,8 +24,7 @@ export default (config, query) => {
       // Check if record does exist before search
       if (recordValue) {
         // Holds match value
-        const match =
-          typeof customSearchEngine === "function"
+        const match = typeof customSearchEngine === "function"
             ? customSearchEngine(query, recordValue)
             : searchEngine(query, recordValue, config);
         // Push match to results list with key if set

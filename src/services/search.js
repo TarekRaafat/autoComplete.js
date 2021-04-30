@@ -55,11 +55,9 @@ export default (query, record, config) => {
       const pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
       // Search for a match Query in Record
       query = pattern.exec(record);
-      const match = config.resultItem.highlight.render
-        ? record.replace(query, item(config.resultItem.highlight.className, query))
-        : record;
-      // Return the match
-      return match;
+      if (config.resultItem.highlight.render)
+        return record.replace(query, item(config.resultItem.highlight.className, query));
+      return record;
     }
   }
 };

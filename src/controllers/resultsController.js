@@ -79,7 +79,10 @@ export default (config, data) => {
   // If custom container is set pass the list
   if (config.resultsList.container) config.resultsList.container(list, data);
   // Initialize list navigation controls
-  config.resultsList.navigation ? config.resultsList.navigation(list) : navigation(config, data);
+  if (config.resultsList.navigation) 
+    config.resultsList.navigation(list)
+  else
+    navigation(config, data);
 
   /**
    * @desc
