@@ -32,13 +32,13 @@ export default (config, data) => {
   } else {
     // Create new list
     list = createList(config);
+    // Set list to opened
+    config.inputField.setAttribute(ariaExpanded, true);
     /**
      * @emit {open} Emit Event after results list is opened
      **/
     eventEmitter(config.inputField, data, "open");
   }
-  // Set list to opened
-  config.inputField.setAttribute(ariaExpanded, true);
 
   // Check if there are results
   if (matches.length) {

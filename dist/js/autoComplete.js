@@ -281,9 +281,9 @@
       config.inputField.removeAttribute(ariaActive);
     } else {
       list = createList(config);
+      config.inputField.setAttribute(ariaExpanded, true);
       eventEmitter(config.inputField, data, "open");
     }
-    config.inputField.setAttribute(ariaExpanded, true);
     if (matches.length) {
       results.forEach(function (item, index) {
         var resultItem = createItem(item, index, config);
