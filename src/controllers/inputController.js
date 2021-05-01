@@ -1,33 +1,47 @@
 /**
- * Gets the inputField search value "query"
- *
- * @param {Element} inputField - autoComplete inputField or textarea element
- *
- * @return {String} - Raw inputField value as a string
- */
-const getInputValue = (inputField) => {
-  return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement
-    ? inputField.value.toLowerCase()
-    : inputField.innerHTML.toLowerCase();
-};
-
-/**
- * Intercept query value
+ * Format raw input value
  *
  * @param {String} inputValue - User's raw search query value
  * @param {Object} config - autoComplete configurations
  *
- * @return {String} - Manipulated Query Value
+ * @return {String} - Raw "inputField" value as a string
  */
-const prepareQueryValue = (inputValue, config) => {
-  if (config.query && config.query.manipulate)
-    return config.query.manipulate(inputValue);
-  else
-  {
-    return config.diacritics
-      ? inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC")
-      : inputValue
-  }
+const formatRawInputValue = (value, config) => {
+  value = value.toLowerCase();
+
+  return config.diacritics
+    ? value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .normalize("NFC")
+    : value;
 };
 
-export { getInputValue, prepareQueryValue };
+/**
+ * Get the "inputField" search value
+ *
+ * @param {Element} inputField - autoComplete "inputField" or textarea element
+ *
+ * @return {String} - Raw "inputField" value as a string
+ */
+const getInputValue = (inputField) =>
+  inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement
+    ? inputField.value
+    : inputField.innerHTML;
+
+/**
+ * Intercept query value
+ *
+ * @param {String} input - User's raw search input value
+ * @param {Object} config - autoComplete configurations
+ *
+ * @return {String} - Manipulated Query
+ */
+const prepareQuery = (input, config) =>
+  config.query && config.query.manipulate
+    ? config.query.manipulate(input)
+    : config.diacritics
+    ? formatRawInputValue(input, config)
+    : formatRawInputValue(input, config);
+
+export { getInputValue, prepareQuery, formatRawInputValue };

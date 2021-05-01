@@ -1,14 +1,13 @@
 /**
- * App triggering condition
+ * autoComplete triggering condition
  *
- * @param {Object} config - Trigger Object with the Trigger function
- * @param {Object} event - The trigger event Object
- * @param {String} queryValue - User's search query value string after manipulation
+ * @param {Object} config - autoComplete configurations
+ * @param {Object} event - Trigger event Object
+ * @param {String} query - User's manipulated search query value
  *
- * @return {Boolean} triggerCondition - For autoComplete trigger decision
+ * @return {Boolean} triggerCondition - For autoComplete to run
  */
-export default (config, event, queryValue) => {
-  if (config.trigger.condition)
-    return config.trigger.condition(event, queryValue);
-  return queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
-};
+export default (config, event, query) =>
+  config.trigger.condition
+    ? config.trigger.condition(event, query)
+    : query.length >= config.threshold && query.replace(/ /g, "").length;

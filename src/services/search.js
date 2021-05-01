@@ -1,61 +1,56 @@
-// Result item constructor
-const item = (className, value) => `<span class="${className}">${value}</span>`;
+import { formatRawInputValue } from "../controllers/inputController";
+
+// Highlighted result item constructor
+const highlightChar = (className, value) => `<span class="${className}">${value}</span>`;
 
 /**
- * Search common characters within record
+ * Find matching characters in record
  *
- * @param {String} query - User's search query value after manipulation
- * @param {String} record - The data item string to be compared
- * @param {Object {searchEngine: String, highlight: Boolean}} config - The search engine configurations
+ * @param {String} query - User's manipulated search query value
+ * @param {String} record - Data record string to be compared
+ * @param {Object} config - autoComplete configurations
  *
- * @return {String} - The matched data item string
+ * @return {String} - Matched data record string
  */
 export default (query, record, config) => {
-  const recordLowerCase = config.diacritics
-    ? record
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .normalize("NFC")
-    : record.toLowerCase();
+  const formattedRecord = formatRawInputValue(record, config);
 
   if (config.searchEngine === "loose") {
-    // Search query string sanitized & normalized
+    // Query string with no spaces
     query = query.replace(/ /g, "");
-    // Array of matching characters
-    const match = [];
-    // Query character position based on success
-    let searchPosition = 0;
-    // Iterate over record characters
-    for (let number = 0; number < recordLowerCase.length; number++) {
-      // Holds current record character
-      let recordChar = record[number];
-      // Matching case
-      if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-        // Highlight matching character
-        recordChar = config.resultItem.highlight.render
-          ? item(config.resultItem.highlight.className, recordChar)
-          : recordChar;
-        searchPosition++;
-      }
-      // Adds matching character to the matching list
-      match.push(recordChar);
-    }
-    // Non-Matching case
-    if (searchPosition === query.length) {
-      // Return the joined match
-      return match.join("");
-    }
-    
-  } else { // Strict mode
-    if (recordLowerCase.includes(query)) {
-      // Regular Expression Query Pattern Ignores caseSensitive
+    const queryLength = query.length;
+    // Query character cursor position based on match
+    let cursor = 0;
+    // Matching characters
+    const match = Array.from(record)
+      .map((character, index) => {
+        // Matching case
+        if (cursor < queryLength && formattedRecord[index] === query[cursor]) {
+          // Highlight matching character if active
+          character = config.resultItem.highlight.render
+            ? highlightChar(config.resultItem.highlight.className, character)
+            : character;
+          // Move cursor position
+          cursor++;
+        }
+
+        return character;
+      })
+      .join("");
+    // If record is fully scanned
+    if (cursor === queryLength) return match;
+  } else {
+    // Strict mode
+    if (formattedRecord.includes(query)) {
+      // Ignore special characters & caseSensitivity
       const pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
-      // Search for a match Query in Record
       query = pattern.exec(record);
-      if (config.resultItem.highlight.render)
-        return record.replace(query, item(config.resultItem.highlight.className, query));
-      return record;
+      // Highlight matching characters if active
+      const match = config.resultItem.highlight.render
+        ? record.replace(query, highlightChar(config.resultItem.highlight.className, query))
+        : record;
+
+      return match;
     }
   }
 };

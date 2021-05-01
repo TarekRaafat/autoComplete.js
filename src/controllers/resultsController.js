@@ -13,36 +13,39 @@ const ariaActive = "aria-activedescendant";
  * List all matching results
  *
  * @param {Object} config - autoComplete configurations
- * @param {Object|Array} data - The available data object
+ * @param {Object|Array} data - Data object
  *
- * @return {Component} - The matching results list component
+ * @return {Component} - Results list component
  */
 export default (config, data) => {
-  const { input, query, matches, results } = data;
+  const { query, matches, results } = data;
+  const input = config.inputField;
+  const resultsList = config.resultsList;
+
   // Results list element
   let list = document.getElementById(config.resultsList.idName);
 
   // Check if there is a rendered list
   if (list) {
     list.innerHTML = "";
-    // Remove active descendant
-    config.inputField.removeAttribute(ariaActive);
+    // Remove "aria-activedescendant" attribute
+    input.removeAttribute(ariaActive);
   } else {
     // Create new list
     list = createList(config);
     // Set list to opened
-    config.inputField.setAttribute(ariaExpanded, true);
+    input.setAttribute(ariaExpanded, true);
     /**
-     * @emit {open} Emit Event after results list is opened
+     * @emit {open} event after results list is opened
      **/
-    eventEmitter(config.inputField, data, "open");
+    eventEmitter(input, data, "open");
   }
 
   if (matches.length) {
     results.forEach((item, index) => {
       const resultItem = createItem(item, index, config);
       resultItem.addEventListener(clickEvent, (event) => {
-        // Prepare onSelection feedback data object
+        // Prepare onSelection data feedback object
         const dataFeedback = {
           event,
           ...data,
@@ -51,36 +54,33 @@ export default (config, data) => {
             index,
           },
         };
-        // Returns the selected value onSelection if set
+        // Return selected value if onSelection is active
         if (config.onSelection) config.onSelection(dataFeedback);
       });
       list.appendChild(resultItem);
     });
   } else {
     // Check if there are NO results
-    if (!config.resultsList.noResults) {
+    if (!resultsList.noResults) {
       closeList(config);
       // Set list to closed
-      config.inputField.setAttribute(ariaExpanded, false);
+      input.setAttribute(ariaExpanded, false);
     } else {
-      // Run noResults action function
-      config.resultsList.noResults(list, query);
+      // Run "noResults" action function
+      resultsList.noResults(list, query);
     }
   }
 
-  // If custom container is set pass the list
-  if (config.resultsList.container) config.resultsList.container(list, data);
+  // Run custom container function if active
+  if (resultsList.container) resultsList.container(list, data);
   // Initialize list navigation controls
-  if (config.resultsList.navigation) 
-    config.resultsList.navigation(list)
-  else
-    navigation(config, data);
+  resultsList.navigation ? resultsList.navigation(list) : navigation(config, data);
 
   /**
    * @desc
-   * Listen for all `click` events in the document
-   * and close list if clicked outside the list and inputField
-   * @listen {click} Listen to all `click` events on the document
+   * Listen for all "click" events in the document
+   * and close list if clicked outside "resultsList" or "inputField"
+   * @listen {click} events of the entire document
    **/
   document.addEventListener(clickEvent, (event) => closeList(config, event.target));
 };

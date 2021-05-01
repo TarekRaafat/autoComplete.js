@@ -34,7 +34,19 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v9.1.0 ✨
+### v9.1.1 ✨
+  > <div class="ps-icon ps-icon-warning"></div> Important Note:
+  >
+  >> Starting next major release:
+  > 1. "noResults" API will accept "Boolean" instead of function to be replaced with "resultsList.container"
+  > 2. "fetch" eventEmitter will be renamed to "response"
+  > 3. All "className" APIs will be renamed to "classList"
+  
+  - 🔧 Fixed: Data feedback `inputField` value was in lowerCase instead of raw
+  - 🔧 Fixed: `resultItem.className` did not accept except one class instead of multiple
+  - 🔝 Updated: Code with deep refactoring & cleanup (Thanks 👍 @Pirulax) #210
+
+### v9.1.0
   > <div class="ps-icon ps-icon-warning"></div> Important Note:
   >
   >> Starting next major release:

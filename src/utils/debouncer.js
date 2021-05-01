@@ -1,10 +1,10 @@
 /**
  * Debouncer
  *
- * @param {Function} callback - The callback function
- * @param {Number} delay - The delay number value
+ * @param {Function} callback - Callback function
+ * @param {Number} delay - Delay number value
  *
- * @return {Function} - The callback function wrapped in `setTimeout` function
+ * @return {Function} - Debouncer function
  */
 export default (callback, delay) => {
   let inDebounce;

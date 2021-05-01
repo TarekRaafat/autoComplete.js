@@ -79,6 +79,18 @@
     return obj;
   }
 
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+  }
+
+  function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
+  }
+
   function _unsupportedIterableToArray(o, minLen) {
     if (!o) return;
     if (typeof o === "string") return _arrayLikeToArray(o, minLen);
@@ -94,6 +106,10 @@
     for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
 
     return arr2;
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   function _createForOfIteratorHelper(o, allowArrayLike) {
@@ -154,11 +170,12 @@
   }
 
   var prepareInputField = (function (config) {
-    config.inputField.setAttribute("role", "combobox");
-    config.inputField.setAttribute("aria-haspopup", true);
-    config.inputField.setAttribute("aria-expanded", false);
-    config.inputField.setAttribute("aria-controls", config.resultsList.idName);
-    config.inputField.setAttribute("aria-autocomplete", "both");
+    var input = config.inputField;
+    input.setAttribute("role", "combobox");
+    input.setAttribute("aria-haspopup", true);
+    input.setAttribute("aria-expanded", false);
+    input.setAttribute("aria-controls", config.resultsList.idName);
+    input.setAttribute("aria-autocomplete", "both");
   });
 
   var eventEmitter = (function (target, detail, name) {
@@ -172,12 +189,13 @@
   var ariaActive$2 = "aria-activedescendant";
   var ariaExpanded$1 = "aria-expanded";
   var closeList = function closeList(config, target) {
+    var inputField = config.inputField;
     var list = document.getElementById(config.resultsList.idName);
-    if (list && target !== config.inputField) {
+    if (list && target !== inputField) {
       list.remove();
-      config.inputField.removeAttribute(ariaActive$2);
-      config.inputField.setAttribute(ariaExpanded$1, false);
-      eventEmitter(config.inputField, null, "close");
+      inputField.removeAttribute(ariaActive$2);
+      inputField.setAttribute(ariaExpanded$1, false);
+      eventEmitter(inputField, null, "close");
     }
   };
 
@@ -207,6 +225,7 @@
   var navigation = (function (config, dataFeedback) {
     config.inputField.removeEventListener(keyboardEvent, config.nav);
     var cursor = -1;
+    var classList = config.resultItem.selected.className.split(" ");
     var update = function update(event, list, state) {
       event.preventDefault();
       if (list.length) {
@@ -225,17 +244,19 @@
       }
     };
     var removeActive = function removeActive(list) {
-      for (var index = 0; index < list.length; index++) {
-        list[index].removeAttribute(ariaSelected);
-        if (config.resultItem.selected.className) list[index].classList.remove(config.resultItem.selected.className);
-      }
+      Array.from(list).forEach(function (item) {
+        var _item$classList;
+        item.removeAttribute(ariaSelected);
+        if (classList) (_item$classList = item.classList).remove.apply(_item$classList, _toConsumableArray(classList));
+      });
     };
     var addActive = function addActive(list) {
+      var _list$cursor$classLis;
       removeActive(list);
       if (cursor >= list.length) cursor = 0;
       if (cursor < 0) cursor = list.length - 1;
       list[cursor].setAttribute(ariaSelected, true);
-      if (config.resultItem.selected.className) list[cursor].classList.add(config.resultItem.selected.className);
+      if (classList) (_list$cursor$classLis = list[cursor].classList).add.apply(_list$cursor$classLis, _toConsumableArray(classList));
     };
     config.nav = function (event) {
       var list = document.getElementById(config.resultsList.idName);
@@ -271,18 +292,19 @@
   var ariaExpanded = "aria-expanded";
   var ariaActive = "aria-activedescendant";
   var resultsList = (function (config, data) {
-    data.input;
-        var query = data.query,
+    var query = data.query,
         matches = data.matches,
         results = data.results;
+    var input = config.inputField;
+    var resultsList = config.resultsList;
     var list = document.getElementById(config.resultsList.idName);
     if (list) {
       list.innerHTML = "";
-      config.inputField.removeAttribute(ariaActive);
+      input.removeAttribute(ariaActive);
     } else {
       list = createList(config);
-      config.inputField.setAttribute(ariaExpanded, true);
-      eventEmitter(config.inputField, data, "open");
+      input.setAttribute(ariaExpanded, true);
+      eventEmitter(input, data, "open");
     }
     if (matches.length) {
       results.forEach(function (item, index) {
@@ -300,52 +322,53 @@
         list.appendChild(resultItem);
       });
     } else {
-      if (!config.resultsList.noResults) {
+      if (!resultsList.noResults) {
         closeList(config);
-        config.inputField.setAttribute(ariaExpanded, false);
+        input.setAttribute(ariaExpanded, false);
       } else {
-        config.resultsList.noResults(list, query);
+        resultsList.noResults(list, query);
       }
     }
-    if (config.resultsList.container) config.resultsList.container(list, data);
-    config.resultsList.navigation ? config.resultsList.navigation(list) : navigation(config, data);
+    if (resultsList.container) resultsList.container(list, data);
+    resultsList.navigation ? resultsList.navigation(list) : navigation(config, data);
     document.addEventListener(clickEvent, function (event) {
       return closeList(config, event.target);
     });
   });
 
-  var getInputValue = function getInputValue(inputField) {
-    return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value.toLowerCase() : inputField.innerHTML.toLowerCase();
+  var formatRawInputValue = function formatRawInputValue(value, config) {
+    value = value.toLowerCase();
+    return config.diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value;
   };
-  var prepareQueryValue = function prepareQueryValue(inputValue, config) {
-    return config.query && config.query.manipulate ? config.query.manipulate(inputValue) : config.diacritics ? inputValue.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : inputValue;
+  var getInputValue = function getInputValue(inputField) {
+    return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value : inputField.innerHTML;
+  };
+  var prepareQuery = function prepareQuery(input, config) {
+    return config.query && config.query.manipulate ? config.query.manipulate(input) : config.diacritics ? formatRawInputValue(input, config) : formatRawInputValue(input, config);
   };
 
-  var item = function item(className, value) {
+  var highlightChar = function highlightChar(className, value) {
     return "<span class=\"".concat(className, "\">").concat(value, "</span>");
   };
   var searchEngine = (function (query, record, config) {
-    var recordLowerCase = config.diacritics ? record.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : record.toLowerCase();
+    var formattedRecord = formatRawInputValue(record, config);
     if (config.searchEngine === "loose") {
       query = query.replace(/ /g, "");
-      var match = [];
-      var searchPosition = 0;
-      for (var number = 0; number < recordLowerCase.length; number++) {
-        var recordChar = record[number];
-        if (searchPosition < query.length && recordLowerCase[number] === query[searchPosition]) {
-          recordChar = config.resultItem.highlight.render ? item(config.resultItem.highlight.className, recordChar) : recordChar;
-          searchPosition++;
+      var queryLength = query.length;
+      var cursor = 0;
+      var match = Array.from(record).map(function (character, index) {
+        if (cursor < queryLength && formattedRecord[index] === query[cursor]) {
+          character = config.resultItem.highlight.render ? highlightChar(config.resultItem.highlight.className, character) : character;
+          cursor++;
         }
-        match.push(recordChar);
-      }
-      if (searchPosition === query.length) {
-        return match.join("");
-      }
+        return character;
+      }).join("");
+      if (cursor === queryLength) return match;
     } else {
-      if (recordLowerCase.includes(query)) {
+      if (formattedRecord.includes(query)) {
         var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
         query = pattern.exec(record);
-        var _match = config.resultItem.highlight.render ? record.replace(query, item(config.resultItem.highlight.className, query)) : record;
+        var _match = config.resultItem.highlight.render ? record.replace(query, highlightChar(config.resultItem.highlight.className, query)) : record;
         return _match;
       }
     }
@@ -358,23 +381,15 @@
     data.store.forEach(function (record, index) {
       var search = function search(key) {
         var recordValue = (key ? record[key] : record).toString();
-        if (recordValue) {
-          var match = typeof customSearchEngine === "function" ? customSearchEngine(query, recordValue) : searchEngine(query, recordValue, config);
-          if (match && key) {
-            results.push({
-              key: key,
-              index: index,
-              match: match,
-              value: record
-            });
-          } else if (match && !key) {
-            results.push({
-              index: index,
-              match: match,
-              value: record
-            });
-          }
-        }
+        var match = typeof customSearchEngine === "function" ? customSearchEngine(query, recordValue) : searchEngine(query, recordValue, config);
+        if (!match) return;
+        var result = {
+          index: index,
+          match: match,
+          value: record
+        };
+        if (key) result.key = key;
+        results.push(result);
       };
       if (data.key) {
         var _iterator = _createForOfIteratorHelper(data.key),
@@ -396,8 +411,8 @@
     return results;
   });
 
-  var checkTriggerCondition = (function (config, event, queryValue) {
-    return config.trigger.condition ? config.trigger.condition(event, queryValue) : queryValue.length >= config.threshold && queryValue.replace(/ /g, "").length;
+  var checkTriggerCondition = (function (config, event, query) {
+    return config.trigger.condition ? config.trigger.condition(event, query) : query.length >= config.threshold && query.replace(/ /g, "").length;
   });
 
   var debouncer = (function (callback, delay) {
@@ -542,7 +557,7 @@
       value: function dataStore() {
         var _this = this;
         return new Promise(function ($return, $error) {
-          if (_this.data.cache && _this.data.store) return $return(null);
+          if (_this.data.cache && _this.data.store) return $return();
           return new Promise(function ($return, $error) {
             if (typeof _this.data.src === "function") {
               return _this.data.src().then($return, $error);
@@ -566,7 +581,7 @@
         return new Promise(function ($return, $error) {
           var input, query, triggerCondition;
           input = getInputValue(_this2.inputField);
-          query = prepareQueryValue(input, _this2);
+          query = prepareQuery(input, _this2);
           triggerCondition = checkTriggerCondition(_this2, event, query);
           if (triggerCondition) {
             return _this2.dataStore().then(function ($await_6) {
@@ -604,10 +619,6 @@
       key: "preInit",
       value: function preInit() {
         var _this4 = this;
-        var config = {
-          childList: true,
-          subtree: true
-        };
         var callback = function callback(mutations, observer) {
           mutations.forEach(function (mutation) {
             if (_this4.inputField) {
@@ -617,7 +628,10 @@
           });
         };
         var observer = new MutationObserver(callback);
-        observer.observe(document, config);
+        observer.observe(document, {
+          childList: true,
+          subtree: true
+        });
       }
     }, {
       key: "unInit",

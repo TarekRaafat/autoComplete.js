@@ -2,16 +2,15 @@
  * InputField element
  *
  * @param {Object} config - autoComplete configurations
- * 
+ *
  * @return {void}
  */
 export default (config) => {
-  // General attributes
+  const input = config.inputField;
   // ARIA attributes
-  let inf = config.inputField;
-  inf.setAttribute("role", "combobox");
-  inf.setAttribute("aria-haspopup", true);
-  inf.setAttribute("aria-expanded", false);
-  inf.setAttribute("aria-controls", config.resultsList.idName);
-  inf.setAttribute("aria-autocomplete", "both");
+  input.setAttribute("role", "combobox");
+  input.setAttribute("aria-haspopup", true);
+  input.setAttribute("aria-expanded", false);
+  input.setAttribute("aria-controls", config.resultsList.idName);
+  input.setAttribute("aria-autocomplete", "both");
 };

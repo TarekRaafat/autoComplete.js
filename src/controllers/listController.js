@@ -8,24 +8,26 @@ const ariaExpanded = "aria-expanded";
  * Close open list
  *
  * @param {Object} config - autoComplete configurations
- * @param {String} target - autoComplete inputField ID
+ * @param {String} target - autoComplete "inputField" element
  *
  * @return {void}
  */
 const closeList = (config, target) => {
+  const inputField = config.inputField;
+
   // Get autoComplete list
   const list = document.getElementById(config.resultsList.idName);
-  if (list && target !== config.inputField) {
+  if (list && target !== inputField) {
     // Remove open list
     list.remove();
     // Remove active descendant
-    config.inputField.removeAttribute(ariaActive);
+    inputField.removeAttribute(ariaActive);
     // Set list to closed
-    config.inputField.setAttribute(ariaExpanded, false);
+    inputField.setAttribute(ariaExpanded, false);
     /**
-     * @emit {close} Emit Event on list close
+     * @emit {close} event after "resultsList" is closed
      **/
-    eventEmitter(config.inputField, null, "close");
+    eventEmitter(inputField, null, "close");
   }
 };
 

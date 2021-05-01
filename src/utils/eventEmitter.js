@@ -1,10 +1,10 @@
 /**
- * Event emitter/dispatcher `Function`
+ * Event emitter/dispatcher function
  *
- * @param {Element} target - The target element to listen for
- * @param {Object} detail - The detail object containing relevant information or null
- * @param {String} name - The name of the event fired
- * 
+ * @param {Element} target - Target element to listen for
+ * @param {Object|null} detail - Data object with relevant information or null
+ * @param {String} name - Name of fired event
+ *
  * @return {void}
  */
 export default (target, detail, name) => {
