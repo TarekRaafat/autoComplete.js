@@ -1,7 +1,6 @@
 .autoComplete_wrapper {
-  position: relative;
   display: inline-block;
-  width: 370px;
+  position: relative;
 }
 
 #autoComplete {
