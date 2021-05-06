@@ -432,20 +432,6 @@ document.querySelector("#autoComplete").addEventListener("fetch", function (even
 });
 ```
 
-### input
-
-***
-
-> Fires on every user input interaction
-
-- Example:
-
-```js
-document.querySelector("#autoComplete").addEventListener("input", function (event) {
-    console.log(event);
-});
-```
-
 ### results
 
 ***
