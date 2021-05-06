@@ -90,6 +90,8 @@
 #autoComplete_list:empty {
   display: block;
   opacity: 0;
+  transform: scale(0);
+  /* transition-timing-function: ease; */
 }
 
 .autoComplete_result {
