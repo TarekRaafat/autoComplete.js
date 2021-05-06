@@ -13,7 +13,7 @@ const autoCompleteJS = new autoComplete({
       return data;
     },
     key: ["food", "cities", "animals"],
-    results: (list) => {
+    filter: (list) => {
       // Filter duplicates
       const filteredResults = Array.from(new Set(list.map((value) => value.match))).map((food) => {
         return list.find((value) => value.match === food);
@@ -28,13 +28,14 @@ const autoCompleteJS = new autoComplete({
   placeHolder: "Search for Food & Drinks!",
   searchEngine: "strict",
   resultsList: {
-    noResults: (list, query) => {
+    container: (list, data) => {
       // No Results List Message
       const message = document.createElement("div");
       message.setAttribute("class", "no_result");
       message.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${query}"</span>`;
       list.appendChild(message);
     },
+    noResults: true,
   },
   resultItem: {
     content: (data, element) => {
