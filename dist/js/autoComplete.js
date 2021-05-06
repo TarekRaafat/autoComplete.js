@@ -164,20 +164,22 @@
   }
 
   var configure = (function (ctx) {
-    ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
+    var selector = ctx.selector,
+        options = ctx.options;
+    ctx.input = typeof selector === "string" ? document.querySelector(selector) : selector();
     var inject = function inject(option) {
-      for (var subOption in ctx.options[option]) {
-        if (_typeof(ctx.options[option][subOption]) === "object" && !ctx.options[option][subOption].length) {
-          for (var subSubOption in ctx.options[option][subOption]) {
-            ctx[option][subOption][subSubOption] = ctx.options[option][subOption][subSubOption];
+      for (var subOption in options[option]) {
+        if (_typeof(options[option][subOption]) === "object" && !options[option][subOption].length) {
+          for (var subSubOption in options[option][subOption]) {
+            ctx[option][subOption][subSubOption] = options[option][subOption][subSubOption];
           }
         } else {
-          ctx[option][subOption] = ctx.options[option][subOption];
+          ctx[option][subOption] = options[option][subOption];
         }
       }
     };
-    for (var option in ctx.options) {
-      if (_typeof(ctx.options[option]) === "object") {
+    for (var option in options) {
+      if (_typeof(options[option]) === "object") {
         if (ctx[option]) {
           inject(option);
         } else {
@@ -185,7 +187,7 @@
           inject(option);
         }
       } else {
-        ctx[option] = ctx.options[option];
+        ctx[option] = options[option];
       }
     }
   });
@@ -499,12 +501,14 @@
 
   var dataStore = function dataStore(ctx) {
     return new Promise(function ($return, $error) {
-      if (ctx.data.cache && ctx.data.store) return $return();
+      var data;
+      data = ctx.data;
+      if (data.cache && data.store) return $return();
       return new Promise(function ($return, $error) {
-        if (typeof ctx.data.src === "function") {
-          return ctx.data.src().then($return, $error);
+        if (typeof data.src === "function") {
+          return data.src().then($return, $error);
         }
-        return $return(ctx.data.src);
+        return $return(data.src);
       }).then($return, $error);
     });
   };
@@ -548,28 +552,32 @@
   function start (ctx, event) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var input, query, triggerCondition;
-      input = getInputValue(ctx.input);
-      query = prepareQuery(ctx, input);
+      var input, data, resultsList, feedback, inputValue, query, triggerCondition;
+      input = ctx.input;
+      data = ctx.data;
+      resultsList = ctx.resultsList;
+      feedback = ctx.feedback;
+      inputValue = getInputValue(input);
+      query = prepareQuery(ctx, inputValue);
       triggerCondition = checkTriggerCondition(ctx, event, query);
       if (triggerCondition) {
         var results;
         return dataStore(ctx).then(function ($await_2) {
           try {
-            ctx.data.store = $await_2;
+            data.store = $await_2;
             eventEmitter({
-              input: ctx.input,
-              dataFeedback: ctx.data.store
+              input: input,
+              dataFeedback: data.store
             }, "response");
-            results = ctx.data.filter ? ctx.data.filter(findMatches(ctx, query)) : findMatches(ctx, query);
+            results = data.filter ? data.filter(findMatches(ctx, query)) : findMatches(ctx, query);
             ctx.dataFeedback = {
               input: input,
               query: query,
               matches: results,
-              results: results.slice(0, ctx.resultsList.maxResults)
+              results: results.slice(0, resultsList.maxResults)
             };
             eventEmitter(ctx, "results");
-            if (!ctx.resultsList.render) return $return(ctx.feedback(ctx.dataFeedback));
+            if (!resultsList.render) return $return(feedback(dataFeedback));
             renderList(ctx);
             return $If_1.call(_this);
           } catch ($boundEx) {

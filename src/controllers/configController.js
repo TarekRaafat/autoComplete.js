@@ -1,24 +1,25 @@
 // Configuring options stage
 export default (ctx) => {
+  let { selector, options } = ctx;
   // Assign the "inputField" selector
-  ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
+  ctx.input = typeof selector === "string" ? document.querySelector(selector) : selector();
 
   // Inject sub options into options
   const inject = (option) => {
-    for (const subOption in ctx.options[option]) {
-      if (typeof ctx.options[option][subOption] === "object" && !ctx.options[option][subOption].length) {
-        for (const subSubOption in ctx.options[option][subOption]) {
-          ctx[option][subOption][subSubOption] = ctx.options[option][subOption][subSubOption];
+    for (const subOption in options[option]) {
+      if (typeof options[option][subOption] === "object" && !options[option][subOption].length) {
+        for (const subSubOption in options[option][subOption]) {
+          ctx[option][subOption][subSubOption] = options[option][subOption][subSubOption];
         }
       } else {
-        ctx[option][subOption] = ctx.options[option][subOption];
+        ctx[option][subOption] = options[option][subOption];
       }
     }
   };
 
   // Populate Configuration options
-  for (const option in ctx.options) {
-    if (typeof ctx.options[option] === "object") {
+  for (const option in options) {
+    if (typeof options[option] === "object") {
       if (ctx[option]) {
         inject(option);
       } else {
@@ -26,7 +27,7 @@ export default (ctx) => {
         inject(option);
       }
     } else {
-      ctx[option] = ctx.options[option];
+      ctx[option] = options[option];
     }
   }
 };

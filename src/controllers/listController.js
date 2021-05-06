@@ -110,7 +110,7 @@ const closeList = (ctx) => {
 const selectItem = (ctx, event, index) => {
   index = index > -1 ? index : ctx.cursor;
 
-  // Get list items
+  // Get selected list item
   const list = ctx.list.getElementsByTagName(ctx.resultItem.element);
   const item = list[index];
   const data = ctx.dataFeedback;

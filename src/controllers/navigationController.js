@@ -110,9 +110,10 @@ const navigate = (ctx, event) => {
     case 9:
       // if (ctx.resultsList.tabSelect) {
       //   event.preventDefault();
-      //   ctx.resultsList.tabToSelect ? selectItem(ctx, event) : closeList(ctx);
+      //   selectItem(ctx, event);
+      // } else {
+        closeList(ctx);
       // }
-      closeList(ctx);
       break;
   }
 };
