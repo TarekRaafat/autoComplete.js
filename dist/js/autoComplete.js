@@ -42,26 +42,20 @@
     return target;
   }
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
 
-  function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
     }
-  }
 
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
+    return _typeof(obj);
   }
 
   function _defineProperty(obj, key, value) {
@@ -169,196 +163,321 @@
     };
   }
 
-  var prepareInputField = (function (config) {
-    var input = config.inputField;
-    input.setAttribute("role", "combobox");
-    input.setAttribute("aria-haspopup", true);
-    input.setAttribute("aria-expanded", false);
-    input.setAttribute("aria-controls", config.resultsList.idName);
-    input.setAttribute("aria-autocomplete", "both");
+  var configure = (function (ctx) {
+    ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
+    var inject = function inject(option) {
+      for (var subOption in ctx.options[option]) {
+        if (_typeof(ctx.options[option][subOption]) === "object" && !ctx.options[option][subOption].length) {
+          for (var subSubOption in ctx.options[option][subOption]) {
+            ctx[option][subOption][subSubOption] = ctx.options[option][subOption][subSubOption];
+          }
+        } else {
+          ctx[option][subOption] = ctx.options[option][subOption];
+        }
+      }
+    };
+    for (var option in ctx.options) {
+      if (_typeof(ctx.options[option]) === "object") {
+        if (ctx[option]) {
+          inject(option);
+        } else {
+          ctx[option] = {};
+          inject(option);
+        }
+      } else {
+        ctx[option] = ctx.options[option];
+      }
+    }
   });
 
-  var eventEmitter = (function (target, detail, name) {
-    target.dispatchEvent(new CustomEvent(name, {
+  var preInit = (function (ctx) {
+    var callback = function callback(mutations, observer) {
+      mutations.forEach(function (mutation) {
+        if (ctx.input) {
+          observer.disconnect();
+          ctx.init();
+        }
+      });
+    };
+    var observer = new MutationObserver(callback);
+    observer.observe(document, {
+      childList: true,
+      subtree: true
+    });
+  });
+
+  var selector = (function (element, from) {
+    return typeof element === "string" ? (from || document).querySelector(element) : element || null;
+  });
+
+  var create = (function (tag, options) {
+    var element = typeof tag === "string" ? document.createElement(tag) : tag;
+    for (var key in options) {
+      var value = options[key];
+      if (key === "dest") {
+        selector(value[0]).insertAdjacentElement(value[1], element);
+      } else if (key === "around") {
+        var reference = selector(value);
+        reference.parentNode.insertBefore(element, reference);
+        element.appendChild(reference);
+        if (reference.getAttribute("autofocus") != null) reference.focus();
+      } else if (key in element) {
+        element[key] = value;
+      } else {
+        element.setAttribute(key, value);
+      }
+    }
+    return element;
+  });
+
+  var debouncer = (function (callback, delay) {
+    var inDebounce;
+    return function () {
+      var context = this;
+      var args = arguments;
+      clearTimeout(inDebounce);
+      inDebounce = setTimeout(function () {
+        return callback.apply(context, args);
+      }, delay);
+    };
+  });
+
+  var eventEmitter = (function (ctx, name) {
+    ctx.input.dispatchEvent(new CustomEvent(name, {
       bubbles: true,
-      detail: detail,
+      detail: ctx.dataFeedback,
       cancelable: true
     }));
   });
 
-  var ariaActive$2 = "aria-activedescendant";
-  var ariaExpanded$1 = "aria-expanded";
-  var closeList = function closeList(config, target) {
-    var inputField = config.inputField;
-    var list = document.getElementById(config.resultsList.idName);
-    if (list && target !== inputField) {
-      list.remove();
-      inputField.removeAttribute(ariaActive$2);
-      inputField.setAttribute(ariaExpanded$1, false);
-      eventEmitter(inputField, null, "close");
+  var ariaExpanded = "aria-expanded";
+  var ariaActive$1 = "aria-activedescendant";
+  var renderList = function renderList(ctx) {
+    var data = ctx.dataFeedback;
+    data.query;
+        var matches = data.matches,
+        results = data.results;
+    var resultsList = ctx.resultsList;
+    var list = ctx.list;
+    list.innerHTML = "";
+    openList(ctx);
+    ctx.cursor = -1;
+    if (matches.length) {
+      var fragment = document.createDocumentFragment();
+      results.forEach(function (item, index) {
+        var resultItem = ctx.resultItem;
+        var result = create(resultItem.element, _defineProperty({
+          id: "".concat(resultItem.idName, "_").concat(index),
+          "class": resultItem.className,
+          role: "option",
+          innerHTML: item.match
+        }, "role", "option"));
+        if (resultItem.content) resultItem.content(item, result);
+        fragment.appendChild(result);
+      });
+      list.appendChild(fragment);
+    } else if (!resultsList.noResults) {
+      closeList(ctx);
+    }
+    if (resultsList.container) resultsList.container(list, data);
+  };
+  var openList = function openList(ctx) {
+    ctx.list.removeAttribute("hidden");
+    ctx.wrapper.setAttribute(ariaExpanded, true);
+    ctx.input.setAttribute(ariaActive$1, "");
+    ctx.isOpened = true;
+    eventEmitter(ctx, "open");
+  };
+  var closeList = function closeList(ctx) {
+    var list = document.getElementById(ctx.resultsList.idName);
+    list.setAttribute("hidden", "");
+    ctx.isOpened = false;
+    ctx.input.setAttribute(ariaActive$1, "");
+    ctx.wrapper.setAttribute(ariaExpanded, false);
+    eventEmitter(ctx, "close");
+  };
+  var selectItem = function selectItem(ctx, event, index) {
+    index = index > -1 ? index : ctx.cursor;
+    var list = ctx.list.getElementsByTagName(ctx.resultItem.element);
+    list[index];
+    var data = ctx.dataFeedback;
+    var dataFeedback = _objectSpread2(_objectSpread2({
+      event: event
+    }, data), {}, {
+      selection: _objectSpread2(_objectSpread2({}, data.results[index]), {}, {
+        index: index
+      })
+    });
+    if (ctx.onSelection) ctx.onSelection(dataFeedback);
+    closeList(ctx);
+  };
+
+  var classList;
+  var ariaSelected = "aria-selected";
+  var ariaActive = "aria-activedescendant";
+  var goTo = function goTo(index, ctx) {
+    var list = ctx.list.getElementsByTagName(ctx.resultItem.element);
+    if (list.length) {
+      var _list$index$classList;
+      ctx.state = ctx.cursor;
+      if (index >= list.length) index = 0;
+      if (index < 0) index = list.length - 1;
+      ctx.cursor = index;
+      if (ctx.state > -1) {
+        var _list$ctx$state$class;
+        list[ctx.state].removeAttribute(ariaSelected);
+        if (classList) (_list$ctx$state$class = list[ctx.state].classList).remove.apply(_list$ctx$state$class, _toConsumableArray(classList));
+      }
+      list[index].setAttribute(ariaSelected, true);
+      if (classList) (_list$index$classList = list[index].classList).add.apply(_list$index$classList, _toConsumableArray(classList));
+      ctx.input.setAttribute(ariaActive, list[ctx.cursor].id);
+      ctx.dataFeedback.cursor = ctx.cursor;
+      ctx.list.scrollTop = list[index].offsetTop - ctx.list.clientHeight + list[index].clientHeight;
+      eventEmitter(ctx, "navigate");
+    }
+  };
+  var next = function next(ctx) {
+    var index = ctx.cursor + 1;
+    ctx.goTo(index, ctx);
+  };
+  var previous = function previous(ctx) {
+    var index = ctx.cursor - 1;
+    ctx.goTo(index, ctx);
+  };
+  var navigate = function navigate(ctx, event) {
+    var key = event.keyCode;
+    var selectedResultItem = ctx.resultItem.selected;
+    classList = selectedResultItem ? selectedResultItem.className.split(" ") : "";
+    switch (key) {
+      case 40:
+      case 38:
+        event.preventDefault();
+        ctx[key === 40 ? "next" : "previous"](ctx);
+        break;
+      case 13:
+        event.preventDefault();
+        if (ctx.cursor >= 0) {
+          selectItem(ctx, event);
+        }
+        break;
+      case 9:
+        closeList(ctx);
+        break;
     }
   };
 
-  var createList = (function (config) {
-    var list = document.createElement(config.resultsList.element);
-    list.setAttribute("id", config.resultsList.idName);
-    list.setAttribute("class", config.resultsList.className);
-    list.setAttribute("role", "listbox");
-    var destination = "string" === typeof config.resultsList.destination ? document.querySelector(config.resultsList.destination) : config.resultsList.destination();
-    destination.insertAdjacentElement(config.resultsList.position, list);
-    return list;
-  });
-
-  var createItem = (function (data, index, config) {
-    var item = document.createElement(config.resultItem.element);
-    item.setAttribute("id", "".concat(config.resultItem.idName, "_").concat(index));
-    item.setAttribute("class", config.resultItem.className);
-    item.setAttribute("role", "option");
-    item.innerHTML = data.match;
-    if (config.resultItem.content) config.resultItem.content(data, item);
-    return item;
-  });
-
-  var keyboardEvent = "keydown";
-  var ariaSelected = "aria-selected";
-  var ariaActive$1 = "aria-activedescendant";
-  var navigation = (function (config, dataFeedback) {
-    config.inputField.removeEventListener(keyboardEvent, config.nav);
-    var cursor = -1;
-    var classList = config.resultItem.selected.className.split(" ");
-    var update = function update(event, list, state) {
-      event.preventDefault();
-      if (list.length) {
-        if (state) {
-          cursor++;
-        } else {
-          cursor--;
-        }
-        addActive(list);
-        config.inputField.setAttribute(ariaActive$1, list[cursor].id);
-        eventEmitter(event.srcElement, _objectSpread2(_objectSpread2({
-          event: event
-        }, dataFeedback), {}, {
-          selection: dataFeedback.results[cursor]
-        }), "navigate");
-      }
-    };
-    var removeActive = function removeActive(list) {
-      Array.from(list).forEach(function (item) {
-        var _item$classList;
-        item.removeAttribute(ariaSelected);
-        if (classList) (_item$classList = item.classList).remove.apply(_item$classList, _toConsumableArray(classList));
-      });
-    };
-    var addActive = function addActive(list) {
-      var _list$cursor$classLis;
-      removeActive(list);
-      if (cursor >= list.length) cursor = 0;
-      if (cursor < 0) cursor = list.length - 1;
-      list[cursor].setAttribute(ariaSelected, true);
-      if (classList) (_list$cursor$classLis = list[cursor].classList).add.apply(_list$cursor$classLis, _toConsumableArray(classList));
-    };
-    config.nav = function (event) {
-      var list = document.getElementById(config.resultsList.idName);
-      if (list) {
-        list = list.getElementsByTagName(config.resultItem.element);
-        switch (event.keyCode) {
-          case 40:
-            update(event, list, 1);
-            break;
-          case 38:
-            update(event, list);
-            break;
-          case 27:
-            config.inputField.value = "";
-            closeList(config);
-            break;
-          case 13:
+  var addEventListeners = function addEventListeners(ctx) {
+    ctx._events = {
+      input: {
+        keydown: function keydown(event) {
+          var resultsList = ctx.resultsList;
+          resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
+          if (event.keyCode === 27) {
             event.preventDefault();
-            if (cursor >= 0) {
-              list[cursor].click();
-            }
-            break;
-          case 9:
-            closeList(config);
-            break;
+            ctx.inputField.value = "";
+            closeList(ctx);
+          }
+        },
+        blur: function blur() {
+          closeList(ctx);
+        }
+      },
+      list: {
+        mousedown: function mousedown(event) {
+          event.preventDefault();
+        },
+        click: function click(event) {
+          var resultItemElement = ctx.resultItem.element.toUpperCase();
+          var items = Array.from(ctx.list.children);
+          var item = event.target.closest(resultItemElement);
+          if (item && item.nodeName === resultItemElement) {
+            event.preventDefault();
+            var index = items.indexOf(item) - 1;
+            selectItem(ctx, event, index);
+          }
         }
       }
     };
-    config.inputField.addEventListener(keyboardEvent, config.nav);
-  });
-
-  var clickEvent = "click";
-  var ariaExpanded = "aria-expanded";
-  var ariaActive = "aria-activedescendant";
-  var resultsList = (function (config, data) {
-    var query = data.query,
-        matches = data.matches,
-        results = data.results;
-    var input = config.inputField;
-    var resultsList = config.resultsList;
-    var list = document.getElementById(config.resultsList.idName);
-    if (list) {
-      list.innerHTML = "";
-      input.removeAttribute(ariaActive);
-    } else {
-      list = createList(config);
-      input.setAttribute(ariaExpanded, true);
-      eventEmitter(input, data, "open");
-    }
-    if (matches.length) {
-      results.forEach(function (item, index) {
-        var resultItem = createItem(item, index, config);
-        resultItem.addEventListener(clickEvent, function (event) {
-          var dataFeedback = _objectSpread2(_objectSpread2({
-            event: event
-          }, data), {}, {
-            selection: _objectSpread2(_objectSpread2({}, item), {}, {
-              index: index
-            })
-          });
-          if (config.onSelection) config.onSelection(dataFeedback);
-        });
-        list.appendChild(resultItem);
-      });
-    } else {
-      if (!resultsList.noResults) {
-        closeList(config);
-        input.setAttribute(ariaExpanded, false);
-      } else {
-        resultsList.noResults(list, query);
+    ctx.trigger.event.forEach(function (eventType) {
+      ctx._events.input[eventType] = debouncer(function (event) {
+        return ctx.start(ctx, event);
+      }, ctx.debounce);
+    });
+    for (var element in ctx._events) {
+      for (var event in ctx._events[element]) {
+        ctx[element].addEventListener(event, ctx._events[element][event]);
       }
     }
-    if (resultsList.container) resultsList.container(list, data);
-    resultsList.navigation ? resultsList.navigation(list) : navigation(config, data);
-    document.addEventListener(clickEvent, function (event) {
-      return closeList(config, event.target);
+  };
+  var removeEventListeners = function removeEventListeners(ctx) {
+    for (var element in ctx._events) {
+      for (var event in ctx._events[element]) {
+        ctx[element].removeEventListener(event, ctx._events[element][event]);
+      }
+    }
+  };
+
+  var init = (function (ctx) {
+    ctx.isOpened = false;
+    var resultsList = ctx.resultsList;
+    var attributes = {
+      role: "combobox",
+      "aria-haspopup": true,
+      "aria-expanded": false,
+      "aria-controls": resultsList.idName,
+      "aria-autocomplete": "both"
+    };
+    if (ctx.placeHolder) attributes.placeholder = ctx.placeHolder;
+    create(ctx.input, attributes);
+    ctx.wrapper = create("div", {
+      className: ctx.name + "_wrapper",
+      around: ctx.input,
+      role: "combobox",
+      "aria-expanded": false,
+      "aria-owns": resultsList.idName
     });
+    ctx.list = create(resultsList.element, {
+      hidden: "hidden",
+      dest: ["string" === typeof resultsList.destination ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
+      id: resultsList.idName,
+      "class": resultsList.classList,
+      role: "listbox"
+    });
+    addEventListeners(ctx);
+    eventEmitter(ctx, "init");
   });
 
-  var formatRawInputValue = function formatRawInputValue(value, config) {
+  var formatRawInputValue = function formatRawInputValue(ctx, value) {
     value = value.toLowerCase();
-    return config.diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value;
+    return (ctx.diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value).toString();
   };
   var getInputValue = function getInputValue(inputField) {
     return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value : inputField.innerHTML;
   };
-  var prepareQuery = function prepareQuery(input, config) {
-    return config.query && config.query.manipulate ? config.query.manipulate(input) : config.diacritics ? formatRawInputValue(input, config) : formatRawInputValue(input, config);
+  var prepareQuery = function prepareQuery(ctx, input) {
+    return ctx.query && ctx.query.manipulate ? ctx.query.manipulate(input) : formatRawInputValue(ctx, input);
+  };
+  var highlightChar = function highlightChar(classList, value) {
+    return "<mark class=\"".concat(classList, "\">").concat(value, "</mark>");
   };
 
-  var highlightChar = function highlightChar(className, value) {
-    return "<span class=\"".concat(className, "\">").concat(value, "</span>");
-  };
-  var searchEngine = (function (query, record, config) {
-    var formattedRecord = formatRawInputValue(record, config);
-    if (config.searchEngine === "loose") {
+  var checkTriggerCondition = (function (ctx, event, query) {
+    query = query.replace(/ /g, "");
+    return ctx.trigger.condition ? ctx.trigger.condition(event, query) : query.length >= ctx.threshold;
+  });
+
+  var searchEngine = (function (ctx, query, record) {
+    var formattedRecord = formatRawInputValue(ctx, record);
+    var resultItemHighlight = ctx.resultItem.highlight;
+    var classList = resultItemHighlight ? resultItemHighlight.className : "";
+    var highlight = resultItemHighlight ? resultItemHighlight.render : "";
+    if (ctx.searchEngine === "loose") {
       query = query.replace(/ /g, "");
       var queryLength = query.length;
       var cursor = 0;
       var match = Array.from(record).map(function (character, index) {
         if (cursor < queryLength && formattedRecord[index] === query[cursor]) {
-          character = config.resultItem.highlight.render ? highlightChar(config.resultItem.highlight.className, character) : character;
+          character = highlight ? highlightChar(classList, character) : character;
           cursor++;
         }
         return character;
@@ -368,20 +487,31 @@
       if (formattedRecord.includes(query)) {
         var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
         query = pattern.exec(record);
-        var _match = config.resultItem.highlight.render ? record.replace(query, highlightChar(config.resultItem.highlight.className, query)) : record;
+        var _match = highlight ? record.replace(query, highlightChar(classList, query)) : record;
         return _match;
       }
     }
   });
 
-  var findMatches = (function (config, query) {
-    var data = config.data,
-        customSearchEngine = config.searchEngine;
+  var dataStore = function dataStore(ctx) {
+    return new Promise(function ($return, $error) {
+      if (ctx.data.cache && ctx.data.store) return $return();
+      return new Promise(function ($return, $error) {
+        if (typeof ctx.data.src === "function") {
+          return ctx.data.src().then($return, $error);
+        }
+        return $return(ctx.data.src);
+      }).then($return, $error);
+    });
+  };
+  var findMatches = function findMatches(ctx, query) {
+    var data = ctx.data,
+        customSearchEngine = ctx.searchEngine;
     var results = [];
     data.store.forEach(function (record, index) {
       var search = function search(key) {
-        var recordValue = (key ? record[key] : record).toString();
-        var match = typeof customSearchEngine === "function" ? customSearchEngine(query, recordValue) : searchEngine(query, recordValue, config);
+        var recordValue = key ? record[key] : record;
+        var match = typeof customSearchEngine === "function" ? customSearchEngine(query, recordValue) : searchEngine(ctx, query, recordValue);
         if (!match) return;
         var result = {
           index: index,
@@ -409,242 +539,110 @@
       }
     });
     return results;
-  });
+  };
 
-  var checkTriggerCondition = (function (config, event, query) {
-    return config.trigger.condition ? config.trigger.condition(event, query) : query.length >= config.threshold && query.replace(/ /g, "").length;
-  });
+  function start (ctx, event) {
+    var _this = this;
+    return new Promise(function ($return, $error) {
+      var input, query, triggerCondition;
+      input = getInputValue(ctx.input);
+      query = prepareQuery(ctx, input);
+      triggerCondition = checkTriggerCondition(ctx, event, query);
+      if (triggerCondition) {
+        var results;
+        return dataStore(ctx).then(function ($await_2) {
+          try {
+            ctx.data.store = $await_2;
+            eventEmitter({
+              input: ctx.input,
+              dataFeedback: ctx.data.store
+            }, "response");
+            results = ctx.data.filter ? ctx.data.filter(findMatches(ctx, query)) : findMatches(ctx, query);
+            ctx.dataFeedback = {
+              input: input,
+              query: query,
+              matches: results,
+              results: results.slice(0, ctx.resultsList.maxResults)
+            };
+            eventEmitter(ctx, "results");
+            if (!ctx.resultsList.render) return $return(ctx.feedback(ctx.dataFeedback));
+            renderList(ctx);
+            return $If_1.call(_this);
+          } catch ($boundEx) {
+            return $error($boundEx);
+          }
+        }, $error);
+      } else {
+        closeList(ctx);
+        return $If_1.call(_this);
+      }
+      function $If_1() {
+        return $return();
+      }
+    });
+  }
 
-  var debouncer = (function (callback, delay) {
-    var inDebounce;
-    return function () {
-      var context = this;
-      var args = arguments;
-      clearTimeout(inDebounce);
-      inDebounce = setTimeout(function () {
-        return callback.apply(context, args);
-      }, delay);
+  var stage = (function (ctx, autoComplete) {
+    autoComplete.prototype.preInit = function () {
+      return preInit(ctx);
+    };
+    autoComplete.prototype.init = function () {
+      return init(ctx);
+    };
+    autoComplete.prototype.start = function () {
+      return start(ctx);
+    };
+    autoComplete.prototype.unInit = function () {
+      return removeEventListeners(ctx);
+    };
+    autoComplete.prototype.open = function () {
+      return openList(ctx);
+    };
+    autoComplete.prototype.close = function () {
+      return closeList(ctx);
+    };
+    autoComplete.prototype.goTo = function (index) {
+      return goTo(index, ctx);
+    };
+    autoComplete.prototype.next = function () {
+      return next(ctx);
+    };
+    autoComplete.prototype.previous = function () {
+      return previous(ctx);
+    };
+    autoComplete.prototype.select = function (index) {
+      return selectItem(ctx, null, index);
     };
   });
 
-  var autoComplete = function () {
-    function autoComplete(config) {
-      _classCallCheck(this, autoComplete);
-      var _config$selector = config.selector,
-          selector = _config$selector === void 0 ? "#autoComplete" : _config$selector,
-          placeHolder = config.placeHolder,
-          observer = config.observer,
-          _config$data = config.data,
-          src = _config$data.src,
-          key = _config$data.key,
-          cache = _config$data.cache,
-          store = _config$data.store,
-          results = _config$data.results,
-          query = config.query,
-          _config$trigger = config.trigger;
-      _config$trigger = _config$trigger === void 0 ? {} : _config$trigger;
-      var _config$trigger$event = _config$trigger.event,
-          event = _config$trigger$event === void 0 ? ["input"] : _config$trigger$event,
-          condition = _config$trigger.condition,
-          _config$threshold = config.threshold,
-          threshold = _config$threshold === void 0 ? 1 : _config$threshold,
-          _config$debounce = config.debounce,
-          debounce = _config$debounce === void 0 ? 0 : _config$debounce,
-          diacritics = config.diacritics,
-          searchEngine = config.searchEngine,
-          feedback = config.feedback,
-          _config$resultsList = config.resultsList;
-      _config$resultsList = _config$resultsList === void 0 ? {} : _config$resultsList;
-      var _config$resultsList$r = _config$resultsList.render,
-          resultsListRender = _config$resultsList$r === void 0 ? true : _config$resultsList$r,
-          container = _config$resultsList.container,
-          _config$resultsList$d = _config$resultsList.destination,
-          destination = _config$resultsList$d === void 0 ? selector : _config$resultsList$d,
-          _config$resultsList$p = _config$resultsList.position,
-          position = _config$resultsList$p === void 0 ? "afterend" : _config$resultsList$p,
-          _config$resultsList$e = _config$resultsList.element,
-          resultsListElement = _config$resultsList$e === void 0 ? "ul" : _config$resultsList$e,
-          _config$resultsList$i = _config$resultsList.idName,
-          resultsListId = _config$resultsList$i === void 0 ? "autoComplete_list" : _config$resultsList$i,
-          resultsListClass = _config$resultsList.className,
-          _config$resultsList$m = _config$resultsList.maxResults,
-          maxResults = _config$resultsList$m === void 0 ? 5 : _config$resultsList$m,
-          navigation = _config$resultsList.navigation,
-          noResults = _config$resultsList.noResults,
-          _config$resultItem = config.resultItem;
-      _config$resultItem = _config$resultItem === void 0 ? {} : _config$resultItem;
-      var content = _config$resultItem.content,
-          _config$resultItem$el = _config$resultItem.element,
-          resultItemElement = _config$resultItem$el === void 0 ? "li" : _config$resultItem$el,
-          resultItemId = _config$resultItem.idName,
-          _config$resultItem$cl = _config$resultItem.className,
-          resultItemClass = _config$resultItem$cl === void 0 ? "autoComplete_result" : _config$resultItem$cl,
-          _config$resultItem$hi = _config$resultItem.highlight;
-      _config$resultItem$hi = _config$resultItem$hi === void 0 ? {} : _config$resultItem$hi;
-      var highlightRender = _config$resultItem$hi.render,
-          _config$resultItem$hi2 = _config$resultItem$hi.className,
-          highlightClass = _config$resultItem$hi2 === void 0 ? "autoComplete_highlighted" : _config$resultItem$hi2,
-          _config$resultItem$se = _config$resultItem.selected;
-      _config$resultItem$se = _config$resultItem$se === void 0 ? {} : _config$resultItem$se;
-      var _config$resultItem$se2 = _config$resultItem$se.className,
-          selectedClass = _config$resultItem$se2 === void 0 ? "autoComplete_selected" : _config$resultItem$se2,
-          onSelection = config.onSelection;
-      this.selector = selector;
-      this.observer = observer;
-      this.placeHolder = placeHolder;
-      this.data = {
-        src: src,
-        key: key,
-        cache: cache,
-        store: store,
-        results: results
-      };
-      this.query = query;
-      this.trigger = {
-        event: event,
-        condition: condition
-      };
-      this.threshold = threshold;
-      this.debounce = debounce;
-      this.diacritics = diacritics;
-      this.searchEngine = searchEngine;
-      this.feedback = feedback;
-      this.resultsList = {
-        render: resultsListRender,
-        container: container,
-        destination: destination,
-        position: position,
-        element: resultsListElement,
-        idName: resultsListId,
-        className: resultsListClass,
-        maxResults: maxResults,
-        navigation: navigation,
-        noResults: noResults
-      };
-      this.resultItem = {
-        content: content,
-        element: resultItemElement,
-        idName: resultItemId,
-        className: resultItemClass,
-        highlight: {
-          render: highlightRender,
-          className: highlightClass
-        },
-        selected: {
-          className: selectedClass
-        }
-      };
-      this.onSelection = onSelection;
-      this.inputField = typeof this.selector === "string" ? document.querySelector(this.selector) : this.selector();
-      this.observer ? this.preInit() : this.init();
-    }
-    _createClass(autoComplete, [{
-      key: "start",
-      value: function start(input, query) {
-        var results = this.data.results ? this.data.results(findMatches(this, query)) : findMatches(this, query);
-        var dataFeedback = {
-          input: input,
-          query: query,
-          matches: results,
-          results: results.slice(0, this.resultsList.maxResults)
-        };
-        eventEmitter(this.inputField, dataFeedback, "results");
-        if (!this.resultsList.render) return this.feedback(dataFeedback);
-        resultsList(this, dataFeedback);
+  function autoComplete(config) {
+    this.options = config;
+    this.name = "autoComplete";
+    this.selector = "#" + this.name;
+    this.trigger = {
+      event: ["input"]
+    };
+    this.threshold = 1;
+    this.debounce = 0;
+    this.resultsList = {
+      render: true,
+      destination: this.selector,
+      position: "afterend",
+      element: "ul",
+      idName: this.name + "_list",
+      maxResults: 5
+    };
+    this.resultItem = {
+      element: "li",
+      className: this.name + "_result",
+      highlight: {
+        className: this.name + "_highlighted"
       }
-    }, {
-      key: "dataStore",
-      value: function dataStore() {
-        var _this = this;
-        return new Promise(function ($return, $error) {
-          if (_this.data.cache && _this.data.store) return $return();
-          return new Promise(function ($return, $error) {
-            if (typeof _this.data.src === "function") {
-              return _this.data.src().then($return, $error);
-            }
-            return $return(_this.data.src);
-          }).then(function ($await_5) {
-            try {
-              _this.data.store = $await_5;
-              eventEmitter(_this.inputField, _this.data.store, "fetch");
-              return $return();
-            } catch ($boundEx) {
-              return $error($boundEx);
-            }
-          }, $error);
-        });
-      }
-    }, {
-      key: "compose",
-      value: function compose(event) {
-        var _this2 = this;
-        return new Promise(function ($return, $error) {
-          var input, query, triggerCondition;
-          input = getInputValue(_this2.inputField);
-          query = prepareQuery(input, _this2);
-          triggerCondition = checkTriggerCondition(_this2, event, query);
-          if (triggerCondition) {
-            return _this2.dataStore().then(function ($await_6) {
-              try {
-                _this2.start(input, query);
-                return $If_3.call(_this2);
-              } catch ($boundEx) {
-                return $error($boundEx);
-              }
-            }, $error);
-          } else {
-            closeList(_this2);
-            return $If_3.call(_this2);
-          }
-          function $If_3() {
-            return $return();
-          }
-        });
-      }
-    }, {
-      key: "init",
-      value: function init() {
-        var _this3 = this;
-        prepareInputField(this);
-        if (this.placeHolder) this.inputField.setAttribute("placeholder", this.placeHolder);
-        this.hook = debouncer(function (event) {
-          _this3.compose(event);
-        }, this.debounce);
-        this.trigger.event.forEach(function (eventType) {
-          _this3.inputField.addEventListener(eventType, _this3.hook);
-        });
-        eventEmitter(this.inputField, null, "init");
-      }
-    }, {
-      key: "preInit",
-      value: function preInit() {
-        var _this4 = this;
-        var callback = function callback(mutations, observer) {
-          mutations.forEach(function (mutation) {
-            if (_this4.inputField) {
-              observer.disconnect();
-              _this4.init();
-            }
-          });
-        };
-        var observer = new MutationObserver(callback);
-        observer.observe(document, {
-          childList: true,
-          subtree: true
-        });
-      }
-    }, {
-      key: "unInit",
-      value: function unInit() {
-        var _this5 = this;
-        this.trigger.event.forEach(function (eventType) {
-          _this5.inputField.removeEventListener(eventType, _this5.hook);
-        });
-        eventEmitter(this.inputField, null, "unInit");
-      }
-    }]);
-    return autoComplete;
-  }();
+    };
+    configure(this);
+    stage(this, autoComplete);
+    this.observer ? this.preInit() : this.init();
+  }
 
   return autoComplete;
 

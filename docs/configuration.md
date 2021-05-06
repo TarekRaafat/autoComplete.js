@@ -26,7 +26,7 @@ selector: "#autoComplete", // Any valid selector
 #### ** Function **
 ```js
 selector: () => {
-    return "#customID"; // Any valid selector
+    return [Element]; // Any valid selector
 },
 ```
 
@@ -39,18 +39,25 @@ selector: () => {
 > Data Source.
 
 - Type: `Object`
+
 - Methods:
-  - src: `Array`|`Function` <small>(required)</small>
-  - key: `Array` <small>(required only if `data.src` is `Array` of `Objects`)</small>
-  - cache: `Boolean` <small>(optional)</small>
-  - results: `Function` <small>(optional)</small>
+
+
+#### src
+  - Type: `Array`|`Function` <small>(required)</small>
+#### key
+  - Type: `Array` <small>(required only if `data.src` is `Array` of `Objects`)</small>
+#### cache
+  - Type: `Boolean` <small>(optional)</small>
+#### filter
+  - Type: `Function` <small>(optional)</small>
     - 1 parameter `(list)` returns `Array` of results values
 
 - Defaults:
   - src: `null`
   - key: `null`
   - cache: `false`
-  - results: No action
+  - filter: No action
   
 - Example:
 
@@ -418,7 +425,7 @@ document.querySelector("#autoComplete").addEventListener("init", function (event
 });
 ```
 
-### fetch
+### response
 
 ***
 
@@ -427,22 +434,8 @@ document.querySelector("#autoComplete").addEventListener("init", function (event
 - Example:
 
 ```js
-document.querySelector("#autoComplete").addEventListener("fetch", function (event) {
+document.querySelector("#autoComplete").addEventListener("response", function (event) {
     console.log(event.detail);
-});
-```
-
-### input
-
-***
-
-> Fires on every user input interaction
-
-- Example:
-
-```js
-document.querySelector("#autoComplete").addEventListener("input", function (event) {
-    console.log(event);
 });
 ```
 
@@ -470,7 +463,7 @@ document.querySelector("#autoComplete").addEventListener("results", function (ev
 
 ```js
 document.querySelector("#autoComplete").addEventListener("open", function (event) {
-    console.log(event);
+    console.log(event.detail);
 });
 ```
 
@@ -498,7 +491,7 @@ document.querySelector("#autoComplete").addEventListener("navigate", function (e
 
 ```js
 document.querySelector("#autoComplete").addEventListener("close", function (event) {
-    console.log(event);
+    console.log(event.detail);
 });
 ```
 

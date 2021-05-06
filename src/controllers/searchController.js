@@ -1,21 +1,21 @@
-import { formatRawInputValue } from "../controllers/inputController";
-
-// Highlighted result item constructor
-const highlightChar = (className, value) => `<span class="${className}">${value}</span>`;
+import { formatRawInputValue, highlightChar } from "../helpers/io";
 
 /**
  * Find matching characters in record
  *
+ * @param {Object} ctx - autoComplete configurations
  * @param {String} query - User's manipulated search query value
  * @param {String} record - Data record string to be compared
- * @param {Object} config - autoComplete configurations
  *
  * @return {String} - Matched data record string
  */
-export default (query, record, config) => {
-  const formattedRecord = formatRawInputValue(record, config);
+export default (ctx, query, record) => {
+  const formattedRecord = formatRawInputValue(ctx, record);
+  const resultItemHighlight = ctx.resultItem.highlight;
+  const classList = resultItemHighlight ? resultItemHighlight.className : "";
+  const highlight = resultItemHighlight ? resultItemHighlight.render : "";
 
-  if (config.searchEngine === "loose") {
+  if (ctx.searchEngine === "loose") {
     // Query string with no spaces
     query = query.replace(/ /g, "");
     const queryLength = query.length;
@@ -27,9 +27,7 @@ export default (query, record, config) => {
         // Matching case
         if (cursor < queryLength && formattedRecord[index] === query[cursor]) {
           // Highlight matching character if active
-          character = config.resultItem.highlight.render
-            ? highlightChar(config.resultItem.highlight.className, character)
-            : character;
+          character = highlight ? highlightChar(classList, character) : character;
           // Move cursor position
           cursor++;
         }
@@ -46,9 +44,7 @@ export default (query, record, config) => {
       const pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
       query = pattern.exec(record);
       // Highlight matching characters if active
-      const match = config.resultItem.highlight.render
-        ? record.replace(query, highlightChar(config.resultItem.highlight.className, query))
-        : record;
+      const match = highlight ? record.replace(query, highlightChar(classList, query)) : record;
 
       return match;
     }

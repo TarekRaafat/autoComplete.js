@@ -1,27 +1,33 @@
-import searchEngine from "../services/search";
+import searchEngine from "./searchController";
+
+const dataStore = async (ctx) => {
+  if (ctx.data.cache && ctx.data.store) return;
+
+  return typeof ctx.data.src === "function" ? await ctx.data.src() : ctx.data.src;
+};
 
 /**
  * Find matches to "query"
  *
- * @param {Object} config - Search engine configurations
+ * @param {Object} ctx - Search engine configurations
  * @param {String} query - User's search query string
  *
  * @return {Array} - Matches
  */
-export default (config, query) => {
-  const { data, searchEngine: customSearchEngine } = config;
+const findMatches = (ctx, query) => {
+  const { data, searchEngine: customSearchEngine } = ctx;
 
   const results = [];
 
   // Find matches from data source
   data.store.forEach((record, index) => {
     const search = (key) => {
-      const recordValue = (key ? record[key] : record).toString();
+      const recordValue = key ? record[key] : record;
 
       const match =
         typeof customSearchEngine === "function"
           ? customSearchEngine(query, recordValue)
-          : searchEngine(query, recordValue, config);
+          : searchEngine(ctx, query, recordValue);
 
       if (!match) return;
 
@@ -47,3 +53,5 @@ export default (config, query) => {
 
   return results;
 };
+
+export { dataStore, findMatches };

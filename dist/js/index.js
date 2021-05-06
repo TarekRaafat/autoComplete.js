@@ -1,5 +1,34 @@
+document.querySelector("#autoComplete").addEventListener("init", function (event) {
+  console.log(event);
+});
+
+document.querySelector("#autoComplete").addEventListener("response", function (event) {
+  console.log(event);
+});
+
+document.querySelector("#autoComplete").addEventListener("results", function (event) {
+  console.log(event);
+});
+
+document.querySelector("#autoComplete").addEventListener("open", function (event) {
+  console.log(event);
+});
+
+document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
+  console.log(event);
+});
+
+document.querySelector("#autoComplete").addEventListener("close", function (event) {
+  console.log(event);
+});
+
+document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
+  console.log(event);
+});
+
 // The autoComplete.js Engine instance creator
 const autoCompleteJS = new autoComplete({
+  selector: () => document.querySelector("#autoComplete"),
   data: {
     src: async () => {
       // Loading placeholder text
@@ -13,7 +42,7 @@ const autoCompleteJS = new autoComplete({
       return data;
     },
     key: ["food", "cities", "animals"],
-    results: (list) => {
+    filter: (list) => {
       // Filter duplicates
       const filteredResults = Array.from(new Set(list.map((value) => value.match))).map((food) => {
         return list.find((value) => value.match === food);
@@ -27,9 +56,10 @@ const autoCompleteJS = new autoComplete({
   debounce: 100,
   threshold: 1,
   trigger: {
-    event: ["input", "focus"],
+    event: ["input"],
   },
   resultsList: {
+    element: "ul",
     container: (element, data) => {
       const info = document.createElement("p");
       if (data.results.length > 0) {
@@ -39,9 +69,12 @@ const autoCompleteJS = new autoComplete({
       }
       element.prepend(info);
     },
-    noResults: () => {},
+    noResults: true,
+    maxResults: 5,
+    // tabToSelect: true,
   },
   resultItem: {
+    element: "li",
     content: (data, element) => {
       // Modify Results Item Style
       element.style = "display: flex; justify-content: space-between;";

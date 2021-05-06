@@ -1,143 +1,117 @@
-import { closeList } from "./listController";
-import eventEmitter from "../utils/eventEmitter";
+import { selectItem, closeList } from "../controllers/listController";
+import eventEmitter from "../helpers/eventEmitter";
 
+let classList;
 // String holders
-const keyboardEvent = "keydown";
 const ariaSelected = "aria-selected";
 const ariaActive = "aria-activedescendant";
 
 /**
+ * Select result item by index
+ *
+ * @param {Number} index - of the selected result item
+ * @param {Object} ctx - autoComplete configurations
+ *
+ * @return {void}
+ */
+const goTo = (index, ctx) => {
+  const list = ctx.list.getElementsByTagName(ctx.resultItem.element);
+
+  if (list.length) {
+    // Previous cursor state
+    ctx.state = ctx.cursor;
+    // Reset cursor to first item
+    if (index >= list.length) index = 0;
+    // Move cursor to the last item
+    if (index < 0) index = list.length - 1;
+    // Current cursor state
+    ctx.cursor = index;
+
+    if (ctx.state > -1) {
+      // Remove "aria-selected" attribute from the item
+      list[ctx.state].removeAttribute(ariaSelected);
+      // Remove "selected" class from the item
+      if (classList) list[ctx.state].classList.remove(...classList);
+    }
+
+    // Set "aria-selected" value to true
+    list[index].setAttribute(ariaSelected, true);
+    // Add "selected" class to the selected item
+    if (classList) list[index].classList.add(...classList);
+
+    // Set "aria-activedescendant" value to the selected item
+    ctx.input.setAttribute(ariaActive, list[ctx.cursor].id);
+    ctx.dataFeedback.cursor = ctx.cursor;
+
+    // Scroll to selection
+    ctx.list.scrollTop = list[index].offsetTop - ctx.list.clientHeight + list[index].clientHeight;
+
+    /**
+     * @emit {navigate} event on results list navigation
+     **/
+    eventEmitter(ctx, "navigate");
+  }
+};
+
+/**
+ * Select next result item
+ *
+ * @param {Object} ctx - autoComplete configurations
+ *
+ * @return {void}
+ */
+const next = (ctx) => {
+  const index = ctx.cursor + 1;
+  ctx.goTo(index, ctx);
+};
+
+/**
+ * Select previous result item
+ *
+ * @param {Object} ctx - autoComplete configurations
+ *
+ * @return {void}
+ */
+const previous = (ctx) => {
+  const index = ctx.cursor - 1;
+  ctx.goTo(index, ctx);
+};
+
+/**
  * List navigation function initializer
  *
- * @param {Object} config - autoComplete configurations
- * @param {Object} dataFeedback - Data object
+ * @param {Object} ctx - autoComplete configurations
+ * @param {Object} event - "keydown" Object
  *
  */
-export default (config, dataFeedback) => {
-  // Remove previous keyboard Event listener
-  config.inputField.removeEventListener(keyboardEvent, config.nav);
+const navigate = (ctx, event) => {
+  const key = event.keyCode;
+  const selectedResultItem = ctx.resultItem.selected;
+  classList = selectedResultItem ? selectedResultItem.className.split(" ") : "";
 
-  // Reset cursor
-  let cursor = -1;
-
-  const classList = config.resultItem.selected.className.split(" ");
-
-  /**
-   * Update list item state
-   *
-   * @param {Object} event - "keydown" event Object
-   * @param {Array} list - Array of list items
-   * @param {Boolean} state - arrow Down/Up
-   *
-   */
-  const update = (event, list, state) => {
-    // Prevent default behaviour
-    event.preventDefault();
-    // If list is NOT empty
-    if (list.length) {
-      // If arrow "DOWN" key pressed
-      if (state) {
-        // Move cursor forward
-        cursor++;
-      } else {
-        // Else if arrow "UP" key pressed
-        // Move cursor backwards
-        cursor--;
+  // Check pressed key
+  switch (key) {
+    // Down/Up arrow
+    case 40:
+    case 38:
+      event.preventDefault();
+      ctx[key === 40 ? "next" : "previous"](ctx);
+      break;
+    // Enter
+    case 13:
+      event.preventDefault();
+      // If cursor moved
+      if (ctx.cursor >= 0) {
+        selectItem(ctx, event);
       }
-      // Add "active/selected" class to the list item
-      addActive(list);
-      // Set "aria-activedescendant" value to the selected item
-      config.inputField.setAttribute(ariaActive, list[cursor].id);
-      /**
-       * @emit {navigate} event on results list navigation
-       **/
-      eventEmitter(event.srcElement, { event, ...dataFeedback, selection: dataFeedback.results[cursor] }, "navigate");
-    }
-  };
-
-  /**
-   * Remove "active" class from all list items
-   *
-   * @param {Array} list - Array of list items
-   *
-   */
-  const removeActive = (list) => {
-    Array.from(list).forEach((item) => {
-      // Remove "aria-selected" attribute from the item
-      item.removeAttribute(ariaSelected);
-      // Remove "selected" class from the item
-      if (classList) item.classList.remove(...classList);
-    });
-  };
-
-  /**
-   * Add "selected" class to the selected item
-   *
-   * @param {Array} list - Array of list items
-   *
-   */
-  const addActive = (list) => {
-    // Remove "active" class from all list items
-    removeActive(list);
-    // Reset cursor to first item
-    if (cursor >= list.length) cursor = 0;
-    // Move cursor to the next item
-    if (cursor < 0) cursor = list.length - 1;
-    // Set "aria-selected" value to true
-    list[cursor].setAttribute(ariaSelected, true);
-    // Add "selected" class to the selected item
-    if (classList) list[cursor].classList.add(...classList);
-  };
-
-  /**
-   * List Navigation Function
-   *
-   * @param {Object} event - "keydown" event Object
-   *
-   * @return {void}
-   */
-  config.nav = (event) => {
-    let list = document.getElementById(config.resultsList.idName);
-
-    // Check if list is not opened
-    if (list) {
-      // Get list items
-      list = list.getElementsByTagName(config.resultItem.element);
-
-      // Check pressed key
-      switch (event.keyCode) {
-        // Down arrow
-        case 40:
-          update(event, list, 1);
-          break;
-        // Up arrow
-        case 38:
-          update(event, list);
-          break;
-        // Esc
-        case 27:
-          config.inputField.value = "";
-          closeList(config);
-          break;
-        // Enter
-        case 13:
-          event.preventDefault();
-          // If cursor moved
-          if (cursor >= 0) {
-            // Simulate a click event on the selected "active" item
-            list[cursor].click();
-          }
-          break;
-        // Tab
-        case 9:
-          closeList(config);
-          break;
-      }
-    }
-  };
-
-  /**
-   * @listen {keydown} events of inputField
-   **/
-  config.inputField.addEventListener(keyboardEvent, config.nav);
+      break;
+    // Tab
+    case 9:
+      // event.preventDefault();
+      // ctx.resultsList.tabToSelect ? selectItem(ctx, event) : closeList(ctx);
+      closeList(ctx);
+      break;
+  }
 };
+
+export { navigate, goTo, next, previous };

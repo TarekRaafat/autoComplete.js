@@ -1,18 +1,17 @@
 /**
  * Event emitter/dispatcher function
  *
- * @param {Element} target - Target element to listen for
- * @param {Object|null} detail - Data object with relevant information or null
+ * @param {Object} ctx - autoComplete configurations
  * @param {String} name - Name of fired event
  *
  * @return {void}
  */
-export default (target, detail, name) => {
+export default (ctx, name) => {
   // Dispatch event on input
-  target.dispatchEvent(
+  ctx.input.dispatchEvent(
     new CustomEvent(name, {
       bubbles: true,
-      detail,
+      detail: ctx.dataFeedback,
       cancelable: true,
     })
   );
