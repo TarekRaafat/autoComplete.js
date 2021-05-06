@@ -13,10 +13,8 @@ const ariaActive = "aria-activedescendant";
  * @return {Component} - Results list component
  */
 const renderList = (ctx) => {
-  const data = ctx.dataFeedback;
-  const { query, matches, results } = data;
-  const resultsList = ctx.resultsList;
-  const list = ctx.list;
+  let { resultsList, list, dataFeedback } = ctx;
+  const { query, matches, results } = dataFeedback;
 
   // Clear list
   list.innerHTML = "";
@@ -49,7 +47,7 @@ const renderList = (ctx) => {
     closeList(ctx);
   }
   // Run custom container function if active
-  if (resultsList.container) resultsList.container(list, data);
+  if (resultsList.container) resultsList.container(list, dataFeedback);
 };
 
 /**

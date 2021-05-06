@@ -15,37 +15,37 @@ const ariaActive = "aria-activedescendant";
  * @return {void}
  */
 const goTo = (index, ctx) => {
-  const list = ctx.list.getElementsByTagName(ctx.resultItem.element);
+  let { list, state } = ctx;
+  const results = list.getElementsByTagName(ctx.resultItem.element);
 
-  if (list.length) {
-    let state = ctx.state;
+  if (results.length) {
     // Previous cursor state
     state = ctx.cursor;
     // Reset cursor to first item
-    if (index >= list.length) index = 0;
+    if (index >= results.length) index = 0;
     // Move cursor to the last item
-    if (index < 0) index = list.length - 1;
+    if (index < 0) index = results.length - 1;
     // Current cursor state
     ctx.cursor = index;
 
     if (state > -1) {
       // Remove "aria-selected" attribute from the item
-      list[state].removeAttribute(ariaSelected);
+      results[state].removeAttribute(ariaSelected);
       // Remove "selected" class from the item
-      if (classList) list[state].classList.remove(...classList);
+      if (classList) results[state].classList.remove(...classList);
     }
 
     // Set "aria-selected" value to true
-    list[index].setAttribute(ariaSelected, true);
+    results[index].setAttribute(ariaSelected, true);
     // Add "selected" class to the selected item
-    if (classList) list[index].classList.add(...classList);
+    if (classList) results[index].classList.add(...classList);
 
     // Set "aria-activedescendant" value to the selected item
-    ctx.input.setAttribute(ariaActive, list[ctx.cursor].id);
+    ctx.input.setAttribute(ariaActive, results[ctx.cursor].id);
     ctx.dataFeedback.cursor = ctx.cursor;
 
     // Scroll to selection
-    ctx.list.scrollTop = list[index].offsetTop - ctx.list.clientHeight + list[index].clientHeight;
+    list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight;
 
     /**
      * @emit {navigate} event on results list navigation
@@ -112,7 +112,7 @@ const navigate = (ctx, event) => {
       //   event.preventDefault();
       //   selectItem(ctx, event);
       // } else {
-        closeList(ctx);
+      closeList(ctx);
       // }
       break;
   }

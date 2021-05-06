@@ -255,12 +255,12 @@
   var ariaExpanded = "aria-expanded";
   var ariaActive$1 = "aria-activedescendant";
   var renderList = function renderList(ctx) {
-    var data = ctx.dataFeedback;
-    data.query;
-        var matches = data.matches,
-        results = data.results;
-    var resultsList = ctx.resultsList;
-    var list = ctx.list;
+    var resultsList = ctx.resultsList,
+        list = ctx.list,
+        dataFeedback = ctx.dataFeedback;
+    dataFeedback.query;
+        var matches = dataFeedback.matches,
+        results = dataFeedback.results;
     list.innerHTML = "";
     openList(ctx);
     ctx.cursor = -1;
@@ -281,7 +281,7 @@
     } else if (!resultsList.noResults) {
       closeList(ctx);
     }
-    if (resultsList.container) resultsList.container(list, data);
+    if (resultsList.container) resultsList.container(list, dataFeedback);
   };
   var openList = function openList(ctx) {
     ctx.list.removeAttribute("hidden");
@@ -318,24 +318,25 @@
   var ariaSelected = "aria-selected";
   var ariaActive = "aria-activedescendant";
   var goTo = function goTo(index, ctx) {
-    var list = ctx.list.getElementsByTagName(ctx.resultItem.element);
-    if (list.length) {
-      var _list$index$classList;
-      var state = ctx.state;
+    var list = ctx.list,
+        state = ctx.state;
+    var results = list.getElementsByTagName(ctx.resultItem.element);
+    if (results.length) {
+      var _results$index$classL;
       state = ctx.cursor;
-      if (index >= list.length) index = 0;
-      if (index < 0) index = list.length - 1;
+      if (index >= results.length) index = 0;
+      if (index < 0) index = results.length - 1;
       ctx.cursor = index;
       if (state > -1) {
-        var _list$state$classList;
-        list[state].removeAttribute(ariaSelected);
-        if (classList) (_list$state$classList = list[state].classList).remove.apply(_list$state$classList, _toConsumableArray(classList));
+        var _results$state$classL;
+        results[state].removeAttribute(ariaSelected);
+        if (classList) (_results$state$classL = results[state].classList).remove.apply(_results$state$classL, _toConsumableArray(classList));
       }
-      list[index].setAttribute(ariaSelected, true);
-      if (classList) (_list$index$classList = list[index].classList).add.apply(_list$index$classList, _toConsumableArray(classList));
-      ctx.input.setAttribute(ariaActive, list[ctx.cursor].id);
+      results[index].setAttribute(ariaSelected, true);
+      if (classList) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(classList));
+      ctx.input.setAttribute(ariaActive, results[ctx.cursor].id);
       ctx.dataFeedback.cursor = ctx.cursor;
-      ctx.list.scrollTop = list[index].offsetTop - ctx.list.clientHeight + list[index].clientHeight;
+      list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight;
       eventEmitter(ctx, "navigate");
     }
   };
@@ -370,10 +371,10 @@
   };
 
   var addEventListeners = function addEventListeners(ctx) {
+    var resultsList = ctx.resultsList;
     ctx._events = {
       input: {
         keydown: function keydown(event) {
-          var resultsList = ctx.resultsList;
           resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
           if (event.keyCode === 27) {
             event.preventDefault();
@@ -422,8 +423,9 @@
   };
 
   var init = (function (ctx) {
+    var placeHolder = ctx.placeHolder,
+        resultsList = ctx.resultsList;
     ctx.isOpened = false;
-    var resultsList = ctx.resultsList;
     var cmnAttributes = {
       role: "combobox",
       "aria-expanded": false
@@ -433,7 +435,7 @@
       "aria-controls": resultsList.idName,
       "aria-autocomplete": "both"
     }, cmnAttributes);
-    if (ctx.placeHolder) inputAttributes.placeholder = ctx.placeHolder;
+    if (placeHolder) inputAttributes.placeholder = placeHolder;
     create(ctx.input, inputAttributes);
     ctx.wrapper = create("div", _objectSpread2({
       className: ctx.name + "_wrapper",

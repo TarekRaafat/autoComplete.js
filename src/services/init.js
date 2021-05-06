@@ -4,9 +4,8 @@ import { addEventListeners } from "../controllers/eventController";
 import eventEmitter from "../helpers/eventEmitter";
 
 export default (ctx) => {
+  let { placeHolder, resultsList } = ctx;
   ctx.isOpened = false;
-
-  const resultsList = ctx.resultsList;
 
   // Common attributes
   const cmnAttributes = {
@@ -22,7 +21,7 @@ export default (ctx) => {
   };
 
   // Set placeholder attribute value
-  if (ctx.placeHolder) inputAttributes.placeholder = ctx.placeHolder;
+  if (placeHolder) inputAttributes.placeholder = placeHolder;
 
   // Set "inputField" attributes
   create(ctx.input, inputAttributes);

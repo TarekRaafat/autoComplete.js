@@ -1,6 +1,6 @@
 // Configuring options stage
 export default (ctx) => {
-  let { selector, options } = ctx;
+  const { selector, options } = ctx;
   // Assign the "inputField" selector
   ctx.input = typeof selector === "string" ? document.querySelector(selector) : selector();
 

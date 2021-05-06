@@ -3,10 +3,11 @@ import { navigate } from "./navigationController";
 import { closeList, selectItem } from "../controllers/listController";
 
 const addEventListeners = (ctx) => {
+  const { resultsList } = ctx;
+
   ctx._events = {
     input: {
       keydown: (event) => {
-        const resultsList = ctx.resultsList;
         resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
 
         // Esc key
