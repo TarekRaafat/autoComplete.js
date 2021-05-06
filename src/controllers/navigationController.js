@@ -18,8 +18,9 @@ const goTo = (index, ctx) => {
   const list = ctx.list.getElementsByTagName(ctx.resultItem.element);
 
   if (list.length) {
+    let state = ctx.state;
     // Previous cursor state
-    ctx.state = ctx.cursor;
+    state = ctx.cursor;
     // Reset cursor to first item
     if (index >= list.length) index = 0;
     // Move cursor to the last item
@@ -27,11 +28,11 @@ const goTo = (index, ctx) => {
     // Current cursor state
     ctx.cursor = index;
 
-    if (ctx.state > -1) {
+    if (state > -1) {
       // Remove "aria-selected" attribute from the item
-      list[ctx.state].removeAttribute(ariaSelected);
+      list[state].removeAttribute(ariaSelected);
       // Remove "selected" class from the item
-      if (classList) list[ctx.state].classList.remove(...classList);
+      if (classList) list[state].classList.remove(...classList);
     }
 
     // Set "aria-selected" value to true

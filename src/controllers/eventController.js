@@ -13,7 +13,7 @@ const addEventListeners = (ctx) => {
         if (event.keyCode === 27) {
           event.preventDefault();
 
-          ctx.inputField.value = "";
+          ctx.input.value = "";
 
           closeList(ctx);
         }
@@ -41,24 +41,26 @@ const addEventListeners = (ctx) => {
     },
   };
 
+  const events = ctx._events;
+
   // Attach inputField events
   ctx.trigger.event.forEach((eventType) => {
-    ctx._events.input[eventType] = debouncer((event) => ctx.start(ctx, event), ctx.debounce);
+    events.input[eventType] = debouncer((event) => ctx.start(ctx, event), ctx.debounce);
   });
 
   // Attach all events
-  for (const element in ctx._events) {
-    for (const event in ctx._events[element]) {
-      ctx[element].addEventListener(event, ctx._events[element][event]);
+  for (const element in events) {
+    for (const event in events[element]) {
+      ctx[element].addEventListener(event, events[element][event]);
     }
   }
 };
 
 const removeEventListeners = (ctx) => {
   // Remove all events
-  for (const element in ctx._events) {
-    for (const event in ctx._events[element]) {
-      ctx[element].removeEventListener(event, ctx._events[element][event]);
+  for (const element in events) {
+    for (const event in events[element]) {
+      ctx[element].removeEventListener(event, events[element][event]);
     }
   }
 };

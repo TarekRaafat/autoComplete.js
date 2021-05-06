@@ -40,8 +40,10 @@ const getInputValue = (inputField) =>
  *
  * @return {String} - Manipulated Query
  */
-const prepareQuery = (ctx, input) =>
-  ctx.query && ctx.query.manipulate ? ctx.query.manipulate(input) : formatRawInputValue(ctx, input);
+const prepareQuery = (ctx, input) => {
+  const query = ctx.query;
+  return query && query.manipulate ? query.manipulate(input) : formatRawInputValue(ctx, input);
+};
 
 // Outputs
 

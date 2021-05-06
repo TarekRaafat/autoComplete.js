@@ -266,12 +266,12 @@
       var fragment = document.createDocumentFragment();
       results.forEach(function (item, index) {
         var resultItem = ctx.resultItem;
-        var result = create(resultItem.element, _defineProperty({
+        var result = create(resultItem.element, {
           id: "".concat(resultItem.idName, "_").concat(index),
           "class": resultItem.className,
           role: "option",
           innerHTML: item.match
-        }, "role", "option"));
+        });
         if (resultItem.content) resultItem.content(item, result);
         fragment.appendChild(result);
       });
@@ -319,14 +319,15 @@
     var list = ctx.list.getElementsByTagName(ctx.resultItem.element);
     if (list.length) {
       var _list$index$classList;
-      ctx.state = ctx.cursor;
+      var state = ctx.state;
+      state = ctx.cursor;
       if (index >= list.length) index = 0;
       if (index < 0) index = list.length - 1;
       ctx.cursor = index;
-      if (ctx.state > -1) {
-        var _list$ctx$state$class;
-        list[ctx.state].removeAttribute(ariaSelected);
-        if (classList) (_list$ctx$state$class = list[ctx.state].classList).remove.apply(_list$ctx$state$class, _toConsumableArray(classList));
+      if (state > -1) {
+        var _list$state$classList;
+        list[state].removeAttribute(ariaSelected);
+        if (classList) (_list$state$classList = list[state].classList).remove.apply(_list$state$classList, _toConsumableArray(classList));
       }
       list[index].setAttribute(ariaSelected, true);
       if (classList) (_list$index$classList = list[index].classList).add.apply(_list$index$classList, _toConsumableArray(classList));
@@ -374,7 +375,7 @@
           resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
           if (event.keyCode === 27) {
             event.preventDefault();
-            ctx.inputField.value = "";
+            ctx.input.value = "";
             closeList(ctx);
           }
         },
@@ -398,21 +399,22 @@
         }
       }
     };
+    var events = ctx._events;
     ctx.trigger.event.forEach(function (eventType) {
-      ctx._events.input[eventType] = debouncer(function (event) {
+      events.input[eventType] = debouncer(function (event) {
         return ctx.start(ctx, event);
       }, ctx.debounce);
     });
-    for (var element in ctx._events) {
-      for (var event in ctx._events[element]) {
-        ctx[element].addEventListener(event, ctx._events[element][event]);
+    for (var element in events) {
+      for (var event in events[element]) {
+        ctx[element].addEventListener(event, events[element][event]);
       }
     }
   };
   var removeEventListeners = function removeEventListeners(ctx) {
-    for (var element in ctx._events) {
-      for (var event in ctx._events[element]) {
-        ctx[element].removeEventListener(event, ctx._events[element][event]);
+    for (var element in events) {
+      for (var event in events[element]) {
+        ctx[element].removeEventListener(event, events[element][event]);
       }
     }
   };
@@ -420,22 +422,22 @@
   var init = (function (ctx) {
     ctx.isOpened = false;
     var resultsList = ctx.resultsList;
-    var attributes = {
+    var cmnAttributes = {
       role: "combobox",
+      "aria-expanded": false
+    };
+    var inputAttributes = _objectSpread2({
       "aria-haspopup": true,
-      "aria-expanded": false,
       "aria-controls": resultsList.idName,
       "aria-autocomplete": "both"
-    };
-    if (ctx.placeHolder) attributes.placeholder = ctx.placeHolder;
-    create(ctx.input, attributes);
-    ctx.wrapper = create("div", {
+    }, cmnAttributes);
+    if (ctx.placeHolder) inputAttributes.placeholder = ctx.placeHolder;
+    create(ctx.input, inputAttributes);
+    ctx.wrapper = create("div", _objectSpread2({
       className: ctx.name + "_wrapper",
       around: ctx.input,
-      role: "combobox",
-      "aria-expanded": false,
       "aria-owns": resultsList.idName
-    });
+    }, cmnAttributes));
     ctx.list = create(resultsList.element, {
       hidden: "hidden",
       dest: ["string" === typeof resultsList.destination ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
@@ -455,7 +457,8 @@
     return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value : inputField.innerHTML;
   };
   var prepareQuery = function prepareQuery(ctx, input) {
-    return ctx.query && ctx.query.manipulate ? ctx.query.manipulate(input) : formatRawInputValue(ctx, input);
+    var query = ctx.query;
+    return query && query.manipulate ? query.manipulate(input) : formatRawInputValue(ctx, input);
   };
   var highlightChar = function highlightChar(classList, value) {
     return "<mark class=\"".concat(classList, "\">").concat(value, "</mark>");
@@ -463,7 +466,8 @@
 
   var checkTriggerCondition = (function (ctx, event, query) {
     query = query.replace(/ /g, "");
-    return ctx.trigger.condition ? ctx.trigger.condition(event, query) : query.length >= ctx.threshold;
+    var condition = ctx.trigger.condition;
+    return condition ? condition(event, query) : query.length >= ctx.threshold;
   });
 
   var searchEngine = (function (ctx, query, record) {

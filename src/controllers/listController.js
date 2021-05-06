@@ -2,7 +2,6 @@ import create from "../helpers/creator";
 import eventEmitter from "../helpers/eventEmitter";
 
 // String holders
-const clickEvent = "click";
 const ariaExpanded = "aria-expanded";
 const ariaActive = "aria-activedescendant";
 
@@ -37,7 +36,6 @@ const renderList = (ctx) => {
         class: resultItem.className,
         role: "option",
         innerHTML: item.match,
-        role: "option",
       });
       // If custom content is active pass params
       if (resultItem.content) resultItem.content(item, result);

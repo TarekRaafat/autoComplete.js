@@ -6,6 +6,5 @@
  *
  * @return {HTMLElement} - selected html element
  */
-export default (element, from) => {
-  return typeof element === "string" ? (from || document).querySelector(element) : element || null;
-};
+export default (element, from) =>
+  typeof element === "string" ? (from || document).querySelector(element) : element || null;

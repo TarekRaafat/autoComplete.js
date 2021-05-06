@@ -9,6 +9,7 @@
  */
 export default (ctx, event, query) => {
   query = query.replace(/ /g, "");
+  const condition = ctx.trigger.condition;
 
-  return ctx.trigger.condition ? ctx.trigger.condition(event, query) : query.length >= ctx.threshold;
+  return condition ? condition(event, query) : query.length >= ctx.threshold;
 };
