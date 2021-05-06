@@ -257,6 +257,7 @@
   var renderList = function renderList(ctx) {
     var resultsList = ctx.resultsList,
         list = ctx.list,
+        resultItem = ctx.resultItem,
         dataFeedback = ctx.dataFeedback;
     dataFeedback.query;
         var matches = dataFeedback.matches,
@@ -267,7 +268,6 @@
     if (matches.length) {
       var fragment = document.createDocumentFragment();
       results.forEach(function (item, index) {
-        var resultItem = ctx.resultItem;
         var result = create(resultItem.element, {
           id: "".concat(resultItem.idName, "_").concat(index),
           "class": resultItem.className,

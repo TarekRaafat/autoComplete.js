@@ -13,7 +13,7 @@ const ariaActive = "aria-activedescendant";
  * @return {Component} - Results list component
  */
 const renderList = (ctx) => {
-  let { resultsList, list, dataFeedback } = ctx;
+  let { resultsList, list, resultItem, dataFeedback } = ctx;
   const { query, matches, results } = dataFeedback;
 
   // Clear list
@@ -28,7 +28,6 @@ const renderList = (ctx) => {
     // Generate results
     results.forEach((item, index) => {
       // Create new list
-      const resultItem = ctx.resultItem;
       const result = create(resultItem.element, {
         id: `${resultItem.idName}_${index}`,
         class: resultItem.className,
