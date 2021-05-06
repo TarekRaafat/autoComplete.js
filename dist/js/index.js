@@ -1,30 +1,30 @@
-document.querySelector("#autoComplete").addEventListener("init", function (event) {
-  console.log(event);
-});
+// document.querySelector("#autoComplete").addEventListener("init", function (event) {
+//   console.log(event);
+// });
 
-document.querySelector("#autoComplete").addEventListener("response", function (event) {
-  console.log(event);
-});
+// document.querySelector("#autoComplete").addEventListener("response", function (event) {
+//   console.log(event);
+// });
 
-document.querySelector("#autoComplete").addEventListener("results", function (event) {
-  console.log(event);
-});
+// document.querySelector("#autoComplete").addEventListener("results", function (event) {
+//   console.log(event);
+// });
 
-document.querySelector("#autoComplete").addEventListener("open", function (event) {
-  console.log(event);
-});
+// document.querySelector("#autoComplete").addEventListener("open", function (event) {
+//   console.log(event);
+// });
 
-document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
-  console.log(event);
-});
+// document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
+//   console.log(event);
+// });
 
-document.querySelector("#autoComplete").addEventListener("close", function (event) {
-  console.log(event);
-});
+// document.querySelector("#autoComplete").addEventListener("close", function (event) {
+//   console.log(event);
+// });
 
-document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
-  console.log(event);
-});
+// document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
+//   console.log(event);
+// });
 
 // The autoComplete.js Engine instance creator
 const autoCompleteJS = new autoComplete({
@@ -71,7 +71,7 @@ const autoCompleteJS = new autoComplete({
     },
     noResults: true,
     maxResults: 5,
-    // tabToSelect: true,
+    // tabSelect: true,
   },
   resultItem: {
     element: "li",

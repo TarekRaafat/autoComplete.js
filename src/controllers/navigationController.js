@@ -108,8 +108,10 @@ const navigate = (ctx, event) => {
       break;
     // Tab
     case 9:
-      // event.preventDefault();
-      // ctx.resultsList.tabToSelect ? selectItem(ctx, event) : closeList(ctx);
+      // if (ctx.resultsList.tabSelect) {
+      //   event.preventDefault();
+      //   ctx.resultsList.tabToSelect ? selectItem(ctx, event) : closeList(ctx);
+      // }
       closeList(ctx);
       break;
   }
