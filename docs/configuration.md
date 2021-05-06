@@ -26,7 +26,7 @@ selector: "#autoComplete", // Any valid selector
 #### ** Function **
 ```js
 selector: () => {
-    return "#customID"; // Any valid selector
+    return [Element]; // Any valid selector
 },
 ```
 
