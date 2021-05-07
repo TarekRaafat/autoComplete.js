@@ -264,7 +264,6 @@
         results = dataFeedback.results;
     list.innerHTML = "";
     ctx.cursor = -1;
-    openList(ctx);
     if (matches.length) {
       var fragment = document.createDocumentFragment();
       results.forEach(function (result, index) {
@@ -282,6 +281,7 @@
       closeList(ctx);
     }
     if (resultsList.container) resultsList.container(list, dataFeedback);
+    openList(ctx);
   };
   var openList = function openList(ctx) {
     ctx.wrapper.setAttribute(ariaExpanded, true);

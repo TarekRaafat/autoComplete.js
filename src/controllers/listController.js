@@ -22,8 +22,6 @@ const renderList = (ctx) => {
   // Reset cursor
   ctx.cursor = -1;
 
-  openList(ctx);
-
   if (matches.length) {
     const fragment = document.createDocumentFragment();
 
@@ -52,6 +50,8 @@ const renderList = (ctx) => {
   }
   // Run custom container function if active
   if (resultsList.container) resultsList.container(list, dataFeedback);
+
+  openList(ctx);
 };
 
 /**
