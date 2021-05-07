@@ -28,7 +28,6 @@
 
 // The autoComplete.js Engine instance creator
 const autoCompleteJS = new autoComplete({
-  selector: () => document.querySelector("#autoComplete"),
   data: {
     src: async () => {
       // Loading placeholder text
@@ -93,9 +92,6 @@ const autoCompleteJS = new autoComplete({
       render: true,
     },
   },
-  // feedback: (data) => {
-  //   console.log(data);
-  // },
   onSelection: (dataFeedback) => {
     document.querySelector("#autoComplete").blur();
     // Prepare User's Selected Value
