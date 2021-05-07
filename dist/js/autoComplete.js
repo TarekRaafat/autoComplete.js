@@ -382,9 +382,20 @@
     }
   };
 
+  var eventsListManager = function eventsListManager(events, callback) {
+    for (var element in events) {
+      for (var event in events[element]) {
+        callback(event, element);
+      }
+    }
+  };
   var addEventListeners = function addEventListeners(ctx) {
     var resultsList = ctx.resultsList;
-    ctx._events = {
+    var publicEvents = ctx._events = {
+      input: {},
+      list: {}
+    };
+    var privateEvents = {
       input: {
         keydown: function keydown(event) {
           resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
@@ -409,24 +420,24 @@
         }
       }
     };
-    var events = ctx._events;
     ctx.trigger.event.forEach(function (eventType) {
-      events.input[eventType] = debouncer(function (event) {
+      publicEvents.input[eventType] = debouncer(function (event) {
         return ctx.start(ctx, event);
       }, ctx.debounce);
     });
-    for (var element in events) {
-      for (var event in events[element]) {
-        ctx[element].addEventListener(event, events[element][event]);
-      }
+    if (ctx.resultsList.render) {
+      eventsListManager(privateEvents, function (event, element) {
+        publicEvents[element][event] = privateEvents[element][event];
+      });
     }
+    eventsListManager(publicEvents, function (event, element) {
+      ctx[element].addEventListener(event, publicEvents[element][event]);
+    });
   };
   var removeEventListeners = function removeEventListeners(ctx) {
-    for (var element in events) {
-      for (var event in events[element]) {
-        ctx[element].removeEventListener(event, events[element][event]);
-      }
-    }
+    eventsListManager(ctx._events, function (event, element) {
+      ctx[element].removeEventListener(event, ctx._events[element][event]);
+    });
   };
 
   var init = (function (ctx) {
