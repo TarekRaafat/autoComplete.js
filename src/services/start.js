@@ -21,13 +21,18 @@ export default async function (ctx, event) {
     /**
      * @emit {response} event on data request
      **/
-    eventEmitter({ input: input, dataFeedback: data.store }, "response");
+    eventEmitter({ input, dataFeedback: data.store }, "response");
 
     // Start autoComplete engine
     const results = data.filter ? data.filter(findMatches(ctx, query)) : findMatches(ctx, query);
 
     // Prepare data feedback object
-    ctx.dataFeedback = { input, query, matches: results, results: results.slice(0, resultsList.maxResults) };
+    ctx.dataFeedback = {
+      input: inputValue,
+      query,
+      matches: results,
+      results: results.slice(0, resultsList.maxResults),
+    };
 
     /**
      * @emit {results} event on search response with results

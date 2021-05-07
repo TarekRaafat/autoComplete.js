@@ -443,7 +443,6 @@
   var init = (function (ctx) {
     var placeHolder = ctx.placeHolder,
         resultsList = ctx.resultsList;
-    ctx.isOpened = false;
     var cmnAttributes = {
       role: "combobox",
       "aria-expanded": false
@@ -601,7 +600,7 @@
             }, "response");
             results = data.filter ? data.filter(findMatches(ctx, query)) : findMatches(ctx, query);
             ctx.dataFeedback = {
-              input: input,
+              input: inputValue,
               query: query,
               matches: results,
               results: results.slice(0, resultsList.maxResults)

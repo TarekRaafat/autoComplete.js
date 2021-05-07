@@ -6,8 +6,6 @@ import eventEmitter from "../helpers/eventEmitter";
 export default (ctx) => {
   let { placeHolder, resultsList } = ctx;
 
-  ctx.isOpened = false;
-
   // Common attributes
   const cmnAttributes = {
     role: "combobox",
