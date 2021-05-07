@@ -3,7 +3,7 @@ import searchEngine from "./searchController";
 const dataStore = async (ctx) => {
   const { data } = ctx;
 
-  if (data.cache && data.store) return;
+  if (data.cache && data.store) return data.store;
 
   return typeof data.src === "function" ? await data.src() : data.src;
 };

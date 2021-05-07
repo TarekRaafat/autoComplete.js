@@ -505,7 +505,7 @@
     return new Promise(function ($return, $error) {
       var data;
       data = ctx.data;
-      if (data.cache && data.store) return $return();
+      if (data.cache && data.store) return $return(data.store);
       return new Promise(function ($return, $error) {
         if (typeof data.src === "function") {
           return data.src().then($return, $error);

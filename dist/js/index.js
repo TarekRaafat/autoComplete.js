@@ -42,6 +42,7 @@ const autoCompleteJS = new autoComplete({
       return data;
     },
     key: ["food", "cities", "animals"],
+    cache: true,
     filter: (list) => {
       // Filter duplicates
       const filteredResults = Array.from(new Set(list.map((value) => value.match))).map((food) => {
@@ -56,7 +57,10 @@ const autoCompleteJS = new autoComplete({
   debounce: 100,
   threshold: 1,
   trigger: {
-    event: ["input"],
+    event: ["input", "focus"],
+    condition:() => {
+      return true;
+    }
   },
   query: {
     manipulate: (input) => {
