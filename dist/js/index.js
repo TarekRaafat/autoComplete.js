@@ -42,7 +42,7 @@ const autoCompleteJS = new autoComplete({
       return data;
     },
     key: ["food", "cities", "animals"],
-    cache: true,
+    // cache: true,
     filter: (list) => {
       // Filter duplicates
       // due to the usage of multiple data keys

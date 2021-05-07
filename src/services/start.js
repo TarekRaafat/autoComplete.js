@@ -15,7 +15,7 @@ export default async function (ctx, event) {
 
   // Validate trigger condition
   if (triggerCondition) {
-    // Prepare data
+    // Store the data from source
     data.store = await dataStore(ctx);
 
     /**
