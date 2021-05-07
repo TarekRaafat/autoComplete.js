@@ -5,7 +5,11 @@ const dataStore = async (ctx) => {
 
   if (data.cache && data.store) return data.store;
 
-  return typeof data.src === "function" ? await data.src() : data.src;
+  try {
+    return typeof data.src === "function" ? await data.src() : data.src;
+  } catch (error) {
+    return error;
+  }
 };
 
 /**

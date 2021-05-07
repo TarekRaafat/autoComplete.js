@@ -12,6 +12,7 @@ export default async function (ctx, event) {
   const query = prepareQuery(ctx, inputValue);
   // Get trigger decision
   const triggerCondition = checkTriggerCondition(ctx, event, query);
+
   // Validate trigger condition
   if (triggerCondition) {
     // Prepare data

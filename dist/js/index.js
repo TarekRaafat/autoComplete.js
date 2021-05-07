@@ -45,6 +45,7 @@ const autoCompleteJS = new autoComplete({
     cache: true,
     filter: (list) => {
       // Filter duplicates
+      // due to the usage of multiple data keys
       const filteredResults = Array.from(new Set(list.map((value) => value.match))).map((food) => {
         return list.find((value) => value.match === food);
       });
@@ -57,17 +58,7 @@ const autoCompleteJS = new autoComplete({
   debounce: 100,
   threshold: 1,
   trigger: {
-    event: ["input", "focus"],
-    condition:() => {
-      return true;
-    }
-  },
-  query: {
-    manipulate: (input) => {
-      console.log(input);
-
-      return input;
-    },
+    event: ["input"],
   },
   resultsList: {
     element: "ul",
@@ -82,7 +73,7 @@ const autoCompleteJS = new autoComplete({
     },
     noResults: true,
     maxResults: 5,
-    // tabSelect: true,
+    tabSelect: true,
   },
   resultItem: {
     element: "li",
@@ -105,16 +96,16 @@ const autoCompleteJS = new autoComplete({
   // feedback: (data) => {
   //   console.log(data);
   // },
-  onSelection: (feedback) => {
+  onSelection: (dataFeedback) => {
     document.querySelector("#autoComplete").blur();
     // Prepare User's Selected Value
-    const selection = feedback.selection.value[feedback.selection.key];
+    const selection = dataFeedback.selection.value[dataFeedback.selection.key];
     // Render selected choice to selection div
     document.querySelector(".selection").innerHTML = selection;
     // Replace Input value with the selected value
     document.querySelector("#autoComplete").value = selection;
     // Console log autoComplete data feedback
-    console.log(feedback);
+    console.log(dataFeedback);
   },
 });
 

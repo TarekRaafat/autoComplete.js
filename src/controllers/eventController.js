@@ -58,7 +58,7 @@ const addEventListeners = (ctx) => {
 };
 
 const removeEventListeners = (ctx) => {
-  // Remove all events
+  // Remove all attached events
   for (const element in events) {
     for (const event in events[element]) {
       ctx[element].removeEventListener(event, events[element][event]);

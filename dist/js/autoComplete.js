@@ -208,8 +208,8 @@
     });
   });
 
-  var selector = (function (element, from) {
-    return typeof element === "string" ? (from || document).querySelector(element) : element || null;
+  var selector = (function (element) {
+    return typeof element === "string" ? document.querySelector(element) : element || null;
   });
 
   var create = (function (tag, options) {
@@ -263,8 +263,8 @@
         var matches = dataFeedback.matches,
         results = dataFeedback.results;
     list.innerHTML = "";
-    openList(ctx);
     ctx.cursor = -1;
+    openList(ctx);
     if (matches.length) {
       var fragment = document.createDocumentFragment();
       results.forEach(function (result, index) {
@@ -284,9 +284,9 @@
     if (resultsList.container) resultsList.container(list, dataFeedback);
   };
   var openList = function openList(ctx) {
-    ctx.list.removeAttribute("hidden");
     ctx.wrapper.setAttribute(ariaExpanded, true);
     ctx.input.setAttribute(ariaActive$1, "");
+    ctx.list.removeAttribute("hidden");
     ctx.isOpened = true;
     eventEmitter(ctx, "open");
   };
@@ -300,8 +300,6 @@
   };
   var selectItem = function selectItem(ctx, event, index) {
     index = index > -1 ? index : ctx.cursor;
-    var list = ctx.list.getElementsByTagName(ctx.resultItem.element);
-    list[index];
     var data = ctx.dataFeedback;
     var dataFeedback = _objectSpread2(_objectSpread2({
       event: event
@@ -310,8 +308,8 @@
         index: index
       })
     });
-    if (ctx.onSelection) ctx.onSelection(dataFeedback);
     closeList(ctx);
+    if (ctx.onSelection) ctx.onSelection(dataFeedback);
   };
 
   var classList;
@@ -350,8 +348,8 @@
   };
   var navigate = function navigate(ctx, event) {
     var key = event.keyCode;
-    var selectedResultItem = ctx.resultItem.selected;
-    classList = selectedResultItem ? selectedResultItem.className.split(" ") : "";
+    var selectedItem = ctx.resultItem.selected;
+    classList = selectedItem ? selectedItem.className.split(" ") : "";
     switch (key) {
       case 40:
       case 38:
@@ -365,7 +363,12 @@
         }
         break;
       case 9:
-        closeList(ctx);
+        if (ctx.resultsList.tabSelect) {
+          event.preventDefault();
+          selectItem(ctx, event);
+        } else {
+          closeList(ctx);
+        }
         break;
     }
   };
@@ -506,12 +509,23 @@
       var data;
       data = ctx.data;
       if (data.cache && data.store) return $return(data.store);
-      return new Promise(function ($return, $error) {
-        if (typeof data.src === "function") {
-          return data.src().then($return, $error);
+      var $Try_1_Catch = function $Try_1_Catch(error) {
+        try {
+          return $return(error);
+        } catch ($boundEx) {
+          return $error($boundEx);
         }
-        return $return(data.src);
-      }).then($return, $error);
+      };
+      try {
+        return new Promise(function ($return, $error) {
+          if (typeof data.src === "function") {
+            return data.src().then($return, $error);
+          }
+          return $return(data.src);
+        }).then($return, $Try_1_Catch);
+      } catch (error) {
+        $Try_1_Catch(error);
+      }
     });
   };
   var findMatches = function findMatches(ctx, query) {

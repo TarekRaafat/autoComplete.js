@@ -18,7 +18,9 @@ export default (tag, options) => {
       selector(value[0]).insertAdjacentElement(value[1], element);
     } else if (key === "around") {
       const reference = selector(value);
+
       reference.parentNode.insertBefore(element, reference);
+
       element.appendChild(reference);
 
       if (reference.getAttribute("autofocus") != null) reference.focus();

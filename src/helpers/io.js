@@ -42,6 +42,7 @@ const getInputValue = (inputField) =>
  */
 const prepareQuery = (ctx, input) => {
   const query = ctx.query;
+
   return query && query.manipulate ? query.manipulate(input) : formatRawInputValue(ctx, input);
 };
 

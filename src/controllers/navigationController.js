@@ -2,6 +2,7 @@ import { selectItem, closeList } from "../controllers/listController";
 import eventEmitter from "../helpers/eventEmitter";
 
 let classList;
+
 // String holders
 const ariaSelected = "aria-selected";
 const ariaActive = "aria-activedescendant";
@@ -21,10 +22,12 @@ const goTo = (index, ctx) => {
   if (results.length) {
     // Previous cursor state
     state = ctx.cursor;
+
     // Reset cursor to first item
     if (index >= results.length) index = 0;
     // Move cursor to the last item
     if (index < 0) index = results.length - 1;
+
     // Current cursor state
     ctx.cursor = index;
 
@@ -87,8 +90,8 @@ const previous = (ctx) => {
  */
 const navigate = (ctx, event) => {
   const key = event.keyCode;
-  const selectedResultItem = ctx.resultItem.selected;
-  classList = selectedResultItem ? selectedResultItem.className.split(" ") : "";
+  const selectedItem = ctx.resultItem.selected;
+  classList = selectedItem ? selectedItem.className.split(" ") : "";
 
   // Check pressed key
   switch (key) {
@@ -108,12 +111,12 @@ const navigate = (ctx, event) => {
       break;
     // Tab
     case 9:
-      // if (ctx.resultsList.tabSelect) {
-      //   event.preventDefault();
-      //   selectItem(ctx, event);
-      // } else {
-      closeList(ctx);
-      // }
+      if (ctx.resultsList.tabSelect) {
+        event.preventDefault();
+        selectItem(ctx, event);
+      } else {
+        closeList(ctx);
+      }
       break;
   }
 };

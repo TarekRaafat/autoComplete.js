@@ -19,13 +19,15 @@ const renderList = (ctx) => {
   // Clear list
   list.innerHTML = "";
 
-  openList(ctx);
   // Reset cursor
   ctx.cursor = -1;
 
+  openList(ctx);
+
   if (matches.length) {
     const fragment = document.createDocumentFragment();
-    // Generate results
+
+    // Generate results elements
     results.forEach((result, index) => {
       // Create new list item
       const element = create(resultItem.element, {
@@ -34,11 +36,14 @@ const renderList = (ctx) => {
         role: "option",
         innerHTML: result.match,
       });
+
       // If custom content is active pass params
       if (resultItem.content) resultItem.content(element, result);
+
       // Add result to fragment before DOM
       fragment.appendChild(element);
     });
+
     // Add fragment of result items to DOM list
     list.appendChild(fragment);
   } else if (!resultsList.noResults) {
@@ -58,11 +63,10 @@ const renderList = (ctx) => {
  */
 
 const openList = (ctx) => {
-  // Set list to opened
-  ctx.list.removeAttribute("hidden");
   ctx.wrapper.setAttribute(ariaExpanded, true);
-  // Remove "aria-activedescendant" attribute
   ctx.input.setAttribute(ariaActive, "");
+  ctx.list.removeAttribute("hidden");
+  // Set list to opened
   ctx.isOpened = true;
 
   /**
@@ -83,6 +87,7 @@ const closeList = (ctx) => {
   const list = document.getElementById(ctx.resultsList.idName);
   // Remove open list
   list.setAttribute("hidden", "");
+  // Set list to closed
   ctx.isOpened = false;
   // Remove active descendant
   ctx.input.setAttribute(ariaActive, "");
@@ -105,11 +110,9 @@ const closeList = (ctx) => {
  * @return {void}
  */
 const selectItem = (ctx, event, index) => {
+  // Check if cursor within list range
   index = index > -1 ? index : ctx.cursor;
 
-  // Get selected list item
-  const list = ctx.list.getElementsByTagName(ctx.resultItem.element);
-  const item = list[index];
   const data = ctx.dataFeedback;
 
   // Prepare onSelection data feedback object
@@ -121,9 +124,11 @@ const selectItem = (ctx, event, index) => {
       index,
     },
   };
+
+  closeList(ctx);
+
   // Return selected value if onSelection is active
   if (ctx.onSelection) ctx.onSelection(dataFeedback);
-  closeList(ctx);
 };
 
 export { renderList, openList, closeList, selectItem };
