@@ -267,15 +267,15 @@
     ctx.cursor = -1;
     if (matches.length) {
       var fragment = document.createDocumentFragment();
-      results.forEach(function (item, index) {
-        var result = create(resultItem.element, {
+      results.forEach(function (result, index) {
+        var element = create(resultItem.element, {
           id: "".concat(resultItem.idName, "_").concat(index),
           "class": resultItem.className,
           role: "option",
-          innerHTML: item.match
+          innerHTML: result.match
         });
-        if (resultItem.content) resultItem.content(item, result);
-        fragment.appendChild(result);
+        if (resultItem.content) resultItem.content(element, result);
+        fragment.appendChild(element);
       });
       list.appendChild(fragment);
     } else if (!resultsList.noResults) {

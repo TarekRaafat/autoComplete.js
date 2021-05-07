@@ -26,18 +26,18 @@ const renderList = (ctx) => {
   if (matches.length) {
     const fragment = document.createDocumentFragment();
     // Generate results
-    results.forEach((item, index) => {
-      // Create new list
-      const result = create(resultItem.element, {
+    results.forEach((result, index) => {
+      // Create new list item
+      const element = create(resultItem.element, {
         id: `${resultItem.idName}_${index}`,
         class: resultItem.className,
         role: "option",
-        innerHTML: item.match,
+        innerHTML: result.match,
       });
       // If custom content is active pass params
-      if (resultItem.content) resultItem.content(item, result);
+      if (resultItem.content) resultItem.content(element, result);
       // Add result to fragment before DOM
-      fragment.appendChild(result);
+      fragment.appendChild(element);
     });
     // Add fragment of result items to DOM list
     list.appendChild(fragment);

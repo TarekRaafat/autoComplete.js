@@ -58,6 +58,13 @@ const autoCompleteJS = new autoComplete({
   trigger: {
     event: ["input"],
   },
+  query: {
+    manipulate: (input) => {
+      console.log(input);
+
+      return input;
+    },
+  },
   resultsList: {
     element: "ul",
     container: (element, data) => {
@@ -75,7 +82,7 @@ const autoCompleteJS = new autoComplete({
   },
   resultItem: {
     element: "li",
-    content: (data, element) => {
+    content: (element, data) => {
       // Modify Results Item Style
       element.style = "display: flex; justify-content: space-between;";
       // Modify Results Item Content

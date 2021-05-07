@@ -5,6 +5,7 @@ import eventEmitter from "../helpers/eventEmitter";
 
 export default (ctx) => {
   let { placeHolder, resultsList } = ctx;
+
   ctx.isOpened = false;
 
   // Common attributes
@@ -26,7 +27,7 @@ export default (ctx) => {
   // Set "inputField" attributes
   create(ctx.input, inputAttributes);
 
-  // Create wrapper
+  // Create wrapper element
   ctx.wrapper = create("div", {
     className: ctx.name + "_wrapper",
     around: ctx.input,
@@ -34,7 +35,7 @@ export default (ctx) => {
     ...cmnAttributes,
   });
 
-  // Create new list
+  // Create new list element
   ctx.list = create(resultsList.element, {
     hidden: "hidden",
     dest: [

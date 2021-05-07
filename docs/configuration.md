@@ -334,7 +334,7 @@ resultsList: {
   - idName: `String` of id value <small>(optional)</small>
   - className: `String` of class value <small>(optional)</small>
   - content: `Function` <small>(optional)</small>
-    - 2 parameters (data, element) with no return
+    - 2 parameters (element, data) with no return
   - highlight: `Object` <small>(optional)</small>
     - render: `Boolean` <small>(optional)</small>
     - className: `String` of class value <small>(optional)</small>
@@ -358,7 +358,7 @@ resultsList: {
 resultItem: {
     element: "li",
     className: "autoComplete_result",
-    content: (data, element) => {
+    content: (element, data) => {
         element.setAttribute("data-parent", "food-item");
     },
     highlight: {
