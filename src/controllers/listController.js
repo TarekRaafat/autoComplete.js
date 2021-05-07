@@ -22,7 +22,7 @@ const renderList = (ctx) => {
   // Reset cursor
   ctx.cursor = -1;
 
-  if (matches.length) {
+  if (matches.length || resultsList.noResults) {
     const fragment = document.createDocumentFragment();
 
     // Generate results elements
@@ -44,14 +44,15 @@ const renderList = (ctx) => {
 
     // Add fragment of result items to DOM list
     list.appendChild(fragment);
-  } else if (!resultsList.noResults) {
+
+    // Run custom container function if active
+    if (resultsList.container) resultsList.container(list, dataFeedback);
+
+    openList(ctx);
+  } else {
     // Check if there are NO results
     closeList(ctx);
   }
-  // Run custom container function if active
-  if (resultsList.container) resultsList.container(list, dataFeedback);
-
-  openList(ctx);
 };
 
 /**
@@ -63,16 +64,21 @@ const renderList = (ctx) => {
  */
 
 const openList = (ctx) => {
-  ctx.wrapper.setAttribute(ariaExpanded, true);
-  ctx.input.setAttribute(ariaActive, "");
-  ctx.list.removeAttribute("hidden");
-  // Set list to opened
-  ctx.isOpened = true;
+  if (!ctx.isOpened) {
+    // Set expanded attribute on the wrapper to true
+    ctx.wrapper.setAttribute(ariaExpanded, true);
+    // Reset input active descendant attribute
+    ctx.input.setAttribute(ariaActive, "");
+    // Remove hidden attribute from list
+    ctx.list.removeAttribute("hidden");
+    // Set list to opened
+    ctx.isOpened = true;
 
-  /**
-   * @emit {open} event after results list is opened
-   **/
-  eventEmitter(ctx, "open");
+    /**
+     * @emit {open} event after results list is opened
+     **/
+    eventEmitter(ctx, "open");
+  }
 };
 
 /**
@@ -83,21 +89,23 @@ const openList = (ctx) => {
  * @return {void}
  */
 const closeList = (ctx) => {
-  // Get autoComplete list
-  const list = document.getElementById(ctx.resultsList.idName);
-  // Remove open list
-  list.setAttribute("hidden", "");
-  // Set list to closed
-  ctx.isOpened = false;
-  // Remove active descendant
-  ctx.input.setAttribute(ariaActive, "");
-  // Set list to closed
-  ctx.wrapper.setAttribute(ariaExpanded, false);
+  if (ctx.isOpened) {
+    // Get autoComplete results list
+    const list = document.getElementById(ctx.resultsList.idName);
+    // Set expanded attribute on the wrapper to false
+    ctx.wrapper.setAttribute(ariaExpanded, false);
+    // Add input active descendant attribute
+    ctx.input.setAttribute(ariaActive, "");
+    // Add hidden attribute from list
+    list.setAttribute("hidden", "");
+    // Set list to closed
+    ctx.isOpened = false;
 
-  /**
-   * @emit {close} event after "resultsList" is closed
-   **/
-  eventEmitter(ctx, "close");
+    /**
+     * @emit {close} event after "resultsList" is closed
+     **/
+    eventEmitter(ctx, "close");
+  }
 };
 
 /**
@@ -125,10 +133,10 @@ const selectItem = (ctx, event, index) => {
     },
   };
 
-  closeList(ctx);
-
-  // Return selected value if onSelection is active
+  // Pass selection data value to "onSelection" if active
   if (ctx.onSelection) ctx.onSelection(dataFeedback);
+
+  closeList(ctx);
 };
 
 export { renderList, openList, closeList, selectItem };

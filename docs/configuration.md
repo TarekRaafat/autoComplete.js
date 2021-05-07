@@ -371,25 +371,6 @@ resultItem: {
 },
 ```
 
-### feedback <sub><sup>(optional)</sup></sub>
-
-***
-
-> Action script on dataFeedback event.
-
-- Type: `Function` <small>(optional)</small>
-    - 1 parameter (data) with no return
-
-- Defaults: No action
-  
-- Example:
-
-```js
-feedback: (data) => {
-    console.log(data);
-},
-```
-
 ### onSelection <sub><sup>(optional)</sup></sub>
 
 ***

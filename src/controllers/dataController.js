@@ -1,4 +1,4 @@
-import searchEngine from "./searchController";
+import search from "./searchController";
 
 const dataStore = async (ctx) => {
   const { data } = ctx;
@@ -21,19 +21,17 @@ const dataStore = async (ctx) => {
  * @return {Array} - Matches
  */
 const findMatches = (ctx, query) => {
-  const { data, searchEngine: customSearchEngine } = ctx;
+  const { data, searchEngine: customSearch } = ctx;
 
   const results = [];
 
   // Find matches from data source
   data.store.forEach((record, index) => {
-    const search = (key) => {
+    const find = (key) => {
       const recordValue = key ? record[key] : record;
 
       const match =
-        typeof customSearchEngine === "function"
-          ? customSearchEngine(query, recordValue)
-          : searchEngine(ctx, query, recordValue);
+        typeof customSearch === "function" ? customSearch(query, recordValue) : search(ctx, query, recordValue);
 
       if (!match) return;
 
@@ -50,10 +48,10 @@ const findMatches = (ctx, query) => {
 
     if (data.key) {
       for (const key of data.key) {
-        search(key);
+        find(key);
       }
     } else {
-      search();
+      find();
     }
   });
 

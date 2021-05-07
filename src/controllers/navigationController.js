@@ -99,7 +99,10 @@ const navigate = (ctx, event) => {
     case 40:
     case 38:
       event.preventDefault();
+
+      // Move cursor
       ctx[key === 40 ? "next" : "previous"](ctx);
+
       break;
     // Enter
     case 13:
@@ -108,15 +111,26 @@ const navigate = (ctx, event) => {
       if (ctx.cursor >= 0) {
         selectItem(ctx, event);
       }
+
       break;
     // Tab
     case 9:
-      if (ctx.resultsList.tabSelect) {
+      if (ctx.resultsList.tabSelect && ctx.cursor >= 0) {
         event.preventDefault();
+
         selectItem(ctx, event);
       } else {
         closeList(ctx);
       }
+      break;
+    // Esc
+    case 27:
+      event.preventDefault();
+
+      // Clear input field
+      ctx.input.value = "";
+
+      closeList(ctx);
       break;
   }
 };

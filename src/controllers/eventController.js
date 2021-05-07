@@ -9,15 +9,6 @@ const addEventListeners = (ctx) => {
     input: {
       keydown: (event) => {
         resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
-
-        // Esc key
-        if (event.keyCode === 27) {
-          event.preventDefault();
-
-          ctx.input.value = "";
-
-          closeList(ctx);
-        }
       },
       blur: () => {
         closeList(ctx);

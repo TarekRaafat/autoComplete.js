@@ -34,7 +34,18 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v9.1.1 ✨
+### v10.0.0
+  > <div class="ps-icon ps-icon-warning"></div> Important Note:
+  >
+  > This release has several breaking changes, so kindly check all the changes.
+
+  - 🔧 Fixed: `resultsList` eventEmitter unexpected behavior which was firing multiple times
+  - 🌀 Changed: All `className` APIs names to `classList`
+  - 🌀 Changed: `fetch` eventEmitter name to `response`
+  - 🌀 Changed: `noResults` API to accept `boolean` instead of `function` to be replaced with `resultsList.container`
+  - ❗ Removed: `feedback` API to be replaced with `navigate` event
+
+### v9.1.1
   > <div class="ps-icon ps-icon-warning"></div> Important Note:
   >
   >> Starting next major release:

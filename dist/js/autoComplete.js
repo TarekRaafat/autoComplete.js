@@ -264,7 +264,7 @@
         results = dataFeedback.results;
     list.innerHTML = "";
     ctx.cursor = -1;
-    if (matches.length) {
+    if (matches.length || resultsList.noResults) {
       var fragment = document.createDocumentFragment();
       results.forEach(function (result, index) {
         var element = create(resultItem.element, {
@@ -277,26 +277,30 @@
         fragment.appendChild(element);
       });
       list.appendChild(fragment);
-    } else if (!resultsList.noResults) {
+      if (resultsList.container) resultsList.container(list, dataFeedback);
+      openList(ctx);
+    } else {
       closeList(ctx);
     }
-    if (resultsList.container) resultsList.container(list, dataFeedback);
-    openList(ctx);
   };
   var openList = function openList(ctx) {
-    ctx.wrapper.setAttribute(ariaExpanded, true);
-    ctx.input.setAttribute(ariaActive$1, "");
-    ctx.list.removeAttribute("hidden");
-    ctx.isOpened = true;
-    eventEmitter(ctx, "open");
+    if (!ctx.isOpened) {
+      ctx.wrapper.setAttribute(ariaExpanded, true);
+      ctx.input.setAttribute(ariaActive$1, "");
+      ctx.list.removeAttribute("hidden");
+      ctx.isOpened = true;
+      eventEmitter(ctx, "open");
+    }
   };
   var closeList = function closeList(ctx) {
-    var list = document.getElementById(ctx.resultsList.idName);
-    list.setAttribute("hidden", "");
-    ctx.isOpened = false;
-    ctx.input.setAttribute(ariaActive$1, "");
-    ctx.wrapper.setAttribute(ariaExpanded, false);
-    eventEmitter(ctx, "close");
+    if (ctx.isOpened) {
+      var list = document.getElementById(ctx.resultsList.idName);
+      ctx.wrapper.setAttribute(ariaExpanded, false);
+      ctx.input.setAttribute(ariaActive$1, "");
+      list.setAttribute("hidden", "");
+      ctx.isOpened = false;
+      eventEmitter(ctx, "close");
+    }
   };
   var selectItem = function selectItem(ctx, event, index) {
     index = index > -1 ? index : ctx.cursor;
@@ -308,8 +312,8 @@
         index: index
       })
     });
-    closeList(ctx);
     if (ctx.onSelection) ctx.onSelection(dataFeedback);
+    closeList(ctx);
   };
 
   var classList;
@@ -363,12 +367,17 @@
         }
         break;
       case 9:
-        if (ctx.resultsList.tabSelect) {
+        if (ctx.resultsList.tabSelect && ctx.cursor >= 0) {
           event.preventDefault();
           selectItem(ctx, event);
         } else {
           closeList(ctx);
         }
+        break;
+      case 27:
+        event.preventDefault();
+        ctx.input.value = "";
+        closeList(ctx);
         break;
     }
   };
@@ -379,11 +388,6 @@
       input: {
         keydown: function keydown(event) {
           resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
-          if (event.keyCode === 27) {
-            event.preventDefault();
-            ctx.input.value = "";
-            closeList(ctx);
-          }
         },
         blur: function blur() {
           closeList(ctx);
@@ -477,7 +481,7 @@
     return condition ? condition(event, query) : query.length >= ctx.threshold;
   });
 
-  var searchEngine = (function (ctx, query, record) {
+  var search = (function (ctx, query, record) {
     var formattedRecord = formatRawInputValue(ctx, record);
     var resultItemHighlight = ctx.resultItem.highlight;
     var classList = resultItemHighlight ? resultItemHighlight.className : "";
@@ -530,12 +534,12 @@
   };
   var findMatches = function findMatches(ctx, query) {
     var data = ctx.data,
-        customSearchEngine = ctx.searchEngine;
+        customSearch = ctx.searchEngine;
     var results = [];
     data.store.forEach(function (record, index) {
-      var search = function search(key) {
+      var find = function find(key) {
         var recordValue = key ? record[key] : record;
-        var match = typeof customSearchEngine === "function" ? customSearchEngine(query, recordValue) : searchEngine(ctx, query, recordValue);
+        var match = typeof customSearch === "function" ? customSearch(query, recordValue) : search(ctx, query, recordValue);
         if (!match) return;
         var result = {
           index: index,
@@ -551,7 +555,7 @@
         try {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
             var key = _step.value;
-            search(key);
+            find(key);
           }
         } catch (err) {
           _iterator.e(err);
@@ -559,7 +563,7 @@
           _iterator.f();
         }
       } else {
-        search();
+        find();
       }
     });
     return results;
@@ -568,11 +572,10 @@
   function start (ctx, event) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var input, data, resultsList, feedback, inputValue, query, triggerCondition;
+      var input, data, resultsList, inputValue, query, triggerCondition;
       input = ctx.input;
       data = ctx.data;
       resultsList = ctx.resultsList;
-      feedback = ctx.feedback;
       inputValue = getInputValue(input);
       query = prepareQuery(ctx, inputValue);
       triggerCondition = checkTriggerCondition(ctx, event, query);
@@ -593,7 +596,7 @@
               results: results.slice(0, resultsList.maxResults)
             };
             eventEmitter(ctx, "results");
-            if (!resultsList.render) return $return(feedback(dataFeedback));
+            if (!resultsList.render) return $return();
             renderList(ctx);
             return $If_1.call(_this);
           } catch ($boundEx) {
