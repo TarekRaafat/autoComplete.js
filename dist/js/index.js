@@ -44,7 +44,7 @@ const autoCompleteJS = new autoComplete({
     // cache: true,
     filter: (list) => {
       // Filter duplicates
-      // due to the usage of multiple data keys
+      // incase of multiple data keys usage
       const filteredResults = Array.from(new Set(list.map((value) => value.match))).map((food) => {
         return list.find((value) => value.match === food);
       });
