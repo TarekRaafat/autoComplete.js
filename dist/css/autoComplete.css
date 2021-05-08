@@ -67,7 +67,8 @@
 
 #autoComplete_list {
   position: absolute;
-  /* top: 100%; */
+  height: 226px;
+  overflow-y: scroll;
   left: 0;
   right: 0;
   margin: 0;

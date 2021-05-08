@@ -48,7 +48,7 @@ const goTo = (index, ctx) => {
     ctx.dataFeedback.cursor = ctx.cursor;
 
     // Scroll to selection
-    list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight;
+    results[index].scrollIntoView({ behavior: "smooth", block: "center" });
 
     /**
      * @emit {navigate} event on results list navigation

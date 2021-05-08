@@ -338,7 +338,10 @@
       if (classList) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(classList));
       ctx.input.setAttribute(ariaActive, results[ctx.cursor].id);
       ctx.dataFeedback.cursor = ctx.cursor;
-      list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight;
+      results[index].scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
       eventEmitter(ctx, "navigate");
     }
   };
