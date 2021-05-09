@@ -37,7 +37,7 @@ export default (ctx) => {
   ctx.list = create(resultsList.element, {
     hidden: "hidden",
     dest: [
-      "string" === typeof resultsList.destination
+      typeof resultsList.destination === "string"
         ? document.querySelector(resultsList.destination)
         : resultsList.destination(),
       resultsList.position,

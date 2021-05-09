@@ -71,8 +71,9 @@ const autoCompleteJS = new autoComplete({
       element.prepend(info);
     },
     noResults: true,
-    maxResults: 5,
+    maxResults: 15,
     tabSelect: true,
+    scroll: "smooth",
   },
   resultItem: {
     element: "li",

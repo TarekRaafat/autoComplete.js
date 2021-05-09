@@ -339,7 +339,7 @@
       ctx.input.setAttribute(ariaActive, results[ctx.cursor].id);
       ctx.dataFeedback.cursor = ctx.cursor;
       results[index].scrollIntoView({
-        behavior: "smooth",
+        behavior: ctx.resultsList.scroll || "smooth",
         block: "center"
       });
       eventEmitter(ctx, "navigate");
@@ -464,7 +464,7 @@
     }, cmnAttributes));
     ctx.list = create(resultsList.element, {
       hidden: "hidden",
-      dest: ["string" === typeof resultsList.destination ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
+      dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
       id: resultsList.idName,
       "class": resultsList.classList,
       role: "listbox"
