@@ -39,6 +39,17 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   >
   > This release has several breaking changes, so kindly check all the changes.
 
+  - ➕ Added: Auto wrapping
+  - ➕ Added: `resultsList` auto scrolling
+  - ➕ Added: `resultsList.scroll` API to control scrolling behavior
+  - ➕ Added: `resultsList.tabSelect` API to control `tab` button behavior
+  - ➕ Added: `events` list API
+  - ➕ Added: `close` API method controls `resultsList` state
+  - ➕ Added: `open` API method controls `resultsList` state
+  - ➕ Added: `goTo` API method controls `resultsList` navigation by index
+  - ➕ Added: `next` API method controls `resultsList` navigation
+  - ➕ Added: `previous` API method controls `resultsList` navigation
+  - ➕ Added: `select` API method controls `resultsList` selection by index
   - 🔧 Fixed: `resultsList` eventEmitter unexpected behavior which was firing multiple times
   - 🌀 Changed: All `className` APIs names to `classList`
   - 🌀 Changed: `fetch` eventEmitter name to `response`
