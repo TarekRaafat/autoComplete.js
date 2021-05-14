@@ -430,14 +430,14 @@ resultItem: {
 > Action script onSelection event
 
 - Type: `Function` with no return
-- Parameters: (`feedback`)
+- Parameters: (`dataFeedback`)
 - Default: No action
 
 ##### Example:
 
 ```js
-onSelection: (feedback) => {
-    console.log(feedback);
+onSelection: (dataFeedback) => {
+    console.log(dataFeedback);
 },
 ```
 
