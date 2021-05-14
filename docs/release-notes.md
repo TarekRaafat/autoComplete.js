@@ -75,7 +75,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: `noResults` API to accept `boolean` instead of `function` to be replaced with `resultsList.container`
   - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
 
-  - ❗ Removed: `feedback` API to be replaced with `navigate` event
+  - ❗ Removed: `feedback` API method to be replaced with `navigate` event
   - ❗ Removed: `nav` API method to be replaced with `_events`
   - ❗ Removed: `hook` API method to be replaced with `start` API
 
