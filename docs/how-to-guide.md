@@ -201,7 +201,7 @@ onSelection: (dataFeedback) => {
             // Add selected value
             query.push(selection);
             // Replace Input value with the new query
-            input.value = query.join(", ");
+            input.value = query.join(", ") + ", ";
 	    }
     });
 </script>
