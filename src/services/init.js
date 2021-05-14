@@ -5,18 +5,10 @@ import eventEmitter from "../helpers/eventEmitter";
 export default (ctx) => {
   let { placeHolder, resultsList } = ctx;
 
-  // Common attributes
-  const cmnAttributes = {
-    role: "combobox",
-    "aria-expanded": false,
-  };
-
   // InputField attributes
   const inputAttributes = {
-    "aria-haspopup": true,
     "aria-controls": resultsList.idName,
     "aria-autocomplete": "both",
-    ...cmnAttributes,
   };
 
   // Set placeholder attribute value
@@ -26,8 +18,10 @@ export default (ctx) => {
   ctx.wrapper = create("div", {
     class: ctx.name + "_wrapper",
     around: ctx.input,
+    role: "combobox",
     "aria-owns": resultsList.idName,
-    ...cmnAttributes,
+    "aria-haspopup": true,
+    "aria-expanded": false,
   });
 
   // Set "inputField" attributes

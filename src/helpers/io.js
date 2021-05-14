@@ -1,4 +1,4 @@
-// Inputs
+import create from "./creator";
 
 /**
  * Format raw input value
@@ -11,12 +11,13 @@
 const formatRawInputValue = (ctx, value) => {
   value = value.toLowerCase();
 
-  return (ctx.diacritics
-    ? value
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .normalize("NFC")
-    : value
+  return (
+    ctx.diacritics
+      ? value
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .normalize("NFC")
+      : value
   ).toString();
 };
 
@@ -46,8 +47,6 @@ const prepareQuery = (ctx, input) => {
   return query && query.manipulate ? query.manipulate(input) : formatRawInputValue(ctx, input);
 };
 
-// Outputs
-
 /**
  * Highlight result item
  *
@@ -56,6 +55,10 @@ const prepareQuery = (ctx, input) => {
  *
  * @return {String} - highlighted character
  */
-const highlightChar = (className, value) => `<mark class="${className}">${value}</mark>`;
+const highlightChar = (className, value) =>
+  create("mark", {
+    ...(className && { className }),
+    innerHTML: value,
+  }).outerHTML;
 
 export { getInputValue, prepareQuery, formatRawInputValue, highlightChar };

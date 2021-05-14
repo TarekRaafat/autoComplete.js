@@ -450,21 +450,19 @@
   var init = (function (ctx) {
     var placeHolder = ctx.placeHolder,
         resultsList = ctx.resultsList;
-    var cmnAttributes = {
-      role: "combobox",
-      "aria-expanded": false
-    };
-    var inputAttributes = _objectSpread2({
-      "aria-haspopup": true,
+    var inputAttributes = {
       "aria-controls": resultsList.idName,
       "aria-autocomplete": "both"
-    }, cmnAttributes);
+    };
     if (placeHolder) inputAttributes.placeholder = placeHolder;
-    ctx.wrapper = create("div", _objectSpread2({
+    ctx.wrapper = create("div", {
       "class": ctx.name + "_wrapper",
       around: ctx.input,
-      "aria-owns": resultsList.idName
-    }, cmnAttributes));
+      role: "combobox",
+      "aria-owns": resultsList.idName,
+      "aria-haspopup": true,
+      "aria-expanded": false
+    });
     create(ctx.input, inputAttributes);
     ctx.list = create(resultsList.element, _objectSpread2(_objectSpread2({
       hidden: "hidden",
@@ -491,7 +489,11 @@
     return query && query.manipulate ? query.manipulate(input) : formatRawInputValue(ctx, input);
   };
   var highlightChar = function highlightChar(className, value) {
-    return "<mark class=\"".concat(className, "\">").concat(value, "</mark>");
+    return create("mark", _objectSpread2(_objectSpread2({}, className && {
+      className: className
+    }), {}, {
+      innerHTML: value
+    })).outerHTML;
   };
 
   var checkTriggerCondition = (function (ctx, query) {
@@ -503,8 +505,8 @@
   var search = (function (ctx, query, record) {
     var formattedRecord = formatRawInputValue(ctx, record);
     var resultItemHighlight = ctx.resultItem.highlight;
-    var className = resultItemHighlight ? resultItemHighlight.className : "";
-    var highlight = resultItemHighlight ? resultItemHighlight.render : "";
+    var className = resultItemHighlight.className;
+    var highlight = resultItemHighlight.render || false;
     if (ctx.searchEngine === "loose") {
       query = query.replace(/ /g, "");
       var queryLength = query.length;
