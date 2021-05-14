@@ -16,7 +16,6 @@
   color: rgba(255, 122, 122, 0.3);
   outline: none;
   border-radius: 10rem;
-  border: 0;
   border: 0.05rem solid rgba(255, 122, 122, 0.5);
   background-image: url(./images/search.svg);
   background-size: 1.4rem;
@@ -67,20 +66,19 @@
 
 .autoComplete_wrapper > ul {
   position: absolute;
-  height: 226px;
+  max-height: 226px;
   overflow-y: scroll;
+  box-sizing: border-box;
   left: 0;
   right: 0;
-  margin: 0;
+  margin: 0.5rem 0 0 0;
   padding: 0;
-  list-style: none;
-  margin-top: 0.5rem;
-  border-radius: 0.6rem;
-  box-sizing: border-box;
-  background-color: #fff;
-  box-shadow: 0 3px 6px rgba(149, 157, 165, 0.15);
-  border: 1px solid rgba(33, 33, 33, 0.07);
   z-index: 1;
+  list-style: none;
+  border-radius: 0.6rem;
+  background-color: #fff;
+  border: 1px solid rgba(33, 33, 33, 0.07);
+  box-shadow: 0 3px 6px rgba(149, 157, 165, 0.15);
   outline: none;
   transition: opacity 0.15s ease-in-out;
   -moz-transition: opacity 0.15s ease-in-out;
@@ -92,7 +90,6 @@
   display: block;
   opacity: 0;
   transform: scale(0);
-  /* transition-timing-function: ease; */
 }
 
 .autoComplete_wrapper > ul > li {
@@ -101,7 +98,6 @@
   text-align: left;
   font-size: 1rem;
   color: #212121;
-  transition: all 0.1s ease-in-out;
   border-radius: 0.35rem;
   background-color: rgba(255, 255, 255, 1);
   white-space: nowrap;
@@ -122,37 +118,11 @@
 }
 
 .autoComplete_wrapper > ul > li[aria-selected="true"] {
-  cursor: pointer;
   background-color: rgba(255, 122, 122, 0.15);
 }
 
 @media only screen and (max-width: 600px) {
-  .autoComplete_wrapper {
-    width: 320px;
-  }
-
   .autoComplete_wrapper > input {
     width: 18rem;
-    background-size: 1.6rem;
-    background-position: left 1.1rem top 0.75rem;
-  }
-
-  .autoComplete_wrapper > ul {
-    margin: 10px;
-  }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  .autoComplete_wrapper > input {
-    border-width: 1px;
-  }
-}
-
-@-moz-document url-prefix() {
-  .autoComplete_wrapper > input {
-    background-size: 1.2rem;
-    background-origin: border-box;
-    border-width: 1px;
-    background-position: left 1.1rem top 0.8rem;
   }
 }
