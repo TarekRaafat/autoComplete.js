@@ -16,12 +16,12 @@ const ariaActive = "aria-activedescendant";
  * @return {void}
  */
 const goTo = (index, ctx) => {
-  let { list, state } = ctx;
+  let { list } = ctx;
   const results = list.getElementsByTagName(ctx.resultItem.element);
 
   if (ctx.isOpened && results.length) {
     // Previous cursor state
-    state = ctx.cursor;
+    const state = ctx.cursor;
 
     // Reset cursor to first item
     if (index >= results.length) index = 0;

@@ -304,7 +304,6 @@
       ctx.input.setAttribute(ariaActive$1, "");
       list.setAttribute("hidden", "");
       ctx.isOpened = false;
-      ctx.cursor = -1;
       eventEmitter(ctx, "close");
     }
   };
@@ -326,12 +325,11 @@
   var ariaSelected = "aria-selected";
   var ariaActive = "aria-activedescendant";
   var goTo = function goTo(index, ctx) {
-    var list = ctx.list,
-        state = ctx.state;
+    var list = ctx.list;
     var results = list.getElementsByTagName(ctx.resultItem.element);
     if (ctx.isOpened && results.length) {
       var _results$index$classL;
-      state = ctx.cursor;
+      var state = ctx.cursor;
       if (index >= results.length) index = 0;
       if (index < 0) index = results.length - 1;
       ctx.cursor = index;

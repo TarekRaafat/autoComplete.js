@@ -100,8 +100,6 @@ const closeList = (ctx) => {
     list.setAttribute("hidden", "");
     // Set list to closed
     ctx.isOpened = false;
-    // Reset cursor
-    ctx.cursor = -1;
 
     /**
      * @emit {close} event after "resultsList" is closed
