@@ -1,20 +1,37 @@
 # Configuration
 
-API configuration options and events
-
-## Options
-
-### selector <sub><sup>(optional)</sup></sub>
+API configuration options, methods and events
 
 ***
 
-> Input field selector.
+## Options
 
-- Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` <small>(optional)</small>
+***
 
-- Defaults: `#autoComplete`
+### name <sub><sup>(optional)</sup></sub>
 
-- Example
+> Global instance name where all elements inherit their class names
+
+- Type: `String`
+- Default: `autoComplete`
+
+##### Example
+
+```js
+name: "autoComplete",
+```
+
+***
+
+### selector <sub><sup>(optional)</sup></sub>
+
+
+> Input field selector
+
+- Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function`
+- Default: `#autoComplete`
+
+##### Example
 
 <!-- tabs:start -->
 
@@ -32,34 +49,34 @@ selector: () => {
 
 <!-- tabs:end -->
 
-### data <sub><sup>(required)</sup></sub>
-
 ***
 
-> Data Source.
+### data <sub><sup>(required)</sup></sub>
+
+> Data Source
 
 - Type: `Object`
 
-- Methods:
+##### Methods:
 
+#### `src` <sub><sup>(required)</sup></sub>
+- Type: `Array`|`Function`
+- Default: `null`
 
-#### src
-  - Type: `Array`|`Function` <small>(required)</small>
-#### key
-  - Type: `Array` <small>(required only if `data.src` is `Array` of `Objects`)</small>
-#### cache
-  - Type: `Boolean` <small>(optional)</small>
-#### filter
-  - Type: `Function` <small>(optional)</small>
-    - 1 parameter `(list)` returns `Array` of results values
+#### `key` <sub><sup>(required)</sup></sub>
+- Type: `Array` <small>(required only if `data.src` is `Array` of `Objects`)</small>
+- Default: `null`
 
-- Defaults:
-  - src: `null`
-  - key: `null`
-  - cache: `false`
-  - filter: No action
-  
-- Example:
+#### `cache` <sub><sup>(optional)</sup></sub>
+- Type: `Boolean`
+- Default: `false`
+
+#### `filter` <sub><sup>(optional)</sup></sub>
+- Type: `Function` returns `Array` of results values
+  - Parameters: (`list`)
+- Default: No action
+
+##### Example:
 
 <!-- tabs:start -->
 #### ** Array (Strings) **
@@ -110,23 +127,26 @@ data: {
 ```
 <!-- tabs:end -->
 
-### trigger <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Engine event & condition trigger.
+### trigger <sub><sup>(optional)</sup></sub>
+
+> Engine event & condition trigger
 
 - Type: `Object`
-- Methods:
-  - event: `Array` of [events](https://developer.mozilla.org/en-US/docs/Web/Events) <small>(optional)</small>
-  - condition: `Function` <small>(optional)</small>
-    - 2 parameters `(event, queryValue)` returns `Boolean` 
 
-- Defaults:
-  - event: `["input"]`
-  - condition: if input field **NOT** empty and greater or equal threshold
-  
-- Example:
+##### Methods:
+
+#### `event` <sub><sup>(optional)</sup></sub>
+- Type: `Array` of [events](https://developer.mozilla.org/en-US/docs/Web/Events)
+- Default: [`"input"`]
+
+#### `condition` <sub><sup>(optional)</sup></sub>
+- Type: `Function` returns `Boolean`
+  - Parameters: (`event`, `queryValue`)
+- Default: if input field **NOT** empty **and** greater than or equal threshold
+
+##### Example:
 
 ```js
 trigger: {
@@ -137,21 +157,22 @@ trigger: {
 },
 ```
 
-### query <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Query interceptor.
+### query <sub><sup>(optional)</sup></sub>
+
+> Query interceptor
 
 - Type: `Object`
-- Methods:
-  - manipulate: `Function` <small>(optional)</small>
-    - 1 parameter `(query)` returns `String`
 
-- Defaults:
-  - manipulate: Returns raw input value
-  
-- Example:
+##### Methods:
+
+#### `manipulate` <sub><sup>(optional)</sup></sub>
+  - Type: `Function` returns `String`
+    - Parameters: (`query`)
+  - Default: Returns raw input value
+
+##### Example:
 
 ```js
 query: {
@@ -161,140 +182,161 @@ query: {
 },
 ```
 
-### placeHolder <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Input field place holder text value.
+### placeHolder <sub><sup>(optional)</sup></sub>
 
-- Type: `String` <small>(optional)</small>
+> Input field place holder text value
 
-- Defaults: `Blank/Empty`
-  
-- Example:
+- Type: `String`
+- Default: `Blank/Empty`
+
+##### Example:
 
 ```js
 placeHolder: "Search...",
 ```
 
-### observer <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Input field observer.
+### observer <sub><sup>(optional)</sup></sub>
 
-- Type: `Boolean` <small>(optional)</small>
+> Input field observer
 
-- Defaults: `false`
-  
-- Example:
+- Type: `Boolean`
+- Default: `false`
+
+##### Example:
 
 ```js
 observer: false,
 ```
 
-### threshold <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Minimum characters length before engine starts rendering results.
+### threshold <sub><sup>(optional)</sup></sub>
 
-- Type: `Integer` <small>(optional)</small>
+> Minimum characters length before engine starts rendering results
 
-- Defaults: `1`
-  
-- Example:
+- Type: `Integer`
+- Default: `1`
+
+##### Example:
 
 ```js
 threshold: 2,
 ```
 
-### debounce <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Minimum duration after typing is in idle state for engine to kick in.
+### debounce <sub><sup>(optional)</sup></sub>
 
-- Type: `Integer` <small>(optional)</small>
+> Minimum duration after typing is in idle state for engine to kick in
 
-- Defaults: `0`
-  
-- Example:
+- Type: `Integer`
+- Default: `0`
+
+##### Example:
 
 ```js
 debounce: 300, // Milliseconds value
 ```
 
-### searchEngine <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Search engine Type/Mode.
+### searchEngine <sub><sup>(optional)</sup></sub>
 
-- Type: `String` | `Function` <small>(optional)</small>
+> Search engine Type/Mode
+
+- Type: `String` | `Function`
   - `String` lowerCase `"strict"` | `"loose"`
-  - `Function` with 2 parameters `(query, record)` returns 1 `String` of each match individually
+  - `Function` with 2 parameters (`query`, `record`) returns 1 `String` of each match individually
+- Default: `"strict"`
 
-- Defaults: `"strict"`
-  
-- Example:
+##### Example:
 
 ```js
 searchEngine: "strict",
 ```
 
-### diacritics <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Search engine diacritics handler.
+### diacritics <sub><sup>(optional)</sup></sub>
 
-- Type: `Boolean` <small>(optional)</small>
+> Search engine diacritics handler
 
-- Defaults: `false`
-  
-- Example:
+- Type: `Boolean`
+- Default: `false`
+
+##### Example:
 
 ```js
 diacritics: "strict",
 ```
 
-### resultsList <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Rendered results list element.
+### resultsList <sub><sup>(optional)</sup></sub>
 
-- Type: `Object` <small>(optional)</small>
+> Rendered results list element
 
-- Methods:
-  - render: `Boolean` <small>(optional)</small>
-  - element: `String` of [element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) <small>(optional)</small>
-  - idName: `String` of id value <small>(optional)</small>
-  - className: `String` of class value <small>(optional)</small>
-  - destination: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` <small>(optional)</small>
-  - position: `String` of [position](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement#parameters) <small>(optional)</small>
-  - container: `Function` <small>(optional)</small>
-    - 2 parameter (element, data) with no return
-  - maxResults: `Integer` <small>(optional)</small>
-  - navigation: `Function` <small>(optional)</small>
-    - 1 parameter (list) with no return
-  - noResults: `Function` <small>(optional)</small>
-    - 2 parameters (list, query) with no return
+- Type: `Object`
 
-- Defaults:
-  - render: `true`
-  - element: `ul`
-  - idName: `autoComplete_list`
-  - className: `undefined`
-  - destination: `#autoComplete`
-  - position: `afterend`
-  - container: `Function`
-  - maxResults: `5`
-  - navigation: `default` navigation behavior
-  - noResults: No action
-  
-- Example:
+##### Methods:
+
+#### `render` <sub><sup>(optional)</sup></sub>
+  - Type: `Boolean`
+  - Default: `true`
+
+#### `element` <sub><sup>(optional)</sup></sub>
+  - Type: `String` of [element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+  - Default: `ul`
+
+#### `idName` <sub><sup>(optional)</sup></sub>
+  - Type: `String` of id value
+  - Default: `autoComplete_list`
+
+#### `className` <sub><sup>(optional)</sup></sub>
+  - Type: `String` of class value
+  - Default: No classes
+
+#### `destination` <sub><sup>(optional)</sup></sub>
+  - Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function`
+  - Default: `#autoComplete`
+
+#### `position` <sub><sup>(optional)</sup></sub>
+- Type: `String` of [position](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement#parameters)
+- Default: `afterend`
+
+#### `container` <sub><sup>(optional)</sup></sub>
+- Type: `Function` with no return
+- Parameters: (`element`, `data`)
+- Default: `Function`
+
+#### `maxResults` <sub><sup>(optional)</sup></sub>
+- Type: `Integer`
+- Default: `5`
+
+#### `tabSelect` <sub><sup>(optional)</sup></sub>
+- Type: `Boolean`
+- Default: `false`
+
+#### `scroll` <sub><sup>(optional)</sup></sub>
+- Type: `String` of animation [behavior](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView#parameters)
+- Options: `auto` or `smooth`
+- Default: `auto`
+
+#### `navigation` <sub><sup>(optional)</sup></sub>
+- Type: `Function` with no return
+- Parameters: (`event`)
+- Default: `default` navigation behavior
+
+#### `noResults` <sub><sup>(optional)</sup></sub>
+- Type: `Function` with no return
+- Parameters: (`list`, `query`)
+- Default: No action
+
+##### Example:
 
 ```js
 resultsList: {
@@ -321,38 +363,48 @@ resultsList: {
 },
 ```
 
-### resultItem <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Rendered result item element.
+### resultItem <sub><sup>(optional)</sup></sub>
 
-- Type: `Object` <small>(optional)</small>
+> Rendered result item element
 
-- Methods:
-  - element: `String` of [element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) <small>(optional)</small>
-  - idName: `String` of id value <small>(optional)</small>
-  - className: `String` of class value <small>(optional)</small>
-  - content: `Function` <small>(optional)</small>
-    - 2 parameters (element, data) with no return
-  - highlight: `Object` <small>(optional)</small>
-    - render: `Boolean` <small>(optional)</small>
-    - className: `String` of class value <small>(optional)</small>
-  - selected: `Object` <small>(optional></small>
-    - className: `String` of class value <small>(optional)</small>
+- Type: `Object`
 
-- Defaults:
-  - element: `li`
-  - idName: `undefined_[index]`
-  - className: `autoComplete_result`
-  - content: `Function`
-  - highlight:
-    - render: `false`
-    - className: `"autoComplete_highlighted"`
-  - selected:
-    - className: `"autoComplete_selected"`
-  
-- Example:
+##### Methods:
+
+#### `element` <sub><sup>(optional)</sup></sub>
+- Type: `String` of [element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+- Default: `li`
+
+#### `idName` <sub><sup>(optional)</sup></sub>
+- Type: `String` of id value
+- Default: `autoComplete_result_[index]`
+
+#### `className` <sub><sup>(optional)</sup></sub>
+- Type: `String` of class value
+- Default: No classes
+
+#### `content` <sub><sup>(optional)</sup></sub>
+- Type: `Function` with no return
+- Parameters: (`element`, `data`)
+- Default: `Function`
+
+#### `highlight` <sub><sup>(optional)</sup></sub>
+- Type: `Object`
+  - render: `Boolean`
+  - className: `String` of class value
+- Defaults: 
+  - render: `false`
+  - className: `"autoComplete_highlighted"`
+
+#### `selected` <sub><sup>(optional)</sup></sub>
+- Type: `Object` <small>(optional></small>
+  - className: `String` of class value
+- Default: 
+  - className: `"autoComplete_selected"`
+
+##### Example:
 
 ```js
 resultItem: {
@@ -371,18 +423,17 @@ resultItem: {
 },
 ```
 
-### onSelection <sub><sup>(optional)</sup></sub>
-
 ***
 
-> Action script onSelection event.
+### onSelection <sub><sup>(optional)</sup></sub>
 
-- Type: `Function` <small>(optional)</small>
-    - 1 parameter (feedback) with no return
+> Action script onSelection event
 
-- Defaults: No action
-  
-- Example:
+- Type: `Function` with no return
+- Parameters: (`feedback`)
+- Default: No action
+
+##### Example:
 
 ```js
 onSelection: (feedback) => {
@@ -390,15 +441,155 @@ onSelection: (feedback) => {
 },
 ```
 
-## Events
+***
 
-### init
+## APIs
+*All examples assumes that the "autoComplete" new instance is assigned to an "autoCompleteJS" named variable*
 
 ***
 
+### preInit()
+
+> Runs `preInit()` core function to start watching the `DOM` until the selected input is ready then runs `init()` automatically
+
+##### Example:
+
+```js
+autoCompleteJS.preInit();
+```
+
+***
+
+### init()
+
+> Runs `init()` core function which is responsible for the following tasks in order:
+
+1. Applying `placeholder` text if set
+2. Setting `input` field attributes
+3. Creating `wrapper` element and moving the selected `input` inside it
+4. Creating new empty `list`
+5. Attaching all event listeners on the `_events` list
+
+##### Example:
+
+```js
+autoCompleteJS.init();
+```
+
+***
+
+### start()
+
+> Runs `start()` core function which is responsible for the following tasks in order:
+
+1. Getting the `input` query value
+2. Manipulating `query` value
+3. Checking `trigger` condition validity to proceed
+4. Fetching `data` from `src` or `store` if cached
+5. Start matching results
+6. Rendering `list` if activated
+
+##### Example:
+
+```js
+autoCompleteJS.start();
+```
+
+***
+
+### open()
+
+> Opens `resultsList` if not empty
+
+##### Example:
+
+```js
+autoCompleteJS.open();
+```
+
+***
+
+### next()
+
+> Navigates to the next `resultItem` on the list
+
+##### Example:
+
+```js
+autoCompleteJS.next();
+```
+
+***
+
+### previous()
+
+> Navigates to the previous `resultItem` on the list
+
+##### Example:
+
+```js
+autoCompleteJS.previous();
+```
+
+***
+
+### gotTo(index)
+
+> Navigates to a specific `resultItem` on the list by its `index` number
+
+##### Example:
+
+```js
+autoCompleteJS.gotTo(1);
+```
+
+***
+
+### select(index)
+
+> Selects a `resultItem` from the list by its `index` number
+
+##### Example:
+
+```js
+autoCompleteJS.select();
+```
+
+***
+
+### close()
+
+> Closes the `resultsList` if opened
+
+##### Example:
+
+```js
+autoCompleteJS.close();
+```
+
+***
+
+### unInit()
+
+> Removes all the event listeners on the `_events` list
+
+##### Example:
+
+```js
+autoCompleteJS.unInit();
+```
+
+***
+
+## Events
+
+***
+
+### init
+
 > Fires after `autoComplete.js` engine is initialized and ready
 
-- Example:
+##### Example:
 
 ```js
 document.querySelector("#autoComplete").addEventListener("init", function (event) {
@@ -406,83 +597,88 @@ document.querySelector("#autoComplete").addEventListener("init", function (event
 });
 ```
 
-### response
-
 ***
 
-> Fires after fetching data is complete and data is ready
+### response
 
-- Example:
+> Fires after fetching the `data` is completed and the `data` is ready
+
+##### Example:
 
 ```js
 document.querySelector("#autoComplete").addEventListener("response", function (event) {
+    // "event.detail" carries the returned data values
     console.log(event.detail);
 });
 ```
+
+***
 
 ### results
 
-***
+> Fires after the `search` operation is done and matching results are ready
 
-> Fires after search operation is done and matching results are ready
-
-- Example:
+##### Example:
 
 ```js
 document.querySelector("#autoComplete").addEventListener("results", function (event) {
+    // "event.detail" carries the matching results values
     console.log(event.detail);
 });
 ```
+
+***
 
 ### open
 
-***
+> Fires after the results list is opened
 
-> Fires after opening the results list
-
-- Example:
+##### Example:
 
 ```js
 document.querySelector("#autoComplete").addEventListener("open", function (event) {
+    // "event.detail" carries the autoComplete.js "dataFeedback" object
     console.log(event.detail);
 });
 ```
+
+***
 
 ### navigate
 
-***
-
 > Fires on every "resultsList" navigation interaction
 
-- Example:
+##### Example:
 
 ```js
 document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
+    // "event.detail" carries the autoComplete.js "dataFeedback" object
     console.log(event.detail);
 });
 ```
+
+***
 
 ### close
 
-***
-
 > Fires after "resultsList" is closed
 
-- Example:
+##### Example:
 
 ```js
 document.querySelector("#autoComplete").addEventListener("close", function (event) {
+    // "event.detail" carries the autoComplete.js "dataFeedback" object
     console.log(event.detail);
 });
 ```
 
-### unInit
-
 ***
+
+### unInit
 
 > Fires after `autoComplete.js` engine is un-initialized and detached
 
-- Example:
+##### Example:
 
 ```js
 document.querySelector("#autoComplete").addEventListener("unInit", function (event) {

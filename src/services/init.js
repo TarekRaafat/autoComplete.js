@@ -1,5 +1,4 @@
 import create from "../helpers/creator";
-import debouncer from "../helpers/debouncer";
 import { addEventListeners } from "../controllers/eventController";
 import eventEmitter from "../helpers/eventEmitter";
 
@@ -11,6 +10,7 @@ export default (ctx) => {
     role: "combobox",
     "aria-expanded": false,
   };
+
   // InputField attributes
   const inputAttributes = {
     "aria-haspopup": true,
@@ -22,16 +22,16 @@ export default (ctx) => {
   // Set placeholder attribute value
   if (placeHolder) inputAttributes.placeholder = placeHolder;
 
-  // Set "inputField" attributes
-  create(ctx.input, inputAttributes);
-
   // Create wrapper element
   ctx.wrapper = create("div", {
-    className: ctx.name + "_wrapper",
+    class: ctx.name + "_wrapper",
     around: ctx.input,
     "aria-owns": resultsList.idName,
     ...cmnAttributes,
   });
+
+  // Set "inputField" attributes
+  create(ctx.input, inputAttributes);
 
   // Create new list element
   ctx.list = create(resultsList.element, {
@@ -43,7 +43,7 @@ export default (ctx) => {
       resultsList.position,
     ],
     id: resultsList.idName,
-    class: resultsList.classList,
+    ...(resultsList.className && { class: resultsList.className }),
     role: "listbox",
   });
 

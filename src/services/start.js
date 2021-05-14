@@ -4,14 +4,14 @@ import { dataStore, findMatches } from "../controllers/dataController";
 import eventEmitter from "../helpers/eventEmitter";
 import { renderList, closeList } from "../controllers/listController";
 
-export default async function (ctx, event) {
+export default async function (ctx) {
   let { input, data, resultsList } = ctx;
   // Prepare raw "inputField" value
   const inputValue = getInputValue(input);
   // Prepare manipulated query value
   const query = prepareQuery(ctx, inputValue);
   // Get trigger decision
-  const triggerCondition = checkTriggerCondition(ctx, event, query);
+  const triggerCondition = checkTriggerCondition(ctx, query);
 
   // Validate trigger condition
   if (triggerCondition) {

@@ -26,6 +26,8 @@ yarn add @tarekraafat/autocomplete.js
 
 <!-- tabs:end -->
 
+***
+
 ## CDN
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 <!-- tabs:start -->
@@ -79,6 +81,9 @@ yarn add @tarekraafat/autocomplete.js
 ```
 
 <!-- tabs:end -->
+
+***
+
 
 ## Direct
 [![GitHub package.json version](https://img.shields.io/github/package-json/v/TarekRaafat/autoComplete.js)](https://badge.fury.io/gh/tarekraafat%2FautoComplete.js)

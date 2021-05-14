@@ -49,7 +49,7 @@ const addEventListeners = (ctx) => {
 
   // Add input field events
   ctx.trigger.event.forEach((eventType) => {
-    publicEvents.input[eventType] = debouncer((event) => ctx.start(ctx, event), ctx.debounce);
+    publicEvents.input[eventType] = debouncer(ctx.start, ctx.debounce);
   });
 
   // Add private events to public events list

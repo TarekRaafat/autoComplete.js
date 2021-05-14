@@ -2,9 +2,9 @@
 
 This quick start is intended for beginner to advanced developers
 
-## Quick Start <!-- {docsify-ignore} -->
-
 ***
+
+## Quick Start <!-- {docsify-ignore} -->
 
 It's very easy to get started with `autoComplete.js`.
 

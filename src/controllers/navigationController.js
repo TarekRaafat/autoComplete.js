@@ -19,7 +19,7 @@ const goTo = (index, ctx) => {
   let { list, state } = ctx;
   const results = list.getElementsByTagName(ctx.resultItem.element);
 
-  if (results.length) {
+  if (ctx.isOpened && results.length) {
     // Previous cursor state
     state = ctx.cursor;
 
@@ -64,9 +64,9 @@ const goTo = (index, ctx) => {
  *
  * @return {void}
  */
-const next = (ctx) => {
+const next = function (ctx) {
   const index = ctx.cursor + 1;
-  ctx.goTo(index, ctx);
+  goTo(index, ctx);
 };
 
 /**
@@ -78,7 +78,7 @@ const next = (ctx) => {
  */
 const previous = (ctx) => {
   const index = ctx.cursor - 1;
-  ctx.goTo(index, ctx);
+  goTo(index, ctx);
 };
 
 /**
@@ -88,7 +88,7 @@ const previous = (ctx) => {
  * @param {Object} event - "keydown" Object
  *
  */
-const navigate = (ctx, event) => {
+const navigate = function (ctx, event) {
   const key = event.keyCode;
   const selectedItem = ctx.resultItem.selected;
   classList = selectedItem ? selectedItem.className.split(" ") : "";
@@ -101,7 +101,7 @@ const navigate = (ctx, event) => {
       event.preventDefault();
 
       // Move cursor
-      ctx[key === 40 ? "next" : "previous"](ctx);
+      key === 40 ? next(ctx) : previous(ctx);
 
       break;
     // Enter

@@ -164,9 +164,9 @@
   }
 
   var configure = (function (ctx) {
-    var selector = ctx.selector,
-        options = ctx.options;
-    ctx.input = typeof selector === "string" ? document.querySelector(selector) : selector();
+    var options = ctx.options,
+        resultsList = ctx.resultsList,
+        resultItem = ctx.resultItem;
     var inject = function inject(option) {
       for (var subOption in options[option]) {
         if (_typeof(options[option][subOption]) === "object" && !options[option][subOption].length) {
@@ -190,6 +190,11 @@
         ctx[option] = options[option];
       }
     }
+    ctx.selector = "#" + ctx.name;
+    resultsList.destination = resultsList.destination || ctx.selector;
+    resultsList.idName = resultsList.idName || ctx.name + "_list_" + ctx.id;
+    resultItem.idName = resultItem.idName || ctx.name + "_result";
+    ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
   });
 
   var preInit = (function (ctx) {
@@ -235,11 +240,9 @@
   var debouncer = (function (callback, delay) {
     var inDebounce;
     return function () {
-      var context = this;
-      var args = arguments;
       clearTimeout(inDebounce);
       inDebounce = setTimeout(function () {
-        return callback.apply(context, args);
+        return callback();
       }, delay);
     };
   });
@@ -267,12 +270,14 @@
     if (matches.length || resultsList.noResults) {
       var fragment = document.createDocumentFragment();
       results.forEach(function (result, index) {
-        var element = create(resultItem.element, {
-          id: "".concat(resultItem.idName, "_").concat(index),
-          "class": resultItem.className,
+        var element = create(resultItem.element, _objectSpread2(_objectSpread2({
+          id: "".concat(resultItem.idName, "_").concat(index)
+        }, resultItem.className && {
+          "class": resultItem.className
+        }), {}, {
           role: "option",
           innerHTML: result.match
-        });
+        }));
         if (resultItem.content) resultItem.content(element, result);
         fragment.appendChild(element);
       });
@@ -299,6 +304,7 @@
       ctx.input.setAttribute(ariaActive$1, "");
       list.setAttribute("hidden", "");
       ctx.isOpened = false;
+      ctx.cursor = -1;
       eventEmitter(ctx, "close");
     }
   };
@@ -323,7 +329,7 @@
     var list = ctx.list,
         state = ctx.state;
     var results = list.getElementsByTagName(ctx.resultItem.element);
-    if (results.length) {
+    if (ctx.isOpened && results.length) {
       var _results$index$classL;
       state = ctx.cursor;
       if (index >= results.length) index = 0;
@@ -347,11 +353,11 @@
   };
   var next = function next(ctx) {
     var index = ctx.cursor + 1;
-    ctx.goTo(index, ctx);
+    goTo(index, ctx);
   };
   var previous = function previous(ctx) {
     var index = ctx.cursor - 1;
-    ctx.goTo(index, ctx);
+    goTo(index, ctx);
   };
   var navigate = function navigate(ctx, event) {
     var key = event.keyCode;
@@ -361,7 +367,7 @@
       case 40:
       case 38:
         event.preventDefault();
-        ctx[key === 40 ? "next" : "previous"](ctx);
+        key === 40 ? next(ctx) : previous(ctx);
         break;
       case 13:
         event.preventDefault();
@@ -424,9 +430,7 @@
       }
     };
     ctx.trigger.event.forEach(function (eventType) {
-      publicEvents.input[eventType] = debouncer(function (event) {
-        return ctx.start(ctx, event);
-      }, ctx.debounce);
+      publicEvents.input[eventType] = debouncer(ctx.start, ctx.debounce);
     });
     if (ctx.resultsList.render) {
       eventsListManager(privateEvents, function (event, element) {
@@ -456,19 +460,21 @@
       "aria-autocomplete": "both"
     }, cmnAttributes);
     if (placeHolder) inputAttributes.placeholder = placeHolder;
-    create(ctx.input, inputAttributes);
     ctx.wrapper = create("div", _objectSpread2({
-      className: ctx.name + "_wrapper",
+      "class": ctx.name + "_wrapper",
       around: ctx.input,
       "aria-owns": resultsList.idName
     }, cmnAttributes));
-    ctx.list = create(resultsList.element, {
+    create(ctx.input, inputAttributes);
+    ctx.list = create(resultsList.element, _objectSpread2(_objectSpread2({
       hidden: "hidden",
       dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
-      id: resultsList.idName,
-      "class": resultsList.classList,
+      id: resultsList.idName
+    }, resultsList.className && {
+      "class": resultsList.className
+    }), {}, {
       role: "listbox"
-    });
+    }));
     addEventListeners(ctx);
     eventEmitter(ctx, "init");
   });
@@ -484,20 +490,20 @@
     var query = ctx.query;
     return query && query.manipulate ? query.manipulate(input) : formatRawInputValue(ctx, input);
   };
-  var highlightChar = function highlightChar(classList, value) {
-    return "<mark class=\"".concat(classList, "\">").concat(value, "</mark>");
+  var highlightChar = function highlightChar(className, value) {
+    return "<mark class=\"".concat(className, "\">").concat(value, "</mark>");
   };
 
-  var checkTriggerCondition = (function (ctx, event, query) {
+  var checkTriggerCondition = (function (ctx, query) {
     query = query.replace(/ /g, "");
     var condition = ctx.trigger.condition;
-    return condition ? condition(event, query) : query.length >= ctx.threshold;
+    return condition ? condition(query) : query.length >= ctx.threshold;
   });
 
   var search = (function (ctx, query, record) {
     var formattedRecord = formatRawInputValue(ctx, record);
     var resultItemHighlight = ctx.resultItem.highlight;
-    var classList = resultItemHighlight ? resultItemHighlight.className : "";
+    var className = resultItemHighlight ? resultItemHighlight.className : "";
     var highlight = resultItemHighlight ? resultItemHighlight.render : "";
     if (ctx.searchEngine === "loose") {
       query = query.replace(/ /g, "");
@@ -505,7 +511,7 @@
       var cursor = 0;
       var match = Array.from(record).map(function (character, index) {
         if (cursor < queryLength && formattedRecord[index] === query[cursor]) {
-          character = highlight ? highlightChar(classList, character) : character;
+          character = highlight ? highlightChar(className, character) : character;
           cursor++;
         }
         return character;
@@ -515,7 +521,7 @@
       if (formattedRecord.includes(query)) {
         var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
         query = pattern.exec(record);
-        var _match = highlight ? record.replace(query, highlightChar(classList, query)) : record;
+        var _match = highlight ? record.replace(query, highlightChar(className, query)) : record;
         return _match;
       }
     }
@@ -582,7 +588,7 @@
     return results;
   };
 
-  function start (ctx, event) {
+  function start (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
       var input, data, resultsList, inputValue, query, triggerCondition;
@@ -591,7 +597,7 @@
       resultsList = ctx.resultsList;
       inputValue = getInputValue(input);
       query = prepareQuery(ctx, inputValue);
-      triggerCondition = checkTriggerCondition(ctx, event, query);
+      triggerCondition = checkTriggerCondition(ctx, query);
       if (triggerCondition) {
         var results;
         return dataStore(ctx).then(function ($await_2) {
@@ -661,8 +667,8 @@
 
   function autoComplete(config) {
     this.options = config;
+    this.id = autoComplete.instances = (autoComplete.instances || 0) + 1;
     this.name = "autoComplete";
-    this.selector = "#" + this.name;
     this.trigger = {
       event: ["input"]
     };
@@ -670,18 +676,13 @@
     this.debounce = 0;
     this.resultsList = {
       render: true,
-      destination: this.selector,
       position: "afterend",
       element: "ul",
-      idName: this.name + "_list",
       maxResults: 5
     };
     this.resultItem = {
       element: "li",
-      className: this.name + "_result",
-      highlight: {
-        className: this.name + "_highlighted"
-      }
+      highlight: {}
     };
     configure(this);
     stage(this, autoComplete);

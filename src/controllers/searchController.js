@@ -12,7 +12,7 @@ import { formatRawInputValue, highlightChar } from "../helpers/io";
 export default (ctx, query, record) => {
   const formattedRecord = formatRawInputValue(ctx, record);
   const resultItemHighlight = ctx.resultItem.highlight;
-  const classList = resultItemHighlight ? resultItemHighlight.className : "";
+  const className = resultItemHighlight ? resultItemHighlight.className : "";
   const highlight = resultItemHighlight ? resultItemHighlight.render : "";
 
   if (ctx.searchEngine === "loose") {
@@ -27,7 +27,7 @@ export default (ctx, query, record) => {
         // Matching case
         if (cursor < queryLength && formattedRecord[index] === query[cursor]) {
           // Highlight matching character if active
-          character = highlight ? highlightChar(classList, character) : character;
+          character = highlight ? highlightChar(className, character) : character;
           // Move cursor position
           cursor++;
         }
@@ -44,7 +44,7 @@ export default (ctx, query, record) => {
       const pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
       query = pattern.exec(record);
       // Highlight matching characters if active
-      const match = highlight ? record.replace(query, highlightChar(classList, query)) : record;
+      const match = highlight ? record.replace(query, highlightChar(className, query)) : record;
 
       return match;
     }

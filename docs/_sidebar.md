@@ -9,7 +9,7 @@
 - 
   - [<div class="ps-icon ps-icon-puzzle"></div> Plugins](plugins.md "Plugins | autoComplete.js")
   - [<div class="ps-icon ps-icon-laptop"></div> Browser Support](browsers-support.md "Browser Support | autoComplete.js")
-  - <div class="title"><div class="ps-icon ps-icon-book"></div> How-to Guides <small>(Coming Soon)</small></div>
+  - [<div class="ps-icon ps-icon-book"></div> How-to Guide](how-to-guide.md  "How-to Guide | autoComplete.js")
 - <div class="title">References</div>
 - 
   - [<div class="ps-icon ps-icon-headset"></div> Support](support.md "Support | autoComplete.js")

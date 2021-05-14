@@ -30,7 +30,7 @@ const renderList = (ctx) => {
       // Create new list item
       const element = create(resultItem.element, {
         id: `${resultItem.idName}_${index}`,
-        class: resultItem.className,
+        ...(resultItem.className && { class: resultItem.className }),
         role: "option",
         innerHTML: result.match,
       });
@@ -100,6 +100,8 @@ const closeList = (ctx) => {
     list.setAttribute("hidden", "");
     // Set list to closed
     ctx.isOpened = false;
+    // Reset cursor
+    ctx.cursor = -1;
 
     /**
      * @emit {close} event after "resultsList" is closed

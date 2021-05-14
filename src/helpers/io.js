@@ -51,11 +51,11 @@ const prepareQuery = (ctx, input) => {
 /**
  * Highlight result item
  *
- * @param {Array} classList - of highlighted character
+ * @param {Array} className - of highlighted character
  * @param {String} value - user's raw search query value
  *
  * @return {String} - highlighted character
  */
-const highlightChar = (classList, value) => `<mark class="${classList}">${value}</mark>`;
+const highlightChar = (className, value) => `<mark class="${className}">${value}</mark>`;
 
 export { getInputValue, prepareQuery, formatRawInputValue, highlightChar };

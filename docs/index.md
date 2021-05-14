@@ -1,10 +1,9 @@
-<div style="min-height: 100vh" align="center">
+<div class="cover">
 
+<div>
+<a href="/autoComplete.js/demo/" target="\_blank">
 <img src="./img/autoComplete.js.svg" alt= "autoComplete.js Logo" id="logo">
-
-<p style="font-size: 24px; color: #34495e;">Simple autocomplete pure vanilla Javascript library. :rocket: <a href="/autoComplete.js/demo/" target="\_blank" id="demo">Live Demo</a> <strong>v{{minVersion}}</strong></p>
-
-<p style="max-width: 710px;">autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed,<br>high versatility and seamless integration with a wide range of projects & systems.</p>
+</a>
 
 <br>
 
@@ -17,26 +16,33 @@
 <a href="https://www.producthunt.com/posts/autocomplete-js?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-autocomplete-js" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=141833&theme=light&period=weekly" alt="autoComplete.js - Simple autocomplete pure vanilla Javascript library. | Product Hunt Embed" style="margin: 30px 0;width: 250px; height: 54px;" width="250px" height="54px" /></a>
 
 <div class="sharethis-inline-share-buttons"></div>
+</div>
 
 </div>
 
-## Features <!-- {docsify-ignore} -->
-
 ***
+
+# autoComplete.js <!-- {docsify-ignore} -->
+
+> Simple autocomplete pure vanilla Javascript library. :rocket: <a href="/autoComplete.js/demo/" target="\_blank" id="demo">Live Demo</a>
+
+## What it is? <!-- {docsify-ignore} -->
+
+autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed,
+high versatility and seamless integration with a wide range of projects & systems.
+
+## Features <!-- {docsify-ignore} -->
 
 -  Pure Vanilla Javascript
 -  Zero Dependencies
--  Simple & Easy to use
--  Extremely Lightweight
--  Blazing Fast
--  Versatile
--  Hackable & Highly Customizable
+-  Simple & Lightweight
+-  Useful plugin API
+-  WAI-ARIA Compliant
+-  Highly Customizable
 -  Well Documented
 
 
 ## Author <!-- {docsify-ignore} -->
-
-***
 
 <div class="ps-icon ps-icon-guy-big-smile"></div> <b>Tarek Raafat</b>
 
@@ -45,8 +51,6 @@
 - Github: [github.com/TarekRaafat](https://github.com/TarekRaafat/)
 
 ## License <!-- {docsify-ignore} -->
-
-* * *
 
 `autoComplete.js` is released under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
 
