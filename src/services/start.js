@@ -23,7 +23,7 @@ export default async function (ctx) {
      **/
     eventEmitter({ input, dataFeedback: data.store }, "response");
 
-    // Start autoComplete engine
+    // Find results matching to the query
     const results = data.filter ? data.filter(findMatches(ctx, query)) : findMatches(ctx, query);
 
     // Prepare data feedback object
@@ -35,11 +35,11 @@ export default async function (ctx) {
     };
 
     /**
-     * @emit {results} event on search response with results
+     * @emit {results} event on search response with matches
      **/
     eventEmitter(ctx, "results");
 
-    // No list rendering if "resultsList" NOT active
+    // Stop list rendering if "resultsList" NOT active
     if (!resultsList.render) return;
 
     // Generate & Render "resultsList"
