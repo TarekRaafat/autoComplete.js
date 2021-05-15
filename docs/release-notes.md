@@ -43,21 +43,21 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: Automatic field wrapping inside `DIV`
   - ➕ Added: `resultsList` navigation auto scrolling for long lists
   - ➕ Added: `resultsList.scroll` API to control scrolling behavior (Thanks 👍 @TimHeinrich) #221
-  - ➕ Added: `resultsList.tabSelect` API to control `tab` button behavior
-  - ➕ Added: `_events` list API methods holds all the current events assigned to `input` & `list`
+  - ➕ Added: `resultsList.tabSelect` API property to control `tab` button behavior
+  - ➕ Added: `_events` list API property holds all the current events assigned to `input` & `list`
   - ➕ Added: `close` API method controls `resultsList` state
   - ➕ Added: `open` API method controls `resultsList` state
   - ➕ Added: `goTo` API method controls `resultsList` navigation by index
   - ➕ Added: `next` API method controls `resultsList` navigation
   - ➕ Added: `previous` API method controls `resultsList` navigation
   - ➕ Added: `select` API method controls `resultsList` selection by index
-  - ➕ Added: `isOpened` API `boolean` method that returns `true` if `resultsList` opened or `false` if closed
-  - ➕ Added: `list` API method holds the entire list element
-  - ➕ Added: `wrapper` API method holds the entire wrapper element
-  - ➕ Added: `cursor` API method returns the index of the current selection or `-1` for idle
-  - ➕ Added: `id` API method returns the current instance number incase of multiple instances
-  - ➕ Added: `name` API method that changes all the `className` properties accordingly
-  - ➕ Added: `options` API method that holds all the manually set `config`
+  - ➕ Added: `isOpened` API `boolean` property that holds `resultsList` state `true` opened `false` closed
+  - ➕ Added: `list` API property holds the entire list element
+  - ➕ Added: `wrapper` API property holds the entire wrapper element
+  - ➕ Added: `cursor` API property returns the index of the current selection or `-1` for idle
+  - ➕ Added: `id` API property returns the current instance number incase of multiple instances
+  - ➕ Added: `name` API property that changes all the `className` properties accordingly
+  - ➕ Added: `options` API property that holds all the manually set `config`
   - ➕ Added: `data.src` fetching error messages to `response` event details (Thanks 👍 @folknor) #207
 
   - 🔝 Updated: `WAI-ARIA` configurations for significantly better support
@@ -70,7 +70,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: The core library architecture for improved code separation
   - 🌀 Changed: API to only include the used methods instead of including also unused ones with `undefined` value
   - 🌀 Changed: `fetch` eventEmitter name to `response`
-  - 🌀 Changed: `inputField` API method name to `input`
+  - 🌀 Changed: `inputField` API property name to `input`
   - 🌀 Changed: `data.results` API method name to `data.filter`
   - 🌀 Changed: `noResults` API to accept `boolean` instead of `function` to be replaced with `resultsList.container`
   - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
