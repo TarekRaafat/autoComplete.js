@@ -7,9 +7,9 @@ import stage from "./controllers/stagingController";
  * @example const autoCompleteJS = new autoComplete({config});
  */
 export default function autoComplete(config) {
-  // User's Configuration
+  // User's Configuration options
   this.options = config;
-  // Default Configuration
+  // Default Configuration options
   this.id = autoComplete.instances = (autoComplete.instances || 0) + 1;
   this.name = "autoComplete";
   this.trigger = { event: ["input"] };
@@ -25,9 +25,9 @@ export default function autoComplete(config) {
     element: "li",
     highlight: {},
   };
-  // Set Configurations
+  // Set all Configurations
   configure(this);
-  // Stage API
+  // Stage API methods
   stage(this, autoComplete);
   // Invoke preInit function if enabled
   // or initiate autoComplete instance directly
