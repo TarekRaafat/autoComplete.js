@@ -12,7 +12,7 @@ export default function autoComplete(config) {
   // Default Configuration options
   this.id = autoComplete.instances = (autoComplete.instances || 0) + 1;
   this.name = "autoComplete";
-  this.trigger = { event: ["input"] };
+  this.trigger = { events: ["input"] };
   this.threshold = 1;
   this.debounce = 0;
   this.resultsList = {

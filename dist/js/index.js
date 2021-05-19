@@ -56,9 +56,6 @@ const autoCompleteJS = new autoComplete({
   placeHolder: "Search for Food & Drinks!",
   debounce: 100,
   threshold: 1,
-  trigger: {
-    event: ["input"],
-  },
   resultsList: {
     element: "ul",
     container: (element, data) => {

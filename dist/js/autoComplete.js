@@ -400,21 +400,23 @@
     }
   };
   var addEventListeners = function addEventListeners(ctx) {
-    var resultsList = ctx.resultsList;
-    var publicEvents = ctx._events = {
-      input: {},
-      list: {}
-    };
+    var events = ctx.events,
+        resultsList = ctx.resultsList;
+    var publicEvents = ctx.events = _objectSpread2({
+      input: _objectSpread2({}, events && events.input)
+    }, resultsList.render && {
+      list: events ? _objectSpread2({}, events.list) : {}
+    });
     var privateEvents = {
-      input: _objectSpread2({
+      input: {
         keydown: function keydown(event) {
           resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
         },
         blur: function blur() {
           closeList(ctx);
         }
-      }, ctx.events && ctx.events.input),
-      list: _objectSpread2({
+      },
+      list: {
         mousedown: function mousedown(event) {
           event.preventDefault();
         },
@@ -428,14 +430,18 @@
             selectItem(ctx, event, index);
           }
         }
-      }, ctx.events && ctx.events.list)
+      }
     };
-    ctx.trigger.event.forEach(function (eventType) {
-      publicEvents.input[eventType] = debouncer(ctx.start, ctx.debounce);
+    ctx.trigger.events.forEach(function (event) {
+      if (!publicEvents.input[event]) {
+        publicEvents.input[event] = debouncer(ctx.start, ctx.debounce);
+      }
     });
-    if (ctx.resultsList.render) {
+    if (resultsList.render) {
       eventsListManager(privateEvents, function (event, element) {
-        publicEvents[element][event] = privateEvents[element][event];
+        if (!publicEvents[element][event]) {
+          publicEvents[element][event] = privateEvents[element][event];
+        }
       });
     }
     eventsListManager(publicEvents, function (event, element) {
@@ -443,8 +449,8 @@
     });
   };
   var removeEventListeners = function removeEventListeners(ctx) {
-    eventsListManager(ctx._events, function (event, element) {
-      ctx[element].removeEventListener(event, ctx._events[element][event]);
+    eventsListManager(ctx.events, function (event, element) {
+      ctx[element].removeEventListener(event, ctx.events[element][event]);
     });
   };
 
@@ -676,7 +682,7 @@
     this.id = autoComplete.instances = (autoComplete.instances || 0) + 1;
     this.name = "autoComplete";
     this.trigger = {
-      event: ["input"]
+      events: ["input"]
     };
     this.threshold = 1;
     this.debounce = 0;

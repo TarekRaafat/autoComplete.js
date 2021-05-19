@@ -11,12 +11,15 @@ const eventsListManager = (events, callback) => {
   }
 };
 
+// Attach all events listeners
 const addEventListeners = (ctx) => {
-  const { resultsList } = ctx;
+  const { events, resultsList } = ctx;
 
-  const publicEvents = (ctx._events = {
-    input: {},
-    list: {},
+  const publicEvents = (ctx.events = {
+    input: {
+      ...(events && events.input),
+    },
+    ...(resultsList.render && { list: events ? { ...events.list } : {} }),
   });
 
   const privateEvents = {
@@ -27,7 +30,6 @@ const addEventListeners = (ctx) => {
       blur: () => {
         closeList(ctx);
       },
-      ...(ctx.events && ctx.events.input),
     },
     list: {
       mousedown: (event) => {
@@ -45,19 +47,22 @@ const addEventListeners = (ctx) => {
           selectItem(ctx, event, index);
         }
       },
-      ...(ctx.events && ctx.events.list),
     },
   };
 
-  // Add input field events
-  ctx.trigger.event.forEach((eventType) => {
-    publicEvents.input[eventType] = debouncer(ctx.start, ctx.debounce);
+  // Add input field trigger events
+  ctx.trigger.events.forEach((event) => {
+    if (!publicEvents.input[event]) {
+      publicEvents.input[event] = debouncer(ctx.start, ctx.debounce);
+    }
   });
 
-  // Add private events to public events list
-  if (ctx.resultsList.render) {
+  // Populate private events to public events list
+  if (resultsList.render) {
     eventsListManager(privateEvents, (event, element) => {
-      publicEvents[element][event] = privateEvents[element][event];
+      if (!publicEvents[element][event]) {
+        publicEvents[element][event] = privateEvents[element][event];
+      }
     });
   }
 
@@ -67,10 +72,11 @@ const addEventListeners = (ctx) => {
   });
 };
 
+// Remove all attached event listeners
 const removeEventListeners = (ctx) => {
   // Remove all attached events
-  eventsListManager(ctx._events, (event, element) => {
-    ctx[element].removeEventListener(event, ctx._events[element][event]);
+  eventsListManager(ctx.events, (event, element) => {
+    ctx[element].removeEventListener(event, ctx.events[element][event]);
   });
 };
 

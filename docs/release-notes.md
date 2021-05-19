@@ -45,8 +45,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: `resultsList` navigation auto scrolling for long lists
   - ➕ Added: `resultsList.scroll` API to control scrolling behavior (Thanks 👍 @TimHeinrich) #221
   - ➕ Added: `resultsList.tabSelect` API property to control `tab` button behavior
-  - ➕ Added: `events` API property that assigns events to `input` & `list` as sub-properties (Thanks 👍 @stell) #223
-  - ➕ Added: `_events` list API property holds all the current events assigned to `input` & `list`
+  - ➕ Added: `events` list API property that holds and assigns events to `input` & `list` (Thanks 👍 @stell) #223
   - ➕ Added: `close` API method controls `resultsList` state
   - ➕ Added: `open` API method controls `resultsList` state
   - ➕ Added: `goTo` API method controls `resultsList` navigation by index
@@ -54,26 +53,26 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: `previous` API method controls `resultsList` navigation
   - ➕ Added: `select` API method controls `resultsList` selection by index
   - ➕ Added: `isOpened` API `boolean` property that holds `resultsList` state `true` opened `false` closed
-  - ➕ Added: `list` API property holds the entire list element
-  - ➕ Added: `wrapper` API property holds the entire wrapper element
-  - ➕ Added: `cursor` API property returns the index of the current selection or `-1` for idle
-  - ➕ Added: `id` API property returns the current instance number incase of multiple instances
+  - ➕ Added: `list` API property holds the entire list html element
+  - ➕ Added: `wrapper` API property holds the entire wrapper html element
+  - ➕ Added: `cursor` API property holds the index of the current selection or `-1` for idle
+  - ➕ Added: `id` API property holds the current instance number
   - ➕ Added: `name` API property that changes all the `className` properties accordingly
-  - ➕ Added: `options` API property that holds all the manually set `config`
+  - ➕ Added: `options` API property that holds all the manually set `config` options
   - ➕ Added: `data.src` fetching error messages to `response` event details (Thanks 👍 @folknor) #207
 
   - 🔝 Updated: `WAI-ARIA` configurations for significantly better support
   - 🔝 Updated: `dataFeedback` event information
 
-  - 🔧 Fixed: `resultsList` eventEmitter unexpected behavior which was firing multiple times
-  - 🔧 Fixed: `resultsList` eventEmitter unexpected behavior which was firing multiple times
+  - 🔧 Fixed: `resultsList` eventEmitters unexpected behavior which was firing multiple times
   - 🔧 Fixed: Empty `className` values do not assign any classes instead of `undefined`
 
   - 🌀 Changed: The core library architecture for improved code separation
-  - 🌀 Changed: API to only include the used methods instead of including also unused ones with `undefined` value
+  - 🌀 Changed: API to only include the used options instead of including unused ones with `undefined` value
   - 🌀 Changed: `fetch` eventEmitter name to `response`
   - 🌀 Changed: `inputField` API property name to `input`
-  - 🌀 Changed: `data.results` API method name to `data.filter`
+  - 🌀 Changed: `trigger.event` API property name to `trigger.events`
+  - 🌀 Changed: `data.results` API property name to `data.filter`
   - 🌀 Changed: `noResults` API to accept `boolean` instead of `function` to be replaced with `resultsList.container`
   - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
 

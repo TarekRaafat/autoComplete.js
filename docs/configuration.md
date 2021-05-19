@@ -137,7 +137,7 @@ data: {
 
 ##### Methods:
 
-#### `event` <sub><sup>(optional)</sup></sub>
+#### `events` <sub><sup>(optional)</sup></sub>
 - Type: `Array` of [events](https://developer.mozilla.org/en-US/docs/Web/Events)
 - Default: [`"input"`]
 
@@ -150,7 +150,7 @@ data: {
 
 ```js
 trigger: {
-    event: ["input"], // Any valid event type name
+    events: ["input"], // Any valid event type name
     condition: (event, queryValue) => {
         return queryValue.replace(/ /g, "").length; // Returns "Boolean"
     }
