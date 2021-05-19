@@ -4,7 +4,7 @@
  * @param {Object} ctx - autoComplete configurations
  * @param {String} name - Name of fired event
  *
- * @return {void}
+ * @returns {void}
  */
 export default (ctx, name) => {
   // Dispatch event on input

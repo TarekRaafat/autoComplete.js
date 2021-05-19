@@ -7,7 +7,7 @@ import { formatRawInputValue, highlightChar } from "../helpers/io";
  * @param {String} query - User's manipulated search query value
  * @param {String} record - Data record string to be compared
  *
- * @return {String} - Matched data record string
+ * @returns {String} - Matched data record string
  */
 export default (ctx, query, record) => {
   const formattedRecord = formatRawInputValue(ctx, record);

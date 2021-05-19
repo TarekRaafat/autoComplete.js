@@ -6,7 +6,7 @@ import create from "./creator";
  * @param {Object} ctx - autoComplete configurations
  * @param {String} inputValue - user's raw search query value
  *
- * @return {String} - Raw "inputField" value as a string
+ * @returns {String} - Raw "inputField" value as a string
  */
 const formatRawInputValue = (ctx, value) => {
   value = value.toLowerCase();
@@ -26,7 +26,7 @@ const formatRawInputValue = (ctx, value) => {
  *
  * @param {Element} inputField - autoComplete "inputField" or textarea element
  *
- * @return {String} - Raw "inputField" value as a string
+ * @returns {String} - Raw "inputField" value as a string
  */
 const getInputValue = (inputField) =>
   inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement
@@ -39,7 +39,7 @@ const getInputValue = (inputField) =>
  * @param {Object} ctx - autoComplete configurations
  * @param {String} input - user's raw search input value
  *
- * @return {String} - Manipulated Query
+ * @returns {String} - Manipulated Query
  */
 const prepareQuery = (ctx, input) => {
   const query = ctx.query;
@@ -53,7 +53,7 @@ const prepareQuery = (ctx, input) => {
  * @param {Array} className - of highlighted character
  * @param {String} value - user's raw search query value
  *
- * @return {String} - highlighted character
+ * @returns {String} - highlighted character
  */
 const highlightChar = (className, value) =>
   create("mark", {

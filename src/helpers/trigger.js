@@ -4,7 +4,7 @@
  * @param {Object} ctx - autoComplete configurations
  * @param {String} query - User's manipulated search query value
  *
- * @return {Boolean} triggerCondition - For autoComplete to run
+ * @returns {Boolean} triggerCondition - For autoComplete to run
  */
 export default (ctx, query) => {
   query = query.replace(/ /g, "");

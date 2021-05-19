@@ -3,7 +3,7 @@ import stage from "./controllers/stagingController";
 
 /**
  * @desc This is autoComplete.js
- * @version 10.0
+ * @version 10.0.0
  * @example const autoCompleteJS = new autoComplete({config});
  */
 export default function autoComplete(config) {
@@ -25,11 +25,17 @@ export default function autoComplete(config) {
     element: "li",
     highlight: {},
   };
-  // Set all Configurations
+  // Set all Configuration options
   configure(this);
   // Stage API methods
   stage(this, autoComplete);
-  // Invoke preInit function if enabled
-  // or initiate autoComplete instance directly
-  this.observer ? this.preInit() : this.init();
+  // Set to run "preInit" if "observer" enabled else "init"
+  const run = this.observer ? this.preInit : this.init;
+  // Check if DOM loaded
+  if (document.readyState !== "loading") {
+    run();
+  } else {
+    // Wait until DOM loaded
+    document.addEventListener("DOMContentLoaded", run);
+  }
 }

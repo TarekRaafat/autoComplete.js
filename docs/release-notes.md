@@ -41,6 +41,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   > This release has several breaking changes, so kindly check all the changes.
 
   - ➕ Added: Automatic field wrapping inside `DIV`
+  - ➕ Added: Document `readyState` listener that initializes the library after `DOM` content is loaded
   - ➕ Added: `resultsList` navigation auto scrolling for long lists
   - ➕ Added: `resultsList.scroll` API to control scrolling behavior (Thanks 👍 @TimHeinrich) #221
   - ➕ Added: `resultsList.tabSelect` API property to control `tab` button behavior

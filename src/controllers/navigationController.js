@@ -13,7 +13,7 @@ const ariaActive = "aria-activedescendant";
  * @param {Number} index - of the selected result item
  * @param {Object} ctx - autoComplete configurations
  *
- * @return {void}
+ * @returns {void}
  */
 const goTo = (index, ctx) => {
   let { list } = ctx;
@@ -62,7 +62,7 @@ const goTo = (index, ctx) => {
  *
  * @param {Object} ctx - autoComplete configurations
  *
- * @return {void}
+ * @returns {void}
  */
 const next = function (ctx) {
   const index = ctx.cursor + 1;
@@ -74,7 +74,7 @@ const next = function (ctx) {
  *
  * @param {Object} ctx - autoComplete configurations
  *
- * @return {void}
+ * @returns {void}
  */
 const previous = (ctx) => {
   const index = ctx.cursor - 1;

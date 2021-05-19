@@ -6,7 +6,7 @@ import selector from "./selector";
  * @param {String} tag - html element
  * @param {Object} options - of the html element
  *
- * @return {HTMLElement} - newly create html element
+ * @returns {HTMLElement} - newly create html element
  */
 export default (tag, options) => {
   const element = typeof tag === "string" ? document.createElement(tag) : tag;

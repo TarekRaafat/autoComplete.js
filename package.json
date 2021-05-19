@@ -1,12 +1,12 @@
 {
   "name": "@tarekraafat/autocomplete.js",
-  "version": "9.1.1",
+  "version": "10.0.0",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "keywords": [
     "simple",
     "autocomplete",
     "autocompletion",
-    "javascript",
+    "autoComplete.js",
     "light",
     "blazing",
     "fast",
@@ -18,7 +18,7 @@
     "customizable",
     "hackable",
     "easy",
-    "intuitive",
+    "javascript",
     "scalable",
     "extensible",
     "autoCompleteJS",

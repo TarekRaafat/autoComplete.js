@@ -686,7 +686,12 @@
     };
     configure(this);
     stage(this, autoComplete);
-    this.observer ? this.preInit() : this.init();
+    var run = this.observer ? this.preInit : this.init;
+    if (document.readyState !== "loading") {
+      run();
+    } else {
+      document.addEventListener("DOMContentLoaded", run);
+    }
   }
 
   return autoComplete;

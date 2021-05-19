@@ -18,7 +18,7 @@ const dataStore = async (ctx) => {
  * @param {Object} ctx - Search engine configurations
  * @param {String} query - User's search query string
  *
- * @return {Array} - Matches
+ * @returns {Array} - Matches
  */
 const findMatches = (ctx, query) => {
   const { data, searchEngine: customSearch } = ctx;

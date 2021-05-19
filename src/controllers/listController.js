@@ -10,7 +10,7 @@ const ariaActive = "aria-activedescendant";
  *
  * @param {Object} ctx - autoComplete configurations
  *
- * @return {Component} - Results list component
+ * @returns {Component} - Results list component
  */
 const renderList = (ctx) => {
   let { resultsList, list, resultItem, dataFeedback } = ctx;
@@ -60,7 +60,7 @@ const renderList = (ctx) => {
  *
  * @param {Object} ctx - autoComplete configurations
  *
- * @return {void}
+ * @returns {void}
  */
 
 const openList = (ctx) => {
@@ -86,7 +86,7 @@ const openList = (ctx) => {
  *
  * @param {Object} ctx - autoComplete configurations
  *
- * @return {void}
+ * @returns {void}
  */
 const closeList = (ctx) => {
   if (ctx.isOpened) {
@@ -115,7 +115,7 @@ const closeList = (ctx) => {
  * @param {Object} event - of selection
  * @param {Number} index - of the selected result item
  *
- * @return {void}
+ * @returns {void}
  */
 const selectItem = (ctx, event, index) => {
   // Check if cursor within list range
