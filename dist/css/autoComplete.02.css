@@ -3,7 +3,7 @@
   position: relative;
 }
 
-#autoComplete {
+.autoComplete_wrapper > input {
   width: 370px;
   height: 40px;
   padding-left: 10px;
@@ -14,18 +14,20 @@
   outline: none;
 }
 
-#autoComplete::placeholder {
+.autoComplete_wrapper > input::placeholder {
   color: rgba(123, 123, 123, 0.5);
   transition: all 0.3s ease;
 }
 
-#autoComplete_list {
+.autoComplete_wrapper > ul {
   position: absolute;
+  max-height: 226px;
+  overflow-y: scroll;
   top: 100%;
   left: 0;
   right: 0;
   padding: 0;
-  margin: 10px 0;
+  margin: 0.5rem 0 0 0;
   border-radius: 4px;
   background-color: #fff;
   border: 1px solid rgba(33, 33, 33, 0.1);
@@ -33,7 +35,7 @@
   outline: none;
 }
 
-.autoComplete_result {
+.autoComplete_wrapper > ul > li {
   padding: 10px 20px;
   list-style: none;
   text-align: left;
@@ -48,58 +50,33 @@
   transition: all 0.2s ease;
 }
 
-.autoComplete_result::selection {
+.autoComplete_wrapper > ul > li::selection {
   color: rgba(#ffffff, 0);
   background-color: rgba(#ffffff, 0);
 }
 
-.autoComplete_result:hover {
+.autoComplete_wrapper > ul > li:hover {
   cursor: pointer;
   background-color: rgba(123, 123, 123, 0.1);
 }
 
-.autoComplete_highlighted {
+.autoComplete_wrapper > ul > li mark {
+  background-color: transparent;
   color: rgba(123, 123, 123, 0.5);
   font-weight: bold;
 }
 
-.autoComplete_highlighted::selection {
+.autoComplete_wrapper > ul > li mark::selection {
   color: rgba(#ffffff, 0);
   background-color: rgba(#ffffff, 0);
 }
 
-.autoComplete_selected {
-  cursor: pointer;
+.autoComplete_wrapper > ul > li[aria-selected="true"] {
   background-color: rgba(123, 123, 123, 0.1);
 }
 
 @media only screen and (max-width: 600px) {
-  .autoComplete_wrapper {
-    width: 320px;
-  }
-
-  #autoComplete {
+  .autoComplete_wrapper > input {
     width: 18rem;
-    background-size: 1.6rem;
-    background-position: left 1.1rem top 0.75rem;
-  }
-
-  #autoComplete_list {
-    margin: 10px;
-  }
-}
-
-@media screen and (-webkit-min-device-pixel-ratio: 0) {
-  #autoComplete {
-    border-width: 1px;
-  }
-}
-
-@-moz-document url-prefix() {
-  #autoComplete {
-    background-size: 1.2rem;
-    background-origin: border-box;
-    border-width: 1px;
-    background-position: left 1.1rem top 0.8rem;
   }
 }
