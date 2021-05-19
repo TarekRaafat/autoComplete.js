@@ -5,7 +5,10 @@ export default (ctx) => {
   // Inject sub options into options
   const inject = (option) => {
     for (const subOption in options[option]) {
-      if (typeof options[option][subOption] === "object" && !options[option][subOption].length) {
+      if (typeof options[option][subOption] === "object") {
+        if (!ctx[option][subOption]) {
+          ctx[option][subOption] = options[option][subOption];
+        }
         for (const subSubOption in options[option][subOption]) {
           ctx[option][subOption][subSubOption] = options[option][subOption][subSubOption];
         }

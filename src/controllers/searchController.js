@@ -12,8 +12,12 @@ import { formatRawInputValue, highlightChar } from "../helpers/io";
 export default (ctx, query, record) => {
   const formattedRecord = formatRawInputValue(ctx, record);
   const resultItemHighlight = ctx.resultItem.highlight;
-  const className = resultItemHighlight.className;
-  const highlight = resultItemHighlight.render || false;
+  let className, highlight;
+
+  if (resultItemHighlight) {
+    className = resultItemHighlight.className;
+    highlight = resultItemHighlight.render;
+  }
 
   if (ctx.searchEngine === "loose") {
     // Query string with no spaces

@@ -27,6 +27,7 @@ const addEventListeners = (ctx) => {
       blur: () => {
         closeList(ctx);
       },
+      ...(ctx.events && ctx.events.input),
     },
     list: {
       mousedown: (event) => {
@@ -44,6 +45,7 @@ const addEventListeners = (ctx) => {
           selectItem(ctx, event, index);
         }
       },
+      ...(ctx.events && ctx.events.list),
     },
   };
 

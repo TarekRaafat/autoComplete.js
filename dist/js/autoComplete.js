@@ -169,7 +169,10 @@
         resultItem = ctx.resultItem;
     var inject = function inject(option) {
       for (var subOption in options[option]) {
-        if (_typeof(options[option][subOption]) === "object" && !options[option][subOption].length) {
+        if (_typeof(options[option][subOption]) === "object") {
+          if (!ctx[option][subOption]) {
+            ctx[option][subOption] = options[option][subOption];
+          }
           for (var subSubOption in options[option][subOption]) {
             ctx[option][subOption][subSubOption] = options[option][subOption][subSubOption];
           }
@@ -403,15 +406,15 @@
       list: {}
     };
     var privateEvents = {
-      input: {
+      input: _objectSpread2({
         keydown: function keydown(event) {
           resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
         },
         blur: function blur() {
           closeList(ctx);
         }
-      },
-      list: {
+      }, ctx.events && ctx.events.input),
+      list: _objectSpread2({
         mousedown: function mousedown(event) {
           event.preventDefault();
         },
@@ -425,7 +428,7 @@
             selectItem(ctx, event, index);
           }
         }
-      }
+      }, ctx.events && ctx.events.list)
     };
     ctx.trigger.event.forEach(function (eventType) {
       publicEvents.input[eventType] = debouncer(ctx.start, ctx.debounce);
@@ -503,8 +506,11 @@
   var search = (function (ctx, query, record) {
     var formattedRecord = formatRawInputValue(ctx, record);
     var resultItemHighlight = ctx.resultItem.highlight;
-    var className = resultItemHighlight.className;
-    var highlight = resultItemHighlight.render || false;
+    var className, highlight;
+    if (resultItemHighlight) {
+      className = resultItemHighlight.className;
+      highlight = resultItemHighlight.render;
+    }
     if (ctx.searchEngine === "loose") {
       query = query.replace(/ /g, "");
       var queryLength = query.length;
@@ -681,8 +687,7 @@
       maxResults: 5
     };
     this.resultItem = {
-      element: "li",
-      highlight: {}
+      element: "li"
     };
     configure(this);
     stage(this, autoComplete);

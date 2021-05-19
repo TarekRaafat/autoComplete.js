@@ -425,6 +425,36 @@ resultItem: {
 
 ***
 
+### events <sub><sup>(optional)</sup></sub>
+
+> Input field & Results list events additions or overriding
+
+- Type: `Object`
+  - input: `Object` of functions with the [event](https://developer.mozilla.org/en-US/docs/Web/Events) type name
+  - list: `Object` of functions with the [event](https://developer.mozilla.org/en-US/docs/Web/Events) type name
+- Default:
+  - input: `keydown` and `blur`
+  - list: `mousedown` and `click`
+
+##### Example:
+
+```js
+events: {
+    input: {
+      focus: (event) => {
+        console.log("Input Field is in focus!");
+      }
+    },
+    list: {
+      scroll: (event) => {
+        console.log("Results List scrolled!");
+      }
+    }
+},
+```
+
+***
+
 ### onSelection <sub><sup>(optional)</sup></sub>
 
 > Action script onSelection event

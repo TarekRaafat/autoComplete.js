@@ -45,6 +45,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: `resultsList` navigation auto scrolling for long lists
   - ➕ Added: `resultsList.scroll` API to control scrolling behavior (Thanks 👍 @TimHeinrich) #221
   - ➕ Added: `resultsList.tabSelect` API property to control `tab` button behavior
+  - ➕ Added: `events` API property that assigns events to `input` & `list` as sub-properties (Thanks 👍 @stell) #223
   - ➕ Added: `_events` list API property holds all the current events assigned to `input` & `list`
   - ➕ Added: `close` API method controls `resultsList` state
   - ➕ Added: `open` API method controls `resultsList` state

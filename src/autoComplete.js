@@ -23,7 +23,6 @@ export default function autoComplete(config) {
   };
   this.resultItem = {
     element: "li",
-    highlight: {},
   };
   // Set all Configuration options
   configure(this);
