@@ -1,4 +1,4 @@
-# How-to Guide
+# How-to Guides
 Guided examples on how-to use autoComplete.js in different use-cases
 
 ***

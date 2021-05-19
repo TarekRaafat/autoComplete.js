@@ -35,7 +35,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.0.0
+### v10.0 ✨
   > <div class="ps-icon ps-icon-warning"></div> Important Note:
   >
   > This release has several breaking changes, so kindly check all the changes.
@@ -60,13 +60,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: `name` API property that changes all the `className` properties accordingly
   - ➕ Added: `options` API property that holds all the manually set `config` options
   - ➕ Added: `data.src` fetching error messages to `response` event details (Thanks 👍 @folknor) #207
-
   - 🔝 Updated: `WAI-ARIA` configurations for significantly better support
   - 🔝 Updated: `dataFeedback` event information
-
   - 🔧 Fixed: `resultsList` eventEmitters unexpected behavior which was firing multiple times
   - 🔧 Fixed: Empty `className` values do not assign any classes instead of `undefined`
-
   - 🌀 Changed: The core library architecture for improved code separation
   - 🌀 Changed: API to only include the used options instead of including unused ones with `undefined` value
   - 🌀 Changed: `fetch` eventEmitter name to `response`
@@ -75,7 +72,6 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: `data.results` API property name to `data.filter`
   - 🌀 Changed: `noResults` API to accept `boolean` instead of `function` to be replaced with `resultsList.container`
   - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
-
   - ❗ Removed: `feedback` API method to be replaced with `navigate` event
   - ❗ Removed: `nav` API method to be replaced with `_events`
   - ❗ Removed: `hook` API method to be replaced with `start` API
@@ -151,7 +147,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 ***
 
 
-### v9.0.0
+### v9.0
   > <div class="ps-icon ps-icon-important"></div> This version has breaking changes, kindly check the list
   - 🔧 Fixed: `esc` button not working with `noResults` in some cases (Thanks 👍 @sunshineplan) #157
   - ➕ Added: `selection` & `highlight` custom `className` API methods (Thanks 👍 @jerrykan) #184
@@ -248,7 +244,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v8.0.0
+### v8.0
   - Whole New More Modern Architecture Design
   - Added: High Quality Accessibility ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/examples/combobox/combobox-autocomplete-both.html)) Support
   - Added: Life Cycle Events (Thanks 👍 @zippy84) #89
@@ -327,7 +323,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v7.0.0
+### v7.0
   - New API for results list navigation `resultsList.navigation` (Thanks 👍 @fredluetkemeier)
   - New API for autoComplete.js engine `trigger.event` (Thanks 👍 @fredluetkemeier)
   - New API for autoComplete.js engine `trigger.condition`
@@ -345,7 +341,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v6.0.0
+### v6.0
   - `CustomEvent` & `Closest` method IE compatibility (Thanks @g-viet)
   - Query interception (Thanks @barns101)
   - Simplified `resultsList` & `resultItem`
@@ -382,8 +378,8 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v5.0.0
-  - Large datasets handeling (Thanks @Johann-S)
+### v5.0
+  - Large datasets handling (Thanks @Johann-S)
   - API Data fetching & Dynamic Data reloading (Thanks @Brostafa)
   - Debouncing API Calls
   - Custom `resultsList` & `resultItem` Elements (Thanks @Johann-S)
@@ -393,7 +389,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 ***
 
 
-### v4.0.0
+### v4.0
   -   Multiple searchable `keys` for data `src` (Thanks @Johann-S)
   -   Rendered `results` in original case (Thanks @nickbp12)
   -   Improved Development Environment (Thanks @ziishaned)
@@ -416,7 +412,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 
 ### v3.2.2
-  -   Fixed bug with `hightlight` API default value during `strict` engine mode
+  -   Fixed bug with `highlight` API default value during `strict` engine mode
   -   Fixed bug with `resultsList` API default value when not configured
 
 ***
@@ -441,7 +437,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 ***
 
 
-### v3.0.0
+### v3.0
   -   Added API for rendered result item `resultItem` function
   -   `renderResults` API name changed to `resultsList` `[Changed]`
 
@@ -474,7 +470,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 ***
 
 
-### v2.0.0
+### v2.0
   -   Added support for array of `Objects` & `JSON` as data source with `Key` selection
   -   Added support for external data source via `Promises` & `Async/Await` function
   -   Added more comprehensive and usable data feedback on user selection `(User Input, Results List, User Selection)` Object
@@ -593,7 +589,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v1.0.0
+### v1.0
   -   Add customized data attribute tag for generated results
   -   Highlight matching results from the results list
   -   Set maximum number for shown results

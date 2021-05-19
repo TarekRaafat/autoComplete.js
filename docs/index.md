@@ -39,6 +39,7 @@ high versatility and seamless integration with a wide range of projects & system
 -  Useful plugin API
 -  WAI-ARIA Compliant
 -  Highly Customizable
+-  Works on anything <small>(`<input>`, `<textarea>` and `contentEditable` elements)</small>
 -  Well Documented
 
 
