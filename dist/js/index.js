@@ -1,42 +1,14 @@
-// document.querySelector("#autoComplete").addEventListener("init", function (event) {
-//   console.log(event);
-// });
-
-// document.querySelector("#autoComplete").addEventListener("response", function (event) {
-//   console.log(event);
-// });
-
-// document.querySelector("#autoComplete").addEventListener("results", function (event) {
-//   console.log(event);
-// });
-
-// document.querySelector("#autoComplete").addEventListener("open", function (event) {
-//   console.log(event);
-// });
-
-// document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
-//   console.log(event);
-// });
-
-// document.querySelector("#autoComplete").addEventListener("close", function (event) {
-//   console.log(event);
-// });
-
-// document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
-//   console.log(event);
-// });
-
 // The autoComplete.js Engine instance creator
 const autoCompleteJS = new autoComplete({
   data: {
     src: async () => {
       // Loading placeholder text
-      document.querySelector("#autoComplete").setAttribute("placeholder", "Loading...");
+      autoCompleteJS.input.setAttribute("placeholder", "Loading...");
       // Fetch External Data Source
       const source = await fetch("./db/generic.json");
       const data = await source.json();
       // Post Loading placeholder text
-      document.querySelector("#autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
+      autoCompleteJS.input.setAttribute("placeholder", autoCompleteJS.placeHolder);
       // Returns Fetched data
       return data;
     },
@@ -52,9 +24,7 @@ const autoCompleteJS = new autoComplete({
     },
   },
   placeHolder: "Search for Food & Drinks!",
-  debounce: 100,
   resultsList: {
-    element: "ul",
     container: (element, data) => {
       const info = document.createElement("p");
       if (data.results.length > 0) {
@@ -67,10 +37,8 @@ const autoCompleteJS = new autoComplete({
     noResults: true,
     maxResults: 15,
     tabSelect: true,
-    scroll: "smooth",
   },
   resultItem: {
-    element: "li",
     content: (element, data) => {
       // Modify Results Item Style
       element.style = "display: flex; justify-content: space-between;";
@@ -87,24 +55,55 @@ const autoCompleteJS = new autoComplete({
       render: true,
     },
   },
+  events: {
+    input: {
+      focus: () => autoCompleteJS.open(),
+    },
+  },
   onSelection: (dataFeedback) => {
-    document.querySelector("#autoComplete").blur();
+    autoCompleteJS.input.blur();
     // Prepare User's Selected Value
     const selection = dataFeedback.selection.value[dataFeedback.selection.key];
     // Render selected choice to selection div
     document.querySelector(".selection").innerHTML = selection;
     // Replace Input value with the selected value
-    document.querySelector("#autoComplete").value = selection;
+    autoCompleteJS.input.value = selection;
     // Console log autoComplete data feedback
     console.log(dataFeedback);
   },
 });
 
-// autoComplete.unInit();
+// autoCompleteJS.input.addEventListener("init", function (event) {
+//   console.log(event);
+// });
+
+// autoCompleteJS.input.addEventListener("response", function (event) {
+//   console.log(event);
+// });
+
+// autoCompleteJS.input.addEventListener("results", function (event) {
+//   console.log(event);
+// });
+
+// autoCompleteJS.input.addEventListener("open", function (event) {
+//   console.log(event);
+// });
+
+// autoCompleteJS.input.addEventListener("navigate", function (event) {
+//   console.log(event);
+// });
+
+// autoCompleteJS.input.addEventListener("close", function (event) {
+//   console.log(event);
+// });
+
+// autoCompleteJS.input.addEventListener("unInit", function (event) {
+//   console.log(event);
+// });
 
 // Toggle Search Engine Type/Mode
-document.querySelector(".toggler").addEventListener("click", function () {
-  // Holds the toggle button alignment
+document.querySelector(".toggler").addEventListener("click", () => {
+  // Holds the toggle button selection/alignment
   const toggle = document.querySelector(".toggle").style.justifyContent;
 
   if (toggle === "flex-start" || toggle === "") {
@@ -120,8 +119,8 @@ document.querySelector(".toggler").addEventListener("click", function () {
   }
 });
 
-// Toggle results list and other elements
-const action = function (action) {
+// Blur/unBlur page elements
+const action = (action) => {
   const github = document.querySelector(".github-corner");
   const title = document.querySelector("h1");
   const mode = document.querySelector(".mode");
@@ -143,15 +142,14 @@ const action = function (action) {
   }
 };
 
-// Toggle event for search input
-// showing & hiding results list onfocus/blur
-["focus", "blur"].forEach(function (eventType) {
-  document.querySelector("#autoComplete").addEventListener(eventType, function () {
-    // Hide results list & show other elements
+// Blur/unBlur page elements on input focus
+["focus", "blur"].forEach((eventType) => {
+  autoCompleteJS.input.addEventListener(eventType, () => {
+    // Blur page elements
     if (eventType === "blur") {
       action("dim");
     } else if (eventType === "focus") {
-      // Show results list & hide other elements
+      // unBlur page elements
       action("light");
     }
   });

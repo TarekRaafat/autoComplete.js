@@ -58,7 +58,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: `cursor` API property holds the index of the current selection or `-1` for idle
   - ➕ Added: `id` API property holds the current instance number
   - ➕ Added: `name` API property that changes all the `className` properties accordingly
-  - ➕ Added: `options` API property that holds all the manually set `config` options
+  - ➕ Added: `options` API property that holds all the custom set `config` options
   - ➕ Added: `data.src` fetching error messages to `response` event details (Thanks 👍 @folknor) #207
   - 🔝 Updated: `WAI-ARIA` configurations for significantly better support
   - 🔝 Updated: `dataFeedback` event information
@@ -71,9 +71,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: `trigger.event` API property name to `trigger.events`
   - 🌀 Changed: `data.results` API property name to `data.filter`
   - 🌀 Changed: `noResults` API to accept `boolean` instead of `function` to be replaced with `resultsList.container`
+  - 🌀 Changed: `resultItem.content` API parameters order from `(data, element)` to `(element, data)` for consistency
   - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
   - ❗ Removed: `feedback` API method to be replaced with `navigate` event
-  - ❗ Removed: `nav` API method to be replaced with `_events`
+  - ❗ Removed: `nav` API method to be replaced with `events`
   - ❗ Removed: `hook` API method to be replaced with `start` API
 
 ***
