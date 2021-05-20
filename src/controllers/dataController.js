@@ -1,29 +1,36 @@
+import eventEmitter from "../helpers/eventEmitter";
 import search from "./searchController";
 
-const dataStore = async (ctx) => {
-  const { data } = ctx;
+const getData = async (ctx) => {
+  const { input, data } = ctx;
 
-  if (data.cache && data.store) return data.store;
+  if (data.cache && data.store) return;
 
   try {
-    return typeof data.src === "function" ? await data.src() : data.src;
+    data.store = typeof data.src === "function" ? await data.src() : data.src;
   } catch (error) {
-    return error;
+    data.store = error;
   }
+
+  /**
+   * @emit {response} event on data request
+   **/
+  eventEmitter({ input, dataFeedback: data.store }, "response");
 };
 
 /**
  * Find matches to "query"
  *
  * @param {Object} ctx - Search engine configurations
+ * @param {String} input - User's raw input value
  * @param {String} query - User's search query string
  *
  * @returns {Array} - Matches
  */
-const findMatches = (ctx, query) => {
+const findMatches = (ctx, input, query) => {
   const { data, searchEngine: customSearch } = ctx;
 
-  const results = [];
+  let matches = [];
 
   // Find matches from data source
   data.store.forEach((record, index) => {
@@ -43,7 +50,7 @@ const findMatches = (ctx, query) => {
 
       if (key) result.key = key;
 
-      results.push(result);
+      matches.push(result);
     };
 
     if (data.key) {
@@ -55,7 +62,21 @@ const findMatches = (ctx, query) => {
     }
   });
 
-  return results;
+  // Find results matching to the query
+  if (data.filter) matches = data.filter(matches);
+
+  // Prepare data feedback object
+  ctx.dataFeedback = {
+    input,
+    query,
+    matches,
+    results: matches.slice(0, ctx.resultsList.maxResults),
+  };
+
+  /**
+   * @emit {results} event on search response with matches
+   **/
+  eventEmitter(ctx, "results");
 };
 
-export { dataStore, findMatches };
+export { getData, findMatches };

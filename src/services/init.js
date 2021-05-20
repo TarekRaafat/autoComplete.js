@@ -1,8 +1,9 @@
 import create from "../helpers/creator";
+import { getData } from "../controllers/dataController";
 import { addEventListeners } from "../controllers/eventController";
 import eventEmitter from "../helpers/eventEmitter";
 
-export default (ctx) => {
+export default async function (ctx) {
   let { placeHolder, resultsList } = ctx;
 
   // InputField attributes
@@ -41,6 +42,9 @@ export default (ctx) => {
     role: "listbox",
   });
 
+  // Get the data from store
+  if (ctx.data.cache) await getData(ctx);
+
   // Event handlers
   addEventListeners(ctx);
 
@@ -48,4 +52,4 @@ export default (ctx) => {
    * @emit {init} event on Initialization
    **/
   eventEmitter(ctx, "init");
-};
+}

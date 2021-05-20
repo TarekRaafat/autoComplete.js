@@ -59,7 +59,8 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: `id` API property holds the current instance number
   - ➕ Added: `name` API property that changes all the `className` properties accordingly
   - ➕ Added: `options` API property that holds all the custom set `config` options
-  - ➕ Added: `data.src` fetching error messages to `response` event details (Thanks 👍 @folknor) #207
+  - ➕ Added: `data.src` fetching error messages to `response` event detail (Thanks 👍 @folknor) #207
+  - 🔝 Updated: Data caching mechanism
   - 🔝 Updated: `WAI-ARIA` configurations for significantly better support
   - 🔝 Updated: `dataFeedback` event information
   - 🔧 Fixed: `resultsList` eventEmitters unexpected behavior which was firing multiple times

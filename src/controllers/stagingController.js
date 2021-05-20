@@ -1,38 +1,31 @@
 import preInit from "../services/preInit";
 import init from "../services/init";
 import start from "../services/start";
-import { removeEventListeners } from "../controllers/eventController";
+import { removeEventListeners } from "./eventController";
 import { openList, closeList, selectItem } from "./listController";
-import { goTo, next, previous } from "../controllers/navigationController";
+import { goTo, next, previous } from "./navigationController";
 
 export default (ctx, autoComplete) => {
+  const { prototype } = autoComplete;
+
   // Pre-Initialization stage
-  autoComplete.prototype.preInit = () => preInit(ctx);
-
+  prototype.preInit = () => preInit(ctx);
   // Initialization stage
-  autoComplete.prototype.init = () => init(ctx);
-
+  prototype.init = () => init(ctx);
   // Start autoComplete.js engine
-  autoComplete.prototype.start = () => start(ctx);
-
+  prototype.start = () => start(ctx);
   // Un-Initialize autoComplete.js engine
-  autoComplete.prototype.unInit = () => removeEventListeners(ctx);
-
+  prototype.unInit = () => removeEventListeners(ctx);
   // Open result list
-  autoComplete.prototype.open = () => openList(ctx);
-
+  prototype.open = () => openList(ctx);
   // Close result list
-  autoComplete.prototype.close = () => closeList(ctx);
-
+  prototype.close = () => closeList(ctx);
   // Go to result by index
-  autoComplete.prototype.goTo = (index) => goTo(index, ctx);
-
+  prototype.goTo = (index) => goTo(index, ctx);
   // Go to next result
-  autoComplete.prototype.next = () => next(ctx);
-
+  prototype.next = () => next(ctx);
   // Go to previous result
-  autoComplete.prototype.previous = () => previous(ctx);
-
+  prototype.previous = () => previous(ctx);
   // Select result by index
-  autoComplete.prototype.select = (index) => selectItem(ctx, null, index);
+  prototype.select = (index) => selectItem(ctx, null, index);
 };

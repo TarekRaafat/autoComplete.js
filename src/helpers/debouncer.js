@@ -9,7 +9,7 @@
 export default (callback, delay) => {
   let inDebounce;
 
-  return function () {
+  return () => {
     clearTimeout(inDebounce);
 
     inDebounce = setTimeout(() => callback(), delay);
