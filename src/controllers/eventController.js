@@ -1,5 +1,6 @@
 import debouncer from "../helpers/debouncer";
 import { navigate } from "./navigationController";
+import start from "../services/start";
 import { closeList, selectItem } from "../controllers/listController";
 
 // Manage all given events
@@ -53,7 +54,7 @@ const addEventListeners = (ctx) => {
   // Add input field trigger events
   ctx.trigger.events.forEach((event) => {
     if (!publicEvents.input[event]) {
-      publicEvents.input[event] = debouncer(ctx.start, ctx.debounce);
+      publicEvents.input[event] = debouncer(() => start(ctx), ctx.debounce);
     }
   });
 

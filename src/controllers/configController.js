@@ -33,7 +33,7 @@ export default (ctx) => {
   }
 
   // Dynamic Options
-  ctx.selector = "#" + ctx.name;
+  ctx.selector = ctx.selector || "#" + ctx.name;
   resultsList.destination = resultsList.destination || ctx.selector;
   resultsList.idName = resultsList.idName || ctx.name + "_list_" + ctx.id;
   resultItem.idName = resultItem.idName || ctx.name + "_result";

@@ -193,7 +193,7 @@
         ctx[option] = options[option];
       }
     }
-    ctx.selector = "#" + ctx.name;
+    ctx.selector = ctx.selector || "#" + ctx.name;
     resultsList.destination = resultsList.destination || ctx.selector;
     resultsList.idName = resultsList.idName || ctx.name + "_list_" + ctx.id;
     resultItem.idName = resultItem.idName || ctx.name + "_result";
@@ -529,6 +529,39 @@
     }
   };
 
+  var checkTriggerCondition = (function (ctx, query) {
+    query = query.replace(/ /g, "");
+    var condition = ctx.trigger.condition;
+    return condition ? condition(query) : query.length >= ctx.threshold;
+  });
+
+  function start (ctx) {
+    var _this = this;
+    return new Promise(function ($return, $error) {
+      var inputValue, query, triggerCondition;
+      inputValue = getInputValue(ctx.input);
+      query = prepareQuery(ctx, inputValue);
+      triggerCondition = checkTriggerCondition(ctx, query);
+      if (triggerCondition) {
+        return getData(ctx).then(function ($await_2) {
+          try {
+            findMatches(ctx, inputValue, query);
+            if (ctx.resultsList.render) renderList(ctx);
+            return $If_1.call(_this);
+          } catch ($boundEx) {
+            return $error($boundEx);
+          }
+        }, $error);
+      } else {
+        closeList(ctx);
+        return $If_1.call(_this);
+      }
+      function $If_1() {
+        return $return();
+      }
+    });
+  }
+
   var eventsListManager = function eventsListManager(events, callback) {
     for (var element in events) {
       for (var event in events[element]) {
@@ -571,7 +604,9 @@
     };
     ctx.trigger.events.forEach(function (event) {
       if (!publicEvents.input[event]) {
-        publicEvents.input[event] = debouncer(ctx.start, ctx.debounce);
+        publicEvents.input[event] = debouncer(function () {
+          return start(ctx);
+        }, ctx.debounce);
       }
     });
     if (resultsList.render) {
@@ -635,39 +670,6 @@
         return $return();
       }
       return $If_1.call(_this);
-    });
-  }
-
-  var checkTriggerCondition = (function (ctx, query) {
-    query = query.replace(/ /g, "");
-    var condition = ctx.trigger.condition;
-    return condition ? condition(query) : query.length >= ctx.threshold;
-  });
-
-  function start (ctx) {
-    var _this = this;
-    return new Promise(function ($return, $error) {
-      var inputValue, query, triggerCondition;
-      inputValue = getInputValue(ctx.input);
-      query = prepareQuery(ctx, inputValue);
-      triggerCondition = checkTriggerCondition(ctx, query);
-      if (triggerCondition) {
-        return getData(ctx).then(function ($await_2) {
-          try {
-            findMatches(ctx, inputValue, query);
-            if (ctx.resultsList.render) renderList(ctx);
-            return $If_1.call(_this);
-          } catch ($boundEx) {
-            return $error($boundEx);
-          }
-        }, $error);
-      } else {
-        closeList(ctx);
-        return $If_1.call(_this);
-      }
-      function $If_1() {
-        return $return();
-      }
     });
   }
 

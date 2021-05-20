@@ -104,64 +104,51 @@ onSelection: (dataFeedback) => {
 <!-- panels:end -->
 
 <script>
+    const data = {
+        src: ["Pizza", "Burgers", "Sushi", "Coffee", "Soda", "Fresh Juice"]
+    };
+    const placeHolder = "Pizza, Burger, Sushi";
+    const resultsList= {
+        noResults: (list, query) => {
+            // Create "No Results" message list element
+            const message = document.createElement("div");
+            message.setAttribute("class", "no_result");
+            // Add message text content
+            message.innerHTML = `<span>Found No Results for "${query}"</span>`;
+            // Add message list element to the list
+            list.appendChild(message);
+        }
+    };
+    const resultItem = {
+        highlight: {
+            render: true
+        }
+    };
+
     const autoCompleteJS_01 = new autoComplete({
         selector: "#autoComplete_01",
-        placeHolder: "Pizza, Burger, Sushi",
-        data: {
-            src: ["Pizza", "Burgers", "Sushi", "Coffee", "Soda", "Fresh Juice"]
-        },
+        placeHolder,
+        data,
         trigger: {
             event: ["input", "focus"],
             condition: () => true
         },
-        resultsList: {
-            noResults: (list, query) => {
-                // Create "No Results" message list element
-                const message = document.createElement("div");
-                message.setAttribute("class", "no_result");
-                // Add message text content
-                message.innerHTML = `<span>Found No Results for "${query}"</span>`;
-                // Add message list element to the list
-                list.appendChild(message);
-            },
-        },
-        resultItem: {
-            highlight: {
-                render: true
-            }
-        }
+        resultsList,
+        resultItem
     });
 
     const autoCompleteJS_02 = new autoComplete({
         selector: "#autoComplete_02",
-        placeHolder: "Pizza, Burger, Sushi",
-        data: {
-            src: ["Pizza", "Burgers", "Sushi", "Coffee", "Soda", "Fresh Juice"]
-        },
-        resultsList: {
-            noResults: (list, query) => {
-                // Create "No Results" message list element
-                const message = document.createElement("div");
-                message.setAttribute("class", "no_result");
-                // Add message text content
-                message.innerHTML = `<span>Found No Results for "${query}"</span>`;
-                // Add message list element to the list
-                list.appendChild(message);
-            },
-        },
-        resultItem: {
-            highlight: {
-                render: true
-            }
-        }
+        placeHolder,
+        data,
+        resultsList,
+        resultItem
     });
 
     const autoCompleteJS_03 = new autoComplete({
         selector: "#autoComplete_03",
-        placeHolder: "Pizza, Burger, Sushi",
-        data: {
-            src: ["Pizza", "Burgers", "Sushi", "Coffee", "Soda", "Fresh Juice"]
-        },
+        placeHolder,
+        data,
         query: {
 		    manipulate: (query) => {
                 // Split query into array
@@ -174,22 +161,8 @@ onSelection: (dataFeedback) => {
                 return newQuery;
             }
 	    },
-        resultsList: {
-            noResults: (list, query) => {
-                // Create "No Results" message list element
-                const message = document.createElement("div");
-                message.setAttribute("class", "no_result");
-                // Add message text content
-                message.innerHTML = `<span>Found No Results for "${query}"</span>`;
-                // Add message list element to the list
-                list.appendChild(message);
-            },
-        },
-        resultItem: {
-            highlight: {
-                render: true
-            }
-        },
+        resultsList,
+        resultItem,
         onSelection: (dataFeedback) => {
             const input = document.querySelector("#autoComplete_03");
             // Trim selected Value
