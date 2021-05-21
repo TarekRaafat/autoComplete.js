@@ -65,13 +65,10 @@ const findMatches = (ctx, input, query) => {
   // Find results matching to the query
   if (data.filter) matches = data.filter(matches);
 
+  const results = matches.slice(0, ctx.resultsList.maxResults);
+
   // Prepare data feedback object
-  ctx.dataFeedback = {
-    input,
-    query,
-    matches,
-    results: matches.slice(0, ctx.resultsList.maxResults),
-  };
+  ctx.dataFeedback = { input, query, matches, results };
 
   /**
    * @emit {results} event on search response with matches

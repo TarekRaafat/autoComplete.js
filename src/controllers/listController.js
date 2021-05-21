@@ -35,11 +35,11 @@ const renderList = (ctx) => {
         innerHTML: result.match,
       });
 
-      // If custom content is active pass params
-      if (resultItem.content) resultItem.content(element, result);
-
       // Add result to fragment before DOM
       fragment.appendChild(element);
+
+      // If custom content is active pass params
+      if (resultItem.content) resultItem.content(element, result);
     });
 
     // Add fragment of result items to DOM list

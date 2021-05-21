@@ -376,11 +376,12 @@
       }
     });
     if (data.filter) matches = data.filter(matches);
+    var results = matches.slice(0, ctx.resultsList.maxResults);
     ctx.dataFeedback = {
       input: input,
       query: query,
       matches: matches,
-      results: matches.slice(0, ctx.resultsList.maxResults)
+      results: results
     };
     eventEmitter(ctx, "results");
   };
@@ -414,8 +415,8 @@
           role: "option",
           innerHTML: result.match
         }));
-        if (resultItem.content) resultItem.content(element, result);
         fragment.appendChild(element);
+        if (resultItem.content) resultItem.content(element, result);
       });
       list.appendChild(fragment);
       if (resultsList.container) resultsList.container(list, dataFeedback);
