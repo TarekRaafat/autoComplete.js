@@ -16,11 +16,11 @@ const renderList = (ctx) => {
   let { resultsList, list, resultItem, dataFeedback } = ctx;
   const { query, matches, results } = dataFeedback;
 
-  // Clear list
-  list.innerHTML = "";
-
   // Reset cursor
   ctx.cursor = -1;
+
+  // Clear list
+  list.innerHTML = "";
 
   if (matches.length || resultsList.noResults) {
     const fragment = document.createDocumentFragment();

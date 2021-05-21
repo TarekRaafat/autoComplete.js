@@ -401,8 +401,8 @@
     dataFeedback.query;
         var matches = dataFeedback.matches,
         results = dataFeedback.results;
-    list.innerHTML = "";
     ctx.cursor = -1;
+    list.innerHTML = "";
     if (matches.length || resultsList.noResults) {
       var fragment = document.createDocumentFragment();
       results.forEach(function (result, index) {
