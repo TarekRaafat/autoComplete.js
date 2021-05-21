@@ -103,6 +103,92 @@ onSelection: (dataFeedback) => {
 
 <!-- panels:end -->
 
+***
+
+## `Recent Searches`
+
+<!-- panels:start -->
+<!-- div:left-panel -->
+##### Code:
+```js
+// External empty array to save search results
+const history = [];
+```
+
+```js
+// autoComplete.js Config Options
+container: (list) => {
+    const recentSearch = history.reverse();
+    const historyLength = recentSearch.length;
+
+    // Check if there are recent searches
+    if(historyLength) {
+        const historyBlock = document.createElement("div");
+        historyBlock.setAttribute("style", "display: flex; flex-direction: column; margin: .3rem; padding: .3rem .5rem;");
+        historyBlock.innerHTML = "Recent Searches";
+        // Limit displayed searched to only last "2"
+        recentSearch.slice(0, 2).forEach((item) => {
+            const recentItem = document.createElement("span");
+            recentItem.setAttribute("style", "display: flex; margin: .2rem; color: rgba(0, 0, 0, .2);");
+            recentItem.innerHTML = item;
+            historyBlock.append(recentItem);
+        });
+
+        const separator = document.createElement("hr");
+        separator.setAttribute("style", "margin: 5px 0 0 0;");
+        historyBlock.append(separator);
+
+        list.prepend(historyBlock);
+    }
+},
+onSelection: (dataFeedback) => {
+    const input = document.querySelector("#autoComplete");
+    // Get selected Value
+    const selection = dataFeedback.selection.value;
+    // Add selected value to "history" array
+    history.push(selection);
+}
+```
+
+<!-- div:right-panel -->
+
+##### Example:
+
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_04">
+
+<!-- panels:end -->
+
+***
+
+## `Results Start With`
+
+<!-- panels:start -->
+<!-- div:left-panel -->
+##### Code:
+
+```js
+filter: (list) => {
+    const results = list.filter((item) => {
+        const inputValue = document.querySelector("#autoComplete").value.toLowerCase();
+        const itemValue = item.value.toLowerCase();
+
+        if (itemValue.startsWith(inputValue)) {
+            return item.value;
+        }
+    });
+
+    return results;
+}
+```
+
+<!-- div:right-panel -->
+
+##### Example:
+
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_05">
+
+<!-- panels:end -->
+
 <script>
     const data = {
         src: ["Pizza", "Burgers", "Sushi", "Coffee", "Soda", "Fresh Juice"]
@@ -176,5 +262,69 @@ onSelection: (dataFeedback) => {
             // Replace Input value with the new query
             input.value = query.join(", ") + ", ";
 	    }
+    });
+
+    let history = [];
+
+    const autoCompleteJS_04 = new autoComplete({
+        selector: "#autoComplete_04",
+        placeHolder,
+        data,
+        resultsList: {
+            container: (list) => {
+                const recentSearch = history.reverse();
+                const historyLength = recentSearch.length;
+
+                if(historyLength) {
+                    const historyBlock = document.createElement("div");
+                    historyBlock.setAttribute("style", "display: flex; flex-direction: column; margin: .3rem; padding: .3rem .5rem;");
+                    historyBlock.innerHTML = "Recent Searches";
+
+                    recentSearch.slice(0, 2).forEach((item) => {
+                        const recentItem = document.createElement("span");
+                        recentItem.setAttribute("style", "display: flex; margin: .2rem; color: rgba(0, 0, 0, .2);");
+                        recentItem.innerHTML = item;
+                        historyBlock.append(recentItem);
+                    });
+
+                    const separator = document.createElement("hr");
+                    separator.setAttribute("style", "margin: 5px 0 0 0;");
+                    historyBlock.append(separator);
+
+                    list.prepend(historyBlock);
+                }
+            },
+            ...resultsList,
+        },
+        resultItem,
+        onSelection: (dataFeedback) => {
+            const input = document.querySelector("#autoComplete_04");
+            // Get selected Value
+            const selection = dataFeedback.selection.value.trim();
+            // Add selected value to "history" array
+            history.push(selection);
+	    }
+    });
+
+    const autoCompleteJS_05 = new autoComplete({
+        selector: "#autoComplete_05",
+        placeHolder,
+        data: {
+            ...data,
+            filter: (list) => {
+                const results = list.filter((item) => {
+                    const inputValue = document.querySelector("#autoComplete_05").value.toLowerCase();
+                    const itemValue = item.value.toLowerCase();
+
+                    if (itemValue.startsWith(inputValue)) {
+                        return item.value;
+                    }
+                });
+
+                return results;
+            }
+        },
+        resultsList,
+        resultItem,
     });
 </script>

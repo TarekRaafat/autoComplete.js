@@ -1,4 +1,4 @@
-# Styles
+# Styles <!-- {docsify-ignore} -->
 
 Different styles for autoComplete.js
 
