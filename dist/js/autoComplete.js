@@ -385,14 +385,10 @@
     eventEmitter(ctx, "results");
   };
 
-  var debouncer = (function (callback, delay) {
-    var inDebounce;
-    return function () {
-      clearTimeout(inDebounce);
-      inDebounce = setTimeout(function () {
-        return callback();
-      }, delay);
-    };
+  var checkTriggerCondition = (function (ctx, query) {
+    query = query.replace(/ /g, "");
+    var condition = ctx.trigger.condition;
+    return condition ? condition(query) : query.length >= ctx.threshold;
   });
 
   var ariaExpanded = "aria-expanded";
@@ -447,26 +443,49 @@
       eventEmitter(ctx, "close");
     }
   };
-  var selectItem = function selectItem(ctx, event, index) {
-    index = index > -1 ? index : ctx.cursor;
-    var data = ctx.dataFeedback;
-    var dataFeedback = _objectSpread2(_objectSpread2({
-      event: event
-    }, data), {}, {
-      selection: _objectSpread2(_objectSpread2({}, data.results[index]), {}, {
-        index: index
-      })
+
+  function start (ctx) {
+    var _this = this;
+    return new Promise(function ($return, $error) {
+      var inputValue, query, triggerCondition;
+      inputValue = getInputValue(ctx.input);
+      query = prepareQuery(ctx, inputValue);
+      triggerCondition = checkTriggerCondition(ctx, query);
+      if (triggerCondition) {
+        return getData(ctx).then(function ($await_2) {
+          try {
+            findMatches(ctx, inputValue, query);
+            if (ctx.resultsList.render) renderList(ctx);
+            return $If_1.call(_this);
+          } catch ($boundEx) {
+            return $error($boundEx);
+          }
+        }, $error);
+      } else {
+        closeList(ctx);
+        return $If_1.call(_this);
+      }
+      function $If_1() {
+        return $return();
+      }
     });
-    if (ctx.onSelection) ctx.onSelection(dataFeedback);
-    closeList(ctx);
-  };
+  }
+
+  var debouncer = (function (callback, delay) {
+    var inDebounce;
+    return function () {
+      clearTimeout(inDebounce);
+      inDebounce = setTimeout(function () {
+        return callback();
+      }, delay);
+    };
+  });
 
   var classList;
   var ariaSelected = "aria-selected";
   var ariaActive = "aria-activedescendant";
   var goTo = function goTo(index, ctx) {
-    var list = ctx.list;
-    var results = list.getElementsByTagName(ctx.resultItem.element);
+    var results = ctx.list.getElementsByTagName(ctx.resultItem.element);
     if (ctx.isOpened && results.length) {
       var _results$index$classL;
       var state = ctx.cursor;
@@ -497,7 +516,31 @@
     var index = ctx.cursor - 1;
     goTo(index, ctx);
   };
-  var navigate = function navigate(ctx, event) {
+  var select = function select(ctx, event, index) {
+    index = index || ctx.cursor;
+    if (!index || index < 0) return;
+    var data = ctx.dataFeedback;
+    var dataFeedback = _objectSpread2(_objectSpread2({
+      event: event
+    }, data), {}, {
+      selection: _objectSpread2(_objectSpread2({}, data.results[index]), {}, {
+        index: index
+      })
+    });
+    if (ctx.onSelection) ctx.onSelection(dataFeedback);
+    closeList(ctx);
+  };
+  var click = function click(event, ctx) {
+    var resultItemElement = ctx.resultItem.element.toUpperCase();
+    var items = Array.from(ctx.list.children);
+    var item = event.target.closest(resultItemElement);
+    if (item && item.nodeName === resultItemElement) {
+      event.preventDefault();
+      var index = items.indexOf(item) - 1;
+      select(ctx, event, index);
+    }
+  };
+  var navigate = function navigate(event, ctx) {
     var key = event.keyCode;
     var selectedItem = ctx.resultItem.selected;
     classList = selectedItem ? selectedItem.className.split(" ") : "";
@@ -510,13 +553,13 @@
       case 13:
         event.preventDefault();
         if (ctx.cursor >= 0) {
-          selectItem(ctx, event);
+          select(ctx, event);
         }
         break;
       case 9:
         if (ctx.resultsList.tabSelect && ctx.cursor >= 0) {
           event.preventDefault();
-          selectItem(ctx, event);
+          select(ctx, event);
         } else {
           closeList(ctx);
         }
@@ -528,39 +571,6 @@
         break;
     }
   };
-
-  var checkTriggerCondition = (function (ctx, query) {
-    query = query.replace(/ /g, "");
-    var condition = ctx.trigger.condition;
-    return condition ? condition(query) : query.length >= ctx.threshold;
-  });
-
-  function start (ctx) {
-    var _this = this;
-    return new Promise(function ($return, $error) {
-      var inputValue, query, triggerCondition;
-      inputValue = getInputValue(ctx.input);
-      query = prepareQuery(ctx, inputValue);
-      triggerCondition = checkTriggerCondition(ctx, query);
-      if (triggerCondition) {
-        return getData(ctx).then(function ($await_2) {
-          try {
-            findMatches(ctx, inputValue, query);
-            if (ctx.resultsList.render) renderList(ctx);
-            return $If_1.call(_this);
-          } catch ($boundEx) {
-            return $error($boundEx);
-          }
-        }, $error);
-      } else {
-        closeList(ctx);
-        return $If_1.call(_this);
-      }
-      function $If_1() {
-        return $return();
-      }
-    });
-  }
 
   var eventsListManager = function eventsListManager(events, callback) {
     for (var element in events) {
@@ -580,7 +590,7 @@
     var privateEvents = {
       input: {
         keydown: function keydown(event) {
-          resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
+          resultsList.navigation ? resultsList.navigation(event) : navigate(event, ctx);
         },
         blur: function blur() {
           closeList(ctx);
@@ -590,15 +600,8 @@
         mousedown: function mousedown(event) {
           event.preventDefault();
         },
-        click: function click(event) {
-          var resultItemElement = ctx.resultItem.element.toUpperCase();
-          var items = Array.from(ctx.list.children);
-          var item = event.target.closest(resultItemElement);
-          if (item && item.nodeName === resultItemElement) {
-            event.preventDefault();
-            var index = items.indexOf(item) - 1;
-            selectItem(ctx, event, index);
-          }
+        click: function click$1(event) {
+          click(event, ctx);
         }
       }
     };
@@ -632,11 +635,6 @@
       var placeHolder, resultsList, inputAttributes;
       placeHolder = ctx.placeHolder;
       resultsList = ctx.resultsList;
-      inputAttributes = {
-        "aria-controls": resultsList.idName,
-        "aria-autocomplete": "both"
-      };
-      if (placeHolder) inputAttributes.placeholder = placeHolder;
       ctx.wrapper = create("div", {
         "class": ctx.name + "_wrapper",
         around: ctx.input,
@@ -645,6 +643,11 @@
         "aria-haspopup": true,
         "aria-expanded": false
       });
+      inputAttributes = {
+        "aria-controls": resultsList.idName,
+        "aria-autocomplete": "both"
+      };
+      if (placeHolder) inputAttributes.placeholder = placeHolder;
       create(ctx.input, inputAttributes);
       ctx.list = create(resultsList.element, _objectSpread2(_objectSpread2({
         hidden: "hidden",
@@ -703,7 +706,7 @@
       return previous(ctx);
     };
     prototype.select = function (index) {
-      return selectItem(ctx, null, index);
+      return select(ctx, null, index);
     };
   });
 

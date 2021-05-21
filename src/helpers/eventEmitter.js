@@ -1,7 +1,7 @@
 /**
  * Event emitter/dispatcher function
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  * @param {String} name - Name of fired event
  *
  * @returns {void}

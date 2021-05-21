@@ -8,7 +8,7 @@ const ariaActive = "aria-activedescendant";
 /**
  * List all matching results
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  *
  * @returns {Component} - Results list component
  */
@@ -58,7 +58,7 @@ const renderList = (ctx) => {
 /**
  * Open closed list
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  *
  * @returns {void}
  */
@@ -84,13 +84,13 @@ const openList = (ctx) => {
 /**
  * Close open list
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  *
  * @returns {void}
  */
 const closeList = (ctx) => {
   if (ctx.isOpened) {
-    // Get autoComplete results list
+    // Get autoComplete.js results list
     const list = document.getElementById(ctx.resultsList.idName);
     // Set expanded attribute on the wrapper to false
     ctx.wrapper.setAttribute(ariaExpanded, false);
@@ -108,35 +108,4 @@ const closeList = (ctx) => {
   }
 };
 
-/**
- * Select result item
- *
- * @param {Object} ctx - autoComplete configurations
- * @param {Object} event - of selection
- * @param {Number} index - of the selected result item
- *
- * @returns {void}
- */
-const selectItem = (ctx, event, index) => {
-  // Check if cursor within list range
-  index = index > -1 ? index : ctx.cursor;
-
-  const data = ctx.dataFeedback;
-
-  // Prepare onSelection data feedback object
-  const dataFeedback = {
-    event,
-    ...data,
-    selection: {
-      ...data.results[index],
-      index,
-    },
-  };
-
-  // Pass selection data value to "onSelection" if active
-  if (ctx.onSelection) ctx.onSelection(dataFeedback);
-
-  closeList(ctx);
-};
-
-export { renderList, openList, closeList, selectItem };
+export { renderList, openList, closeList };

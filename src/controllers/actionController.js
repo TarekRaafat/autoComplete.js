@@ -1,4 +1,4 @@
-import { selectItem, closeList } from "../controllers/listController";
+import { closeList } from "./listController";
 import eventEmitter from "../helpers/eventEmitter";
 
 let classList;
@@ -11,13 +11,12 @@ const ariaActive = "aria-activedescendant";
  * Select result item by index
  *
  * @param {Number} index - of the selected result item
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  *
  * @returns {void}
  */
 const goTo = (index, ctx) => {
-  let { list } = ctx;
-  const results = list.getElementsByTagName(ctx.resultItem.element);
+  const results = ctx.list.getElementsByTagName(ctx.resultItem.element);
 
   if (ctx.isOpened && results.length) {
     // Previous cursor state
@@ -60,7 +59,7 @@ const goTo = (index, ctx) => {
 /**
  * Select next result item
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  *
  * @returns {void}
  */
@@ -72,7 +71,7 @@ const next = function (ctx) {
 /**
  * Select previous result item
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  *
  * @returns {void}
  */
@@ -82,13 +81,67 @@ const previous = (ctx) => {
 };
 
 /**
- * List navigation function initializer
+ * Select result item with given index or current cursor
  *
- * @param {Object} ctx - autoComplete configurations
- * @param {Object} event - "keydown" Object
+ * @param {Object} ctx - autoComplete.js configurations
+ * @param {Object} event - of selection
+ * @param {Number} index - of the selected result item
+ *
+ * @returns {void}
+ */
+const select = (ctx, event, index) => {
+  // Check if cursor within list range
+  index = index || ctx.cursor;
+
+  // Prevent empty selection
+  if (!index || index < 0) return;
+
+  const data = ctx.dataFeedback;
+
+  // Prepare onSelection data feedback object
+  const dataFeedback = {
+    event,
+    ...data,
+    selection: {
+      ...data.results[index],
+      index,
+    },
+  };
+
+  // Pass selection data value to "onSelection" if active
+  if (ctx.onSelection) ctx.onSelection(dataFeedback);
+
+  closeList(ctx);
+};
+
+/**
+ * Click selection handler
+ *
+ * @param {Object} ctx - autoComplete.js configurations
+ * @param {Object} event - "Click" event object
  *
  */
-const navigate = function (ctx, event) {
+const click = (event, ctx) => {
+  const resultItemElement = ctx.resultItem.element.toUpperCase();
+  const items = Array.from(ctx.list.children);
+  const item = event.target.closest(resultItemElement);
+
+  if (item && item.nodeName === resultItemElement) {
+    event.preventDefault();
+    const index = items.indexOf(item) - 1;
+
+    select(ctx, event, index);
+  }
+};
+
+/**
+ * List navigation handler
+ *
+ * @param {Object} event - "keydown" press event Object
+ * @param {Object} ctx - autoComplete.js configurations
+ *
+ */
+const navigate = function (event, ctx) {
   const key = event.keyCode;
   const selectedItem = ctx.resultItem.selected;
   classList = selectedItem ? selectedItem.className.split(" ") : "";
@@ -100,7 +153,7 @@ const navigate = function (ctx, event) {
     case 38:
       event.preventDefault();
 
-      // Move cursor
+      // Move cursor based on pressed key
       key === 40 ? next(ctx) : previous(ctx);
 
       break;
@@ -109,7 +162,7 @@ const navigate = function (ctx, event) {
       event.preventDefault();
       // If cursor moved
       if (ctx.cursor >= 0) {
-        selectItem(ctx, event);
+        select(ctx, event);
       }
 
       break;
@@ -118,7 +171,7 @@ const navigate = function (ctx, event) {
       if (ctx.resultsList.tabSelect && ctx.cursor >= 0) {
         event.preventDefault();
 
-        selectItem(ctx, event);
+        select(ctx, event);
       } else {
         closeList(ctx);
       }
@@ -127,7 +180,7 @@ const navigate = function (ctx, event) {
     case 27:
       event.preventDefault();
 
-      // Clear input field
+      // Clear "inputField" value
       ctx.input.value = "";
 
       closeList(ctx);
@@ -135,4 +188,4 @@ const navigate = function (ctx, event) {
   }
 };
 
-export { navigate, goTo, next, previous };
+export { click, navigate, goTo, next, previous, select };

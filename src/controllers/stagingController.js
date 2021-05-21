@@ -2,8 +2,8 @@ import preInit from "../services/preInit";
 import init from "../services/init";
 import start from "../services/start";
 import { removeEventListeners } from "./eventController";
-import { openList, closeList, selectItem } from "./listController";
-import { goTo, next, previous } from "./navigationController";
+import { openList, closeList } from "./listController";
+import { goTo, next, previous, select } from "./actionController";
 
 export default (ctx, autoComplete) => {
   const { prototype } = autoComplete;
@@ -27,5 +27,5 @@ export default (ctx, autoComplete) => {
   // Go to previous result
   prototype.previous = () => previous(ctx);
   // Select result by index
-  prototype.select = (index) => selectItem(ctx, null, index);
+  prototype.select = (index) => select(ctx, null, index);
 };

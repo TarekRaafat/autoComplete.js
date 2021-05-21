@@ -6,15 +6,6 @@ import eventEmitter from "../helpers/eventEmitter";
 export default async function (ctx) {
   let { placeHolder, resultsList } = ctx;
 
-  // InputField attributes
-  const inputAttributes = {
-    "aria-controls": resultsList.idName,
-    "aria-autocomplete": "both",
-  };
-
-  // Set placeholder attribute value
-  if (placeHolder) inputAttributes.placeholder = placeHolder;
-
   // Create wrapper element
   ctx.wrapper = create("div", {
     class: ctx.name + "_wrapper",
@@ -24,6 +15,15 @@ export default async function (ctx) {
     "aria-haspopup": true,
     "aria-expanded": false,
   });
+
+  // Prepare "inputField" attributes
+  const inputAttributes = {
+    "aria-controls": resultsList.idName,
+    "aria-autocomplete": "both",
+  };
+
+  // Add "placeholder" attribute value if available
+  if (placeHolder) inputAttributes.placeholder = placeHolder;
 
   // Set "inputField" attributes
   create(ctx.input, inputAttributes);
@@ -45,7 +45,7 @@ export default async function (ctx) {
   // Get the data from store
   if (ctx.data.cache) await getData(ctx);
 
-  // Event handlers
+  // Attach Events listeners
   addEventListeners(ctx);
 
   /**

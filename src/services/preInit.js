@@ -6,7 +6,7 @@ export default (ctx) => {
       if (ctx.input) {
         // If yes disconnect the observer
         observer.disconnect();
-        // Initialize autoComplete
+        // Initialize autoComplete.js
         ctx.init();
       }
     });

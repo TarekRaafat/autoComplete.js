@@ -1,10 +1,10 @@
 /**
- * autoComplete triggering condition
+ * autoComplete.js triggering condition
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  * @param {String} query - User's manipulated search query value
  *
- * @returns {Boolean} triggerCondition - For autoComplete to run
+ * @returns {Boolean} triggerCondition - For autoComplete.js to run
  */
 export default (ctx, query) => {
   query = query.replace(/ /g, "");

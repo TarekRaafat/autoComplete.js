@@ -3,7 +3,7 @@ import { formatRawInputValue, highlightChar } from "../helpers/io";
 /**
  * Find matching characters in record
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  * @param {String} query - User's manipulated search query value
  * @param {String} record - Data record string to be compared
  *

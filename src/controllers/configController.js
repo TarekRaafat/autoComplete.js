@@ -32,12 +32,12 @@ export default (ctx) => {
     }
   }
 
-  // Dynamic Options
+  // Dynamic Config Options
   ctx.selector = ctx.selector || "#" + ctx.name;
   resultsList.destination = resultsList.destination || ctx.selector;
   resultsList.idName = resultsList.idName || ctx.name + "_list_" + ctx.id;
   resultItem.idName = resultItem.idName || ctx.name + "_result";
 
-  // Assign the "input" selector
+  // Assign the "input" html element
   ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
 };

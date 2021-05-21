@@ -1,7 +1,7 @@
-import debouncer from "../helpers/debouncer";
-import { navigate } from "./navigationController";
 import start from "../services/start";
-import { closeList, selectItem } from "../controllers/listController";
+import debouncer from "../helpers/debouncer";
+import { click, navigate } from "./actionController";
+import { closeList } from "./listController";
 
 // Manage all given events
 const eventsListManager = (events, callback) => {
@@ -16,6 +16,7 @@ const eventsListManager = (events, callback) => {
 const addEventListeners = (ctx) => {
   const { events, resultsList } = ctx;
 
+  // Public events listeners list
   const publicEvents = (ctx.events = {
     input: {
       ...(events && events.input),
@@ -23,10 +24,11 @@ const addEventListeners = (ctx) => {
     ...(resultsList.render && { list: events ? { ...events.list } : {} }),
   });
 
+  // Private events listeners list
   const privateEvents = {
     input: {
       keydown: (event) => {
-        resultsList.navigation ? resultsList.navigation(event) : navigate(ctx, event);
+        resultsList.navigation ? resultsList.navigation(event) : navigate(event, ctx);
       },
       blur: () => {
         closeList(ctx);
@@ -37,28 +39,19 @@ const addEventListeners = (ctx) => {
         event.preventDefault();
       },
       click: (event) => {
-        const resultItemElement = ctx.resultItem.element.toUpperCase();
-        const items = Array.from(ctx.list.children);
-        const item = event.target.closest(resultItemElement);
-
-        if (item && item.nodeName === resultItemElement) {
-          event.preventDefault();
-          const index = items.indexOf(item) - 1;
-
-          selectItem(ctx, event, index);
-        }
+        click(event, ctx);
       },
     },
   };
 
-  // Add input field trigger events
+  // Add "inputField" trigger events
   ctx.trigger.events.forEach((event) => {
     if (!publicEvents.input[event]) {
       publicEvents.input[event] = debouncer(() => start(ctx), ctx.debounce);
     }
   });
 
-  // Populate private events to public events list
+  // Populate all private events into public events list
   if (resultsList.render) {
     eventsListManager(privateEvents, (event, element) => {
       if (!publicEvents[element][event]) {
@@ -73,9 +66,8 @@ const addEventListeners = (ctx) => {
   });
 };
 
-// Remove all attached event listeners
+// Remove all attached public events listeners
 const removeEventListeners = (ctx) => {
-  // Remove all attached events
   eventsListManager(ctx.events, (event, element) => {
     ctx[element].removeEventListener(event, ctx.events[element][event]);
   });

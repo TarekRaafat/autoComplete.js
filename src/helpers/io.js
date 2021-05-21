@@ -3,7 +3,7 @@ import create from "./creator";
 /**
  * Format raw input value
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  * @param {String} inputValue - user's raw search query value
  *
  * @returns {String} - Raw "inputField" value as a string
@@ -24,7 +24,7 @@ const formatRawInputValue = (ctx, value) => {
 /**
  * Get the "inputField" search value
  *
- * @param {Element} inputField - autoComplete "inputField" or textarea element
+ * @param {Element} inputField - autoComplete.js "inputField" or textarea element
  *
  * @returns {String} - Raw "inputField" value as a string
  */
@@ -36,7 +36,7 @@ const getInputValue = (inputField) =>
 /**
  * Intercept query value
  *
- * @param {Object} ctx - autoComplete configurations
+ * @param {Object} ctx - autoComplete.js configurations
  * @param {String} input - user's raw search input value
  *
  * @returns {String} - Manipulated Query
