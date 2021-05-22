@@ -1,4 +1,4 @@
-import create from "../helpers/creator";
+import { create } from "../helpers/io";
 import eventEmitter from "../helpers/eventEmitter";
 
 // String holders
@@ -77,7 +77,7 @@ const openList = (ctx) => {
     /**
      * @emit {open} event after results list is opened
      **/
-    eventEmitter(ctx, "open");
+    eventEmitter("open", ctx);
   }
 };
 
@@ -104,7 +104,7 @@ const closeList = (ctx) => {
     /**
      * @emit {close} event after "resultsList" is closed
      **/
-    eventEmitter(ctx, "close");
+    eventEmitter("close", ctx);
   }
 };
 

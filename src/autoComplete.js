@@ -1,5 +1,7 @@
 import configure from "./controllers/configController";
-import stage from "./controllers/stagingController";
+import extend from "./controllers/apiController";
+import preInit from "./services/preInit";
+import init from "./services/init";
 
 /**
  * @desc This is autoComplete.js
@@ -27,14 +29,14 @@ export default function autoComplete(config) {
   // Set all Configuration options
   configure(this);
   // Stage API methods
-  stage(this, autoComplete);
+  extend.call(this, autoComplete);
   // Set to run "preInit" if "observer" enabled else "init"
-  const run = this.observer ? this.preInit : this.init;
+  const run = this.observer ? preInit : init;
   // Check if DOM loaded
   if (document.readyState !== "loading") {
-    run();
+    run(this);
   } else {
     // Wait until DOM loaded
-    document.addEventListener("DOMContentLoaded", run);
+    document.addEventListener("DOMContentLoaded", run(this));
   }
 }

@@ -164,7 +164,9 @@
   }
 
   var configure = (function (ctx) {
-    var options = ctx.options,
+    var id = ctx.id,
+        name = ctx.name,
+        options = ctx.options,
         resultsList = ctx.resultsList,
         resultItem = ctx.resultItem;
     var inject = function inject(option) {
@@ -193,10 +195,10 @@
         ctx[option] = options[option];
       }
     }
-    ctx.selector = ctx.selector || "#" + ctx.name;
+    ctx.selector = ctx.selector || "#" + name;
     resultsList.destination = resultsList.destination || ctx.selector;
-    resultsList.idName = resultsList.idName || ctx.name + "_list_" + ctx.id;
-    resultItem.idName = resultItem.idName || ctx.name + "_result";
+    resultsList.idName = resultsList.idName || name + "_list_" + id;
+    resultItem.idName = resultItem.idName || name + "_result";
     ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
   });
 
@@ -216,18 +218,17 @@
     });
   });
 
-  var selector = (function (element) {
+  var select$1 = function select(element) {
     return typeof element === "string" ? document.querySelector(element) : element || null;
-  });
-
-  var create = (function (tag, options) {
+  };
+  var create = function create(tag, options) {
     var element = typeof tag === "string" ? document.createElement(tag) : tag;
     for (var key in options) {
       var value = options[key];
       if (key === "dest") {
-        selector(value[0]).insertAdjacentElement(value[1], element);
+        select$1(value[0]).insertAdjacentElement(value[1], element);
       } else if (key === "around") {
-        var reference = selector(value);
+        var reference = select$1(value);
         reference.parentNode.insertBefore(element, reference);
         element.appendChild(reference);
         if (reference.getAttribute("autofocus") != null) reference.focus();
@@ -238,28 +239,31 @@
       }
     }
     return element;
-  });
-
-  var eventEmitter = (function (ctx, name) {
-    ctx.input.dispatchEvent(new CustomEvent(name, {
-      bubbles: true,
-      detail: ctx.dataFeedback,
-      cancelable: true
-    }));
-  });
-
-  var formatRawInputValue = function formatRawInputValue(ctx, value) {
-    value = value.toLowerCase();
-    return (ctx.diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value).toString();
   };
-  var getInputValue = function getInputValue(inputField) {
+  var getInput = function getInput(inputField) {
     return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value : inputField.innerHTML;
   };
-  var prepareQuery = function prepareQuery(ctx, input) {
-    var query = ctx.query;
-    return query && query.manipulate ? query.manipulate(input) : formatRawInputValue(ctx, input);
+  var format = function format(value, diacritics) {
+    value = value.toLowerCase();
+    return (diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value).toString();
   };
-  var highlightChar = function highlightChar(className, value) {
+  var getQuery = function getQuery(input, query, diacritics) {
+    return query && query.manipulate ? query.manipulate(input) : format(input, diacritics);
+  };
+  var delay = function delay(callback, _delay) {
+    var inDebounce;
+    return function () {
+      clearTimeout(inDebounce);
+      inDebounce = setTimeout(function () {
+        return callback();
+      }, _delay);
+    };
+  };
+  var checkTrigger = function checkTrigger(query, condition, threshold) {
+    query = query.replace(/ /g, "");
+    return condition ? condition(query) : query.length >= threshold;
+  };
+  var mark = function mark(value, className) {
     return create("mark", _objectSpread2(_objectSpread2({}, className && {
       className: className
     }), {}, {
@@ -267,31 +271,39 @@
     })).outerHTML;
   };
 
-  var search = (function (ctx, query, record) {
-    var formattedRecord = formatRawInputValue(ctx, record);
-    var resultItemHighlight = ctx.resultItem.highlight;
+  var eventEmitter = (function (name, ctx) {
+    ctx.input.dispatchEvent(new CustomEvent(name, {
+      bubbles: true,
+      detail: ctx.dataFeedback,
+      cancelable: true
+    }));
+  });
+
+  var search = (function (query, record, ctx) {
+    var newRecord = format(record, ctx.diacritics);
+    var item = ctx.resultItem.highlight;
     var className, highlight;
-    if (resultItemHighlight) {
-      className = resultItemHighlight.className;
-      highlight = resultItemHighlight.render;
+    if (item) {
+      className = item.className;
+      highlight = item.render;
     }
     if (ctx.searchEngine === "loose") {
       query = query.replace(/ /g, "");
       var queryLength = query.length;
       var cursor = 0;
       var match = Array.from(record).map(function (character, index) {
-        if (cursor < queryLength && formattedRecord[index] === query[cursor]) {
-          character = highlight ? highlightChar(className, character) : character;
+        if (cursor < queryLength && newRecord[index] === query[cursor]) {
+          character = highlight ? mark(character, className) : character;
           cursor++;
         }
         return character;
       }).join("");
       if (cursor === queryLength) return match;
     } else {
-      if (formattedRecord.includes(query)) {
+      if (newRecord.includes(query)) {
         var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
         query = pattern.exec(record);
-        var _match = highlight ? record.replace(query, highlightChar(className, query)) : record;
+        var _match = highlight ? record.replace(query, mark(query, className)) : record;
         return _match;
       }
     }
@@ -305,10 +317,10 @@
       if (data.cache && data.store) return $return();
       var $Try_1_Post = function $Try_1_Post() {
         try {
-          eventEmitter({
+          eventEmitter("response", {
             input: input,
             dataFeedback: data.store
-          }, "response");
+          });
           return $return();
         } catch ($boundEx) {
           return $error($boundEx);
@@ -341,14 +353,15 @@
       }
     });
   };
-  var findMatches = function findMatches(ctx, input, query) {
+  var findMatches = function findMatches(input, query, ctx) {
     var data = ctx.data,
-        customSearch = ctx.searchEngine;
+        customSearch = ctx.searchEngine,
+        resultsList = ctx.resultsList;
     var matches = [];
     data.store.forEach(function (record, index) {
       var find = function find(key) {
         var recordValue = key ? record[key] : record;
-        var match = typeof customSearch === "function" ? customSearch(query, recordValue) : search(ctx, query, recordValue);
+        var match = typeof customSearch === "function" ? customSearch(query, recordValue) : search(query, recordValue, ctx);
         if (!match) return;
         var result = {
           index: index,
@@ -376,21 +389,15 @@
       }
     });
     if (data.filter) matches = data.filter(matches);
-    var results = matches.slice(0, ctx.resultsList.maxResults);
+    var results = matches.slice(0, resultsList.maxResults);
     ctx.dataFeedback = {
       input: input,
       query: query,
       matches: matches,
       results: results
     };
-    eventEmitter(ctx, "results");
+    eventEmitter("results", ctx);
   };
-
-  var checkTriggerCondition = (function (ctx, query) {
-    query = query.replace(/ /g, "");
-    var condition = ctx.trigger.condition;
-    return condition ? condition(query) : query.length >= ctx.threshold;
-  });
 
   var ariaExpanded = "aria-expanded";
   var ariaActive$1 = "aria-activedescendant";
@@ -431,7 +438,7 @@
       ctx.input.setAttribute(ariaActive$1, "");
       ctx.list.removeAttribute("hidden");
       ctx.isOpened = true;
-      eventEmitter(ctx, "open");
+      eventEmitter("open", ctx);
     }
   };
   var closeList = function closeList(ctx) {
@@ -441,22 +448,28 @@
       ctx.input.setAttribute(ariaActive$1, "");
       list.setAttribute("hidden", "");
       ctx.isOpened = false;
-      eventEmitter(ctx, "close");
+      eventEmitter("close", ctx);
     }
   };
 
   function start (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var inputValue, query, triggerCondition;
-      inputValue = getInputValue(ctx.input);
-      query = prepareQuery(ctx, inputValue);
-      triggerCondition = checkTriggerCondition(ctx, query);
-      if (triggerCondition) {
+      var input, query, diacritics, trigger, threshold, resultsList, inputValue, queryValue, condition;
+      input = ctx.input;
+      query = ctx.query;
+      diacritics = ctx.diacritics;
+      trigger = ctx.trigger;
+      threshold = ctx.threshold;
+      resultsList = ctx.resultsList;
+      inputValue = getInput(input);
+      queryValue = getQuery(inputValue, query, diacritics);
+      condition = checkTrigger(queryValue, (trigger || {}).condition, threshold);
+      if (condition) {
         return getData(ctx).then(function ($await_2) {
           try {
-            findMatches(ctx, inputValue, query);
-            if (ctx.resultsList.render) renderList(ctx);
+            findMatches(inputValue, queryValue, ctx);
+            if (resultsList.render) renderList(ctx);
             return $If_1.call(_this);
           } catch ($boundEx) {
             return $error($boundEx);
@@ -471,16 +484,6 @@
       }
     });
   }
-
-  var debouncer = (function (callback, delay) {
-    var inDebounce;
-    return function () {
-      clearTimeout(inDebounce);
-      inDebounce = setTimeout(function () {
-        return callback();
-      }, delay);
-    };
-  });
 
   var classList;
   var ariaSelected = "aria-selected";
@@ -506,7 +509,7 @@
         behavior: ctx.resultsList.scroll || "smooth",
         block: "center"
       });
-      eventEmitter(ctx, "navigate");
+      eventEmitter("navigate", ctx);
     }
   };
   var next = function next(ctx) {
@@ -582,6 +585,8 @@
   };
   var addEventListeners = function addEventListeners(ctx) {
     var events = ctx.events,
+        trigger = ctx.trigger,
+        debounce = ctx.debounce,
         resultsList = ctx.resultsList;
     var publicEvents = ctx.events = _objectSpread2({
       input: _objectSpread2({}, events && events.input)
@@ -606,11 +611,11 @@
         }
       }
     };
-    ctx.trigger.events.forEach(function (event) {
+    trigger.events.forEach(function (event) {
       if (!publicEvents.input[event]) {
-        publicEvents.input[event] = debouncer(function () {
+        publicEvents.input[event] = delay(function () {
           return start(ctx);
-        }, ctx.debounce);
+        }, debounce);
       }
     });
     if (resultsList.render) {
@@ -633,12 +638,15 @@
   function init (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var placeHolder, resultsList, inputAttributes;
+      var name, input, placeHolder, resultsList, data, inputAttributes;
+      name = ctx.name;
+      input = ctx.input;
       placeHolder = ctx.placeHolder;
       resultsList = ctx.resultsList;
+      data = ctx.data;
       ctx.wrapper = create("div", {
-        "class": ctx.name + "_wrapper",
-        around: ctx.input,
+        "class": name + "_wrapper",
+        around: input,
         role: "combobox",
         "aria-owns": resultsList.idName,
         "aria-haspopup": true,
@@ -649,7 +657,7 @@
         "aria-autocomplete": "both"
       };
       if (placeHolder) inputAttributes.placeholder = placeHolder;
-      create(ctx.input, inputAttributes);
+      create(input, inputAttributes);
       ctx.list = create(resultsList.element, _objectSpread2(_objectSpread2({
         hidden: "hidden",
         dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
@@ -659,7 +667,7 @@
       }), {}, {
         role: "listbox"
       }));
-      if (ctx.data.cache) {
+      if (data.cache) {
         return getData(ctx).then(function ($await_2) {
           try {
             return $If_1.call(_this);
@@ -670,46 +678,47 @@
       }
       function $If_1() {
         addEventListeners(ctx);
-        eventEmitter(ctx, "init");
+        eventEmitter("init", ctx);
         return $return();
       }
       return $If_1.call(_this);
     });
   }
 
-  var stage = (function (ctx, autoComplete) {
+  function extend (autoComplete) {
+    var _this = this;
     var prototype = autoComplete.prototype;
     prototype.preInit = function () {
-      return preInit(ctx);
+      return preInit(_this);
     };
     prototype.init = function () {
-      return init(ctx);
+      return init(_this);
     };
     prototype.start = function () {
-      return start(ctx);
+      return start(_this);
     };
     prototype.unInit = function () {
-      return removeEventListeners(ctx);
+      return removeEventListeners(_this);
     };
     prototype.open = function () {
-      return openList(ctx);
+      return openList(_this);
     };
     prototype.close = function () {
-      return closeList(ctx);
+      return closeList(_this);
     };
     prototype.goTo = function (index) {
-      return goTo(index, ctx);
+      return goTo(index, _this);
     };
     prototype.next = function () {
-      return next(ctx);
+      return next(_this);
     };
     prototype.previous = function () {
-      return previous(ctx);
+      return previous(_this);
     };
     prototype.select = function (index) {
-      return select(ctx, null, index);
+      return select(_this, null, index);
     };
-  });
+  }
 
   function autoComplete(config) {
     this.options = config;
@@ -730,12 +739,12 @@
       element: "li"
     };
     configure(this);
-    stage(this, autoComplete);
-    var run = this.observer ? this.preInit : this.init;
+    extend.call(this, autoComplete);
+    var run = this.observer ? preInit : init;
     if (document.readyState !== "loading") {
-      run();
+      run(this);
     } else {
-      document.addEventListener("DOMContentLoaded", run);
+      document.addEventListener("DOMContentLoaded", run(this));
     }
   }
 

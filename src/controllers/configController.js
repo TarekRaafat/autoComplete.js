@@ -1,6 +1,6 @@
 // Configuring options stage
 export default (ctx) => {
-  const { options, resultsList, resultItem } = ctx;
+  const { id, name, options, resultsList, resultItem } = ctx;
 
   // Inject sub options into options
   const inject = (option) => {
@@ -33,10 +33,10 @@ export default (ctx) => {
   }
 
   // Dynamic Config Options
-  ctx.selector = ctx.selector || "#" + ctx.name;
+  ctx.selector = ctx.selector || "#" + name;
   resultsList.destination = resultsList.destination || ctx.selector;
-  resultsList.idName = resultsList.idName || ctx.name + "_list_" + ctx.id;
-  resultItem.idName = resultItem.idName || ctx.name + "_result";
+  resultsList.idName = resultsList.idName || name + "_list_" + id;
+  resultItem.idName = resultItem.idName || name + "_result";
 
   // Assign the "input" html element
   ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();

@@ -52,7 +52,7 @@ const goTo = (index, ctx) => {
     /**
      * @emit {navigate} event on results list navigation
      **/
-    eventEmitter(ctx, "navigate");
+    eventEmitter("navigate", ctx);
   }
 };
 

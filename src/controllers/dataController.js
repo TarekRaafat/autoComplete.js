@@ -15,20 +15,20 @@ const getData = async (ctx) => {
   /**
    * @emit {response} event on data request
    **/
-  eventEmitter({ input, dataFeedback: data.store }, "response");
+  eventEmitter("response", { input, dataFeedback: data.store });
 };
 
 /**
  * Find matches to "query"
  *
- * @param {Object} ctx - Search engine configurations
  * @param {String} input - User's raw input value
  * @param {String} query - User's search query string
+ * @param {Object} ctx - Search engine configurations
  *
  * @returns {Array} - Matches
  */
-const findMatches = (ctx, input, query) => {
-  const { data, searchEngine: customSearch } = ctx;
+const findMatches = (input, query, ctx) => {
+  const { data, searchEngine: customSearch, resultsList } = ctx;
 
   let matches = [];
 
@@ -38,7 +38,7 @@ const findMatches = (ctx, input, query) => {
       const recordValue = key ? record[key] : record;
 
       const match =
-        typeof customSearch === "function" ? customSearch(query, recordValue) : search(ctx, query, recordValue);
+        typeof customSearch === "function" ? customSearch(query, recordValue) : search(query, recordValue, ctx);
 
       if (!match) return;
 
@@ -65,7 +65,7 @@ const findMatches = (ctx, input, query) => {
   // Find results matching to the query
   if (data.filter) matches = data.filter(matches);
 
-  const results = matches.slice(0, ctx.resultsList.maxResults);
+  const results = matches.slice(0, resultsList.maxResults);
 
   // Prepare data feedback object
   ctx.dataFeedback = { input, query, matches, results };
@@ -73,7 +73,7 @@ const findMatches = (ctx, input, query) => {
   /**
    * @emit {results} event on search response with matches
    **/
-  eventEmitter(ctx, "results");
+  eventEmitter("results", ctx);
 };
 
 export { getData, findMatches };

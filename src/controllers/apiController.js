@@ -5,27 +5,27 @@ import { removeEventListeners } from "./eventController";
 import { openList, closeList } from "./listController";
 import { goTo, next, previous, select } from "./actionController";
 
-export default (ctx, autoComplete) => {
+export default function (autoComplete) {
   const { prototype } = autoComplete;
 
   // Pre-Initialization stage
-  prototype.preInit = () => preInit(ctx);
+  prototype.preInit = () => preInit(this);
   // Initialization stage
-  prototype.init = () => init(ctx);
+  prototype.init = () => init(this);
   // Start autoComplete.js engine
-  prototype.start = () => start(ctx);
+  prototype.start = () => start(this);
   // Un-Initialize autoComplete.js engine
-  prototype.unInit = () => removeEventListeners(ctx);
+  prototype.unInit = () => removeEventListeners(this);
   // Open result list
-  prototype.open = () => openList(ctx);
+  prototype.open = () => openList(this);
   // Close result list
-  prototype.close = () => closeList(ctx);
+  prototype.close = () => closeList(this);
   // Go to result by index
-  prototype.goTo = (index) => goTo(index, ctx);
+  prototype.goTo = (index) => goTo(index, this);
   // Go to next result
-  prototype.next = () => next(ctx);
+  prototype.next = () => next(this);
   // Go to previous result
-  prototype.previous = () => previous(ctx);
+  prototype.previous = () => previous(this);
   // Select result by index
-  prototype.select = (index) => select(ctx, null, index);
-};
+  prototype.select = (index) => select(this, null, index);
+}

@@ -1,15 +1,15 @@
-import create from "../helpers/creator";
+import { create } from "../helpers/io";
 import { getData } from "../controllers/dataController";
 import { addEventListeners } from "../controllers/eventController";
 import eventEmitter from "../helpers/eventEmitter";
 
 export default async function (ctx) {
-  let { placeHolder, resultsList } = ctx;
+  let { name, input, placeHolder, resultsList, data } = ctx;
 
   // Create wrapper element
   ctx.wrapper = create("div", {
-    class: ctx.name + "_wrapper",
-    around: ctx.input,
+    class: name + "_wrapper",
+    around: input,
     role: "combobox",
     "aria-owns": resultsList.idName,
     "aria-haspopup": true,
@@ -26,7 +26,7 @@ export default async function (ctx) {
   if (placeHolder) inputAttributes.placeholder = placeHolder;
 
   // Set "inputField" attributes
-  create(ctx.input, inputAttributes);
+  create(input, inputAttributes);
 
   // Create new list element
   ctx.list = create(resultsList.element, {
@@ -43,7 +43,7 @@ export default async function (ctx) {
   });
 
   // Get the data from store
-  if (ctx.data.cache) await getData(ctx);
+  if (data.cache) await getData(ctx);
 
   // Attach Events listeners
   addEventListeners(ctx);
@@ -51,5 +51,5 @@ export default async function (ctx) {
   /**
    * @emit {init} event on Initialization
    **/
-  eventEmitter(ctx, "init");
+  eventEmitter("init", ctx);
 }

@@ -1,5 +1,5 @@
 import start from "../services/start";
-import debouncer from "../helpers/debouncer";
+import { delay } from "../helpers/io";
 import { click, navigate } from "./actionController";
 import { closeList } from "./listController";
 
@@ -14,7 +14,7 @@ const eventsListManager = (events, callback) => {
 
 // Attach all events listeners
 const addEventListeners = (ctx) => {
-  const { events, resultsList } = ctx;
+  const { events, trigger, debounce, resultsList } = ctx;
 
   // Public events listeners list
   const publicEvents = (ctx.events = {
@@ -45,9 +45,9 @@ const addEventListeners = (ctx) => {
   };
 
   // Add "inputField" trigger events
-  ctx.trigger.events.forEach((event) => {
+  trigger.events.forEach((event) => {
     if (!publicEvents.input[event]) {
-      publicEvents.input[event] = debouncer(() => start(ctx), ctx.debounce);
+      publicEvents.input[event] = delay(() => start(ctx), debounce);
     }
   });
 
