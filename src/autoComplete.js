@@ -1,5 +1,5 @@
-import configure from "./controllers/configController";
-import extend from "./controllers/apiController";
+import configure from "./services/configure";
+import extend from "./services/extend";
 import preInit from "./services/preInit";
 import init from "./services/init";
 

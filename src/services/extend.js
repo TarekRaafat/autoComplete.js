@@ -1,9 +1,9 @@
-import preInit from "../services/preInit";
-import init from "../services/init";
-import start from "../services/start";
-import { removeEventListeners } from "./eventController";
-import { openList, closeList } from "./listController";
-import { goTo, next, previous, select } from "./actionController";
+import preInit from "./preInit";
+import init from "./init";
+import start from "./start";
+import { removeEventListeners } from "../controllers/eventController";
+import { openList, closeList } from "../controllers/listController";
+import { goTo, next, previous, select } from "../controllers/actionController";
 
 export default function (autoComplete) {
   const { prototype } = autoComplete;
