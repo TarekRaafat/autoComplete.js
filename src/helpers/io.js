@@ -76,27 +76,27 @@ const format = (value, diacritics) => {
  * Intercept query value
  *
  * @param {String} input - user's raw search input value
- * @param {Function} manipulate - query interceptor
+ * @param {Function} query - query interceptor
  *
  * @returns {String} - Manipulated Query
  */
-const getQuery = (input, manipulate) => (manipulate ? manipulate(input) : input);
+const getQuery = (input, query) => (query ? query(input) : input);
 
 /**
  * Debouncer
  *
  * @param {Function} callback - Callback function
- * @param {Number} delay - Delay number value
+ * @param {Number} duration - Delay time value
  *
  * @returns {Function} - Debouncer function
  */
-const delay = (callback, delay) => {
-  let inDebounce;
-
-  clearTimeout(inDebounce);
+const debounce = (callback, duration) => {
+  let timer;
 
   return () => {
-    inDebounce = setTimeout(() => callback(), delay);
+    clearTimeout(timer);
+
+    timer = setTimeout(() => callback(), duration);
   };
 };
 
@@ -129,4 +129,4 @@ const mark = (value, className) =>
     innerHTML: value,
   }).outerHTML;
 
-export { select, create, getInput, format, getQuery, delay, checkTrigger, mark };
+export { select, create, getInput, format, getQuery, debounce, checkTrigger, mark };

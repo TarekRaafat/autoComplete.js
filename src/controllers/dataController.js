@@ -43,7 +43,7 @@ const findMatches = (input, query, ctx) => {
           : search(query, value, {
               mode: searchEngine,
               diacritics,
-              highlight: (resultItem.highlight || {}).render,
+              highlight: resultItem.highlight,
               className: (resultItem.highlight || {}).className,
             });
 
@@ -76,11 +76,6 @@ const findMatches = (input, query, ctx) => {
 
   // Prepare data feedback object
   ctx.dataFeedback = { input, query, matches, results };
-
-  /**
-   * @emit {results} event on search response with matches
-   **/
-  eventEmitter("results", ctx);
 };
 
 export { getData, findMatches };

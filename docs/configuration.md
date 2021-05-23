@@ -133,15 +133,6 @@ data: {
 
 > Event & Condition rules that trigger autoComplete.js engine to start
 
-- Type: `Object`
-
-##### Methods:
-
-#### `events` <sub><sup>(optional)</sup></sub>
-- Type: `Array` of [events](https://developer.mozilla.org/en-US/docs/Web/Events)
-- Default: [`"input"`]
-
-#### `condition` <sub><sup>(optional)</sup></sub>
 - Type: `Function` returns `Boolean`
   - Parameters: (`event`, `queryValue`)
 - Default: if input field **NOT** empty **and** greater than or equal threshold
@@ -149,11 +140,8 @@ data: {
 ##### Example:
 
 ```js
-trigger: {
-    events: ["input"], // Any valid event type name
-    condition: (event, queryValue) => {
-        return queryValue.replace(/ /g, "").length; // Returns "Boolean"
-    }
+trigger: (query) => {
+    return query.replace(/ /g, "").length; // Returns "Boolean"
 },
 ```
 
@@ -163,22 +151,15 @@ trigger: {
 
 > Query interceptor
 
-- Type: `Object`
-
-##### Methods:
-
-#### `manipulate` <sub><sup>(optional)</sup></sub>
-  - Type: `Function` returns `String`
-    - Parameters: (`query`)
-  - Default: Returns raw input value
+- Type: `Function` returns `String`
+  - Parameters: (`query`)
+- Default: Returns raw input value
 
 ##### Example:
 
 ```js
-query: {
-    manipulate: (query) => {
-        return query.replace("pizza", "burger");
-    }
+query: (input) => {
+    return input.replace("pizza", "burger");
 },
 ```
 
@@ -199,7 +180,7 @@ placeHolder: "Search...",
 
 ***
 
-### observer <sub><sup>(optional)</sup></sub>
+### observe <sub><sup>(optional)</sup></sub>
 
 > Input field observer
 
@@ -391,11 +372,9 @@ resultsList: {
 - Default: `Function`
 
 #### `highlight` <sub><sup>(optional)</sup></sub>
-- Type: `Object`
-  - render: `Boolean`
+- Type: `Object` | `Boolean`
   - className: `String` of class value
 - Defaults: 
-  - render: `false`
   - className: `"autoComplete_highlighted"`
 
 #### `selected` <sub><sup>(optional)</sup></sub>

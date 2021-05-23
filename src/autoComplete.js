@@ -14,7 +14,6 @@ export default function autoComplete(config) {
   // Default Configuration options
   this.id = autoComplete.instances = (autoComplete.instances || 0) + 1;
   this.name = "autoComplete";
-  this.trigger = { events: ["input"] };
   this.threshold = 1;
   this.debounce = 0;
   this.resultsList = {
@@ -31,7 +30,7 @@ export default function autoComplete(config) {
   // Stage API methods
   extend.call(this, autoComplete);
   // Set to run "preInit" if "observer" enabled else "init"
-  const run = this.observer ? preInit : init;
+  const run = this.observe ? preInit : init;
   // Check if DOM loaded
   if (document.readyState !== "loading") {
     run(this);

@@ -6,16 +6,6 @@ import eventEmitter from "../helpers/eventEmitter";
 export default async function (ctx) {
   let { name, input, placeHolder, resultsList, data } = ctx;
 
-  // Create wrapper element
-  ctx.wrapper = create("div", {
-    class: name + "_wrapper",
-    around: input,
-    role: "combobox",
-    "aria-owns": resultsList.idName,
-    "aria-haspopup": true,
-    "aria-expanded": false,
-  });
-
   // Prepare "inputField" attributes
   const Attributes = {
     "aria-controls": resultsList.idName,
@@ -27,6 +17,16 @@ export default async function (ctx) {
 
   // Set "inputField" attributes
   create(input, Attributes);
+
+  // Create wrapper element
+  ctx.wrapper = create("div", {
+    class: name + "_wrapper",
+    around: input,
+    role: "combobox",
+    "aria-owns": resultsList.idName,
+    "aria-haspopup": true,
+    "aria-expanded": false,
+  });
 
   // Create new list element
   ctx.list = create(resultsList.element, {

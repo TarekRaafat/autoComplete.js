@@ -247,16 +247,16 @@
     value = value.toLowerCase();
     return (diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value).toString();
   };
-  var getQuery = function getQuery(input, manipulate) {
-    return manipulate ? manipulate(input) : input;
+  var getQuery = function getQuery(input, query) {
+    return query ? query(input) : input;
   };
-  var delay = function delay(callback, _delay) {
-    var inDebounce;
-    clearTimeout(inDebounce);
+  var debounce = function debounce(callback, duration) {
+    var timer;
     return function () {
-      inDebounce = setTimeout(function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
         return callback();
-      }, _delay);
+      }, duration);
     };
   };
   var checkTrigger = function checkTrigger(query, condition, threshold) {
@@ -366,7 +366,7 @@
         var match = typeof searchEngine === "function" ? searchEngine(query, value) : search(query, value, {
           mode: searchEngine,
           diacritics: diacritics,
-          highlight: (resultItem.highlight || {}).render,
+          highlight: resultItem.highlight,
           className: (resultItem.highlight || {}).className
         });
         if (!match) return;
@@ -403,7 +403,6 @@
       matches: matches,
       results: results
     };
-    eventEmitter("results", ctx);
   };
 
   var classList;
@@ -557,8 +556,8 @@
       threshold = ctx.threshold;
       resultsList = ctx.resultsList;
       inputVal = getInput(input);
-      queryVal = getQuery(inputVal, (query || {}).manipulate);
-      condition = checkTrigger(queryVal, (trigger || {}).condition, threshold);
+      queryVal = getQuery(inputVal, query);
+      condition = checkTrigger(queryVal, trigger, threshold);
       if (condition) {
         return getData(ctx).then(function ($await_2) {
           try {
@@ -587,10 +586,13 @@
     }
   };
   var addEventListeners = function addEventListeners(ctx) {
-    var events = ctx.events,
-        trigger = ctx.trigger,
-        debounce = ctx.debounce,
+    var events = ctx.events;
+        ctx.trigger;
+        var timer = ctx.debounce,
         resultsList = ctx.resultsList;
+    var run = debounce(function () {
+      return start(ctx);
+    }, timer);
     var publicEvents = ctx.events = _objectSpread2({
       input: _objectSpread2({}, events && events.input)
     }, resultsList.render && {
@@ -598,6 +600,9 @@
     });
     var privateEvents = {
       input: {
+        input: function input() {
+          run();
+        },
         keydown: function keydown(event) {
           resultsList.navigation ? resultsList.navigation(event) : navigate(event, ctx);
         },
@@ -614,20 +619,11 @@
         }
       }
     };
-    trigger.events.forEach(function (event) {
-      if (!publicEvents.input[event]) {
-        publicEvents.input[event] = delay(function () {
-          return start(ctx);
-        }, debounce);
-      }
+    eventsListManager(privateEvents, function (event, element) {
+      element = resultsList.render ? element : "input";
+      if (publicEvents[element][event]) return;
+      publicEvents[element][event] = privateEvents[element][event];
     });
-    if (resultsList.render) {
-      eventsListManager(privateEvents, function (event, element) {
-        if (!publicEvents[element][event]) {
-          publicEvents[element][event] = privateEvents[element][event];
-        }
-      });
-    }
     eventsListManager(publicEvents, function (event, element) {
       ctx[element].addEventListener(event, publicEvents[element][event]);
     });
@@ -647,6 +643,12 @@
       placeHolder = ctx.placeHolder;
       resultsList = ctx.resultsList;
       data = ctx.data;
+      Attributes = {
+        "aria-controls": resultsList.idName,
+        "aria-autocomplete": "both"
+      };
+      if (placeHolder) Attributes.placeholder = placeHolder;
+      create(input, Attributes);
       ctx.wrapper = create("div", {
         "class": name + "_wrapper",
         around: input,
@@ -655,12 +657,6 @@
         "aria-haspopup": true,
         "aria-expanded": false
       });
-      Attributes = {
-        "aria-controls": resultsList.idName,
-        "aria-autocomplete": "both"
-      };
-      if (placeHolder) Attributes.placeholder = placeHolder;
-      create(input, Attributes);
       ctx.list = create(resultsList.element, _objectSpread2(_objectSpread2({
         hidden: "hidden",
         dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
@@ -730,9 +726,6 @@
     this.options = config;
     this.id = autoComplete.instances = (autoComplete.instances || 0) + 1;
     this.name = "autoComplete";
-    this.trigger = {
-      events: ["input"]
-    };
     this.threshold = 1;
     this.debounce = 0;
     this.resultsList = {
@@ -746,7 +739,7 @@
     };
     configure(this);
     extend.call(this, autoComplete);
-    var run = this.observer ? preInit : init;
+    var run = this.observe ? preInit : init;
     if (document.readyState !== "loading") {
       run(this);
     } else {

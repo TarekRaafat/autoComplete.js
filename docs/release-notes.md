@@ -70,11 +70,12 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: API to only include the used options instead of including unused ones with `undefined` value
   - 🌀 Changed: `fetch` eventEmitter name to `response`
   - 🌀 Changed: `inputField` API property name to `input`
-  - 🌀 Changed: `trigger.event` API property name to `trigger.events`
+  - 🌀 Changed: `trigger` API property type from `Object` to `Function` formerly called `trigger.condition`
   - 🌀 Changed: `data.results` API property name to `data.filter`
   - 🌀 Changed: `noResults` API to accept `boolean` instead of `function` to be replaced with `resultsList.container`
   - 🌀 Changed: `resultItem.content` API parameters order from `(data, element)` to `(element, data)` for consistency
   - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
+  - ❗ Removed: `trigger.event` API property to be replaced with `events`
   - ❗ Removed: `feedback` API method to be replaced with `navigate` event
   - ❗ Removed: `nav` API method to be replaced with `events`
   - ❗ Removed: `hook` API method to be replaced with `start` API

@@ -1,5 +1,5 @@
 import start from "../services/start";
-import { delay } from "../helpers/io";
+import { debounce } from "../helpers/io";
 import { click, navigate, closeList } from "./listController";
 
 // Manage all given events
@@ -13,7 +13,9 @@ const eventsListManager = (events, callback) => {
 
 // Attach all events listeners
 const addEventListeners = (ctx) => {
-  const { events, trigger, debounce, resultsList } = ctx;
+  const { events, trigger, debounce: timer, resultsList } = ctx;
+
+  const run = debounce(() => start(ctx), timer);
 
   // Public events listeners list
   const publicEvents = (ctx.events = {
@@ -26,6 +28,9 @@ const addEventListeners = (ctx) => {
   // Private events listeners list
   const privateEvents = {
     input: {
+      input: () => {
+        run();
+      },
       keydown: (event) => {
         resultsList.navigation ? resultsList.navigation(event) : navigate(event, ctx);
       },
@@ -43,21 +48,14 @@ const addEventListeners = (ctx) => {
     },
   };
 
-  // Add "inputField" trigger events
-  trigger.events.forEach((event) => {
-    if (!publicEvents.input[event]) {
-      publicEvents.input[event] = delay(() => start(ctx), debounce);
-    }
-  });
-
   // Populate all private events into public events list
-  if (resultsList.render) {
-    eventsListManager(privateEvents, (event, element) => {
-      if (!publicEvents[element][event]) {
-        publicEvents[element][event] = privateEvents[element][event];
-      }
-    });
-  }
+  eventsListManager(privateEvents, (event, element) => {
+    // do NOT populate list events If "resultsList" disabled
+    element = resultsList.render ? element : "input";
+    // do NOT overwrite public events
+    if (publicEvents[element][event]) return;
+    publicEvents[element][event] = privateEvents[element][event];
+  });
 
   // Attach all public events
   eventsListManager(publicEvents, (event, element) => {

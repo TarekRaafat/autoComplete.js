@@ -8,9 +8,9 @@ export default async function (ctx) {
   // Get raw "inputField" value
   const inputVal = getInput(input);
   // Prepare manipulated query value
-  const queryVal = getQuery(inputVal, (query || {}).manipulate);
+  const queryVal = getQuery(inputVal, query);
   // Get trigger decision
-  const condition = checkTrigger(queryVal, (trigger || {}).condition, threshold);
+  const condition = checkTrigger(queryVal, trigger, threshold);
 
   // Validate trigger condition
   if (condition) {

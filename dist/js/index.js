@@ -81,10 +81,6 @@ const autoCompleteJS = new autoComplete({
 //   console.log(event);
 // });
 
-// autoCompleteJS.input.addEventListener("results", function (event) {
-//   console.log(event);
-// });
-
 // autoCompleteJS.input.addEventListener("open", function (event) {
 //   console.log(event);
 // });
