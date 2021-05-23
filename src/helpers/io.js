@@ -16,42 +16,40 @@ const select = (element) => (typeof element === "string" ? document.querySelecto
  * @returns {HTMLElement} - newly create html element
  */
 const create = (tag, options) => {
-  const element = typeof tag === "string" ? document.createElement(tag) : tag;
+  const el = typeof tag === "string" ? document.createElement(tag) : tag;
 
   for (const key in options) {
-    const value = options[key];
+    const val = options[key];
 
     if (key === "dest") {
-      select(value[0]).insertAdjacentElement(value[1], element);
+      select(val[0]).insertAdjacentElement(val[1], el);
     } else if (key === "around") {
-      const reference = select(value);
+      const ref = select(val);
 
-      reference.parentNode.insertBefore(element, reference);
+      ref.parentNode.insertBefore(el, ref);
 
-      element.appendChild(reference);
+      el.appendChild(ref);
 
-      if (reference.getAttribute("autofocus") != null) reference.focus();
-    } else if (key in element) {
-      element[key] = value;
+      if (ref.getAttribute("autofocus") != null) ref.focus();
+    } else if (key in el) {
+      el[key] = val;
     } else {
-      element.setAttribute(key, value);
+      el.setAttribute(key, val);
     }
   }
 
-  return element;
+  return el;
 };
 
 /**
  * Get the "inputField" search value
  *
- * @param {Element} inputField - autoComplete.js "inputField" or textarea element
+ * @param {Element} field - autoComplete.js "inputField" or textarea element
  *
  * @returns {String} - Raw "inputField" value as a string
  */
-const getInput = (inputField) =>
-  inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement
-    ? inputField.value
-    : inputField.innerHTML;
+const getInput = (field) =>
+  field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : field.innerHTML;
 
 /**
  * Format raw input value
@@ -78,14 +76,11 @@ const format = (value, diacritics) => {
  * Intercept query value
  *
  * @param {String} input - user's raw search input value
- * @param {Object} query - query interceptor
- * @param {Boolean} diacritics - formatting on/off
+ * @param {Function} manipulate - query interceptor
  *
  * @returns {String} - Manipulated Query
  */
-const getQuery = (input, query, diacritics) => {
-  return query && query.manipulate ? query.manipulate(input) : format(input, diacritics);
-};
+const getQuery = (input, manipulate) => (manipulate ? manipulate(input) : input);
 
 /**
  * Debouncer
@@ -98,9 +93,9 @@ const getQuery = (input, query, diacritics) => {
 const delay = (callback, delay) => {
   let inDebounce;
 
-  return () => {
-    clearTimeout(inDebounce);
+  clearTimeout(inDebounce);
 
+  return () => {
     inDebounce = setTimeout(() => callback(), delay);
   };
 };

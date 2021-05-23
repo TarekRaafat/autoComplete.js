@@ -1,5 +1,4 @@
 import eventEmitter from "../helpers/eventEmitter";
-import search from "./searchController";
 
 const getData = async (ctx) => {
   const { input, data } = ctx;
@@ -28,7 +27,7 @@ const getData = async (ctx) => {
  * @returns {Array} - Matches
  */
 const findMatches = (input, query, ctx) => {
-  const { data, searchEngine: customSearch, resultsList } = ctx;
+  const { data, searchEngine: customSearch, resultsList, search } = ctx;
 
   let matches = [];
 
@@ -37,8 +36,7 @@ const findMatches = (input, query, ctx) => {
     const find = (key) => {
       const recordValue = key ? record[key] : record;
 
-      const match =
-        typeof customSearch === "function" ? customSearch(query, recordValue) : search(query, recordValue, ctx);
+      const match = typeof customSearch === "function" ? customSearch(query, recordValue) : search(query, recordValue);
 
       if (!match) return;
 

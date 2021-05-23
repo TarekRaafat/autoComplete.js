@@ -222,38 +222,38 @@
     return typeof element === "string" ? document.querySelector(element) : element || null;
   };
   var create = function create(tag, options) {
-    var element = typeof tag === "string" ? document.createElement(tag) : tag;
+    var el = typeof tag === "string" ? document.createElement(tag) : tag;
     for (var key in options) {
-      var value = options[key];
+      var val = options[key];
       if (key === "dest") {
-        select$1(value[0]).insertAdjacentElement(value[1], element);
+        select$1(val[0]).insertAdjacentElement(val[1], el);
       } else if (key === "around") {
-        var reference = select$1(value);
-        reference.parentNode.insertBefore(element, reference);
-        element.appendChild(reference);
-        if (reference.getAttribute("autofocus") != null) reference.focus();
-      } else if (key in element) {
-        element[key] = value;
+        var ref = select$1(val);
+        ref.parentNode.insertBefore(el, ref);
+        el.appendChild(ref);
+        if (ref.getAttribute("autofocus") != null) ref.focus();
+      } else if (key in el) {
+        el[key] = val;
       } else {
-        element.setAttribute(key, value);
+        el.setAttribute(key, val);
       }
     }
-    return element;
+    return el;
   };
-  var getInput = function getInput(inputField) {
-    return inputField instanceof HTMLInputElement || inputField instanceof HTMLTextAreaElement ? inputField.value : inputField.innerHTML;
+  var getInput = function getInput(field) {
+    return field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : field.innerHTML;
   };
   var format = function format(value, diacritics) {
     value = value.toLowerCase();
     return (diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value).toString();
   };
-  var getQuery = function getQuery(input, query, diacritics) {
-    return query && query.manipulate ? query.manipulate(input) : format(input, diacritics);
+  var getQuery = function getQuery(input, manipulate) {
+    return manipulate ? manipulate(input) : input;
   };
   var delay = function delay(callback, _delay) {
     var inDebounce;
+    clearTimeout(inDebounce);
     return function () {
-      clearTimeout(inDebounce);
       inDebounce = setTimeout(function () {
         return callback();
       }, _delay);
@@ -277,36 +277,6 @@
       detail: ctx.dataFeedback,
       cancelable: true
     }));
-  });
-
-  var search = (function (query, record, ctx) {
-    var newRecord = format(record, ctx.diacritics);
-    var item = ctx.resultItem.highlight;
-    var className, highlight;
-    if (item) {
-      className = item.className;
-      highlight = item.render;
-    }
-    if (ctx.searchEngine === "loose") {
-      query = query.replace(/ /g, "");
-      var queryLength = query.length;
-      var cursor = 0;
-      var match = Array.from(record).map(function (character, index) {
-        if (cursor < queryLength && newRecord[index] === query[cursor]) {
-          character = highlight ? mark(character, className) : character;
-          cursor++;
-        }
-        return character;
-      }).join("");
-      if (cursor === queryLength) return match;
-    } else {
-      if (newRecord.includes(query)) {
-        var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
-        query = pattern.exec(record);
-        var _match = highlight ? record.replace(query, mark(query, className)) : record;
-        return _match;
-      }
-    }
   });
 
   var getData = function getData(ctx) {
@@ -356,12 +326,13 @@
   var findMatches = function findMatches(input, query, ctx) {
     var data = ctx.data,
         customSearch = ctx.searchEngine,
-        resultsList = ctx.resultsList;
+        resultsList = ctx.resultsList,
+        search = ctx.search;
     var matches = [];
     data.store.forEach(function (record, index) {
       var find = function find(key) {
         var recordValue = key ? record[key] : record;
-        var match = typeof customSearch === "function" ? customSearch(query, recordValue) : search(query, recordValue, ctx);
+        var match = typeof customSearch === "function" ? customSearch(query, recordValue) : search(query, recordValue);
         if (!match) return;
         var result = {
           index: index,
@@ -455,15 +426,14 @@
   function start (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var input, query, diacritics, trigger, threshold, resultsList, inputValue, queryValue, condition;
+      var input, query, trigger, threshold, resultsList, inputValue, queryValue, condition;
       input = ctx.input;
       query = ctx.query;
-      diacritics = ctx.diacritics;
       trigger = ctx.trigger;
       threshold = ctx.threshold;
       resultsList = ctx.resultsList;
       inputValue = getInput(input);
-      queryValue = getQuery(inputValue, query, diacritics);
+      queryValue = getQuery(inputValue, (query || {}).manipulate);
       condition = checkTrigger(queryValue, (trigger || {}).condition, threshold);
       if (condition) {
         return getData(ctx).then(function ($await_2) {
@@ -522,7 +492,7 @@
   };
   var select = function select(ctx, event, index) {
     index = index || ctx.cursor;
-    if (!index || index < 0) return;
+    if (index < 0) return;
     var data = ctx.dataFeedback;
     var dataFeedback = _objectSpread2(_objectSpread2({
       event: event
@@ -685,6 +655,35 @@
     });
   }
 
+  var search = (function (query, record, options) {
+    var mode = options.mode,
+        diacritics = options.diacritics,
+        highlight = options.highlight,
+        className = options.className;
+    var newRecord = format(record, diacritics);
+    query = format(query, diacritics);
+    if (mode === "loose") {
+      query = query.replace(/ /g, "");
+      var queryLength = query.length;
+      var cursor = 0;
+      var match = Array.from(record).map(function (character, index) {
+        if (cursor < queryLength && newRecord[index] === query[cursor]) {
+          character = highlight ? mark(character, className) : character;
+          cursor++;
+        }
+        return character;
+      }).join("");
+      if (cursor === queryLength) return match;
+    } else {
+      if (newRecord.includes(query)) {
+        var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
+        query = pattern.exec(record);
+        var _match = highlight ? record.replace(query, mark(query, className)) : record;
+        return _match;
+      }
+    }
+  });
+
   function extend (autoComplete) {
     var _this = this;
     var prototype = autoComplete.prototype;
@@ -717,6 +716,13 @@
     };
     prototype.select = function (index) {
       return select(_this, null, index);
+    };
+    autoComplete.search = prototype.search = function (query, record, options) {
+      return search(query, record, options || {
+        mode: _this.searchEngine,
+        highlight: (_this.resultItem.highlight || {}).render,
+        className: (_this.resultItem.highlight || {}).className
+      });
     };
   }
 

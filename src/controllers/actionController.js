@@ -94,7 +94,7 @@ const select = (ctx, event, index) => {
   index = index || ctx.cursor;
 
   // Prevent empty selection
-  if (!index || index < 0) return;
+  if (index < 0) return;
 
   const data = ctx.dataFeedback;
 

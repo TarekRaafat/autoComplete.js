@@ -4,6 +4,7 @@ import start from "./start";
 import { removeEventListeners } from "../controllers/eventController";
 import { openList, closeList } from "../controllers/listController";
 import { goTo, next, previous, select } from "../controllers/actionController";
+import search from "../controllers/searchController";
 
 export default function (autoComplete) {
   const { prototype } = autoComplete;
@@ -28,4 +29,15 @@ export default function (autoComplete) {
   prototype.previous = () => previous(this);
   // Select result by index
   prototype.select = (index) => select(this, null, index);
+  // autoComplete.js Search Engine
+  autoComplete.search = prototype.search = (query, record, options) =>
+    search(
+      query,
+      record,
+      options || {
+        mode: this.searchEngine,
+        highlight: (this.resultItem.highlight || {}).render,
+        className: (this.resultItem.highlight || {}).className,
+      }
+    );
 }

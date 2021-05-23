@@ -5,21 +5,17 @@ import { format, mark } from "../helpers/io";
  *
  * @param {String} query - User's manipulated search query value
  * @param {String} record - Data record string to be compared
- * @param {Object} ctx - autoComplete.js configurations
+ * @param {Object} options - autoComplete.js configurations
  *
  * @returns {String} - Matched data record string
  */
-export default (query, record, ctx) => {
-  const newRecord = format(record, ctx.diacritics);
-  const item = ctx.resultItem.highlight;
-  let className, highlight;
+export default (query, record, options) => {
+  const { mode, diacritics, highlight, className } = options;
 
-  if (item) {
-    className = item.className;
-    highlight = item.render;
-  }
+  const newRecord = format(record, diacritics);
+  query = format(query, diacritics);
 
-  if (ctx.searchEngine === "loose") {
+  if (mode === "loose") {
     // Query string with no spaces
     query = query.replace(/ /g, "");
     const queryLength = query.length;

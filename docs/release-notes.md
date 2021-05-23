@@ -52,6 +52,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: `next` API method controls `resultsList` navigation
   - ➕ Added: `previous` API method controls `resultsList` navigation
   - ➕ Added: `select` API method controls `resultsList` selection by index
+  - ➕ Added: `search` API method to avail autoComplete.js powerful engine for external use
   - ➕ Added: `isOpened` API `boolean` property that holds `resultsList` state `true` opened `false` closed
   - ➕ Added: `list` API property holds the entire list html element
   - ➕ Added: `wrapper` API property holds the entire wrapper html element

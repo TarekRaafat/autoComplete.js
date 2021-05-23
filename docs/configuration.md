@@ -131,7 +131,7 @@ data: {
 
 ### trigger <sub><sup>(optional)</sup></sub>
 
-> Engine event & condition trigger
+> Event & Condition rules that trigger autoComplete.js engine to start
 
 - Type: `Object`
 
@@ -186,7 +186,7 @@ query: {
 
 ### placeHolder <sub><sup>(optional)</sup></sub>
 
-> Input field place holder text value
+> Input field placeholder value
 
 - Type: `String`
 - Default: `Blank/Empty`
@@ -216,7 +216,7 @@ observer: false,
 
 ### threshold <sub><sup>(optional)</sup></sub>
 
-> Minimum characters length before engine starts rendering results
+> Minimum characters length for autoComplete.js engine to start
 
 - Type: `Integer`
 - Default: `1`
@@ -231,7 +231,7 @@ threshold: 2,
 
 ### debounce <sub><sup>(optional)</sup></sub>
 
-> Minimum duration after typing is in idle state for engine to kick in
+> Delay duration after done typing for autoComplete.js engine to start
 
 - Type: `Integer`
 - Default: `0`
@@ -278,7 +278,7 @@ diacritics: "strict",
 
 ### resultsList <sub><sup>(optional)</sup></sub>
 
-> Rendered results list element
+> Rendered results list element customizer and interceptor
 
 - Type: `Object`
 
@@ -367,7 +367,7 @@ resultsList: {
 
 ### resultItem <sub><sup>(optional)</sup></sub>
 
-> Rendered result item element
+> Rendered result item element customizer and interceptor
 
 - Type: `Object`
 
@@ -527,6 +527,40 @@ autoCompleteJS.start();
 
 ***
 
+### search(query, record, options)
+
+> autoComplete.js powerful search engine
+
+Parameters:
+- query: `String`
+- record: `String`
+- options: `Object`
+  - mode: `String`
+    - `"strict"` search mode
+    - `"loose"` search mode
+  - diacritics: `Boolean`
+  - highlight: `Boolean`
+  - className: `String`
+
+Defaults:
+- options: `Object`
+  - mode: `"strict"`
+  - diacritics: `false`
+  - highlight: `false`
+  - className: `Empty`
+
+##### Example:
+
+```js
+autoCompleteJS.search(query, record, options);
+
+// Or
+
+autoComplete.search(query, record, options)
+```
+
+***
+
 ### open()
 
 > Opens `resultsList` if not empty
@@ -567,6 +601,12 @@ autoCompleteJS.previous();
 
 > Navigates to a specific `resultItem` on the list by its `index` number
 
+Parameters:
+- index: `Number`
+
+Defaults:
+- index: No default value
+
 ##### Example:
 
 ```js
@@ -579,10 +619,16 @@ autoCompleteJS.gotTo(1);
 
 > Selects a `resultItem` from the list by its `index` number
 
+Parameters:
+- index: `Number`
+
+Defaults:
+- index: current cursor position
+
 ##### Example:
 
 ```js
-autoCompleteJS.select();
+autoCompleteJS.select(1);
 ```
 
 ***

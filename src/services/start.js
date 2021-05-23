@@ -3,12 +3,12 @@ import { getData, findMatches } from "../controllers/dataController";
 import { renderList, closeList } from "../controllers/listController";
 
 export default async function (ctx) {
-  const { input, query, diacritics, trigger, threshold, resultsList } = ctx;
+  const { input, query, trigger, threshold, resultsList } = ctx;
 
   // Get raw "inputField" value
   const inputValue = getInput(input);
   // Prepare manipulated query value
-  const queryValue = getQuery(inputValue, query, diacritics);
+  const queryValue = getQuery(inputValue, (query || {}).manipulate);
   // Get trigger decision
   const condition = checkTrigger(queryValue, (trigger || {}).condition, threshold);
 
