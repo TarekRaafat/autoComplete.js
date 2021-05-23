@@ -2,8 +2,7 @@ import preInit from "./preInit";
 import init from "./init";
 import start from "./start";
 import { removeEventListeners } from "../controllers/eventController";
-import { openList, closeList } from "../controllers/listController";
-import { goTo, next, previous, select } from "../controllers/actionController";
+import { openList, goTo, next, previous, select, closeList } from "../controllers/listController";
 import search from "../controllers/searchController";
 
 export default function (autoComplete) {

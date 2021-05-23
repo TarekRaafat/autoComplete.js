@@ -1,7 +1,6 @@
 import start from "../services/start";
 import { delay } from "../helpers/io";
-import { click, navigate } from "./actionController";
-import { closeList } from "./listController";
+import { click, navigate, closeList } from "./listController";
 
 // Manage all given events
 const eventsListManager = (events, callback) => {

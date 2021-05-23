@@ -406,8 +406,10 @@
     eventEmitter("results", ctx);
   };
 
-  var Expanded = "aria-expanded";
-  var Active$1 = "aria-activedescendant";
+  var classList;
+  var Expand = "aria-expanded";
+  var Active = "aria-activedescendant";
+  var Selected = "aria-selected";
   var renderList = function renderList(ctx) {
     var resultsList = ctx.resultsList,
         list = ctx.list,
@@ -441,8 +443,8 @@
   };
   var openList = function openList(ctx) {
     if (!ctx.isOpened) {
-      ctx.wrapper.setAttribute(Expanded, true);
-      ctx.input.setAttribute(Active$1, "");
+      ctx.wrapper.setAttribute(Expand, true);
+      ctx.input.setAttribute(Active, "");
       ctx.list.removeAttribute("hidden");
       ctx.isOpened = true;
       eventEmitter("open", ctx);
@@ -450,49 +452,13 @@
   };
   var closeList = function closeList(ctx) {
     if (ctx.isOpened) {
-      ctx.wrapper.setAttribute(Expanded, false);
-      ctx.input.setAttribute(Active$1, "");
+      ctx.wrapper.setAttribute(Expand, false);
+      ctx.input.setAttribute(Active, "");
       ctx.list.setAttribute("hidden", "");
       ctx.isOpened = false;
       eventEmitter("close", ctx);
     }
   };
-
-  function start (ctx) {
-    var _this = this;
-    return new Promise(function ($return, $error) {
-      var input, query, trigger, threshold, resultsList, inputVal, queryVal, condition;
-      input = ctx.input;
-      query = ctx.query;
-      trigger = ctx.trigger;
-      threshold = ctx.threshold;
-      resultsList = ctx.resultsList;
-      inputVal = getInput(input);
-      queryVal = getQuery(inputVal, (query || {}).manipulate);
-      condition = checkTrigger(queryVal, (trigger || {}).condition, threshold);
-      if (condition) {
-        return getData(ctx).then(function ($await_2) {
-          try {
-            findMatches(inputVal, queryVal, ctx);
-            if (resultsList.render) renderList(ctx);
-            return $If_1.call(_this);
-          } catch ($boundEx) {
-            return $error($boundEx);
-          }
-        }, $error);
-      } else {
-        closeList(ctx);
-        return $If_1.call(_this);
-      }
-      function $If_1() {
-        return $return();
-      }
-    });
-  }
-
-  var classList;
-  var Selected = "aria-selected";
-  var Active = "aria-activedescendant";
   var goTo = function goTo(index, ctx) {
     var results = ctx.list.getElementsByTagName(ctx.resultItem.element);
     if (ctx.isOpened && results.length) {
@@ -532,9 +498,9 @@
     var dataFeedback = _objectSpread2(_objectSpread2({
       event: event
     }, data), {}, {
-      selection: _objectSpread2(_objectSpread2({}, data.results[index]), {}, {
+      selection: _objectSpread2({
         index: index
-      })
+      }, data.results[index])
     });
     if (ctx.onSelection) ctx.onSelection(dataFeedback);
     closeList(ctx);
@@ -552,7 +518,7 @@
   var navigate = function navigate(event, ctx) {
     var key = event.keyCode;
     var selectedItem = ctx.resultItem.selected;
-    classList = selectedItem ? selectedItem.className.split(" ") : "";
+    if (selectedItem) classList = selectedItem.className.split(" ");
     switch (key) {
       case 40:
       case 38:
@@ -580,6 +546,38 @@
         break;
     }
   };
+
+  function start (ctx) {
+    var _this = this;
+    return new Promise(function ($return, $error) {
+      var input, query, trigger, threshold, resultsList, inputVal, queryVal, condition;
+      input = ctx.input;
+      query = ctx.query;
+      trigger = ctx.trigger;
+      threshold = ctx.threshold;
+      resultsList = ctx.resultsList;
+      inputVal = getInput(input);
+      queryVal = getQuery(inputVal, (query || {}).manipulate);
+      condition = checkTrigger(queryVal, (trigger || {}).condition, threshold);
+      if (condition) {
+        return getData(ctx).then(function ($await_2) {
+          try {
+            findMatches(inputVal, queryVal, ctx);
+            if (resultsList.render) renderList(ctx);
+            return $If_1.call(_this);
+          } catch ($boundEx) {
+            return $error($boundEx);
+          }
+        }, $error);
+      } else {
+        closeList(ctx);
+        return $If_1.call(_this);
+      }
+      function $If_1() {
+        return $return();
+      }
+    });
+  }
 
   var eventsListManager = function eventsListManager(events, callback) {
     for (var element in events) {
