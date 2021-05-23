@@ -2,8 +2,8 @@ import { create } from "../helpers/io";
 import eventEmitter from "../helpers/eventEmitter";
 
 // String holders
-const ariaExpanded = "aria-expanded";
-const ariaActive = "aria-activedescendant";
+const Expanded = "aria-expanded";
+const Active = "aria-activedescendant";
 
 /**
  * List all matching results
@@ -66,9 +66,9 @@ const renderList = (ctx) => {
 const openList = (ctx) => {
   if (!ctx.isOpened) {
     // Set expanded attribute on the wrapper to true
-    ctx.wrapper.setAttribute(ariaExpanded, true);
+    ctx.wrapper.setAttribute(Expanded, true);
     // Reset input active descendant attribute
-    ctx.input.setAttribute(ariaActive, "");
+    ctx.input.setAttribute(Active, "");
     // Remove hidden attribute from list
     ctx.list.removeAttribute("hidden");
     // Set list to opened
@@ -90,14 +90,12 @@ const openList = (ctx) => {
  */
 const closeList = (ctx) => {
   if (ctx.isOpened) {
-    // Get autoComplete.js results list
-    const list = document.getElementById(ctx.resultsList.idName);
     // Set expanded attribute on the wrapper to false
-    ctx.wrapper.setAttribute(ariaExpanded, false);
+    ctx.wrapper.setAttribute(Expanded, false);
     // Add input active descendant attribute
-    ctx.input.setAttribute(ariaActive, "");
+    ctx.input.setAttribute(Active, "");
     // Add hidden attribute from list
-    list.setAttribute("hidden", "");
+    ctx.list.setAttribute("hidden", "");
     // Set list to closed
     ctx.isOpened = false;
 

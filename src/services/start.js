@@ -6,18 +6,18 @@ export default async function (ctx) {
   const { input, query, trigger, threshold, resultsList } = ctx;
 
   // Get raw "inputField" value
-  const inputValue = getInput(input);
+  const inputVal = getInput(input);
   // Prepare manipulated query value
-  const queryValue = getQuery(inputValue, (query || {}).manipulate);
+  const queryVal = getQuery(inputVal, (query || {}).manipulate);
   // Get trigger decision
-  const condition = checkTrigger(queryValue, (trigger || {}).condition, threshold);
+  const condition = checkTrigger(queryVal, (trigger || {}).condition, threshold);
 
   // Validate trigger condition
   if (condition) {
     // Get from source
     await getData(ctx);
     // Find matching results to the query
-    findMatches(inputValue, queryValue, ctx);
+    findMatches(inputVal, queryVal, ctx);
     // Generate & Render "resultsList"
     if (resultsList.render) renderList(ctx);
   } else {

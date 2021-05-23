@@ -17,16 +17,16 @@ export default async function (ctx) {
   });
 
   // Prepare "inputField" attributes
-  const inputAttributes = {
+  const Attributes = {
     "aria-controls": resultsList.idName,
     "aria-autocomplete": "both",
   };
 
   // Add "placeholder" attribute value if available
-  if (placeHolder) inputAttributes.placeholder = placeHolder;
+  if (placeHolder) Attributes.placeholder = placeHolder;
 
   // Set "inputField" attributes
-  create(input, inputAttributes);
+  create(input, Attributes);
 
   // Create new list element
   ctx.list = create(resultsList.element, {

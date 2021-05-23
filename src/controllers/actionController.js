@@ -4,8 +4,8 @@ import eventEmitter from "../helpers/eventEmitter";
 let classList;
 
 // String holders
-const ariaSelected = "aria-selected";
-const ariaActive = "aria-activedescendant";
+const Selected = "aria-selected";
+const Active = "aria-activedescendant";
 
 /**
  * Select result item by index
@@ -32,18 +32,18 @@ const goTo = (index, ctx) => {
 
     if (state > -1) {
       // Remove "aria-selected" attribute from the item
-      results[state].removeAttribute(ariaSelected);
+      results[state].removeAttribute(Selected);
       // Remove "selected" class from the item
       if (classList) results[state].classList.remove(...classList);
     }
 
     // Set "aria-selected" value to true
-    results[index].setAttribute(ariaSelected, true);
+    results[index].setAttribute(Selected, true);
     // Add "selected" class to the selected item
     if (classList) results[index].classList.add(...classList);
 
     // Set "aria-activedescendant" value to the selected item
-    ctx.input.setAttribute(ariaActive, results[ctx.cursor].id);
+    ctx.input.setAttribute(Active, results[ctx.cursor].id);
     ctx.dataFeedback.cursor = ctx.cursor;
 
     // Scroll to selection

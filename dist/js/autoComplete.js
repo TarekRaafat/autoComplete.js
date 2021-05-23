@@ -279,6 +279,36 @@
     }));
   });
 
+  var search = (function (query, record, options) {
+    var _ref = options || {},
+        mode = _ref.mode,
+        diacritics = _ref.diacritics,
+        highlight = _ref.highlight,
+        className = _ref.className;
+    var nRecord = format(record, diacritics);
+    query = format(query, diacritics);
+    if (mode === "loose") {
+      query = query.replace(/ /g, "");
+      var qLength = query.length;
+      var cursor = 0;
+      var match = Array.from(record).map(function (character, index) {
+        if (cursor < qLength && nRecord[index] === query[cursor]) {
+          character = highlight ? mark(character, className) : character;
+          cursor++;
+        }
+        return character;
+      }).join("");
+      if (cursor === qLength) return match;
+    } else {
+      if (nRecord.includes(query)) {
+        var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
+        query = pattern.exec(record);
+        var _match = highlight ? record.replace(query, mark(query, className)) : record;
+        return _match;
+      }
+    }
+  });
+
   var getData = function getData(ctx) {
     return new Promise(function ($return, $error) {
       var input, data;
@@ -325,14 +355,20 @@
   };
   var findMatches = function findMatches(input, query, ctx) {
     var data = ctx.data,
-        customSearch = ctx.searchEngine,
+        searchEngine = ctx.searchEngine,
+        diacritics = ctx.diacritics,
         resultsList = ctx.resultsList,
-        search = ctx.search;
+        resultItem = ctx.resultItem;
     var matches = [];
     data.store.forEach(function (record, index) {
       var find = function find(key) {
-        var recordValue = key ? record[key] : record;
-        var match = typeof customSearch === "function" ? customSearch(query, recordValue) : search(query, recordValue);
+        var value = key ? record[key] : record;
+        var match = typeof searchEngine === "function" ? searchEngine(query, value) : search(query, value, {
+          mode: searchEngine,
+          diacritics: diacritics,
+          highlight: (resultItem.highlight || {}).render,
+          className: (resultItem.highlight || {}).className
+        });
         if (!match) return;
         var result = {
           index: index,
@@ -370,8 +406,8 @@
     eventEmitter("results", ctx);
   };
 
-  var ariaExpanded = "aria-expanded";
-  var ariaActive$1 = "aria-activedescendant";
+  var Expanded = "aria-expanded";
+  var Active$1 = "aria-activedescendant";
   var renderList = function renderList(ctx) {
     var resultsList = ctx.resultsList,
         list = ctx.list,
@@ -405,8 +441,8 @@
   };
   var openList = function openList(ctx) {
     if (!ctx.isOpened) {
-      ctx.wrapper.setAttribute(ariaExpanded, true);
-      ctx.input.setAttribute(ariaActive$1, "");
+      ctx.wrapper.setAttribute(Expanded, true);
+      ctx.input.setAttribute(Active$1, "");
       ctx.list.removeAttribute("hidden");
       ctx.isOpened = true;
       eventEmitter("open", ctx);
@@ -414,10 +450,9 @@
   };
   var closeList = function closeList(ctx) {
     if (ctx.isOpened) {
-      var list = document.getElementById(ctx.resultsList.idName);
-      ctx.wrapper.setAttribute(ariaExpanded, false);
-      ctx.input.setAttribute(ariaActive$1, "");
-      list.setAttribute("hidden", "");
+      ctx.wrapper.setAttribute(Expanded, false);
+      ctx.input.setAttribute(Active$1, "");
+      ctx.list.setAttribute("hidden", "");
       ctx.isOpened = false;
       eventEmitter("close", ctx);
     }
@@ -426,19 +461,19 @@
   function start (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var input, query, trigger, threshold, resultsList, inputValue, queryValue, condition;
+      var input, query, trigger, threshold, resultsList, inputVal, queryVal, condition;
       input = ctx.input;
       query = ctx.query;
       trigger = ctx.trigger;
       threshold = ctx.threshold;
       resultsList = ctx.resultsList;
-      inputValue = getInput(input);
-      queryValue = getQuery(inputValue, (query || {}).manipulate);
-      condition = checkTrigger(queryValue, (trigger || {}).condition, threshold);
+      inputVal = getInput(input);
+      queryVal = getQuery(inputVal, (query || {}).manipulate);
+      condition = checkTrigger(queryVal, (trigger || {}).condition, threshold);
       if (condition) {
         return getData(ctx).then(function ($await_2) {
           try {
-            findMatches(inputValue, queryValue, ctx);
+            findMatches(inputVal, queryVal, ctx);
             if (resultsList.render) renderList(ctx);
             return $If_1.call(_this);
           } catch ($boundEx) {
@@ -456,8 +491,8 @@
   }
 
   var classList;
-  var ariaSelected = "aria-selected";
-  var ariaActive = "aria-activedescendant";
+  var Selected = "aria-selected";
+  var Active = "aria-activedescendant";
   var goTo = function goTo(index, ctx) {
     var results = ctx.list.getElementsByTagName(ctx.resultItem.element);
     if (ctx.isOpened && results.length) {
@@ -468,12 +503,12 @@
       ctx.cursor = index;
       if (state > -1) {
         var _results$state$classL;
-        results[state].removeAttribute(ariaSelected);
+        results[state].removeAttribute(Selected);
         if (classList) (_results$state$classL = results[state].classList).remove.apply(_results$state$classL, _toConsumableArray(classList));
       }
-      results[index].setAttribute(ariaSelected, true);
+      results[index].setAttribute(Selected, true);
       if (classList) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(classList));
-      ctx.input.setAttribute(ariaActive, results[ctx.cursor].id);
+      ctx.input.setAttribute(Active, results[ctx.cursor].id);
       ctx.dataFeedback.cursor = ctx.cursor;
       results[index].scrollIntoView({
         behavior: ctx.resultsList.scroll || "smooth",
@@ -608,7 +643,7 @@
   function init (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var name, input, placeHolder, resultsList, data, inputAttributes;
+      var name, input, placeHolder, resultsList, data, Attributes;
       name = ctx.name;
       input = ctx.input;
       placeHolder = ctx.placeHolder;
@@ -622,12 +657,12 @@
         "aria-haspopup": true,
         "aria-expanded": false
       });
-      inputAttributes = {
+      Attributes = {
         "aria-controls": resultsList.idName,
         "aria-autocomplete": "both"
       };
-      if (placeHolder) inputAttributes.placeholder = placeHolder;
-      create(input, inputAttributes);
+      if (placeHolder) Attributes.placeholder = placeHolder;
+      create(input, Attributes);
       ctx.list = create(resultsList.element, _objectSpread2(_objectSpread2({
         hidden: "hidden",
         dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
@@ -654,35 +689,6 @@
       return $If_1.call(_this);
     });
   }
-
-  var search = (function (query, record, options) {
-    var mode = options.mode,
-        diacritics = options.diacritics,
-        highlight = options.highlight,
-        className = options.className;
-    var newRecord = format(record, diacritics);
-    query = format(query, diacritics);
-    if (mode === "loose") {
-      query = query.replace(/ /g, "");
-      var queryLength = query.length;
-      var cursor = 0;
-      var match = Array.from(record).map(function (character, index) {
-        if (cursor < queryLength && newRecord[index] === query[cursor]) {
-          character = highlight ? mark(character, className) : character;
-          cursor++;
-        }
-        return character;
-      }).join("");
-      if (cursor === queryLength) return match;
-    } else {
-      if (newRecord.includes(query)) {
-        var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
-        query = pattern.exec(record);
-        var _match = highlight ? record.replace(query, mark(query, className)) : record;
-        return _match;
-      }
-    }
-  });
 
   function extend (autoComplete) {
     var _this = this;
@@ -718,11 +724,7 @@
       return select(_this, null, index);
     };
     autoComplete.search = prototype.search = function (query, record, options) {
-      return search(query, record, options || {
-        mode: _this.searchEngine,
-        highlight: (_this.resultItem.highlight || {}).render,
-        className: (_this.resultItem.highlight || {}).className
-      });
+      return search(query, record, options);
     };
   }
 

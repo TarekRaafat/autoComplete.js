@@ -30,14 +30,5 @@ export default function (autoComplete) {
   // Select result by index
   prototype.select = (index) => select(this, null, index);
   // autoComplete.js Search Engine
-  autoComplete.search = prototype.search = (query, record, options) =>
-    search(
-      query,
-      record,
-      options || {
-        mode: this.searchEngine,
-        highlight: (this.resultItem.highlight || {}).render,
-        className: (this.resultItem.highlight || {}).className,
-      }
-    );
+  autoComplete.search = prototype.search = (query, record, options) => search(query, record, options);
 }
