@@ -58,17 +58,6 @@ const autoCompleteJS = new autoComplete({
       focus: () => autoCompleteJS.open(),
     },
   },
-  onSelection: (dataFeedback) => {
-    autoCompleteJS.input.blur();
-    // Prepare User's Selected Value
-    const selection = dataFeedback.selection.value[dataFeedback.selection.key];
-    // Render selected choice to selection div
-    document.querySelector(".selection").innerHTML = selection;
-    // Replace Input value with the selected value
-    autoCompleteJS.input.value = selection;
-    // Console log autoComplete data feedback
-    console.log(dataFeedback);
-  },
 });
 
 // autoCompleteJS.input.addEventListener("init", function (event) {
@@ -90,6 +79,19 @@ const autoCompleteJS = new autoComplete({
 // autoCompleteJS.input.addEventListener("navigate", function (event) {
 //   console.log(event);
 // });
+
+autoCompleteJS.input.addEventListener("selection", function (event) {
+  const dataFeedback = event.detail;
+  autoCompleteJS.input.blur();
+  // Prepare User's Selected Value
+  const selection = dataFeedback.selection.value[dataFeedback.selection.key];
+  // Render selected choice to selection div
+  document.querySelector(".selection").innerHTML = selection;
+  // Replace Input value with the selected value
+  autoCompleteJS.input.value = selection;
+  // Console log autoComplete data feedback
+  console.log(dataFeedback);
+});
 
 // autoCompleteJS.input.addEventListener("close", function (event) {
 //   console.log(event);

@@ -261,7 +261,7 @@ diacritics: false,
 
 > Rendered results list element interceptor and customizer
 
-- Type: `Object`
+- Type: `Object` | `Boolean` for disabling list rendering
 
 ##### Methods:
 
@@ -295,7 +295,7 @@ diacritics: false,
 - Default: `5`
 
 #### `tabSelect` <sub><sup>(optional)</sup></sub>
-- Type: `Boolean`
+- Type: `Boolean` to enable/disable tab selection
 - Default: `false`
 
 #### `scroll` <sub><sup>(optional)</sup></sub>
@@ -304,9 +304,8 @@ diacritics: false,
 - Default: `auto`
 
 #### `noResults` <sub><sup>(optional)</sup></sub>
-- Type: `Function` with no return
-- Parameters: (`list`, `query`)
-- Default: No action
+- Type: `Boolean` to enable/disable list resistance in case of no results
+- Default: `false`
 
 ##### Example:
 
@@ -318,18 +317,9 @@ resultsList: {
     destination: "#autoComplete",
     position: "afterend",
     maxResults: 5,
+    noResults: true,
     element: (element, data) => {
         element.setAttribute("data-parent", "food-list");
-    },
-    noResults: (list, query) => {
-        // Create "No Results" message element
-        const message = document.createElement("div");
-        // Add class to the created element
-        message.setAttribute("class", "no_result");
-        // Add message text content
-        message.innerHTML = `<span>Found No Results for "${query}"</span>`;
-        // Append message element to the results list
-        list.appendChild(message);
     },
 },
 ```
@@ -410,24 +400,6 @@ events: {
         console.log("Results List scrolled!");
       }
     }
-},
-```
-
-***
-
-### onSelection <sub><sup>(optional)</sup></sub>
-
-> Action script onSelection event
-
-- Type: `Function` with no return
-- Parameters: (`dataFeedback`)
-- Default: No action
-
-##### Example:
-
-```js
-onSelection: (dataFeedback) => {
-    console.log(dataFeedback);
 },
 ```
 
@@ -686,6 +658,21 @@ document.querySelector("#autoComplete").addEventListener("open", function (event
 
 ```js
 document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
+    // "event.detail" carries the autoComplete.js "dataFeedback" object
+    console.log(event.detail);
+});
+```
+
+***
+
+### selection
+
+> Fires on result item selection
+
+##### Example:
+
+```js
+document.querySelector("#autoComplete").addEventListener("selection", function (event) {
     // "event.detail" carries the autoComplete.js "dataFeedback" object
     console.log(event.detail);
 });

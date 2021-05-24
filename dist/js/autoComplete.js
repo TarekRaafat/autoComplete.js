@@ -478,15 +478,11 @@
   var select = function select(ctx, event, index) {
     index = index || ctx.cursor;
     if (index < 0) return;
-    var data = ctx.dataFeedback;
-    var dataFeedback = _objectSpread2(_objectSpread2({
-      event: event
-    }, data), {}, {
-      selection: _objectSpread2({
-        index: index
-      }, data.results[index])
-    });
-    if (ctx.onSelection) ctx.onSelection(dataFeedback);
+    ctx.dataFeedback.event = event;
+    ctx.dataFeedback.selection = _objectSpread2({
+      index: index
+    }, ctx.dataFeedback.results[index]);
+    eventEmitter("selection", ctx);
     closeList(ctx);
   };
   var click = function click(event, ctx) {

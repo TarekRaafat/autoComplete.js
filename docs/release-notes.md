@@ -91,6 +91,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ❗ Removed: `resultsList.navigation` API method to be replaced with `events`
   - ❗ Removed: `nav` API property to be replaced with `events`
   - ❗ Removed: `hook` API method to be replaced with `start` API
+  - ❗ Removed: `onSelection` API method to be replaced with `selection` eventEmitter
 
 ***
 

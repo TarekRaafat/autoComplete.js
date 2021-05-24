@@ -196,20 +196,17 @@ const select = (ctx, event, index) => {
   // Prevent empty selection
   if (index < 0) return;
 
-  const data = ctx.dataFeedback;
-
   // Prepare onSelection data feedback object
-  const dataFeedback = {
-    event,
-    ...data,
-    selection: {
-      index,
-      ...data.results[index],
-    },
+  ctx.dataFeedback.event = event;
+  ctx.dataFeedback.selection = {
+    index,
+    ...ctx.dataFeedback.results[index],
   };
 
-  // Pass selection data value to "onSelection" if active
-  if (ctx.onSelection) ctx.onSelection(dataFeedback);
+  /**
+   * @emit {selection} event on result item selection
+   **/
+  eventEmitter("selection", ctx);
 
   closeList(ctx);
 };
