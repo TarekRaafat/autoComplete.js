@@ -259,15 +259,11 @@ diacritics: false,
 
 ### resultsList <sub><sup>(optional)</sup></sub>
 
-> Rendered results list element customizer and interceptor
+> Rendered results list element interceptor and customizer
 
 - Type: `Object`
 
 ##### Methods:
-
-#### `render` <sub><sup>(optional)</sup></sub>
-  - Type: `Boolean`
-  - Default: `true`
 
 #### `tag` <sub><sup>(optional)</sup></sub>
   - Type: `String` of html [tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
@@ -316,7 +312,6 @@ diacritics: false,
 
 ```js
 resultsList: {
-    render: true,
     tag: "ul",
     id: "autoComplete_list",
     class: "results_list",

@@ -85,6 +85,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
   - 🌀 Changed: `query` API property type from `Object` to `Function` formerly called `query.manipulate`
   - 🌀 Changed: `observer` API property name `observe`
+  - ❗ Removed: `resultsList.render` API property to be replaced with `resultsList` to accept `Boolean` instead of `Object` in case of disabling list rendering
   - ❗ Removed: `trigger.event` API property to be replaced with `events`
   - ❗ Removed: `feedback` API method to be replaced with `navigate` event
   - ❗ Removed: `resultsList.navigation` API method to be replaced with `events`
