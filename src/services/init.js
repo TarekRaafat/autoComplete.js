@@ -23,19 +23,20 @@ export default async function (ctx) {
     "aria-expanded": false,
   });
 
-  // Create new list element
-  ctx.list = create(resultsList.tag, {
-    dest: [
-      typeof resultsList.destination === "string"
-        ? document.querySelector(resultsList.destination)
-        : resultsList.destination(),
-      resultsList.position,
-    ],
-    id: resultsList.id,
-    ...(resultsList.class && { class: resultsList.class }),
-    role: "listbox",
-    hidden: "hidden",
-  });
+  if (resultsList)
+    // Create new list element
+    ctx.list = create(resultsList.tag, {
+      dest: [
+        typeof resultsList.destination === "string"
+          ? document.querySelector(resultsList.destination)
+          : resultsList.destination(),
+        resultsList.position,
+      ],
+      id: resultsList.id,
+      ...(resultsList.class && { class: resultsList.class }),
+      role: "listbox",
+      hidden: "hidden",
+    });
 
   // Get the data from store
   if (data.cache) await getData(ctx);

@@ -19,7 +19,7 @@ export default async function (ctx) {
     // Find matching results to the query
     findMatches(inputVal, queryVal, ctx);
     // Generate & Render "resultsList"
-    if (resultsList.render) renderList(ctx);
+    if (resultsList) renderList(ctx);
   } else {
     // Close open list
     closeList(ctx);

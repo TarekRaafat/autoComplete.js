@@ -22,7 +22,7 @@ const addEventListeners = (ctx) => {
     input: {
       ...(events && events.input),
     },
-    ...(resultsList.render && { list: events ? { ...events.list } : {} }),
+    ...(resultsList && { list: events ? { ...events.list } : {} }),
   });
 
   // Private events listeners list
@@ -51,7 +51,7 @@ const addEventListeners = (ctx) => {
   // Populate all private events into public events list
   eventsListManager(privateEvents, (event, element) => {
     // do NOT populate list events If "resultsList" disabled
-    element = resultsList.render ? element : "input";
+    if (!resultsList && element === "list") return;
     // do NOT overwrite public events
     if (publicEvents[element][event]) return;
     publicEvents[element][event] = privateEvents[element][event];

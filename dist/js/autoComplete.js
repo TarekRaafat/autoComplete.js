@@ -547,7 +547,7 @@
         return getData(ctx).then(function ($await_2) {
           try {
             findMatches(inputVal, queryVal, ctx);
-            if (resultsList.render) renderList(ctx);
+            if (resultsList) renderList(ctx);
             return $If_1.call(_this);
           } catch ($boundEx) {
             return $error($boundEx);
@@ -580,7 +580,7 @@
     }, timer);
     var publicEvents = ctx.events = _objectSpread2({
       input: _objectSpread2({}, events && events.input)
-    }, resultsList.render && {
+    }, resultsList && {
       list: events ? _objectSpread2({}, events.list) : {}
     });
     var privateEvents = {
@@ -605,7 +605,7 @@
       }
     };
     eventsListManager(privateEvents, function (event, element) {
-      element = resultsList.render ? element : "input";
+      if (!resultsList && element === "list") return;
       if (publicEvents[element][event]) return;
       publicEvents[element][event] = privateEvents[element][event];
     });
@@ -642,7 +642,7 @@
         "aria-haspopup": true,
         "aria-expanded": false
       });
-      ctx.list = create(resultsList.tag, _objectSpread2(_objectSpread2({
+      if (resultsList) ctx.list = create(resultsList.tag, _objectSpread2(_objectSpread2({
         dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
         id: resultsList.id
       }, resultsList["class"] && {
@@ -714,7 +714,6 @@
     this.threshold = 1;
     this.debounce = 0;
     this.resultsList = {
-      render: true,
       position: "afterend",
       tag: "ul",
       maxResults: 5

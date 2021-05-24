@@ -17,7 +17,6 @@ export default function autoComplete(config) {
   this.threshold = 1;
   this.debounce = 0;
   this.resultsList = {
-    render: true,
     position: "afterend",
     tag: "ul",
     maxResults: 5,
