@@ -72,12 +72,23 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: `inputField` API property name to `input`
   - 🌀 Changed: `trigger` API property type from `Object` to `Function` formerly called `trigger.condition`
   - 🌀 Changed: `data.results` API property name to `data.filter`
-  - 🌀 Changed: `noResults` API to accept `boolean` instead of `function` to be replaced with `resultsList.container`
+  - 🌀 Changed: `noResults` API to accept `boolean` instead of `Function` to be replaced with `resultsList.container`
+  - 🌀 Changed: `resultItem.highlight` API property type from `Object` to accept `Boolean` or `String` formerly called `resultItem.highlight.class`
+  - 🌀 Changed: `resultItem.selected` API property type from `Object` to `String` formerly called `resultItem.selected.class`
   - 🌀 Changed: `resultItem.content` API parameters order from `(data, element)` to `(element, data)` for consistency
+  - 🌀 Changed: `resultItem.idName` API property name to `resultItem.id`
+  - 🌀 Changed: `resultItem.className` API property name to `resultItem.class`
+  - 🌀 Changed: `resultItem.content` API property name to `resultItem.element`
+  - 🌀 Changed: `resultsList.idName` API property name `resultsList.id`
+  - 🌀 Changed: `resultsList.className` API property name `resultsList.class`
+  - 🌀 Changed: `resultsList.container` API property name to `resultsList.element`
   - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
+  - 🌀 Changed: `query` API property type from `Object` to `Function` formerly called `query.manipulate`
+  - 🌀 Changed: `observer` API property name `observe`
   - ❗ Removed: `trigger.event` API property to be replaced with `events`
   - ❗ Removed: `feedback` API method to be replaced with `navigate` event
-  - ❗ Removed: `nav` API method to be replaced with `events`
+  - ❗ Removed: `resultsList.navigation` API method to be replaced with `events`
+  - ❗ Removed: `nav` API property to be replaced with `events`
   - ❗ Removed: `hook` API method to be replaced with `start` API
 
 ***

@@ -21,14 +21,16 @@ const create = (tag, options) => {
   for (const key in options) {
     const val = options[key];
 
-    if (key === "dest") {
+    if (key === "inside") {
+      val.append(el);
+    } else if (key === "dest") {
       select(val[0]).insertAdjacentElement(val[1], el);
     } else if (key === "around") {
       const ref = select(val);
 
       ref.parentNode.insertBefore(el, ref);
 
-      el.appendChild(ref);
+      el.append(ref);
 
       if (ref.getAttribute("autofocus") != null) ref.focus();
     } else if (key in el) {
@@ -119,13 +121,13 @@ const checkTrigger = (query, condition, threshold) => {
  * Highlight result item
  *
  * @param {String} value - user's raw search query value
- * @param {Array} className - of highlighted character
+ * @param {Array} classes - of highlighted character
  *
  * @returns {String} - highlighted character
  */
-const mark = (value, className) =>
+const mark = (value, classes) =>
   create("mark", {
-    ...(className && { className }),
+    ...(typeof classes === "string" && { classes }),
     innerHTML: value,
   }).outerHTML;
 

@@ -25,7 +25,7 @@ const autoCompleteJS = new autoComplete({
   },
   placeHolder: "Search for Food & Drinks!",
   resultsList: {
-    container: (element, data) => {
+    element: (element, data) => {
       const info = document.createElement("p");
       if (data.results.length > 0) {
         info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results`;
@@ -39,7 +39,7 @@ const autoCompleteJS = new autoComplete({
     tabSelect: true,
   },
   resultItem: {
-    content: (element, data) => {
+    element: (element, data) => {
       // Modify Results Item Style
       element.style = "display: flex; justify-content: space-between;";
       // Modify Results Item Content
@@ -51,9 +51,7 @@ const autoCompleteJS = new autoComplete({
         ${data.key}
       </span>`;
     },
-    highlight: {
-      render: true,
-    },
+    highlight: true,
   },
   events: {
     input: {

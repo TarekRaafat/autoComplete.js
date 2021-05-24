@@ -6,40 +6,35 @@ import eventEmitter from "../helpers/eventEmitter";
 export default async function (ctx) {
   let { name, input, placeHolder, resultsList, data } = ctx;
 
-  // Prepare "inputField" attributes
-  const Attributes = {
-    "aria-controls": resultsList.idName,
-    "aria-autocomplete": "both",
-  };
-
-  // Add "placeholder" attribute value if available
-  if (placeHolder) Attributes.placeholder = placeHolder;
-
   // Set "inputField" attributes
-  create(input, Attributes);
+  create(input, {
+    ...(placeHolder && { placeholder: placeHolder }),
+    "aria-controls": resultsList.id,
+    "aria-autocomplete": "both",
+  });
 
   // Create wrapper element
   ctx.wrapper = create("div", {
-    class: name + "_wrapper",
     around: input,
+    class: name + "_wrapper",
     role: "combobox",
-    "aria-owns": resultsList.idName,
+    "aria-owns": resultsList.id,
     "aria-haspopup": true,
     "aria-expanded": false,
   });
 
   // Create new list element
-  ctx.list = create(resultsList.element, {
-    hidden: "hidden",
+  ctx.list = create(resultsList.tag, {
     dest: [
       typeof resultsList.destination === "string"
         ? document.querySelector(resultsList.destination)
         : resultsList.destination(),
       resultsList.position,
     ],
-    id: resultsList.idName,
-    ...(resultsList.className && { class: resultsList.className }),
+    id: resultsList.id,
+    ...(resultsList.class && { class: resultsList.class }),
     role: "listbox",
+    hidden: "hidden",
   });
 
   // Get the data from store

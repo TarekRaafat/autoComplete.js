@@ -152,7 +152,7 @@ trigger: (query) => {
 > Query interceptor
 
 - Type: `Function` returns `String`
-  - Parameters: (`query`)
+  - Parameters: (`input`)
 - Default: Returns raw input value
 
 ##### Example:
@@ -190,7 +190,7 @@ placeHolder: "Search...",
 ##### Example:
 
 ```js
-observer: false,
+observe: false,
 ```
 
 ***
@@ -252,7 +252,7 @@ searchEngine: "strict",
 ##### Example:
 
 ```js
-diacritics: "strict",
+diacritics: false,
 ```
 
 ***
@@ -269,27 +269,27 @@ diacritics: "strict",
   - Type: `Boolean`
   - Default: `true`
 
-#### `element` <sub><sup>(optional)</sup></sub>
-  - Type: `String` of [element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+#### `tag` <sub><sup>(optional)</sup></sub>
+  - Type: `String` of html [tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
   - Default: `ul`
 
-#### `idName` <sub><sup>(optional)</sup></sub>
+#### `id` <sub><sup>(optional)</sup></sub>
   - Type: `String` of id value
   - Default: `autoComplete_list`
 
-#### `className` <sub><sup>(optional)</sup></sub>
-  - Type: `String` of class value
+#### `class` <sub><sup>(optional)</sup></sub>
+  - Type: `String` of class values
   - Default: No classes
 
 #### `destination` <sub><sup>(optional)</sup></sub>
-  - Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function`
+  - Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` destination
   - Default: `#autoComplete`
 
 #### `position` <sub><sup>(optional)</sup></sub>
 - Type: `String` of [position](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement#parameters)
 - Default: `afterend`
 
-#### `container` <sub><sup>(optional)</sup></sub>
+#### `element` <sub><sup>(optional)</sup></sub>
 - Type: `Function` with no return
 - Parameters: (`element`, `data`)
 - Default: `Function`
@@ -307,11 +307,6 @@ diacritics: "strict",
 - Options: `auto` or `smooth`
 - Default: `auto`
 
-#### `navigation` <sub><sup>(optional)</sup></sub>
-- Type: `Function` with no return
-- Parameters: (`event`)
-- Default: `default` navigation behavior
-
 #### `noResults` <sub><sup>(optional)</sup></sub>
 - Type: `Function` with no return
 - Parameters: (`list`, `query`)
@@ -322,13 +317,13 @@ diacritics: "strict",
 ```js
 resultsList: {
     render: true,
-    element: "ul",
-    idName: "autoComplete_list",
-    className: "results_list",
+    tag: "ul",
+    id: "autoComplete_list",
+    class: "results_list",
     destination: "#autoComplete",
     position: "afterend",
     maxResults: 5,
-    container: (element, data) => {
+    element: (element, data) => {
         element.setAttribute("data-parent", "food-list");
     },
     noResults: (list, query) => {
@@ -354,51 +349,42 @@ resultsList: {
 
 ##### Methods:
 
-#### `element` <sub><sup>(optional)</sup></sub>
-- Type: `String` of [element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+#### `tag` <sub><sup>(optional)</sup></sub>
+- Type: `String` of html [tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
 - Default: `li`
 
-#### `idName` <sub><sup>(optional)</sup></sub>
+#### `id` <sub><sup>(optional)</sup></sub>
 - Type: `String` of id value
 - Default: `autoComplete_result_[index]`
 
-#### `className` <sub><sup>(optional)</sup></sub>
-- Type: `String` of class value
+#### `class` <sub><sup>(optional)</sup></sub>
+- Type: `String` of class values
 - Default: No classes
 
-#### `content` <sub><sup>(optional)</sup></sub>
+#### `element` <sub><sup>(optional)</sup></sub>
 - Type: `Function` with no return
 - Parameters: (`element`, `data`)
 - Default: `Function`
 
 #### `highlight` <sub><sup>(optional)</sup></sub>
-- Type: `Object` | `Boolean`
-  - className: `String` of class value
-- Defaults: 
-  - className: `"autoComplete_highlighted"`
+- Type: `Boolean` | `String` of class values
+- Defaults: `false`
 
 #### `selected` <sub><sup>(optional)</sup></sub>
-- Type: `Object` <small>(optional></small>
-  - className: `String` of class value
-- Default: 
-  - className: `"autoComplete_selected"`
+- Type: `String` of class values
+- Default: No classes
 
 ##### Example:
 
 ```js
 resultItem: {
-    element: "li",
-    className: "autoComplete_result",
-    content: (element, data) => {
+    tag: "li",
+    class: "autoComplete_result",
+    element: (element, data) => {
         element.setAttribute("data-parent", "food-item");
     },
-    highlight: {
-        render: true,
-        className: "autoComplete_highlighted"
-    },
-    selected: {
-        className: "autoComplete_selected"
-    }
+    highlight: "autoComplete_highlight",
+    selected: "autoComplete_selected"
 },
 ```
 
@@ -421,7 +407,7 @@ resultItem: {
 events: {
     input: {
       focus: (event) => {
-        console.log("Input Field is in focus!");
+        console.log("Input Field in focus!");
       }
     },
     list: {
@@ -518,15 +504,13 @@ Parameters:
     - `"strict"` search mode
     - `"loose"` search mode
   - diacritics: `Boolean`
-  - highlight: `Boolean`
-  - className: `String`
+  - highlight: `Boolean` | `String` of class values
 
 Defaults:
 - options: `Object`
   - mode: `"strict"`
   - diacritics: `false`
   - highlight: `false`
-  - className: `Empty`
 
 ##### Example:
 

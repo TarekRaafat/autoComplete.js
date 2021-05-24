@@ -2,30 +2,13 @@
 export default (ctx) => {
   const { id, name, options, resultsList, resultItem } = ctx;
 
-  // Inject sub options into options
-  const inject = (option) => {
-    for (const subOption in options[option]) {
-      if (typeof options[option][subOption] === "object") {
-        if (!ctx[option][subOption]) {
-          ctx[option][subOption] = options[option][subOption];
-        }
-        for (const subSubOption in options[option][subOption]) {
-          ctx[option][subOption][subSubOption] = options[option][subOption][subSubOption];
-        }
-      } else {
-        ctx[option][subOption] = options[option][subOption];
-      }
-    }
-  };
-
   // Populate Configuration options
   for (const option in options) {
     if (typeof options[option] === "object") {
-      if (ctx[option]) {
-        inject(option);
-      } else {
-        ctx[option] = {};
-        inject(option);
+      if (!ctx[option]) ctx[option] = {};
+
+      for (const subOption in options[option]) {
+        ctx[option][subOption] = options[option][subOption];
       }
     } else {
       ctx[option] = options[option];
@@ -35,8 +18,8 @@ export default (ctx) => {
   // Dynamic Config Options
   ctx.selector = ctx.selector || "#" + name;
   resultsList.destination = resultsList.destination || ctx.selector;
-  resultsList.idName = resultsList.idName || name + "_list_" + id;
-  resultItem.idName = resultItem.idName || name + "_result";
+  resultsList.id = resultsList.id || name + "_list_" + id;
+  resultItem.id = resultItem.id || name + "_result";
 
   // Assign the "input" html element
   ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();

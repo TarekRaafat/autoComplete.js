@@ -32,7 +32,7 @@ const addEventListeners = (ctx) => {
         run();
       },
       keydown: (event) => {
-        resultsList.navigation ? resultsList.navigation(event) : navigate(event, ctx);
+        navigate(event, ctx);
       },
       blur: () => {
         closeList(ctx);

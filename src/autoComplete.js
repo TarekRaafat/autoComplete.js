@@ -19,11 +19,11 @@ export default function autoComplete(config) {
   this.resultsList = {
     render: true,
     position: "afterend",
-    element: "ul",
+    tag: "ul",
     maxResults: 5,
   };
   this.resultItem = {
-    element: "li",
+    tag: "li",
   };
   // Set all Configuration options
   configure(this);

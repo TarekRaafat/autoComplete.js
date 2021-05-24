@@ -10,7 +10,7 @@ import { format, mark } from "../helpers/io";
  * @returns {String} - Matched data record string
  */
 export default (query, record, options) => {
-  const { mode, diacritics, highlight, className } = options || {};
+  const { mode, diacritics, highlight } = options || {};
 
   const nRecord = format(record, diacritics);
   query = format(query, diacritics);
@@ -27,7 +27,7 @@ export default (query, record, options) => {
         // Matching case
         if (cursor < qLength && nRecord[index] === query[cursor]) {
           // Highlight matching character if active
-          character = highlight ? mark(character, className) : character;
+          character = highlight ? mark(character, highlight) : character;
           // Move cursor position
           cursor++;
         }
@@ -44,7 +44,7 @@ export default (query, record, options) => {
       const pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
       query = pattern.exec(record);
       // Highlight matching characters if active
-      const match = highlight ? record.replace(query, mark(query, className)) : record;
+      const match = highlight ? record.replace(query, mark(query, highlight)) : record;
 
       return match;
     }

@@ -1,7 +1,7 @@
 import { create } from "../helpers/io";
 import eventEmitter from "../helpers/eventEmitter";
 
-let classList;
+let classes;
 
 // String holders
 const Expand = "aria-expanded";
@@ -31,25 +31,23 @@ const renderList = (ctx) => {
     // Generate results elements
     results.forEach((result, index) => {
       // Create new list item
-      const element = create(resultItem.element, {
-        id: `${resultItem.idName}_${index}`,
-        ...(resultItem.className && { class: resultItem.className }),
+      const element = create(resultItem.tag, {
+        id: `${resultItem.id}_${index}`,
+        ...(resultItem.class && { class: resultItem.class }),
         role: "option",
         innerHTML: result.match,
+        inside: fragment,
       });
 
-      // Add result to fragment before DOM
-      fragment.appendChild(element);
-
       // If custom content is active pass params
-      if (resultItem.content) resultItem.content(element, result);
+      if (resultItem.element) resultItem.element(element, result);
     });
 
     // Add fragment of result items to DOM list
-    list.appendChild(fragment);
+    list.append(fragment);
 
     // Run custom container function if active
-    if (resultsList.container) resultsList.container(list, dataFeedback);
+    if (resultsList.element) resultsList.element(list, dataFeedback);
 
     openList(ctx);
   } else {
@@ -118,7 +116,7 @@ const closeList = (ctx) => {
  * @returns {void}
  */
 const goTo = (index, ctx) => {
-  const results = ctx.list.getElementsByTagName(ctx.resultItem.element);
+  const results = ctx.list.getElementsByTagName(ctx.resultItem.tag);
 
   if (ctx.isOpened && results.length) {
     // Previous cursor state
@@ -136,13 +134,13 @@ const goTo = (index, ctx) => {
       // Remove "aria-selected" attribute from the item
       results[state].removeAttribute(Selected);
       // Remove "selected" class from the item
-      if (classList) results[state].classList.remove(...classList);
+      if (classes) results[state].classList.remove(...classes);
     }
 
     // Set "aria-selected" value to true
     results[index].setAttribute(Selected, true);
     // Add "selected" class to the selected item
-    if (classList) results[index].classList.add(...classList);
+    if (classes) results[index].classList.add(...classes);
 
     // Set "aria-activedescendant" value to the selected item
     ctx.input.setAttribute(Active, results[ctx.cursor].id);
@@ -224,7 +222,7 @@ const select = (ctx, event, index) => {
  *
  */
 const click = (event, ctx) => {
-  const resultItemElement = ctx.resultItem.element.toUpperCase();
+  const resultItemElement = ctx.resultItem.tag.toUpperCase();
   const items = Array.from(ctx.list.children);
   const item = event.target.closest(resultItemElement);
 
@@ -245,9 +243,9 @@ const click = (event, ctx) => {
  */
 const navigate = function (event, ctx) {
   const key = event.keyCode;
-  const selectedItem = ctx.resultItem.selected;
+  const selected = ctx.resultItem.selected;
 
-  if (selectedItem) classList = selectedItem.className.split(" ");
+  if (selected) classes = selected.split(" ");
 
   // Check pressed key
   switch (key) {

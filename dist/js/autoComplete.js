@@ -169,27 +169,11 @@
         options = ctx.options,
         resultsList = ctx.resultsList,
         resultItem = ctx.resultItem;
-    var inject = function inject(option) {
-      for (var subOption in options[option]) {
-        if (_typeof(options[option][subOption]) === "object") {
-          if (!ctx[option][subOption]) {
-            ctx[option][subOption] = options[option][subOption];
-          }
-          for (var subSubOption in options[option][subOption]) {
-            ctx[option][subOption][subSubOption] = options[option][subOption][subSubOption];
-          }
-        } else {
-          ctx[option][subOption] = options[option][subOption];
-        }
-      }
-    };
     for (var option in options) {
       if (_typeof(options[option]) === "object") {
-        if (ctx[option]) {
-          inject(option);
-        } else {
-          ctx[option] = {};
-          inject(option);
+        if (!ctx[option]) ctx[option] = {};
+        for (var subOption in options[option]) {
+          ctx[option][subOption] = options[option][subOption];
         }
       } else {
         ctx[option] = options[option];
@@ -197,8 +181,8 @@
     }
     ctx.selector = ctx.selector || "#" + name;
     resultsList.destination = resultsList.destination || ctx.selector;
-    resultsList.idName = resultsList.idName || name + "_list_" + id;
-    resultItem.idName = resultItem.idName || name + "_result";
+    resultsList.id = resultsList.id || name + "_list_" + id;
+    resultItem.id = resultItem.id || name + "_result";
     ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
   });
 
@@ -225,12 +209,14 @@
     var el = typeof tag === "string" ? document.createElement(tag) : tag;
     for (var key in options) {
       var val = options[key];
-      if (key === "dest") {
+      if (key === "inside") {
+        val.append(el);
+      } else if (key === "dest") {
         select$1(val[0]).insertAdjacentElement(val[1], el);
       } else if (key === "around") {
         var ref = select$1(val);
         ref.parentNode.insertBefore(el, ref);
-        el.appendChild(ref);
+        el.append(ref);
         if (ref.getAttribute("autofocus") != null) ref.focus();
       } else if (key in el) {
         el[key] = val;
@@ -263,9 +249,9 @@
     query = query.replace(/ /g, "");
     return condition ? condition(query) : query.length >= threshold;
   };
-  var mark = function mark(value, className) {
-    return create("mark", _objectSpread2(_objectSpread2({}, className && {
-      className: className
+  var mark = function mark(value, classes) {
+    return create("mark", _objectSpread2(_objectSpread2({}, typeof classes === "string" && {
+      classes: classes
     }), {}, {
       innerHTML: value
     })).outerHTML;
@@ -283,8 +269,7 @@
     var _ref = options || {},
         mode = _ref.mode,
         diacritics = _ref.diacritics,
-        highlight = _ref.highlight,
-        className = _ref.className;
+        highlight = _ref.highlight;
     var nRecord = format(record, diacritics);
     query = format(query, diacritics);
     if (mode === "loose") {
@@ -293,7 +278,7 @@
       var cursor = 0;
       var match = Array.from(record).map(function (character, index) {
         if (cursor < qLength && nRecord[index] === query[cursor]) {
-          character = highlight ? mark(character, className) : character;
+          character = highlight ? mark(character, highlight) : character;
           cursor++;
         }
         return character;
@@ -303,7 +288,7 @@
       if (nRecord.includes(query)) {
         var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
         query = pattern.exec(record);
-        var _match = highlight ? record.replace(query, mark(query, className)) : record;
+        var _match = highlight ? record.replace(query, mark(query, highlight)) : record;
         return _match;
       }
     }
@@ -366,8 +351,7 @@
         var match = typeof searchEngine === "function" ? searchEngine(query, value) : search(query, value, {
           mode: searchEngine,
           diacritics: diacritics,
-          highlight: resultItem.highlight,
-          className: (resultItem.highlight || {}).className
+          highlight: resultItem.highlight
         });
         if (!match) return;
         var result = {
@@ -403,9 +387,10 @@
       matches: matches,
       results: results
     };
+    eventEmitter("results", ctx);
   };
 
-  var classList;
+  var classes;
   var Expand = "aria-expanded";
   var Active = "aria-activedescendant";
   var Selected = "aria-selected";
@@ -422,19 +407,19 @@
     if (matches.length || resultsList.noResults) {
       var fragment = document.createDocumentFragment();
       results.forEach(function (result, index) {
-        var element = create(resultItem.element, _objectSpread2(_objectSpread2({
-          id: "".concat(resultItem.idName, "_").concat(index)
-        }, resultItem.className && {
-          "class": resultItem.className
+        var element = create(resultItem.tag, _objectSpread2(_objectSpread2({
+          id: "".concat(resultItem.id, "_").concat(index)
+        }, resultItem["class"] && {
+          "class": resultItem["class"]
         }), {}, {
           role: "option",
-          innerHTML: result.match
+          innerHTML: result.match,
+          inside: fragment
         }));
-        fragment.appendChild(element);
-        if (resultItem.content) resultItem.content(element, result);
+        if (resultItem.element) resultItem.element(element, result);
       });
-      list.appendChild(fragment);
-      if (resultsList.container) resultsList.container(list, dataFeedback);
+      list.append(fragment);
+      if (resultsList.element) resultsList.element(list, dataFeedback);
       openList(ctx);
     } else {
       closeList(ctx);
@@ -459,7 +444,7 @@
     }
   };
   var goTo = function goTo(index, ctx) {
-    var results = ctx.list.getElementsByTagName(ctx.resultItem.element);
+    var results = ctx.list.getElementsByTagName(ctx.resultItem.tag);
     if (ctx.isOpened && results.length) {
       var _results$index$classL;
       var state = ctx.cursor;
@@ -469,10 +454,10 @@
       if (state > -1) {
         var _results$state$classL;
         results[state].removeAttribute(Selected);
-        if (classList) (_results$state$classL = results[state].classList).remove.apply(_results$state$classL, _toConsumableArray(classList));
+        if (classes) (_results$state$classL = results[state].classList).remove.apply(_results$state$classL, _toConsumableArray(classes));
       }
       results[index].setAttribute(Selected, true);
-      if (classList) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(classList));
+      if (classes) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(classes));
       ctx.input.setAttribute(Active, results[ctx.cursor].id);
       ctx.dataFeedback.cursor = ctx.cursor;
       results[index].scrollIntoView({
@@ -505,7 +490,7 @@
     closeList(ctx);
   };
   var click = function click(event, ctx) {
-    var resultItemElement = ctx.resultItem.element.toUpperCase();
+    var resultItemElement = ctx.resultItem.tag.toUpperCase();
     var items = Array.from(ctx.list.children);
     var item = event.target.closest(resultItemElement);
     if (item && item.nodeName === resultItemElement) {
@@ -516,8 +501,8 @@
   };
   var navigate = function navigate(event, ctx) {
     var key = event.keyCode;
-    var selectedItem = ctx.resultItem.selected;
-    if (selectedItem) classList = selectedItem.className.split(" ");
+    var selected = ctx.resultItem.selected;
+    if (selected) classes = selected.split(" ");
     switch (key) {
       case 40:
       case 38:
@@ -604,7 +589,7 @@
           run();
         },
         keydown: function keydown(event) {
-          resultsList.navigation ? resultsList.navigation(event) : navigate(event, ctx);
+          navigate(event, ctx);
         },
         blur: function blur() {
           closeList(ctx);
@@ -637,34 +622,34 @@
   function init (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var name, input, placeHolder, resultsList, data, Attributes;
+      var name, input, placeHolder, resultsList, data;
       name = ctx.name;
       input = ctx.input;
       placeHolder = ctx.placeHolder;
       resultsList = ctx.resultsList;
       data = ctx.data;
-      Attributes = {
-        "aria-controls": resultsList.idName,
+      create(input, _objectSpread2(_objectSpread2({}, placeHolder && {
+        placeholder: placeHolder
+      }), {}, {
+        "aria-controls": resultsList.id,
         "aria-autocomplete": "both"
-      };
-      if (placeHolder) Attributes.placeholder = placeHolder;
-      create(input, Attributes);
+      }));
       ctx.wrapper = create("div", {
-        "class": name + "_wrapper",
         around: input,
+        "class": name + "_wrapper",
         role: "combobox",
-        "aria-owns": resultsList.idName,
+        "aria-owns": resultsList.id,
         "aria-haspopup": true,
         "aria-expanded": false
       });
-      ctx.list = create(resultsList.element, _objectSpread2(_objectSpread2({
-        hidden: "hidden",
+      ctx.list = create(resultsList.tag, _objectSpread2(_objectSpread2({
         dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
-        id: resultsList.idName
-      }, resultsList.className && {
-        "class": resultsList.className
+        id: resultsList.id
+      }, resultsList["class"] && {
+        "class": resultsList["class"]
       }), {}, {
-        role: "listbox"
+        role: "listbox",
+        hidden: "hidden"
       }));
       if (data.cache) {
         return getData(ctx).then(function ($await_2) {
@@ -731,11 +716,11 @@
     this.resultsList = {
       render: true,
       position: "afterend",
-      element: "ul",
+      tag: "ul",
       maxResults: 5
     };
     this.resultItem = {
-      element: "li"
+      tag: "li"
     };
     configure(this);
     extend.call(this, autoComplete);
