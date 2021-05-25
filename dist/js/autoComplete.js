@@ -299,39 +299,20 @@
       var data;
       data = ctx.data;
       if (data.cache && data.store) return $return();
-      var $Try_1_Post = function $Try_1_Post() {
+      return new Promise(function ($return, $error) {
+        if (typeof data.src === "function") {
+          return data.src().then($return, $error);
+        }
+        return $return(data.src);
+      }).then(function ($await_4) {
         try {
+          ctx.dataFeedback = data.store = $await_4;
           eventEmitter("response", ctx);
           return $return();
         } catch ($boundEx) {
           return $error($boundEx);
         }
-      };
-      var $Try_1_Catch = function $Try_1_Catch(error) {
-        try {
-          data.store = error;
-          return $Try_1_Post();
-        } catch ($boundEx) {
-          return $error($boundEx);
-        }
-      };
-      try {
-        return new Promise(function ($return, $error) {
-          if (typeof data.src === "function") {
-            return data.src().then($return, $error);
-          }
-          return $return(data.src);
-        }).then(function ($await_5) {
-          try {
-            ctx.dataFeedback = data.store = $await_5;
-            return $Try_1_Post();
-          } catch ($boundEx) {
-            return $Try_1_Catch($boundEx);
-          }
-        }, $Try_1_Catch);
-      } catch (error) {
-        $Try_1_Catch(error);
-      }
+      }, $error);
     });
   };
   var findMatches = function findMatches(input, query, ctx) {
@@ -388,6 +369,11 @@
   var Expand = "aria-expanded";
   var Active = "aria-activedescendant";
   var Selected = "aria-selected";
+  var feedback = function feedback(ctx, index) {
+    ctx.dataFeedback.selection = _objectSpread2({
+      index: index
+    }, ctx.dataFeedback.results[index]);
+  };
   var renderList = function renderList(ctx) {
     var resultsList = ctx.resultsList,
         list = ctx.list,
@@ -452,11 +438,12 @@
       results[index].setAttribute(Selected, true);
       if (classes) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(classes));
       ctx.input.setAttribute(Active, results[ctx.cursor].id);
-      ctx.dataFeedback.cursor = ctx.cursor;
       results[index].scrollIntoView({
         behavior: ctx.resultsList.scroll || "smooth",
         block: "center"
       });
+      ctx.dataFeedback.cursor = ctx.cursor;
+      feedback(ctx, index);
       eventEmitter("navigate", ctx);
     }
   };
@@ -469,12 +456,10 @@
     goTo(index, ctx);
   };
   var select = function select(ctx, event, index) {
-    index = index || ctx.cursor;
+    index = index >= 0 ? index : ctx.cursor;
     if (index < 0) return;
     ctx.dataFeedback.event = event;
-    ctx.dataFeedback.selection = _objectSpread2({
-      index: index
-    }, ctx.dataFeedback.results[index]);
+    feedback(ctx, index);
     eventEmitter("selection", ctx);
     closeList(ctx);
   };

@@ -692,17 +692,3 @@ document.querySelector("#autoComplete").addEventListener("close", function (even
     console.log(event.detail);
 });
 ```
-
-***
-
-### unInit
-
-> Fires after `autoComplete.js` engine is un-initialized and detached
-
-##### Example:
-
-```js
-document.querySelector("#autoComplete").addEventListener("unInit", function (event) {
-    console.log(event);
-});
-```

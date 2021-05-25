@@ -6,11 +6,7 @@ const getData = async (ctx) => {
 
   if (data.cache && data.store) return;
 
-  try {
-    ctx.dataFeedback = data.store = typeof data.src === "function" ? await data.src() : data.src;
-  } catch (error) {
-    data.store = error;
-  }
+  ctx.dataFeedback = data.store = typeof data.src === "function" ? await data.src() : data.src;
 
   /**
    * @emit {response} event on data request

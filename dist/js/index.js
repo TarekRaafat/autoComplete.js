@@ -2,15 +2,19 @@
 const autoCompleteJS = new autoComplete({
   data: {
     src: async () => {
-      // Loading placeholder text
-      autoCompleteJS.input.setAttribute("placeholder", "Loading...");
-      // Fetch External Data Source
-      const source = await fetch("./db/generic.json");
-      const data = await source.json();
-      // Post Loading placeholder text
-      autoCompleteJS.input.setAttribute("placeholder", autoCompleteJS.placeHolder);
-      // Returns Fetched data
-      return data;
+      try {
+        // Loading placeholder text
+        autoCompleteJS.input.setAttribute("placeholder", "Loading...");
+        // Fetch External Data Source
+        const source = await fetch("./db/generic.json");
+        const data = await source.json();
+        // Post Loading placeholder text
+        autoCompleteJS.input.setAttribute("placeholder", autoCompleteJS.placeHolder);
+        // Returns Fetched data
+        return data;
+      } catch (error) {
+        return error;
+      }
     },
     key: ["food", "cities", "animals"],
     filter: (list) => {
@@ -94,11 +98,7 @@ autoCompleteJS.input.addEventListener("selection", function (event) {
 });
 
 // autoCompleteJS.input.addEventListener("close", function (event) {
-//   console.log(event);
-// });
-
-// autoCompleteJS.input.addEventListener("unInit", function (event) {
-//   console.log(event);
+//   console.log(event.detail);
 // });
 
 // Toggle Search Engine Type/Mode

@@ -9,6 +9,21 @@ const Active = "aria-activedescendant";
 const Selected = "aria-selected";
 
 /**
+ * Data feedback object constructor
+ *
+ * @param {Object} ctx - autoComplete.js configurations
+ * @param {Number} index - of the selected result item
+ *
+ * @returns {Component} - Results list component
+ */
+const feedback = (ctx, index) => {
+  ctx.dataFeedback.selection = {
+    index,
+    ...ctx.dataFeedback.results[index],
+  };
+};
+
+/**
  * List all matching results
  *
  * @param {Object} ctx - autoComplete.js configurations
@@ -144,10 +159,13 @@ const goTo = (index, ctx) => {
 
     // Set "aria-activedescendant" value to the selected item
     ctx.input.setAttribute(Active, results[ctx.cursor].id);
-    ctx.dataFeedback.cursor = ctx.cursor;
 
     // Scroll to selection
     results[index].scrollIntoView({ behavior: ctx.resultsList.scroll || "smooth", block: "center" });
+
+    // Prepare Selection data feedback object
+    ctx.dataFeedback.cursor = ctx.cursor;
+    feedback(ctx, index);
 
     /**
      * @emit {navigate} event on results list navigation
@@ -191,17 +209,14 @@ const previous = (ctx) => {
  */
 const select = (ctx, event, index) => {
   // Check if cursor within list range
-  index = index || ctx.cursor;
+  index = index >= 0 ? index : ctx.cursor;
 
   // Prevent empty selection
   if (index < 0) return;
 
-  // Prepare onSelection data feedback object
+  // Prepare Selection data feedback object
   ctx.dataFeedback.event = event;
-  ctx.dataFeedback.selection = {
-    index,
-    ...ctx.dataFeedback.results[index],
-  };
+  feedback(ctx, index);
 
   /**
    * @emit {selection} event on result item selection
