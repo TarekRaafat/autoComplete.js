@@ -285,10 +285,10 @@
       }).join("");
       if (cursor === qLength) return match;
     } else {
-      if (nRecord.includes(query)) {
-        var pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
-        query = pattern.exec(record);
-        var _match = highlight ? record.replace(query, mark(query, highlight)) : record;
+      var _match = nRecord.indexOf(query);
+      if (_match >= 0) {
+        query = record.substring(_match, _match + query.length);
+        _match = highlight ? record.replace(query, mark(query, highlight)) : record;
         return _match;
       }
     }

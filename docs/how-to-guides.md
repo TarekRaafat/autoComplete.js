@@ -195,30 +195,25 @@ filter: (list) => {
     };
     const placeHolder = "Pizza, Burger, Sushi";
     const resultsList= {
-        noResults: (list, query) => {
+        element: (list, query) => {
             // Create "No Results" message list element
             const message = document.createElement("div");
             message.setAttribute("class", "no_result");
             // Add message text content
             message.innerHTML = `<span>Found No Results for "${query}"</span>`;
             // Add message list element to the list
-            list.appendChild(message);
+            list.append(message);
         }
     };
     const resultItem = {
-        highlight: {
-            render: true
-        }
+        highlight: true
     };
 
     const autoCompleteJS_01 = new autoComplete({
         selector: "#autoComplete_01",
         placeHolder,
         data,
-        trigger: {
-            event: ["input", "focus"],
-            condition: () => true
-        },
+        trigger: () => true,
         resultsList,
         resultItem
     });
@@ -235,17 +230,15 @@ filter: (list) => {
         selector: "#autoComplete_03",
         placeHolder,
         data,
-        query: {
-		    manipulate: (query) => {
-                // Split query into array
-                const querySplit = query.split(",");
-                // Get last query value index
-                const lastQuery = querySplit.length - 1;
-                // Trim new query
-                const newQuery = querySplit[lastQuery].trim();
+        query: (query) => {
+            // Split query into array
+            const querySplit = query.split(",");
+            // Get last query value index
+            const lastQuery = querySplit.length - 1;
+            // Trim new query
+            const newQuery = querySplit[lastQuery].trim();
 
-                return newQuery;
-            }
+            return newQuery;
 	    },
         resultsList,
         resultItem,
@@ -271,7 +264,7 @@ filter: (list) => {
         placeHolder,
         data,
         resultsList: {
-            container: (list) => {
+            element: (list) => {
                 const recentSearch = history.reverse();
                 const historyLength = recentSearch.length;
 

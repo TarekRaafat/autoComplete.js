@@ -35,16 +35,18 @@ export default (query, record, options) => {
         return character;
       })
       .join("");
+
     // If record is fully scanned
     if (cursor === qLength) return match;
   } else {
+    // Get starting index of matching characters
+    let match = nRecord.indexOf(query);
     // Strict mode
-    if (nRecord.includes(query)) {
-      // Ignore special characters & caseSensitivity
-      const pattern = new RegExp(query.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
-      query = pattern.exec(record);
+    if (match >= 0) {
+      // Extract matching characters from record
+      query = record.substring(match, match + query.length);
       // Highlight matching characters if active
-      const match = highlight ? record.replace(query, mark(query, highlight)) : record;
+      match = highlight ? record.replace(query, mark(query, highlight)) : record;
 
       return match;
     }
