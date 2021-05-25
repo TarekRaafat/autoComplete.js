@@ -1,7 +1,7 @@
 import preInit from "./preInit";
 import init from "./init";
 import start from "./start";
-import { removeEventListeners } from "../controllers/eventController";
+import { removeEvents } from "../controllers/eventController";
 import { openList, goTo, next, previous, select, closeList } from "../controllers/listController";
 import search from "../controllers/searchController";
 
@@ -15,7 +15,7 @@ export default function (autoComplete) {
   // Start autoComplete.js engine
   prototype.start = () => start(this);
   // Un-Initialize autoComplete.js engine
-  prototype.unInit = () => removeEventListeners(this);
+  prototype.unInit = () => removeEvents(this);
   // Open result list
   prototype.open = () => openList(this);
   // Close result list

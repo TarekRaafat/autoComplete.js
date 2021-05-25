@@ -3,7 +3,7 @@ import { debounce } from "../helpers/io";
 import { click, navigate, closeList } from "./listController";
 
 // Manage all given events
-const eventsListManager = (events, callback) => {
+const eventsManager = (events, callback) => {
   for (const element in events) {
     for (const event in events[element]) {
       callback(event, element);
@@ -12,7 +12,7 @@ const eventsListManager = (events, callback) => {
 };
 
 // Attach all events listeners
-const addEventListeners = (ctx) => {
+const addEvents = (ctx) => {
   const { events, trigger, debounce: timer, resultsList } = ctx;
 
   const run = debounce(() => start(ctx), timer);
@@ -49,7 +49,7 @@ const addEventListeners = (ctx) => {
   };
 
   // Populate all private events into public events list
-  eventsListManager(privateEvents, (event, element) => {
+  eventsManager(privateEvents, (event, element) => {
     // do NOT populate list events If "resultsList" disabled
     if (!resultsList && element === "list") return;
     // do NOT overwrite public events
@@ -58,16 +58,16 @@ const addEventListeners = (ctx) => {
   });
 
   // Attach all public events
-  eventsListManager(publicEvents, (event, element) => {
+  eventsManager(publicEvents, (event, element) => {
     ctx[element].addEventListener(event, publicEvents[element][event]);
   });
 };
 
 // Remove all attached public events listeners
-const removeEventListeners = (ctx) => {
-  eventsListManager(ctx.events, (event, element) => {
+const removeEvents = (ctx) => {
+  eventsManager(ctx.events, (event, element) => {
     ctx[element].removeEventListener(event, ctx.events[element][event]);
   });
 };
 
-export { addEventListeners, removeEventListeners };
+export { addEvents, removeEvents };

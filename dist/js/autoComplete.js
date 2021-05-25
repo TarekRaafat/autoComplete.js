@@ -552,14 +552,14 @@
     });
   }
 
-  var eventsListManager = function eventsListManager(events, callback) {
+  var eventsManager = function eventsManager(events, callback) {
     for (var element in events) {
       for (var event in events[element]) {
         callback(event, element);
       }
     }
   };
-  var addEventListeners = function addEventListeners(ctx) {
+  var addEvents = function addEvents(ctx) {
     var events = ctx.events;
         ctx.trigger;
         var timer = ctx.debounce,
@@ -593,17 +593,17 @@
         }
       }
     };
-    eventsListManager(privateEvents, function (event, element) {
+    eventsManager(privateEvents, function (event, element) {
       if (!resultsList && element === "list") return;
       if (publicEvents[element][event]) return;
       publicEvents[element][event] = privateEvents[element][event];
     });
-    eventsListManager(publicEvents, function (event, element) {
+    eventsManager(publicEvents, function (event, element) {
       ctx[element].addEventListener(event, publicEvents[element][event]);
     });
   };
-  var removeEventListeners = function removeEventListeners(ctx) {
-    eventsListManager(ctx.events, function (event, element) {
+  var removeEvents = function removeEvents(ctx) {
+    eventsManager(ctx.events, function (event, element) {
       ctx[element].removeEventListener(event, ctx.events[element][event]);
     });
   };
@@ -649,7 +649,7 @@
         }, $error);
       }
       function $If_1() {
-        addEventListeners(ctx);
+        addEvents(ctx);
         eventEmitter("init", ctx);
         return $return();
       }
@@ -670,7 +670,7 @@
       return start(_this);
     };
     prototype.unInit = function () {
-      return removeEventListeners(_this);
+      return removeEvents(_this);
     };
     prototype.open = function () {
       return openList(_this);

@@ -1,6 +1,6 @@
 import { create } from "../helpers/io";
 import { getData } from "../controllers/dataController";
-import { addEventListeners } from "../controllers/eventController";
+import { addEvents } from "../controllers/eventController";
 import eventEmitter from "../helpers/eventEmitter";
 
 export default async function (ctx) {
@@ -42,7 +42,7 @@ export default async function (ctx) {
   if (data.cache) await getData(ctx);
 
   // Attach Events listeners
-  addEventListeners(ctx);
+  addEvents(ctx);
 
   /**
    * @emit {init} event on Initialization
