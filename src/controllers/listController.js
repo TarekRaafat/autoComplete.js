@@ -199,8 +199,8 @@ const select = (ctx, event, index) => {
   // Prepare onSelection data feedback object
   ctx.dataFeedback.event = event;
   ctx.dataFeedback.selection = {
-    ...ctx.dataFeedback.results[index],
     index,
+    ...ctx.dataFeedback.results[index],
   };
 
   /**

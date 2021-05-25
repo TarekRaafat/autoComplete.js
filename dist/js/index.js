@@ -65,19 +65,19 @@ const autoCompleteJS = new autoComplete({
 // });
 
 // autoCompleteJS.input.addEventListener("response", function (event) {
-//   console.log(event);
+//   console.log(event.detail);
 // });
 
 // autoCompleteJS.input.addEventListener("results", function (event) {
-//   console.log(event);
+//   console.log(event.detail);
 // });
 
 // autoCompleteJS.input.addEventListener("open", function (event) {
-//   console.log(event);
+//   console.log(event.detail);
 // });
 
 // autoCompleteJS.input.addEventListener("navigate", function (event) {
-//   console.log(event);
+//   console.log(event.detail);
 // });
 
 autoCompleteJS.input.addEventListener("selection", function (event) {

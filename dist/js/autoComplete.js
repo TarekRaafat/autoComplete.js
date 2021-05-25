@@ -296,16 +296,12 @@
 
   var getData = function getData(ctx) {
     return new Promise(function ($return, $error) {
-      var input, data;
-      input = ctx.input;
+      var data;
       data = ctx.data;
       if (data.cache && data.store) return $return();
       var $Try_1_Post = function $Try_1_Post() {
         try {
-          eventEmitter("response", {
-            input: input,
-            dataFeedback: data.store
-          });
+          eventEmitter("response", ctx);
           return $return();
         } catch ($boundEx) {
           return $error($boundEx);
@@ -327,7 +323,7 @@
           return $return(data.src);
         }).then(function ($await_5) {
           try {
-            data.store = $await_5;
+            ctx.dataFeedback = data.store = $await_5;
             return $Try_1_Post();
           } catch ($boundEx) {
             return $Try_1_Catch($boundEx);
@@ -345,19 +341,18 @@
         resultsList = ctx.resultsList,
         resultItem = ctx.resultItem;
     var matches = [];
-    data.store.forEach(function (record, index) {
+    data.store.forEach(function (value, index) {
       var find = function find(key) {
-        var value = key ? record[key] : record;
-        var match = typeof searchEngine === "function" ? searchEngine(query, value) : search(query, value, {
+        var record = key ? value[key] : value;
+        var match = typeof searchEngine === "function" ? searchEngine(query, record) : search(query, record, {
           mode: searchEngine,
           diacritics: diacritics,
           highlight: resultItem.highlight
         });
         if (!match) return;
         var result = {
-          index: index,
           match: match,
-          value: record
+          value: value
         };
         if (key) result.key = key;
         matches.push(result);
@@ -382,7 +377,6 @@
     if (data.filter) matches = data.filter(matches);
     var results = matches.slice(0, resultsList.maxResults);
     ctx.dataFeedback = {
-      input: input,
       query: query,
       matches: matches,
       results: results
@@ -478,9 +472,9 @@
     index = index || ctx.cursor;
     if (index < 0) return;
     ctx.dataFeedback.event = event;
-    ctx.dataFeedback.selection = _objectSpread2(_objectSpread2({}, ctx.dataFeedback.results[index]), {}, {
+    ctx.dataFeedback.selection = _objectSpread2({
       index: index
-    });
+    }, ctx.dataFeedback.results[index]);
     eventEmitter("selection", ctx);
     closeList(ctx);
   };

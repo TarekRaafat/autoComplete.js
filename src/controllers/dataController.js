@@ -7,7 +7,7 @@ const getData = async (ctx) => {
   if (data.cache && data.store) return;
 
   try {
-    data.store = typeof data.src === "function" ? await data.src() : data.src;
+    ctx.dataFeedback = data.store = typeof data.src === "function" ? await data.src() : data.src;
   } catch (error) {
     data.store = error;
   }
@@ -15,7 +15,7 @@ const getData = async (ctx) => {
   /**
    * @emit {response} event on data request
    **/
-  eventEmitter("response", { input, dataFeedback: data.store });
+  eventEmitter("response", ctx);
 };
 
 /**
@@ -33,14 +33,14 @@ const findMatches = (input, query, ctx) => {
   let matches = [];
 
   // Find matches from data source
-  data.store.forEach((record, index) => {
+  data.store.forEach((value, index) => {
     const find = (key) => {
-      const value = key ? record[key] : record;
+      const record = key ? value[key] : value;
 
       const match =
         typeof searchEngine === "function"
-          ? searchEngine(query, value)
-          : search(query, value, {
+          ? searchEngine(query, record)
+          : search(query, record, {
               mode: searchEngine,
               diacritics,
               highlight: resultItem.highlight,
@@ -48,11 +48,7 @@ const findMatches = (input, query, ctx) => {
 
       if (!match) return;
 
-      let result = {
-        index,
-        match,
-        value: record,
-      };
+      let result = { match, value };
 
       if (key) result.key = key;
 
@@ -74,7 +70,7 @@ const findMatches = (input, query, ctx) => {
   const results = matches.slice(0, resultsList.maxResults);
 
   // Prepare data feedback object
-  ctx.dataFeedback = { input, query, matches, results };
+  ctx.dataFeedback = { query, matches, results };
 
   /**
    * @emit {results} event on search response with matches
