@@ -33,10 +33,10 @@ const renderList = (ctx) => {
       // Create new list item
       const element = create(resultItem.tag, {
         id: `${resultItem.id}_${index}`,
-        ...(resultItem.class && { class: resultItem.class }),
         role: "option",
         innerHTML: result.match,
         inside: fragment,
+        ...(resultItem.class && { class: resultItem.class }),
       });
 
       // If custom content is active pass params
@@ -199,8 +199,8 @@ const select = (ctx, event, index) => {
   // Prepare onSelection data feedback object
   ctx.dataFeedback.event = event;
   ctx.dataFeedback.selection = {
-    index,
     ...ctx.dataFeedback.results[index],
+    index,
   };
 
   /**

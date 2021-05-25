@@ -127,8 +127,8 @@ const checkTrigger = (query, condition, threshold) => {
  */
 const mark = (value, classes) =>
   create("mark", {
-    ...(typeof classes === "string" && { classes }),
     innerHTML: value,
+    ...(typeof classes === "string" && { classes }),
   }).outerHTML;
 
 export { select, create, getInput, format, getQuery, debounce, checkTrigger, mark };

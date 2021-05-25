@@ -250,10 +250,10 @@
     return condition ? condition(query) : query.length >= threshold;
   };
   var mark = function mark(value, classes) {
-    return create("mark", _objectSpread2(_objectSpread2({}, typeof classes === "string" && {
-      classes: classes
-    }), {}, {
+    return create("mark", _objectSpread2({
       innerHTML: value
+    }, typeof classes === "string" && {
+      classes: classes
     })).outerHTML;
   };
 
@@ -407,14 +407,13 @@
     if (matches.length || resultsList.noResults) {
       var fragment = document.createDocumentFragment();
       results.forEach(function (result, index) {
-        var element = create(resultItem.tag, _objectSpread2(_objectSpread2({
-          id: "".concat(resultItem.id, "_").concat(index)
-        }, resultItem["class"] && {
-          "class": resultItem["class"]
-        }), {}, {
+        var element = create(resultItem.tag, _objectSpread2({
+          id: "".concat(resultItem.id, "_").concat(index),
           role: "option",
           innerHTML: result.match,
           inside: fragment
+        }, resultItem["class"] && {
+          "class": resultItem["class"]
         }));
         if (resultItem.element) resultItem.element(element, result);
       });
@@ -479,9 +478,9 @@
     index = index || ctx.cursor;
     if (index < 0) return;
     ctx.dataFeedback.event = event;
-    ctx.dataFeedback.selection = _objectSpread2({
+    ctx.dataFeedback.selection = _objectSpread2(_objectSpread2({}, ctx.dataFeedback.results[index]), {}, {
       index: index
-    }, ctx.dataFeedback.results[index]);
+    });
     eventEmitter("selection", ctx);
     closeList(ctx);
   };
@@ -624,11 +623,11 @@
       placeHolder = ctx.placeHolder;
       resultsList = ctx.resultsList;
       data = ctx.data;
-      create(input, _objectSpread2(_objectSpread2({}, placeHolder && {
-        placeholder: placeHolder
-      }), {}, {
+      create(input, _objectSpread2({
         "aria-controls": resultsList.id,
         "aria-autocomplete": "both"
+      }, placeHolder && {
+        placeholder: placeHolder
       }));
       ctx.wrapper = create("div", {
         around: input,
@@ -638,14 +637,13 @@
         "aria-haspopup": true,
         "aria-expanded": false
       });
-      if (resultsList) ctx.list = create(resultsList.tag, _objectSpread2(_objectSpread2({
+      if (resultsList) ctx.list = create(resultsList.tag, _objectSpread2({
         dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
-        id: resultsList.id
-      }, resultsList["class"] && {
-        "class": resultsList["class"]
-      }), {}, {
+        id: resultsList.id,
         role: "listbox",
         hidden: "hidden"
+      }, resultsList["class"] && {
+        "class": resultsList["class"]
       }));
       if (data.cache) {
         return getData(ctx).then(function ($await_2) {

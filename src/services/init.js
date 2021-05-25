@@ -8,9 +8,9 @@ export default async function (ctx) {
 
   // Set "inputField" attributes
   create(input, {
-    ...(placeHolder && { placeholder: placeHolder }),
     "aria-controls": resultsList.id,
     "aria-autocomplete": "both",
+    ...(placeHolder && { placeholder: placeHolder }),
   });
 
   // Create wrapper element
@@ -33,9 +33,9 @@ export default async function (ctx) {
         resultsList.position,
       ],
       id: resultsList.id,
-      ...(resultsList.class && { class: resultsList.class }),
       role: "listbox",
       hidden: "hidden",
+      ...(resultsList.class && { class: resultsList.class }),
     });
 
   // Get the data from store
