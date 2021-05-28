@@ -1,19 +1,19 @@
 /**
  * DOM Element selector
  *
- * @param {String} element - html tag
+ * @param {String|HTMLElement} element - html tag | html element
  *
  * @returns {HTMLElement} - selected html element
  */
-const select = (element) => (typeof element === "string" ? document.querySelector(element) : element || null);
+const select = (element) => (typeof element === "string" ? document.querySelector(element) : element);
 
 /**
  * Create new element
  *
- * @param {String} tag - html element
+ * @param {String|HTMLElement} tag - html tag | html element
  * @param {Object} options - of the html element
  *
- * @returns {HTMLElement} - newly create html element
+ * @returns {HTMLElement} - created html element
  */
 const create = (tag, options) => {
   const el = typeof tag === "string" ? document.createElement(tag) : tag;
@@ -44,19 +44,19 @@ const create = (tag, options) => {
 };
 
 /**
- * Get the "inputField" search value
+ * Get the "inputField" query value
  *
- * @param {Element} field - autoComplete.js "inputField" or textarea element
+ * @param {Element} field - input or textarea element
  *
- * @returns {String} - Raw "inputField" value as a string
+ * @returns {String} - Raw query value as a string
  */
-const getInput = (field) =>
+const getQuery = (field) =>
   field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : field.innerHTML;
 
 /**
- * Format raw input value
+ * Format input value
  *
- * @param {String} inputValue - user's raw search query value
+ * @param {String} value - user's raw search query value
  * @param {Object} diacritics - formatting on/off
  *
  * @returns {String} - Raw "inputField" value as a string
@@ -73,16 +73,6 @@ const format = (value, diacritics) => {
       : value
   ).toString();
 };
-
-/**
- * Intercept query value
- *
- * @param {String} input - user's raw search input value
- * @param {Function} query - query interceptor
- *
- * @returns {String} - Manipulated Query
- */
-const getQuery = (input, query) => (query ? query(input) : input);
 
 /**
  * Debouncer
@@ -103,27 +93,23 @@ const debounce = (callback, duration) => {
 };
 
 /**
- * autoComplete.js triggering condition
+ * Trigger condition validator
  *
  * @param {String} query - User's manipulated search query value
  * @param {Function} condition - trigger condition rule
  * @param {Number} threshold - of query length to trigger
  *
- * @returns {Boolean} triggerCondition - For autoComplete.js to run
+ * @returns {Boolean} - For autoComplete.js to run or not
  */
-const checkTrigger = (query, condition, threshold) => {
-  query = query.replace(/ /g, "");
-
-  return condition ? condition(query) : query.length >= threshold;
-};
+const checkTrigger = (query, condition, threshold) => (condition ? condition(query) : query.length >= threshold);
 
 /**
- * Highlight result item
+ * Highlight matching characters
  *
  * @param {String} value - user's raw search query value
  * @param {Array} classes - of highlighted character
  *
- * @returns {String} - highlighted character
+ * @returns {HTMLElement} - newly create html element
  */
 const mark = (value, classes) =>
   create("mark", {
@@ -131,4 +117,4 @@ const mark = (value, classes) =>
     ...(typeof classes === "string" && { classes }),
   }).outerHTML;
 
-export { select, create, getInput, format, getQuery, debounce, checkTrigger, mark };
+export { select, create, getQuery, format, debounce, checkTrigger, mark };

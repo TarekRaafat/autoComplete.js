@@ -2,17 +2,21 @@
 const autoCompleteJS = new autoComplete({
   data: {
     src: async () => {
-      // Loading placeholder text
-      autoCompleteJS.input.setAttribute("placeholder", "Loading...");
-      // Fetch External Data Source
-      const source = await fetch("./db/generic.json");
-      const data = await source.json();
-      // Post Loading placeholder text
-      autoCompleteJS.input.setAttribute("placeholder", autoCompleteJS.placeHolder);
-      // Returns Fetched data
-      return data;
+      try {
+        // Loading placeholder text
+        autoCompleteJS.input.setAttribute("placeholder", "Loading...");
+        // Fetch External Data Source
+        const source = await fetch("./db/generic.json");
+        const data = await source.json();
+        // Post Loading placeholder text
+        autoCompleteJS.input.setAttribute("placeholder", autoCompleteJS.placeHolder);
+        // Returns Fetched data
+        return data;
+      } catch (error) {
+        return error;
+      }
     },
-    key: ["food", "cities", "animals"],
+    keys: ["food", "cities", "animals"],
     filter: (list) => {
       // Filter duplicates
       // incase of multiple data keys usage
@@ -25,25 +29,25 @@ const autoCompleteJS = new autoComplete({
   },
   placeHolder: "Search for Food & Drinks!",
   resultsList: {
-    element: (element, data) => {
+    element: (list, data) => {
       const info = document.createElement("p");
       if (data.results.length > 0) {
-        info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results`;
+        info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
       } else {
         info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong`;
       }
-      element.prepend(info);
+      list.prepend(info);
     },
     noResults: true,
     maxResults: 15,
     tabSelect: true,
   },
   resultItem: {
-    element: (element, data) => {
+    element: (item, data) => {
       // Modify Results Item Style
-      element.style = "display: flex; justify-content: space-between;";
+      item.style = "display: flex; justify-content: space-between;";
       // Modify Results Item Content
-      element.innerHTML = `
+      item.innerHTML = `
       <span style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
         ${data.match}
       </span>
@@ -55,21 +59,49 @@ const autoCompleteJS = new autoComplete({
   },
   events: {
     input: {
-      focus: () => autoCompleteJS.open(),
+      focus: () => {
+        if (autoCompleteJS.input.value.length) autoCompleteJS.start();
+      },
     },
   },
-  onSelection: (dataFeedback) => {
-    autoCompleteJS.input.blur();
-    // Prepare User's Selected Value
-    const selection = dataFeedback.selection.value[dataFeedback.selection.key];
-    // Render selected choice to selection div
-    document.querySelector(".selection").innerHTML = selection;
-    // Replace Input value with the selected value
-    autoCompleteJS.input.value = selection;
-    // Console log autoComplete data feedback
-    console.log(dataFeedback);
-  },
 });
+
+// autoCompleteJS.input.addEventListener("init", function (event) {
+//   console.log(event);
+// });
+
+// autoCompleteJS.input.addEventListener("response", function (event) {
+//   console.log(event.detail);
+// });
+
+// autoCompleteJS.input.addEventListener("results", function (event) {
+//   console.log(event.detail);
+// });
+
+// autoCompleteJS.input.addEventListener("open", function (event) {
+//   console.log(event.detail);
+// });
+
+// autoCompleteJS.input.addEventListener("navigate", function (event) {
+//   console.log(event.detail);
+// });
+
+autoCompleteJS.input.addEventListener("selection", function (event) {
+  const feedback = event.detail;
+  autoCompleteJS.input.blur();
+  // Prepare User's Selected Value
+  const selection = feedback.selection.value[feedback.selection.key];
+  // Render selected choice to selection div
+  document.querySelector(".selection").innerHTML = selection;
+  // Replace Input value with the selected value
+  autoCompleteJS.input.value = selection;
+  // Console log autoComplete data feedback
+  console.log(feedback);
+});
+
+// autoCompleteJS.input.addEventListener("close", function (event) {
+//   console.log(event.detail);
+// });
 
 // Toggle Search Engine Type/Mode
 document.querySelector(".toggler").addEventListener("click", () => {

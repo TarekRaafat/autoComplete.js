@@ -1,4 +1,8 @@
-// Configuring options stage
+/**
+ * Configuring options stage
+ *
+ * @param {Object} ctx - autoComplete.js configuration options
+ */
 export default (ctx) => {
   const { id, name, options, resultsList, resultItem } = ctx;
 

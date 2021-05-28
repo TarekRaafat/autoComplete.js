@@ -11,28 +11,24 @@ const Selected = "aria-selected";
 /**
  * Data feedback object constructor
  *
- * @param {Object} ctx - autoComplete.js configurations
+ * @param {Object} ctx - autoComplete.js context
  * @param {Number} index - of the selected result item
- *
- * @returns {Component} - Results list component
  */
 const feedback = (ctx, index) => {
-  ctx.dataFeedback.selection = {
+  ctx.feedback.selection = {
     index,
-    ...ctx.dataFeedback.results[index],
+    ...ctx.feedback.results[index],
   };
 };
 
 /**
- * List all matching results
+ * Render list of matching results
  *
- * @param {Object} ctx - autoComplete.js configurations
- *
- * @returns {Component} - Results list component
+ * @param {Object} ctx - autoComplete.js context
  */
-const renderList = (ctx) => {
-  let { resultsList, list, resultItem, dataFeedback } = ctx;
-  const { query, matches, results } = dataFeedback;
+const render = (ctx) => {
+  let { resultsList, list, resultItem, feedback } = ctx;
+  const { query, matches, results } = feedback;
 
   // Reset cursor
   ctx.cursor = -1;
@@ -62,78 +58,67 @@ const renderList = (ctx) => {
     list.append(fragment);
 
     // Run custom container function if active
-    if (resultsList.element) resultsList.element(list, dataFeedback);
+    if (resultsList.element) resultsList.element(list, feedback);
 
-    openList(ctx);
+    open(ctx);
   } else {
     // Check if there are NO results
-    closeList(ctx);
+    close(ctx);
   }
 };
 
 /**
  * Open closed list
  *
- * @param {Object} ctx - autoComplete.js configurations
- *
- * @returns {void}
+ * @param {Object} ctx - autoComplete.js context
  */
+const open = (ctx) => {
+  if (ctx.isOpen) return;
+  // Set expanded attribute on the wrapper to true
+  ctx.wrapper.setAttribute(Expand, true);
+  // Remove hidden attribute from list
+  ctx.list.removeAttribute("hidden");
+  // Set list to opened
+  ctx.isOpen = true;
 
-const openList = (ctx) => {
-  if (!ctx.isOpened) {
-    // Set expanded attribute on the wrapper to true
-    ctx.wrapper.setAttribute(Expand, true);
-    // Reset input active descendant attribute
-    ctx.input.setAttribute(Active, "");
-    // Remove hidden attribute from list
-    ctx.list.removeAttribute("hidden");
-    // Set list to opened
-    ctx.isOpened = true;
-
-    /**
-     * @emit {open} event after results list is opened
-     **/
-    eventEmitter("open", ctx);
-  }
+  /**
+   * @emit {open} event after results list is opened
+   **/
+  eventEmitter("open", ctx);
 };
 
 /**
- * Close open list
+ * Close opened list
  *
- * @param {Object} ctx - autoComplete.js configurations
- *
- * @returns {void}
+ * @param {Object} ctx - autoComplete.js context
  */
-const closeList = (ctx) => {
-  if (ctx.isOpened) {
-    // Set expanded attribute on the wrapper to false
-    ctx.wrapper.setAttribute(Expand, false);
-    // Add input active descendant attribute
-    ctx.input.setAttribute(Active, "");
-    // Add hidden attribute from list
-    ctx.list.setAttribute("hidden", "");
-    // Set list to closed
-    ctx.isOpened = false;
+const close = (ctx) => {
+  if (!ctx.isOpen) return;
+  // Set expanded attribute on the wrapper to false
+  ctx.wrapper.setAttribute(Expand, false);
+  // Add input active descendant attribute
+  ctx.input.setAttribute(Active, "");
+  // Add hidden attribute from list
+  ctx.list.setAttribute("hidden", "");
+  // Set list to closed
+  ctx.isOpen = false;
 
-    /**
-     * @emit {close} event after "resultsList" is closed
-     **/
-    eventEmitter("close", ctx);
-  }
+  /**
+   * @emit {close} event after "resultsList" is closed
+   **/
+  eventEmitter("close", ctx);
 };
 
 /**
- * Select result item by index
+ * Go to result item by index
  *
  * @param {Number} index - of the selected result item
- * @param {Object} ctx - autoComplete.js configurations
- *
- * @returns {void}
+ * @param {Object} ctx - autoComplete.js context
  */
 const goTo = (index, ctx) => {
   const results = ctx.list.getElementsByTagName(ctx.resultItem.tag);
 
-  if (ctx.isOpened && results.length) {
+  if (ctx.isOpen && results.length) {
     // Previous cursor state
     const state = ctx.cursor;
 
@@ -164,7 +149,7 @@ const goTo = (index, ctx) => {
     results[index].scrollIntoView({ behavior: ctx.resultsList.scroll || "smooth", block: "center" });
 
     // Prepare Selection data feedback object
-    ctx.dataFeedback.cursor = ctx.cursor;
+    ctx.feedback.cursor = ctx.cursor;
     feedback(ctx, index);
 
     /**
@@ -175,11 +160,9 @@ const goTo = (index, ctx) => {
 };
 
 /**
- * Select next result item
+ * Go to next result item
  *
- * @param {Object} ctx - autoComplete.js configurations
- *
- * @returns {void}
+ * @param {Object} ctx - autoComplete.js context
  */
 const next = function (ctx) {
   const index = ctx.cursor + 1;
@@ -187,11 +170,9 @@ const next = function (ctx) {
 };
 
 /**
- * Select previous result item
+ * Go to previous result item
  *
- * @param {Object} ctx - autoComplete.js configurations
- *
- * @returns {void}
+ * @param {Object} ctx - autoComplete.js context
  */
 const previous = (ctx) => {
   const index = ctx.cursor - 1;
@@ -201,11 +182,9 @@ const previous = (ctx) => {
 /**
  * Select result item with given index or current cursor
  *
- * @param {Object} ctx - autoComplete.js configurations
+ * @param {Object} ctx - autoComplete.js context
  * @param {Object} event - of selection
  * @param {Number} index - of the selected result item
- *
- * @returns {void}
  */
 const select = (ctx, event, index) => {
   // Check if cursor within list range
@@ -215,7 +194,7 @@ const select = (ctx, event, index) => {
   if (index < 0) return;
 
   // Prepare Selection data feedback object
-  ctx.dataFeedback.event = event;
+  ctx.feedback.event = event;
   feedback(ctx, index);
 
   /**
@@ -223,23 +202,24 @@ const select = (ctx, event, index) => {
    **/
   eventEmitter("selection", ctx);
 
-  closeList(ctx);
+  close(ctx);
 };
 
 /**
  * Click selection handler
  *
  * @param {Object} event - "Click" event object
- * @param {Object} ctx - autoComplete.js configurations
- *
+ * @param {Object} ctx - autoComplete.js context
  */
 const click = (event, ctx) => {
   const resultItemElement = ctx.resultItem.tag.toUpperCase();
   const items = Array.from(ctx.list.children);
   const item = event.target.closest(resultItemElement);
 
+  // Check if clicked item is a "result" item
   if (item && item.nodeName === resultItemElement) {
     event.preventDefault();
+
     const index = items.indexOf(item) - 1;
 
     select(ctx, event, index);
@@ -250,8 +230,7 @@ const click = (event, ctx) => {
  * List navigation handler
  *
  * @param {Object} event - "keydown" press event Object
- * @param {Object} ctx - autoComplete.js configurations
- *
+ * @param {Object} ctx - autoComplete.js context
  */
 const navigate = function (event, ctx) {
   const key = event.keyCode;
@@ -273,6 +252,7 @@ const navigate = function (event, ctx) {
     // Enter
     case 13:
       event.preventDefault();
+
       // If cursor moved
       if (ctx.cursor >= 0) {
         select(ctx, event);
@@ -286,7 +266,7 @@ const navigate = function (event, ctx) {
 
         select(ctx, event);
       } else {
-        closeList(ctx);
+        close(ctx);
       }
       break;
     // Esc
@@ -296,9 +276,9 @@ const navigate = function (event, ctx) {
       // Clear "inputField" value
       ctx.input.value = "";
 
-      closeList(ctx);
+      close(ctx);
       break;
   }
 };
 
-export { renderList, openList, click, navigate, goTo, next, previous, select, closeList };
+export { render, open, click, navigate, goTo, next, previous, select, close };

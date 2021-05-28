@@ -38,10 +38,11 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 ### v10.0 ✨
   > <div class="ps-icon ps-icon-warning"></div> Important Note:
   >
-  > This release has several breaking changes, so kindly check all the changes.
+  > This release has several breaking changes, so kindly check all the below changes.
 
   - ➕ Added: Automatic field wrapping inside `DIV`
   - ➕ Added: Document `readyState` listener that initializes the library after `DOM` content is loaded
+  - ➕ Added: `query` value to `data.src` for easier data fetching
   - ➕ Added: `resultsList` navigation auto scrolling for long lists
   - ➕ Added: `resultsList.scroll` API to control scrolling behavior (Thanks 👍 @TimHeinrich) #221
   - ➕ Added: `resultsList.tabSelect` API property to control `tab` button behavior
@@ -53,23 +54,25 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: `previous` API method controls `resultsList` navigation
   - ➕ Added: `select` API method controls `resultsList` selection by index
   - ➕ Added: `search` API method to avail autoComplete.js powerful engine for external use
-  - ➕ Added: `isOpened` API `boolean` property that holds `resultsList` state `true` opened `false` closed
+  - ➕ Added: `isOpen` API `boolean` property that holds `resultsList` state `true` opened `false` closed
   - ➕ Added: `list` API property holds the entire list html element
   - ➕ Added: `wrapper` API property holds the entire wrapper html element
-  - ➕ Added: `cursor` API property holds the index of the current selection or `-1` for idle
+  - ➕ Added: `cursor` API property holds the index of the current selection or `-1` or `undefined` for idle
   - ➕ Added: `id` API property holds the current instance number
   - ➕ Added: `name` API property that changes all the `className` properties accordingly
-  - ➕ Added: `options` API property that holds all the custom set `config` options
-  - ➕ Added: `data.src` fetching error messages to `response` event detail (Thanks 👍 @folknor) #207
-  - 🔝 Updated: Data caching mechanism
+  - ➕ Added: `options` API property that holds all the custom set `config` options for separation
+  - ➕ Added: `data.src` fetching error message/instance to `response` event detail (Thanks 👍 @folknor) #207
+  - 🔝 Updated: Data caching with a better mechanism
   - 🔝 Updated: `WAI-ARIA` configurations for significantly better support
   - 🔝 Updated: `dataFeedback` event information
+  - 🔧 Fixed: `diacritics` highlighting issue in `strict` mode
   - 🔧 Fixed: `resultsList` eventEmitters unexpected behavior which was firing multiple times
   - 🔧 Fixed: Empty `className` values do not assign any classes instead of `undefined`
-  - 🌀 Changed: The core library architecture for improved code separation
+  - 🌀 Changed: The core library architecture for an improved performance and code separation
   - 🌀 Changed: API to only include the used options instead of including unused ones with `undefined` value
   - 🌀 Changed: `fetch` eventEmitter name to `response`
   - 🌀 Changed: `inputField` API property name to `input`
+  - 🌀 Changed: `dataFeedback` API property name to `feedback`
   - 🌀 Changed: `trigger` API property type from `Object` to `Function` formerly called `trigger.condition`
   - 🌀 Changed: `data.results` API property name to `data.filter`
   - 🌀 Changed: `noResults` API to accept `boolean` instead of `Function` to be replaced with `resultsList.container`
@@ -85,6 +88,8 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
   - 🌀 Changed: `query` API property type from `Object` to `Function` formerly called `query.manipulate`
   - 🌀 Changed: `observer` API property name `observe`
+  - 🌀 Changed: `data.key` API property name `data.keys`
+  - ❗ Removed: `onSelection` API method to be replaced with `selection` eventEmitter
   - ❗ Removed: `resultsList.render` API property to be replaced with `resultsList` to accept `Boolean` instead of `Object` in case of disabling list rendering
   - ❗ Removed: `trigger.event` API property to be replaced with `events`
   - ❗ Removed: `feedback` API method to be replaced with `navigate` event
@@ -92,6 +97,8 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ❗ Removed: `nav` API property to be replaced with `events`
   - ❗ Removed: `hook` API method to be replaced with `start` API
   - ❗ Removed: `onSelection` API method to be replaced with `selection` eventEmitter
+  - ❗ Removed: `input` property from `dataFeedback` due to the existence of `query` already
+  - ❗ Removed: `unInit` eventEmitter
 
 ***
 

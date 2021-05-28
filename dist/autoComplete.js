@@ -1,3 +1,5 @@
+
+(function(l, r) { if (l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (window.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(window.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -203,7 +205,7 @@
   });
 
   var select$1 = function select(element) {
-    return typeof element === "string" ? document.querySelector(element) : element || null;
+    return typeof element === "string" ? document.querySelector(element) : element;
   };
   var create = function create(tag, options) {
     var el = typeof tag === "string" ? document.createElement(tag) : tag;
@@ -226,15 +228,12 @@
     }
     return el;
   };
-  var getInput = function getInput(field) {
+  var getQuery = function getQuery(field) {
     return field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : field.innerHTML;
   };
   var format = function format(value, diacritics) {
     value = value.toLowerCase();
     return (diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value).toString();
-  };
-  var getQuery = function getQuery(input, query) {
-    return query ? query(input) : input;
   };
   var debounce = function debounce(callback, duration) {
     var timer;
@@ -246,7 +245,6 @@
     };
   };
   var checkTrigger = function checkTrigger(query, condition, threshold) {
-    query = query.replace(/ /g, "");
     return condition ? condition(query) : query.length >= threshold;
   };
   var mark = function mark(value, classes) {
@@ -260,7 +258,7 @@
   var eventEmitter = (function (name, ctx) {
     ctx.input.dispatchEvent(new CustomEvent(name, {
       bubbles: true,
-      detail: ctx.dataFeedback,
+      detail: ctx.feedback,
       cancelable: true
     }));
   });
@@ -286,7 +284,7 @@
       if (cursor === qLength) return match;
     } else {
       var _match = nRecord.indexOf(query);
-      if (_match >= 0) {
+      if (~_match) {
         query = record.substring(_match, _match + query.length);
         _match = highlight ? record.replace(query, mark(query, highlight)) : record;
         return _match;
@@ -296,17 +294,18 @@
 
   var getData = function getData(ctx) {
     return new Promise(function ($return, $error) {
-      var data;
+      var input, data;
+      input = ctx.input;
       data = ctx.data;
       if (data.cache && data.store) return $return();
       return new Promise(function ($return, $error) {
         if (typeof data.src === "function") {
-          return data.src().then($return, $error);
+          return data.src(input.value).then($return, $error);
         }
         return $return(data.src);
       }).then(function ($await_4) {
         try {
-          ctx.dataFeedback = data.store = $await_4;
+          ctx.feedback = data.store = $await_4;
           eventEmitter("response", ctx);
           return $return();
         } catch ($boundEx) {
@@ -315,7 +314,7 @@
       }, $error);
     });
   };
-  var findMatches = function findMatches(input, query, ctx) {
+  var findMatches = function findMatches(query, ctx) {
     var data = ctx.data,
         searchEngine = ctx.searchEngine,
         diacritics = ctx.diacritics,
@@ -338,8 +337,8 @@
         if (key) result.key = key;
         matches.push(result);
       };
-      if (data.key) {
-        var _iterator = _createForOfIteratorHelper(data.key),
+      if (data.keys) {
+        var _iterator = _createForOfIteratorHelper(data.keys),
             _step;
         try {
           for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -357,7 +356,7 @@
     });
     if (data.filter) matches = data.filter(matches);
     var results = matches.slice(0, resultsList.maxResults);
-    ctx.dataFeedback = {
+    ctx.feedback = {
       query: query,
       matches: matches,
       results: results
@@ -370,18 +369,18 @@
   var Active = "aria-activedescendant";
   var Selected = "aria-selected";
   var feedback = function feedback(ctx, index) {
-    ctx.dataFeedback.selection = _objectSpread2({
+    ctx.feedback.selection = _objectSpread2({
       index: index
-    }, ctx.dataFeedback.results[index]);
+    }, ctx.feedback.results[index]);
   };
-  var renderList = function renderList(ctx) {
+  var render = function render(ctx) {
     var resultsList = ctx.resultsList,
         list = ctx.list,
         resultItem = ctx.resultItem,
-        dataFeedback = ctx.dataFeedback;
-    dataFeedback.query;
-        var matches = dataFeedback.matches,
-        results = dataFeedback.results;
+        feedback = ctx.feedback;
+    feedback.query;
+        var matches = feedback.matches,
+        results = feedback.results;
     ctx.cursor = -1;
     list.innerHTML = "";
     if (matches.length || resultsList.noResults) {
@@ -398,33 +397,30 @@
         if (resultItem.element) resultItem.element(element, result);
       });
       list.append(fragment);
-      if (resultsList.element) resultsList.element(list, dataFeedback);
-      openList(ctx);
+      if (resultsList.element) resultsList.element(list, feedback);
+      open(ctx);
     } else {
-      closeList(ctx);
+      close(ctx);
     }
   };
-  var openList = function openList(ctx) {
-    if (!ctx.isOpened) {
-      ctx.wrapper.setAttribute(Expand, true);
-      ctx.input.setAttribute(Active, "");
-      ctx.list.removeAttribute("hidden");
-      ctx.isOpened = true;
-      eventEmitter("open", ctx);
-    }
+  var open = function open(ctx) {
+    if (ctx.isOpen) return;
+    ctx.wrapper.setAttribute(Expand, true);
+    ctx.list.removeAttribute("hidden");
+    ctx.isOpen = true;
+    eventEmitter("open", ctx);
   };
-  var closeList = function closeList(ctx) {
-    if (ctx.isOpened) {
-      ctx.wrapper.setAttribute(Expand, false);
-      ctx.input.setAttribute(Active, "");
-      ctx.list.setAttribute("hidden", "");
-      ctx.isOpened = false;
-      eventEmitter("close", ctx);
-    }
+  var close = function close(ctx) {
+    if (!ctx.isOpen) return;
+    ctx.wrapper.setAttribute(Expand, false);
+    ctx.input.setAttribute(Active, "");
+    ctx.list.setAttribute("hidden", "");
+    ctx.isOpen = false;
+    eventEmitter("close", ctx);
   };
   var goTo = function goTo(index, ctx) {
     var results = ctx.list.getElementsByTagName(ctx.resultItem.tag);
-    if (ctx.isOpened && results.length) {
+    if (ctx.isOpen && results.length) {
       var _results$index$classL;
       var state = ctx.cursor;
       if (index >= results.length) index = 0;
@@ -442,7 +438,7 @@
         behavior: ctx.resultsList.scroll || "smooth",
         block: "center"
       });
-      ctx.dataFeedback.cursor = ctx.cursor;
+      ctx.feedback.cursor = ctx.cursor;
       feedback(ctx, index);
       eventEmitter("navigate", ctx);
     }
@@ -458,10 +454,10 @@
   var select = function select(ctx, event, index) {
     index = index >= 0 ? index : ctx.cursor;
     if (index < 0) return;
-    ctx.dataFeedback.event = event;
+    ctx.feedback.event = event;
     feedback(ctx, index);
     eventEmitter("selection", ctx);
-    closeList(ctx);
+    close(ctx);
   };
   var click = function click(event, ctx) {
     var resultItemElement = ctx.resultItem.tag.toUpperCase();
@@ -494,13 +490,13 @@
           event.preventDefault();
           select(ctx, event);
         } else {
-          closeList(ctx);
+          close(ctx);
         }
         break;
       case 27:
         event.preventDefault();
         ctx.input.value = "";
-        closeList(ctx);
+        close(ctx);
         break;
     }
   };
@@ -508,27 +504,27 @@
   function start (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var input, query, trigger, threshold, resultsList, inputVal, queryVal, condition;
+      var input, query, trigger, threshold, resultsList, queryVal, condition;
       input = ctx.input;
       query = ctx.query;
       trigger = ctx.trigger;
       threshold = ctx.threshold;
       resultsList = ctx.resultsList;
-      inputVal = getInput(input);
-      queryVal = getQuery(inputVal, query);
+      queryVal = getQuery(input);
+      queryVal = query ? query(queryVal) : queryVal;
       condition = checkTrigger(queryVal, trigger, threshold);
       if (condition) {
         return getData(ctx).then(function ($await_2) {
           try {
-            findMatches(inputVal, queryVal, ctx);
-            if (resultsList) renderList(ctx);
+            findMatches(queryVal, ctx);
+            if (resultsList) render(ctx);
             return $If_1.call(_this);
           } catch ($boundEx) {
             return $error($boundEx);
           }
         }, $error);
       } else {
-        closeList(ctx);
+        close(ctx);
         return $If_1.call(_this);
       }
       function $If_1() {
@@ -566,7 +562,7 @@
           navigate(event, ctx);
         },
         blur: function blur() {
-          closeList(ctx);
+          close(ctx);
         }
       },
       list: {
@@ -658,10 +654,10 @@
       return removeEvents(_this);
     };
     prototype.open = function () {
-      return openList(_this);
+      return open(_this);
     };
     prototype.close = function () {
-      return closeList(_this);
+      return close(_this);
     };
     prototype.goTo = function (index) {
       return goTo(index, _this);

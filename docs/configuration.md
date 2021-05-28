@@ -1,4 +1,4 @@
-# Configuration
+# Configuration <!-- {docsify-ignore} -->
 
 API configuration options, methods and events
 
@@ -60,10 +60,11 @@ selector: () => {
 ##### Methods:
 
 #### `src` <sub><sup>(required)</sup></sub>
-- Type: `Array`|`Function`
+- Type: `Array`|`Function` returns `Array` of results values
+  - Parameters: (`query`)
 - Default: `null`
 
-#### `key` <sub><sup>(required)</sup></sub>
+#### `keys` <sub><sup>(required)</sup></sub>
 - Type: `Array` <small>(required only if `data.src` is `Array` of `Objects`)</small>
 - Default: `null`
 
@@ -96,7 +97,7 @@ data: {
         { "food": "Wild Boar - Tenderloin" },
         { "food": "Goat - Whole Cut" }
     ],
-    key: ["food"]
+    keys: ["food"]
 },
 ```
 
@@ -104,8 +105,10 @@ data: {
 
 ```js
 data: {
-    src: () => { ... },
-    key: ["food"]
+    src: (query) => { ... },
+    // Data 'Object' key to be searched
+    keys: ["food"],
+    cache: true
 },
 ```
 
@@ -113,16 +116,20 @@ data: {
 
 ```js
 data: {
-    src: async () => {
+    src: async (query) => {
+      try {
         // Fetch Data from external Source
-        const source = await fetch("https://www.url.com/data.json");
+        const source = await fetch(`https://www.api.com/${query}`);
+        // Data is array of `Objects` | `Strings`
         const data = await source.json();
 
-        // Returns Fetched data
         return data;
+      } catch (error) {
+        return error;
+      }
     },
-    key: ["food"],
-    cache: true
+    // Data 'Object' key to be searched
+    keys: ["food"]
 },
 ```
 <!-- tabs:end -->
@@ -134,7 +141,7 @@ data: {
 > Event & Condition rules that trigger autoComplete.js engine to start
 
 - Type: `Function` returns `Boolean`
-  - Parameters: (`event`, `queryValue`)
+  - Parameters: (`event`, `query`)
 - Default: if input field **NOT** empty **and** greater than or equal threshold
 
 ##### Example:
@@ -287,7 +294,7 @@ diacritics: false,
 
 #### `element` <sub><sup>(optional)</sup></sub>
 - Type: `Function` with no return
-- Parameters: (`element`, `data`)
+- Parameters: (`list`, `data`)
 - Default: `Function`
 
 #### `maxResults` <sub><sup>(optional)</sup></sub>
@@ -318,8 +325,8 @@ resultsList: {
     position: "afterend",
     maxResults: 5,
     noResults: true,
-    element: (element, data) => {
-        element.setAttribute("data-parent", "food-list");
+    element: (list, data) => {
+        list.setAttribute("data-parent", "food-list");
     },
 },
 ```
@@ -348,7 +355,7 @@ resultsList: {
 
 #### `element` <sub><sup>(optional)</sup></sub>
 - Type: `Function` with no return
-- Parameters: (`element`, `data`)
+- Parameters: (`item`, `data`)
 - Default: `Function`
 
 #### `highlight` <sub><sup>(optional)</sup></sub>
@@ -365,8 +372,8 @@ resultsList: {
 resultItem: {
     tag: "li",
     class: "autoComplete_result",
-    element: (element, data) => {
-        element.setAttribute("data-parent", "food-item");
+    element: (item, data) => {
+        item.setAttribute("data-parent", "food-item");
     },
     highlight: "autoComplete_highlight",
     selected: "autoComplete_selected"
@@ -426,11 +433,12 @@ autoCompleteJS.preInit();
 
 > Runs `init()` core function which is responsible for the following tasks in order:
 
-1. Applying `placeholder` text if set
-2. Setting `input` field attributes
-3. Creating `wrapper` element and moving the selected `input` inside it
-4. Creating new empty `list`
-5. Attaching all event listeners on the `_events` list
+1. Setting `input` field attributes & `placeholder` text (if set)
+2. Creating `wrapper` element and moving the selected `input` inside it
+3. Creating new empty hidden `list`
+4. Getting `data` if set to `cache`
+5. Attaching all event listeners on the `events` list
+6. Emitting `init` event 
 
 ##### Example:
 
@@ -449,7 +457,7 @@ autoCompleteJS.init();
 3. Checking `trigger` condition validity to proceed
 4. Fetching `data` from `src` or `store` if cached
 5. Start matching results
-6. Rendering `list` if activated
+6. Rendering `list` if enabled
 
 ##### Example:
 
@@ -643,7 +651,7 @@ document.querySelector("#autoComplete").addEventListener("results", function (ev
 
 ```js
 document.querySelector("#autoComplete").addEventListener("open", function (event) {
-    // "event.detail" carries the autoComplete.js "dataFeedback" object
+    // "event.detail" carries the autoComplete.js "feedback" object
     console.log(event.detail);
 });
 ```
@@ -658,7 +666,7 @@ document.querySelector("#autoComplete").addEventListener("open", function (event
 
 ```js
 document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
-    // "event.detail" carries the autoComplete.js "dataFeedback" object
+    // "event.detail" carries the autoComplete.js "feedback" object
     console.log(event.detail);
 });
 ```
@@ -673,7 +681,7 @@ document.querySelector("#autoComplete").addEventListener("navigate", function (e
 
 ```js
 document.querySelector("#autoComplete").addEventListener("selection", function (event) {
-    // "event.detail" carries the autoComplete.js "dataFeedback" object
+    // "event.detail" carries the autoComplete.js "feedback" object
     console.log(event.detail);
 });
 ```
@@ -688,7 +696,7 @@ document.querySelector("#autoComplete").addEventListener("selection", function (
 
 ```js
 document.querySelector("#autoComplete").addEventListener("close", function (event) {
-    // "event.detail" carries the autoComplete.js "dataFeedback" object
+    // "event.detail" carries the autoComplete.js "feedback" object
     console.log(event.detail);
 });
 ```

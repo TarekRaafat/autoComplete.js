@@ -1,14 +1,18 @@
-import { getInput, getQuery, checkTrigger } from "../helpers/io";
+import { getQuery, checkTrigger } from "../helpers/io";
 import { getData, findMatches } from "../controllers/dataController";
-import { renderList, closeList } from "../controllers/listController";
+import { render, close } from "../controllers/listController";
 
+/**
+ * Start stage
+ *
+ * @param {Object} ctx - autoComplete.js context
+ */
 export default async function (ctx) {
   const { input, query, trigger, threshold, resultsList } = ctx;
 
-  // Get raw "inputField" value
-  const inputVal = getInput(input);
-  // Prepare manipulated query value
-  const queryVal = getQuery(inputVal, query);
+  // Get "inputField" query value
+  let queryVal = getQuery(input);
+  queryVal = query ? query(queryVal) : queryVal;
   // Get trigger decision
   const condition = checkTrigger(queryVal, trigger, threshold);
 
@@ -17,11 +21,11 @@ export default async function (ctx) {
     // Get from source
     await getData(ctx);
     // Find matching results to the query
-    findMatches(inputVal, queryVal, ctx);
-    // Generate & Render "resultsList"
-    if (resultsList) renderList(ctx);
+    findMatches(queryVal, ctx);
+    // Render "resultsList"
+    if (resultsList) render(ctx);
   } else {
     // Close open list
-    closeList(ctx);
+    close(ctx);
   }
 }

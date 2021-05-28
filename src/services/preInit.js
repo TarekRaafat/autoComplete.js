@@ -1,3 +1,8 @@
+/**
+ * Pre-Initialization stage
+ *
+ * @param {Object} ctx - autoComplete.js context
+ */
 export default (ctx) => {
   // Callback function to execute when mutations are observed
   const callback = (mutations, observer) => {

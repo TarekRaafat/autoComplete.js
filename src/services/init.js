@@ -3,6 +3,11 @@ import { getData } from "../controllers/dataController";
 import { addEvents } from "../controllers/eventController";
 import eventEmitter from "../helpers/eventEmitter";
 
+/**
+ * Initialization stage
+ *
+ * @param {Object} ctx - autoComplete.js context
+ */
 export default async function (ctx) {
   let { name, input, placeHolder, resultsList, data } = ctx;
 

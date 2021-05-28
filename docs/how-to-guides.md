@@ -11,10 +11,16 @@ Guided examples on how-to use autoComplete.js in different use-cases
 ##### Code:
 
 ```js
-trigger: {
-    event: ["input", "focus"],
-    condition: () => true
-}
+// autoComplete.js Config Options
+events: {
+    input: {
+        focus: () => {
+            const inputValue = document.querySelector("#autoComplete").value;
+
+            if (input.length) autoCompleteJS.start();
+        },
+    },
+},
 ```
 
 <!-- div:right-panel -->
@@ -35,8 +41,9 @@ trigger: {
 ##### Code:
 
 ```js
+// autoComplete.js Config Options
 resultsList: {
-    noResults: (list, query) => {
+    element: (list, query) => {
         // Create "No Results" message list element
         const message = document.createElement("div");
         message.setAttribute("class", "no_result");
@@ -68,22 +75,24 @@ resultsList: {
 ##### Code:
 
 ```js
-query: {
-    manipulate: (query) => {
-        // Split query into array
-        const querySplit = query.split(",");
-        // Get last query value index
-        const lastQuery = querySplit.length - 1;
-        // Trim new query
-        const newQuery = querySplit[lastQuery].trim();
+// autoComplete.js Config Options
+query: (query) => {
+    // Split query into array
+    const querySplit = query.split(",");
+    // Get last query value index
+    const lastQuery = querySplit.length - 1;
+    // Trim new query
+    const newQuery = querySplit[lastQuery].trim();
 
-        return newQuery;
-    }
+    return newQuery;
 },
-onSelection: (dataFeedback) => {
+
+// Input field event listener
+document.querySelector("#autoComplete").addEventListener("selection", function (event) {
+    const feedback = event.detail;
     const input = document.querySelector("#autoComplete");
     // Trim selected Value
-    const selection = dataFeedback.selection.value.trim();
+    const selection = feedback.selection.value.trim();
     // Split query into array and trim each value
     const query = input.value.split(",").map(item => item.trim());
     // Remove last query
@@ -91,8 +100,8 @@ onSelection: (dataFeedback) => {
     // Add selected value
     query.push(selection);
     // Replace Input value with the new query
-    input.value = query.join(", ");
-}
+    input.value = query.join(", ") + ", ";
+});
 ```
 
 <!-- div:right-panel -->
@@ -117,37 +126,42 @@ const history = [];
 
 ```js
 // autoComplete.js Config Options
-container: (list) => {
-    const recentSearch = history.reverse();
-    const historyLength = recentSearch.length;
+resultsList: {
+    element: (list) => {
+        const recentSearch = history.reverse();
+        const historyLength = recentSearch.length;
 
-    // Check if there are recent searches
-    if(historyLength) {
-        const historyBlock = document.createElement("div");
-        historyBlock.setAttribute("style", "display: flex; flex-direction: column; margin: .3rem; padding: .3rem .5rem;");
-        historyBlock.innerHTML = "Recent Searches";
-        // Limit displayed searched to only last "2"
-        recentSearch.slice(0, 2).forEach((item) => {
-            const recentItem = document.createElement("span");
-            recentItem.setAttribute("style", "display: flex; margin: .2rem; color: rgba(0, 0, 0, .2);");
-            recentItem.innerHTML = item;
-            historyBlock.append(recentItem);
-        });
+        // Check if there are recent searches
+        if(historyLength) {
+            const historyBlock = document.createElement("div");
+            historyBlock.setAttribute("style", "display: flex; flex-direction: column; margin: .3rem; padding: .3rem .5rem;");
+            historyBlock.innerHTML = "Recent Searches";
+            // Limit displayed searched to only last "2"
+            recentSearch.slice(0, 2).forEach((item) => {
+                const recentItem = document.createElement("span");
+                recentItem.setAttribute("style", "display: flex; margin: .2rem; color: rgba(0, 0, 0, .2);");
+                recentItem.innerHTML = item;
+                historyBlock.append(recentItem);
+            });
 
-        const separator = document.createElement("hr");
-        separator.setAttribute("style", "margin: 5px 0 0 0;");
-        historyBlock.append(separator);
+            const separator = document.createElement("hr");
+            separator.setAttribute("style", "margin: 5px 0 0 0;");
+            historyBlock.append(separator);
 
-        list.prepend(historyBlock);
+            list.prepend(historyBlock);
+        }
     }
 },
-onSelection: (dataFeedback) => {
+
+// Input field event listener
+document.querySelector("#autoComplete").addEventListener("selection", function (event) {
+    const feedback = event.detail;
     const input = document.querySelector("#autoComplete");
     // Get selected Value
-    const selection = dataFeedback.selection.value;
+    const selection = feedback.selection.value.trim();
     // Add selected value to "history" array
     history.push(selection);
-}
+});
 ```
 
 <!-- div:right-panel -->
@@ -167,6 +181,7 @@ onSelection: (dataFeedback) => {
 ##### Code:
 
 ```js
+// autoComplete.js Config Options
 filter: (list) => {
     const results = list.filter((item) => {
         const inputValue = document.querySelector("#autoComplete").value.toLowerCase();
@@ -213,9 +228,15 @@ filter: (list) => {
         selector: "#autoComplete_01",
         placeHolder,
         data,
-        trigger: () => true,
         resultsList,
-        resultItem
+        resultItem,
+        events: {
+            input: {
+                focus: () => {
+                    if (autoCompleteJS_01.input.value.length) autoCompleteJS.start();
+                },
+            },
+        },
     });
 
     const autoCompleteJS_02 = new autoComplete({
@@ -242,19 +263,6 @@ filter: (list) => {
 	    },
         resultsList,
         resultItem,
-        onSelection: (dataFeedback) => {
-            const input = document.querySelector("#autoComplete_03");
-            // Trim selected Value
-            const selection = dataFeedback.selection.value.trim();
-            // Split query into array and trim each value
-            const query = input.value.split(",").map(item => item.trim());
-            // Remove last query
-            query.pop();
-            // Add selected value
-            query.push(selection);
-            // Replace Input value with the new query
-            input.value = query.join(", ") + ", ";
-	    }
     });
 
     let history = [];
@@ -290,13 +298,6 @@ filter: (list) => {
             ...resultsList,
         },
         resultItem,
-        onSelection: (dataFeedback) => {
-            const input = document.querySelector("#autoComplete_04");
-            // Get selected Value
-            const selection = dataFeedback.selection.value.trim();
-            // Add selected value to "history" array
-            history.push(selection);
-	    }
     });
 
     const autoCompleteJS_05 = new autoComplete({
@@ -319,5 +320,29 @@ filter: (list) => {
         },
         resultsList,
         resultItem,
+    });
+
+    autoCompleteJS_03.input.addEventListener("selection", function (event) {
+        const feedback = event.detail;
+        const input = document.querySelector("#autoComplete_03");
+        // Trim selected Value
+        const selection = feedback.selection.value.trim();
+        // Split query into array and trim each value
+        const query = input.value.split(",").map(item => item.trim());
+        // Remove last query
+        query.pop();
+        // Add selected value
+        query.push(selection);
+        // Replace Input value with the new query
+        input.value = query.join(", ") + ", ";
+    });
+
+    autoCompleteJS_04.input.addEventListener("selection", function (event) {
+        const feedback = event.detail;
+        const input = document.querySelector("#autoComplete_04");
+        // Get selected Value
+        const selection = feedback.selection.value.trim();
+        // Add selected value to "history" array
+        history.push(selection);
     });
 </script>

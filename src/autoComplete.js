@@ -7,6 +7,8 @@ import init from "./services/init";
  * @desc This is autoComplete.js
  * @version 10.0.0
  * @example const autoCompleteJS = new autoComplete({config});
+ *
+ * @param {Object} config - Configuration options
  */
 export default function autoComplete(config) {
   // User's Configuration options

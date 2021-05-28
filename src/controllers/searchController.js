@@ -3,11 +3,11 @@ import { format, mark } from "../helpers/io";
 /**
  * Find matching characters in record
  *
- * @param {String} query - User's manipulated search query value
- * @param {String} record - Data record string to be compared
- * @param {Object} options - autoComplete.js configurations
+ * @param {String} query - Search query value
+ * @param {String} record - Data record string
+ * @param {Object} options - Search Engine configuration options
  *
- * @returns {String} - Matched data record string
+ * @returns {String} - Matching data record
  */
 export default (query, record, options) => {
   const { mode, diacritics, highlight } = options || {};
@@ -42,7 +42,7 @@ export default (query, record, options) => {
     // Get starting index of matching characters
     let match = nRecord.indexOf(query);
     // Strict mode
-    if (match >= 0) {
+    if (~match) {
       // Extract matching characters from record
       query = record.substring(match, match + query.length);
       // Highlight matching characters if active

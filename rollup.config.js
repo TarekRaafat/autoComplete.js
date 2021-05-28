@@ -7,7 +7,7 @@ import gzipPlugin from "rollup-plugin-gzip";
 import analyze from "rollup-plugin-analyzer";
 import sizes from "rollup-plugin-sizes";
 import serve from "rollup-plugin-serve";
-// import livereload from "rollup-plugin-livereload";
+import livereload from "rollup-plugin-livereload";
 
 // Library Name
 const libName = "autoComplete";
@@ -24,11 +24,18 @@ const onAnalysis = ({ bundleSize }) => {
 export default [
   {
     input: "src/autoComplete.js",
-    output: {
-      file: pkg.browser,
-      name: libName,
-      format: "umd",
-    },
+    output: [
+      {
+        file: pkg.browser,
+        name: libName,
+        format: "umd",
+      },
+      {
+        file: "./docs/demo/js/autoComplete.min.js",
+        name: libName,
+        format: "umd",
+      },
+    ],
     plugins: [
       nodent({
         es7: true,
@@ -54,11 +61,18 @@ export default [
   },
   {
     input: "src/autoComplete.js",
-    output: {
-      file: pkg.main,
-      name: libName,
-      format: "umd",
-    },
+    output: [
+      {
+        file: pkg.main,
+        name: libName,
+        format: "umd",
+      },
+      {
+        file: "./docs/demo/js/autoComplete.js",
+        name: libName,
+        format: "umd",
+      },
+    ],
     plugins: [
       nodent({
         es7: true,
@@ -84,14 +98,14 @@ export default [
       // Server
       serve({
         open: true,
-        openPage: "/index.html",
+        openPage: "./docs/demo/index.html",
         host: "localhost",
         port: 8000,
         verbose: true,
-        contentBase: "./dist",
+        contentBase: "./docs/demo",
       }),
-      // // Live Reload
-      // livereload({ watch: "./dist" }),
+      // Live Reload
+      livereload({ watch: "./docs/demo/" }),
     ],
   },
 ];

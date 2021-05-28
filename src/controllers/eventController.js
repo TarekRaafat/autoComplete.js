@@ -1,8 +1,13 @@
 import start from "../services/start";
 import { debounce } from "../helpers/io";
-import { click, navigate, closeList } from "./listController";
+import { click, navigate, close } from "./listController";
 
-// Manage all given events
+/**
+ * Manage all given events
+ *
+ * @param {Object} events - List of events
+ * @param {Function} callback - Callback function
+ */
 const eventsManager = (events, callback) => {
   for (const element in events) {
     for (const event in events[element]) {
@@ -11,7 +16,11 @@ const eventsManager = (events, callback) => {
   }
 };
 
-// Attach all events listeners
+/**
+ * Attach all events listeners
+ *
+ * @param {Object} ctx - autoComplete.js context
+ */
 const addEvents = (ctx) => {
   const { events, trigger, debounce: timer, resultsList } = ctx;
 
@@ -35,7 +44,7 @@ const addEvents = (ctx) => {
         navigate(event, ctx);
       },
       blur: () => {
-        closeList(ctx);
+        close(ctx);
       },
     },
     list: {
@@ -63,7 +72,11 @@ const addEvents = (ctx) => {
   });
 };
 
-// Remove all attached public events listeners
+/**
+ * Remove all attached public events listeners
+ *
+ * @param {Object} ctx - autoComplete.js context
+ */
 const removeEvents = (ctx) => {
   eventsManager(ctx.events, (event, element) => {
     ctx[element].removeEventListener(event, ctx.events[element][event]);

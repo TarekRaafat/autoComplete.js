@@ -1,7 +1,7 @@
 <div class="cover">
 
 <div>
-<a href="/autoComplete.js/demo/" target="\_blank">
+<a href="/autoComplete.js/demo/" alt="autoComplete.js Demo" target="\_blank">
 <img src="./img/autoComplete.js.svg" alt= "autoComplete.js Logo" id="logo">
 </a>
 
@@ -16,6 +16,8 @@
 <a href="https://www.producthunt.com/posts/autocomplete-js?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-autocomplete-js" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=141833&theme=light&period=weekly" alt="autoComplete.js - Simple autocomplete pure vanilla Javascript library. | Product Hunt Embed" style="margin: 30px 0;width: 250px; height: 54px;" width="250px" height="54px" /></a>
 
 <div class="sharethis-inline-share-buttons"></div>
+
+<a href="#/?id=autocompletejs" class="link no-underline"><span class="ps-icon ps-icon-down"></span></a>
 </div>
 
 </div>
@@ -24,7 +26,7 @@
 
 # autoComplete.js <!-- {docsify-ignore} -->
 
-> Simple autocomplete pure vanilla Javascript library. :rocket: <a href="/autoComplete.js/demo/" target="\_blank" id="demo">Live Demo</a>
+> Simple autocomplete pure vanilla Javascript library. :rocket: <a href="/autoComplete.js/demo/" target="\_blank" class="link">Live Demo</a>
 
 ## What it is? <!-- {docsify-ignore} -->
 

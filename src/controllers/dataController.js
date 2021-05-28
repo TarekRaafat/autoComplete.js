@@ -1,12 +1,17 @@
 import eventEmitter from "../helpers/eventEmitter";
 import search from "./searchController";
 
+/**
+ * Get data from source
+ *
+ * @param {Object} ctx - autoComplete.js context
+ */
 const getData = async (ctx) => {
   const { input, data } = ctx;
 
   if (data.cache && data.store) return;
 
-  ctx.dataFeedback = data.store = typeof data.src === "function" ? await data.src() : data.src;
+  ctx.feedback = data.store = typeof data.src === "function" ? await data.src(input.value) : data.src;
 
   /**
    * @emit {response} event on data request
@@ -17,13 +22,10 @@ const getData = async (ctx) => {
 /**
  * Find matches to "query"
  *
- * @param {String} input - User's raw input value
  * @param {String} query - User's search query string
- * @param {Object} ctx - Search engine configurations
- *
- * @returns {Array} - Matches
+ * @param {Object} ctx - autoComplete.js context
  */
-const findMatches = (input, query, ctx) => {
+const findMatches = (query, ctx) => {
   const { data, searchEngine, diacritics, resultsList, resultItem } = ctx;
 
   let matches = [];
@@ -51,8 +53,8 @@ const findMatches = (input, query, ctx) => {
       matches.push(result);
     };
 
-    if (data.key) {
-      for (const key of data.key) {
+    if (data.keys) {
+      for (const key of data.keys) {
         find(key);
       }
     } else {
@@ -66,7 +68,7 @@ const findMatches = (input, query, ctx) => {
   const results = matches.slice(0, resultsList.maxResults);
 
   // Prepare data feedback object
-  ctx.dataFeedback = { query, matches, results };
+  ctx.feedback = { query, matches, results };
 
   /**
    * @emit {results} event on search response with matches

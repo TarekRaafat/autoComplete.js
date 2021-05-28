@@ -7,7 +7,7 @@
     "background_color": "#ffffff",
     "theme_color": "#ffffff",
     "display": "standalone",
-    "scope": "/demo/",
+    "scope": "./demo/",
     "icons": [{
             "src": "/img/icons/android-icon-36x36.png",
             "sizes": "36x36",
