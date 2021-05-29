@@ -1,5 +1,5 @@
 {
-  "version": "10.0.1",
+  "version": "10.0.2",
   "name": "@tarekraafat/autocomplete.js",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "keywords": [
@@ -48,14 +48,12 @@
     "example": "/docs/demo"
   },
   "files": [
-    "/dist/autoComplete.js",
-    "/dist/autoComplete.min.js",
+    "/dist",
     "/src"
   ],
   "main": "/dist/autoComplete.js",
   "browser": "/dist/autoComplete.min.js",
   "unpkg": "/dist/autoComplete.min.js",
-  "jsdelivr": "/dist/autoComplete.js",
   "module": "/dist/autoComplete.min.js",
   "devDependencies": {
     "@babel/core": "^7.13.10",
