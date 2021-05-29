@@ -217,7 +217,7 @@ filter: (list) => {
             // Add message text content
             message.innerHTML = `<span>Found No Results for "${query}"</span>`;
             // Add message list element to the list
-            list.append(message);
+            list.prepend(message);
         }
     };
     const resultItem = {
