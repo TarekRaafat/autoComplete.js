@@ -305,11 +305,6 @@ diacritics: false,
 - Type: `Boolean` to enable/disable tab selection
 - Default: `false`
 
-#### `scroll` <sub><sup>(optional)</sup></sub>
-- Type: `String` of animation [behavior](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView#parameters)
-- Options: `auto` or `smooth`
-- Default: `auto`
-
 #### `noResults` <sub><sup>(optional)</sup></sub>
 - Type: `Boolean` to enable/disable list resistance in case of no results
 - Default: `false`
