@@ -63,6 +63,7 @@ typings/
 
 # Experimental folder
 .exp
+media
 
 # Distribution folder
 # dist/
@@ -86,4 +87,4 @@ Thumbs.db
 *.ipr
 
 # VS Code related files
-.vscode/
+.vscode

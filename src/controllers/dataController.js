@@ -1,49 +1,79 @@
-import searchEngine from "../services/search";
+import eventEmitter from "../helpers/eventEmitter";
+import search from "./searchController";
+
+/**
+ * Get data from source
+ *
+ * @param {Object} ctx - autoComplete.js context
+ */
+const getData = async (ctx) => {
+  const { input, data } = ctx;
+
+  if (data.cache && data.store) return;
+
+  ctx.feedback = data.store = typeof data.src === "function" ? await data.src(input.value) : data.src;
+
+  /**
+   * @emit {response} event on data request
+   **/
+  eventEmitter("response", ctx);
+};
 
 /**
  * Find matches to "query"
  *
- * @param {Object} config - Search engine configurations
  * @param {String} query - User's search query string
- *
- * @return {Array} - Matches
+ * @param {Object} ctx - autoComplete.js context
  */
-export default (config, query) => {
-  const { data, searchEngine: customSearchEngine } = config;
+const findMatches = (query, ctx) => {
+  const { data, searchEngine, diacritics, resultsList, resultItem } = ctx;
 
-  const results = [];
+  let matches = [];
 
   // Find matches from data source
-  data.store.forEach((record, index) => {
-    const search = (key) => {
-      const recordValue = (key ? record[key] : record).toString();
+  data.store.forEach((value, index) => {
+    const find = (key) => {
+      const record = key ? value[key] : value;
 
       const match =
-        typeof customSearchEngine === "function"
-          ? customSearchEngine(query, recordValue)
-          : searchEngine(query, recordValue, config);
+        typeof searchEngine === "function"
+          ? searchEngine(query, record)
+          : search(query, record, {
+              mode: searchEngine,
+              diacritics,
+              highlight: resultItem.highlight,
+            });
 
       if (!match) return;
 
-      let result = {
-        index,
-        match,
-        value: record,
-      };
+      let result = { match, value };
 
       if (key) result.key = key;
 
-      results.push(result);
+      matches.push(result);
     };
 
-    if (data.key) {
-      for (const key of data.key) {
-        search(key);
+    if (data.keys) {
+      for (const key of data.keys) {
+        find(key);
       }
     } else {
-      search();
+      find();
     }
   });
 
-  return results;
+  // Find results matching to the query
+  if (data.filter) matches = data.filter(matches);
+
+  const results = matches.slice(0, resultsList.maxResults);
+
+  // Prepare data feedback object
+  ctx.feedback = { query, matches, results };
+
+  /**
+   * @emit {results} event on search response with matches
+   **/
+  eventEmitter("results", ctx);
 };
+
+export { getData, findMatches };

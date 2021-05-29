@@ -1,12 +1,13 @@
 {
+  "version": "10.0.0",
   "name": "@tarekraafat/autocomplete.js",
-  "version": "9.1.1",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "keywords": [
     "simple",
+    "complete",
     "autocomplete",
     "autocompletion",
-    "javascript",
+    "autoComplete.js",
     "light",
     "blazing",
     "fast",
@@ -18,7 +19,7 @@
     "customizable",
     "hackable",
     "easy",
-    "intuitive",
+    "javascript",
     "scalable",
     "extensible",
     "autoCompleteJS",
@@ -27,37 +28,33 @@
     "search",
     "dropdown"
   ],
-  "homepage": "https://github.com/TarekRaafat/autoComplete.js#readme",
-  "bugs": {
-    "url": "https://github.com/TarekRaafat/autoComplete.js/issues",
-    "email": "tarek.m.raafat@gmail.com"
-  },
-  "license": "Apache-2.0",
+  "homepage": "https://tarekraafat.github.io/autoComplete.js",
   "author": {
     "name": "Tarek Raafat",
     "email": "tarek.m.raafat@gmail.com",
-    "url": "http://www.tarekraafat.com"
+    "url": "https://www.tarekraafat.com"
   },
-  "files": [
-    "dist/js/autoComplete.js",
-    "dist/css/autoComplete.css",
-    "dist/css/autoComplete.01.css",
-    "dist/css/autoComplete.02.css",
-    "dist/css/images/magnifier.svg",
-    "dist/css/images/search.svg"
-  ],
-  "main": "dist/js/autoComplete.js",
-  "browser": "dist/js/autoComplete.min.js",
-  "unpkg": "dist/js/autoComplete.min.js",
-  "module": "dist/js/autoComplete.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TarekRaafat/autoComplete.js.git"
   },
-  "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w"
+  "bugs": {
+    "url": "https://github.com/TarekRaafat/autoComplete.js/issues",
+    "email": "tarek.m.raafat@gmail.com"
   },
+  "directories": {
+    "doc": "./docs",
+    "lib": "./dist",
+    "example": "./docs/demo"
+  },
+  "files": [
+    "./dist",
+    "./src"
+  ],
+  "main": "./dist/autoComplete.js",
+  "browser": "./dist/autoComplete.min.js",
+  "unpkg": "./dist/autoComplete.min.js",
+  "module": "./dist/autoComplete.min.js",
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
@@ -73,8 +70,168 @@
     "rollup-plugin-sizes": "^1.0.4",
     "rollup-plugin-terser": "^7.0.2"
   },
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "license": "Apache-2.0",
   "engines": {
     "node": ">=12",
     "npm": ">=6"
-  }
+  },
+  "contributors": [
+    {
+      "name": "Tarek Raafat",
+      "email": "tarek.m.raafat@gmail.com"
+    },
+    {
+      "name": "Pirulax",
+      "url": "https://github.com/Pirulax"
+    },
+    {
+      "name": "Fred Luetkemeier",
+      "url": "https://github.com/fredluetkemeier"
+    },
+    {
+      "name": "Zeeshan Ahmad",
+      "url": "https://github.com/ziishaned"
+    },
+    {
+      "name": "Sakurai Kenji",
+      "url": "https://github.com/sakuraineed"
+    },
+    {
+      "name": "Simon Martineau",
+      "url": "https://github.com/marsimeau"
+    },
+    {
+      "name": "Johannes Kinast",
+      "url": "https://github.com/goaround"
+    },
+    {
+      "name": "RobinLawinsky",
+      "url": "https://github.com/RobinLawinsky"
+    },
+    {
+      "name": "maciek_grzybek",
+      "url": "https://github.com/maciekgrzybek"
+    },
+    {
+      "name": "Eliazer Braun",
+      "url": "https://github.com/adardesign"
+    },
+    {
+      "name": "mshakarov",
+      "url": "https://github.com/mshakarov"
+    },
+    {
+      "name": "Hideki Ikemoto",
+      "url": "https://github.com/ikemo3"
+    },
+    {
+      "name": "Karol Tatała",
+      "url": "https://github.com/latata"
+    },
+    {
+      "name": "Olena Sovyn",
+      "url": "https://github.com/Kiwka"
+    },
+    {
+      "name": "Mostafa Hefny",
+      "url": "https://github.com/Brostafa"
+    },
+    {
+      "name": "Johann-S",
+      "url": "https://github.com/Johann-S"
+    },
+    {
+      "name": "Isabel C",
+      "url": "https://github.com/isabelc"
+    },
+    {
+      "name": "Barnaby Knowles",
+      "url": "https://github.com/barns101"
+    },
+    {
+      "name": "Viet Nguyen",
+      "url": "https://github.com/g-viet"
+    },
+    {
+      "name": "Oluwaseyi Adeogun",
+      "url": "https://github.com/asyncdeveloper"
+    },
+    {
+      "name": "Richard Dobroň",
+      "url": "https://github.com/richardDobron"
+    },
+    {
+      "name": "Mrwan Ashraf",
+      "url": "https://github.com/mrwanashraf"
+    },
+    {
+      "name": "Dan Keefe",
+      "url": "https://github.com/Peritract"
+    },
+    {
+      "name": "René K.",
+      "url": "https://github.com/rene78"
+    },
+    {
+      "name": "John Osterman",
+      "url": "https://github.com/ostermanj"
+    },
+    {
+      "name": "Aaron",
+      "url": "https://github.com/aarongerig"
+    },
+    {
+      "name": "Nicolas Hart",
+      "url": "https://github.com/nclsHart"
+    },
+    {
+      "name": "John Kristensen",
+      "url": "https://github.com/jerrykan"
+    },
+    {
+      "name": "rhoit",
+      "url": "https://github.com/rhoit"
+    },
+    {
+      "name": "rho",
+      "url": "https://github.com/rhoit"
+    },
+    {
+      "name": "Bogdan",
+      "url": "https://github.com/mynameisbogdan"
+    },
+    {
+      "name": "Liano",
+      "url": "https://github.com/Liano"
+    },
+    {
+      "name": "Adan Ferguson",
+      "url": "https://github.com/adan-ferguson"
+    },
+    {
+      "name": "Cody Peterson",
+      "email": "cody@humanshapes.co",
+      "url": "https://github.com/codyjames"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Tarek Raafat",
+      "email": "tarek.m.raafat@gmail.com"
+    }
+  ],
+  "funding": [
+    {
+      "type": "Liberapay",
+      "url": "https://liberapay.com/TarekRaafat"
+    },
+    {
+      "type": "Patreon",
+      "url": "https://patreon.com/TarekRaafat"
+    }
+  ]
 }

@@ -1,10 +1,11 @@
 # Release Notes
 Find release notes/changelog and guides on versioning guidelines
 
+***
 
 ## Versioning
 
-* * *
+***
 
 For transparency and insight into the release cycle, releases will be numbered
 with the following format:
@@ -28,23 +29,93 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   -   `[Fixed]`: Bug or Issue that was fixed and no longer exists
   -   `[Added]`: New feature
 
-* * *
+***
 
 ## Releases
 
 ***
 
-### v9.1.1 ✨
+### v10.0 ✨
+  > <div class="ps-icon ps-icon-warning"></div> Important Note:
+  >
+  > This release has several breaking changes, so kindly check all the below changes.
+
+  - ➕ Added: Automatic field wrapping inside `DIV`
+  - ➕ Added: Document `readyState` listener that initializes the library after `DOM` content is loaded
+  - ➕ Added: `query` value to `data.src` for easier data fetching
+  - ➕ Added: `resultsList` navigation auto scrolling for long lists
+  - ➕ Added: `resultsList.scroll` API to control scrolling behavior (Thanks 👍 @TimHeinrich) #221
+  - ➕ Added: `resultsList.tabSelect` API property to control `tab` button behavior
+  - ➕ Added: `events` list API property that holds and assigns events to `input` & `list` (Thanks 👍 @stell) #223
+  - ➕ Added: `close` API method controls `resultsList` state
+  - ➕ Added: `open` API method controls `resultsList` state
+  - ➕ Added: `goTo` API method controls `resultsList` navigation by index
+  - ➕ Added: `next` API method controls `resultsList` navigation
+  - ➕ Added: `previous` API method controls `resultsList` navigation
+  - ➕ Added: `select` API method controls `resultsList` selection by index
+  - ➕ Added: `search` API method to avail autoComplete.js powerful engine for external use
+  - ➕ Added: `isOpen` API `boolean` property that holds `resultsList` state `true` opened `false` closed
+  - ➕ Added: `list` API property holds the entire list html element
+  - ➕ Added: `wrapper` API property holds the entire wrapper html element
+  - ➕ Added: `cursor` API property holds the index of the current selection or `-1` or `undefined` for idle
+  - ➕ Added: `id` API property holds the current instance number
+  - ➕ Added: `name` API property that changes all the `className` properties accordingly
+  - ➕ Added: `options` API property that holds all the custom set `config` options for separation
+  - ➕ Added: `data.src` fetching error message/instance to `response` event detail (Thanks 👍 @folknor) #207
+  - 🔝 Updated: Data caching with a better mechanism
+  - 🔝 Updated: `WAI-ARIA` configurations for significantly better support
+  - 🔝 Updated: `dataFeedback` event information
+  - 🔧 Fixed: `diacritics` highlighting issue in `strict` mode
+  - 🔧 Fixed: `resultsList` eventEmitters unexpected behavior which was firing multiple times
+  - 🔧 Fixed: Empty `className` values do not assign any classes instead of `undefined`
+  - 🌀 Changed: The core library architecture for an improved performance and code separation
+  - 🌀 Changed: API to only include the used options instead of including unused ones with `undefined` value
+  - 🌀 Changed: `fetch` eventEmitter name to `response`
+  - 🌀 Changed: `inputField` API property name to `input`
+  - 🌀 Changed: `dataFeedback` API property name to `feedback`
+  - 🌀 Changed: `trigger` API property type from `Object` to `Function` formerly called `trigger.condition`
+  - 🌀 Changed: `data.results` API property name to `data.filter`
+  - 🌀 Changed: `noResults` API to accept `boolean` instead of `Function` to be replaced with `resultsList.container`
+  - 🌀 Changed: `resultItem.highlight` API property type from `Object` to accept `Boolean` or `String` formerly called `resultItem.highlight.class`
+  - 🌀 Changed: `resultItem.selected` API property type from `Object` to `String` formerly called `resultItem.selected.class`
+  - 🌀 Changed: `resultItem.content` API parameters order from `(data, element)` to `(element, data)` for consistency
+  - 🌀 Changed: `resultItem.idName` API property name to `resultItem.id`
+  - 🌀 Changed: `resultItem.className` API property name to `resultItem.class`
+  - 🌀 Changed: `resultItem.content` API property name to `resultItem.element`
+  - 🌀 Changed: `resultsList.idName` API property name `resultsList.id`
+  - 🌀 Changed: `resultsList.className` API property name `resultsList.class`
+  - 🌀 Changed: `resultsList.container` API property name to `resultsList.element`
+  - 🌀 Changed: Highlighted characters wrapper element to be `mark` instead of `span` (Thanks 👍 @aarongerig) #195
+  - 🌀 Changed: `query` API property type from `Object` to `Function` formerly called `query.manipulate`
+  - 🌀 Changed: `observer` API property name `observe`
+  - 🌀 Changed: `data.key` API property name `data.keys`
+  - ❗ Removed: `onSelection` API method to be replaced with `selection` eventEmitter
+  - ❗ Removed: `resultsList.render` API property to be replaced with `resultsList` to accept `Boolean` instead of `Object` in case of disabling list rendering
+  - ❗ Removed: `trigger.event` API property to be replaced with `events`
+  - ❗ Removed: `feedback` API method to be replaced with `navigate` event
+  - ❗ Removed: `resultsList.navigation` API method to be replaced with `events`
+  - ❗ Removed: `nav` API property to be replaced with `events`
+  - ❗ Removed: `hook` API method to be replaced with `start` API
+  - ❗ Removed: `onSelection` API method to be replaced with `selection` eventEmitter
+  - ❗ Removed: `input` property from `dataFeedback` due to the existence of `query` already
+  - ❗ Removed: `unInit` eventEmitter
+
+***
+
+
+### v9.1.1
   > <div class="ps-icon ps-icon-warning"></div> Important Note:
   >
   >> Starting next major release:
   > 1. "noResults" API will accept "Boolean" instead of function to be replaced with "resultsList.container"
   > 2. "fetch" eventEmitter will be renamed to "response"
-  > 3. All "className" APIs will be renamed to "classList"
   
   - 🔧 Fixed: Data feedback `inputField` value was in lowerCase instead of raw
   - 🔧 Fixed: `resultItem.className` did not accept except one class instead of multiple
   - 🔝 Updated: Code with deep refactoring & cleanup (Thanks 👍 @Pirulax) #210
+
+***
+
 
 ### v9.1.0
   > <div class="ps-icon ps-icon-warning"></div> Important Note:
@@ -65,24 +136,42 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - 🔧 Fixed: `unInit` method did not remove all `inputField` set event listeners except for `input` event
   - 🔧 Fixed: `open` eventEmitter unexpected behavior that used to fire on each trigger event
 
+***
+
+
 ### v9.0.5
   - 🔧 Fixed: `resultsList.container` hierarchy comes after list rendering instead of before
 
+***
+
+
 ### v9.0.4
   - 🔧 Fixed: `resultsList.container` is removed on second input (Thanks 👍 @folknor) #206
+
+***
+
 
 ### v9.0.3
   - 🔧 Fixed: `TAB` button behavior
   - 🔧 Fixed: `resultsList` close behavior on `inputField` double click
 
+***
+
+
 ### v9.0.2
   - 🔧 Fixed: Unexpected behavior `onClick` (Thanks 👍 @iNalgiev) #205
+
+***
+
 
 ### v9.0.1
   - 🔧 Fixed: `resultItem.idName` issue
   - 🔝 Updated: [`TAB`](https://adamsilver.io/blog/building-an-accessible-autocomplete-control/#composite-controls-should-have-a-single-tab-stop) button behavior (Thanks 👍 @ronmichael @codyjames) #175 #202
 
-### v9.0.0
+***
+
+
+### v9.0
   > <div class="ps-icon ps-icon-important"></div> This version has breaking changes, kindly check the list
   - 🔧 Fixed: `esc` button not working with `noResults` in some cases (Thanks 👍 @sunshineplan) #157
   - ➕ Added: `selection` & `highlight` custom `className` API methods (Thanks 👍 @jerrykan) #184
@@ -179,7 +268,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v8.0.0
+### v8.0
   - Whole New More Modern Architecture Design
   - Added: High Quality Accessibility ([WAI-ARIA 1.2](https://www.w3.org/TR/wai-aria-practices-1.2/examples/combobox/combobox-autocomplete-both.html)) Support
   - Added: Life Cycle Events (Thanks 👍 @zippy84) #89
@@ -258,7 +347,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v7.0.0
+### v7.0
   - New API for results list navigation `resultsList.navigation` (Thanks 👍 @fredluetkemeier)
   - New API for autoComplete.js engine `trigger.event` (Thanks 👍 @fredluetkemeier)
   - New API for autoComplete.js engine `trigger.condition`
@@ -276,7 +365,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v6.0.0
+### v6.0
   - `CustomEvent` & `Closest` method IE compatibility (Thanks @g-viet)
   - Query interception (Thanks @barns101)
   - Simplified `resultsList` & `resultItem`
@@ -313,15 +402,18 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v5.0.0
-  - Large datasets handeling (Thanks @Johann-S)
+### v5.0
+  - Large datasets handling (Thanks @Johann-S)
   - API Data fetching & Dynamic Data reloading (Thanks @Brostafa)
   - Debouncing API Calls
   - Custom `resultsList` & `resultItem` Elements (Thanks @Johann-S)
   - Bug fixes
   - Code Clean Up
 
-### v4.0.0
+***
+
+
+### v4.0
   -   Multiple searchable `keys` for data `src` (Thanks @Johann-S)
   -   Rendered `results` in original case (Thanks @nickbp12)
   -   Improved Development Environment (Thanks @ziishaned)
@@ -340,23 +432,41 @@ For more information on semantic versioning, please visit <http://semver.org/>.
       -   Keyboard event
     -   Code Clean Up
 
+***
+
+
 ### v3.2.2
-  -   Fixed bug with `hightlight` API default value during `strict` engine mode
+  -   Fixed bug with `highlight` API default value during `strict` engine mode
   -   Fixed bug with `resultsList` API default value when not configured
+
+***
+
 
 ### v3.2.1
   -   Isolated `resultsList` value for multiple instances **(Thanks @albu77)**
 
+***
+
+
 ### v3.2.0
   -   API Enhancements over rendered results list container `resultsList > container` function **(Thanks @albu77)**
+
+***
+
 
 ### v3.1.0
   -   Added API for rendered results list container `resultsList > container` function **(Thanks @albu77)**
   -   API Enhancements
 
-### v3.0.0
+***
+
+
+### v3.0
   -   Added API for rendered result item `resultItem` function
   -   `renderResults` API name changed to `resultsList` `[Changed]`
+
+***
+
 
 ### v2.1.0
   -   Added support for Keyboard `(Arrow)` & `(Tab)` Navigation
@@ -372,13 +482,19 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   -   Optimizations
   -   Style Enhancements
 
+***
+
+
 ### v2.0.1
   -   Fixed multiple space input issue **(Thanks @DevOsamaMohamed)**
   -   Fixed remote data source excessive requests **(Thanks @DevOsamaMohamed)**
   -   Optimizations for performance enhancements
   -   Reduced Weight
 
-### v2.0.0
+***
+
+
+### v2.0
   -   Added support for array of `Objects` & `JSON` as data source with `Key` selection
   -   Added support for external data source via `Promises` & `Async/Await` function
   -   Added more comprehensive and usable data feedback on user selection `(User Input, Results List, User Selection)` Object
@@ -386,6 +502,9 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   -   Highlighted Results class name `CHANGED` from `.autoComplete_highlighted_result` to `autoComplete_highlighted`
   -   Many Optimizations for better performance
   -   Scroll Infinite results style in [Demo](https://tarekraafat.github.io/autoComplete.js/demo/)
+
+***
+
 
 ### v1.5.4
   -   Gzipped options for both builds are ready `(2KB) non-minified` & `(1KB) minified`
@@ -396,6 +515,9 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   -   Optimizations for better performance
   -   Reduced Weight to `(3KB)` minified
 
+***
+
+
 ### v1.5.2
   -   Fixed `onSelection` null action issue
   -   Placeholder keeps value of last selection `[Removed]`
@@ -403,8 +525,14 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   -   Some code cleanup & optimizations
   -   Reduced Weight
 
+***
+
+
 ### v1.5.1
   -   Bug fixes
+
+***
+
 
 ### v1.5.0
   -   Ability to change results destination & position `renderResults`
@@ -413,8 +541,14 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   -   Styles fixes for better cross browser compatibility
   -   Added detailed documentation
 
+***
+
+
 ### v1.4.1
     -   Bug Fixes
+
+***
+
 
 ### v1.4.0
   -   Added new type/mode of Search Engine `strict`
@@ -422,21 +556,36 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   -   `Placeholder max. length` option `[Removed]`
   -   Optimizations for higher performance & lighter weight
 
+***
+
+
 ### v1.3.1
   -   Refactored for higher speed & smaller footprint
   -   Bug fixes & Optimizations
 
+***
+
+
 ### v1.3.0
   -   Added new `datasrc` a function that returns `Array`
+
+***
+
 
 ### v1.2.1
   -   Added Placeholder text maximum length option `[Experimental]`
   -   Added new style sheet variation
 
+***
+
+
 ### v1.2.0
   -   Redesigned the entire search engine for better results & experience
   -   Added support for Multi-keyword search
   -   Fixed issue with Capital letters reflects in results
+
+***
+
 
 ### v1.1.0
   -   Reduced the library size 97% `(101KB -> 4KB)`
@@ -444,16 +593,27 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   -   Replaced webpack with Rollup for better bundling
   -   Fixed some bugs caused problems with node apps
 
+***
+
+
 ### v1.0.3
   -   Refactored & Optimized to reduce size and enhance performance
+
+***
+
 
 ### v1.0.2
   -   Fixed the library name in the webpack.config.js file
 
+***
+
+
 ### v1.0.1
   -   Optimizations Reduced the library weight by 1KB
 
-### v1.0.0
+***
+
+### v1.0
   -   Add customized data attribute tag for generated results
   -   Highlight matching results from the results list
   -   Set maximum number for shown results

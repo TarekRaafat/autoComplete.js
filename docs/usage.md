@@ -2,11 +2,14 @@
 
 autoComplete.js usage guide in detailed steps
 
+***
+
 ## Steps
+
+***
 
 ### 1. HTML
 
-***
 
 Add an [`<input>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input) or [`<textarea>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea) tag to your html page:
 
@@ -28,11 +31,11 @@ Add an [`<input>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/inp
 <textarea id="autoComplete" rows="4" cols="50" maxlength="2048" tabindex="1">
 ```
 <!-- tabs:end -->
-> <div class="ps-icon ps-icon-bubble"></div><strong>Tip:</strong> wrap < input > or < textarea > inside < div class="autoComplete_wrapper" > to make sure results list always attached and aligned.
+
+***
 
 ### 2. Script
 
-****
 
 1. Import `autoComplete.js` library to your project
 
@@ -76,6 +79,8 @@ import autoComplete from "@tarekraafat/autocomplete.js";
 ```js
 // CommonJS
 const autoComplete = require("@tarekraafat/autocomplete.js");
+
+const autoCompleteJS = new autoComplete({ config });
 
 /* OR */
 
@@ -138,10 +143,10 @@ const autoCompleteJS = new autoComplete({ config });
 <!-- tabs:end -->
 > Note: [data.src](/configuration.md?id=data-required) config is **required**
 
+***
 
 ### 3. Style
 
-***
 
 Add the `autoComplete.js` stylesheet inside the `HEAD` tag
 
@@ -165,10 +170,10 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
 
 ## Demo
 
-***
+<br><br>
 
 <div class="autoComplete_wrapper">
-    <input type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">
+    <input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete">
 </div>
 
 <br><br>
@@ -191,7 +196,7 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
 
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/js/autoComplete.min.js"></script>
     <script>
-        new autoComplete({
+        const autoCompleteJS = new autoComplete({
             selector: "#autoComplete",
             placeHolder: "Search for Food...",
             data: {
@@ -224,7 +229,7 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
 </details>
 
 <script>
-    new autoComplete({
+    const autoCompleteJS = new autoComplete({
         selector: "#autoComplete",
         placeHolder: "Search for Food...",
         data: {
@@ -233,7 +238,7 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
         resultsList: {
             noResults: (list, query) => {
                 // Create "No Results" message list element
-                const message = document.createElement("li");
+                const message = document.createElement("div");
                 message.setAttribute("class", "no_result");
                 // Add message text content
                 message.innerHTML = `<span>Found No Results for "${query}"</span>`;
