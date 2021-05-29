@@ -4,12 +4,12 @@ const autoCompleteJS = new autoComplete({
     src: async () => {
       try {
         // Loading placeholder text
-        autoCompleteJS.input.setAttribute("placeholder", "Loading...");
+        document.getElementById("autoComplete").setAttribute("placeholder", "Loading...");
         // Fetch External Data Source
         const source = await fetch("./db/generic.json");
         const data = await source.json();
         // Post Loading placeholder text
-        autoCompleteJS.input.setAttribute("placeholder", autoCompleteJS.placeHolder);
+        document.getElementById("autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
         // Returns Fetched data
         return data;
       } catch (error) {
@@ -17,6 +17,7 @@ const autoCompleteJS = new autoComplete({
       }
     },
     keys: ["food", "cities", "animals"],
+    caches: true,
     filter: (list) => {
       // Filter duplicates
       // incase of multiple data keys usage
