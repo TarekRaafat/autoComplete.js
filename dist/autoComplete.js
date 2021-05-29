@@ -434,10 +434,7 @@
       results[index].setAttribute(Selected, true);
       if (classes) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(classes));
       ctx.input.setAttribute(Active, results[ctx.cursor].id);
-      results[index].scrollIntoView({
-        behavior: ctx.resultsList.scroll || "smooth",
-        block: "center"
-      });
+      ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
       ctx.feedback.cursor = ctx.cursor;
       feedback(ctx, index);
       eventEmitter("navigate", ctx);

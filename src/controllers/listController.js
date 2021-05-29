@@ -146,7 +146,7 @@ const goTo = (index, ctx) => {
     ctx.input.setAttribute(Active, results[ctx.cursor].id);
 
     // Scroll to selection
-    results[index].scrollIntoView({ behavior: ctx.resultsList.scroll || "smooth", block: "center" });
+    ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
 
     // Prepare Selection data feedback object
     ctx.feedback.cursor = ctx.cursor;

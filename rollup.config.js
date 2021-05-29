@@ -26,7 +26,7 @@ export default [
     input: "src/autoComplete.js",
     output: [
       {
-        file: pkg.browser,
+        file: `./${pkg.browser}`,
         name: libName,
         format: "umd",
       },
@@ -63,7 +63,7 @@ export default [
     input: "src/autoComplete.js",
     output: [
       {
-        file: pkg.main,
+        file: `./${pkg.main}`,
         name: libName,
         format: "umd",
       },
