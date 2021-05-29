@@ -197,27 +197,28 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/autoComplete.min.js"></script>
     <script>
         const autoCompleteJS = new autoComplete({
-            selector: "#autoComplete",
             placeHolder: "Search for Food...",
             data: {
-                src: ["Sauce - Thousand Island", "Wild Boar - Tenderloin", "Goat - Whole Cut"]
+                src: ["Sauce - Thousand Island", "Wild Boar - Tenderloin", "Goat - Whole Cut"],
+                cache: true,
             },
             resultsList: {
-                noResults: (list, query) => {
-                    // Create "No Results" message element
-                    const message = document.createElement("div");
-                    // Add class to the created element
-                    message.setAttribute("class", "no_result");
-                    // Add message text content
-                    message.innerHTML = `<span>Found No Results for "${query}"</span>`;
-                    // Append message element to the results list
-                    list.appendChild(message);
+                element: (list, data) => {
+                    if (!data.results.length) {
+                        // Create "No Results" message element
+                        const message = document.createElement("div");
+                        // Add class to the created element
+                        message.setAttribute("class", "no_result");
+                        // Add message text content
+                        message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                        // Append message element to the results list
+                        list.prepend(message);
+                    }
                 },
+                noResults: true,
             },
             resultItem: {
-                highlight: {
-                    render: true
-                }
+                highlight: true
             }
         });
     </script>
@@ -230,26 +231,28 @@ Add the `autoComplete.js` stylesheet inside the `HEAD` tag
 
 <script>
     const autoCompleteJS = new autoComplete({
-        selector: "#autoComplete",
         placeHolder: "Search for Food...",
         data: {
-            src: ["Sauce - Thousand Island", "Wild Boar - Tenderloin", "Goat - Whole Cut"]
+            src: ["Sauce - Thousand Island", "Wild Boar - Tenderloin", "Goat - Whole Cut"],
+            cache: true,
         },
         resultsList: {
-            noResults: (list, query) => {
-                // Create "No Results" message list element
-                const message = document.createElement("div");
-                message.setAttribute("class", "no_result");
-                // Add message text content
-                message.innerHTML = `<span>Found No Results for "${query}"</span>`;
-                // Add message list element to the list
-                list.appendChild(message);
+            element: (list, data) => {
+                if (!data.results.length) {
+                    // Create "No Results" message element
+                    const message = document.createElement("div");
+                    // Add class to the created element
+                    message.setAttribute("class", "no_result");
+                    // Add message text content
+                    message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                    // Append message element to the results list
+                    list.prepend(message);
+                }
             },
+            noResults: true,
         },
         resultItem: {
-            highlight: {
-                render: true
-            }
+            highlight: true
         }
     });
 </script>

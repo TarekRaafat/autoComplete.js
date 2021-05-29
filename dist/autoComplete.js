@@ -295,13 +295,15 @@
 
   var getData = function getData(ctx) {
     return new Promise(function ($return, $error) {
-      var input, data;
+      var input, query, data;
       input = ctx.input;
+      query = ctx.query;
       data = ctx.data;
       if (data.cache && data.store) return $return();
+      query = query ? query(input.value) : input.value;
       return new Promise(function ($return, $error) {
         if (typeof data.src === "function") {
-          return data.src(input.value).then($return, $error);
+          return data.src(query).then($return, $error);
         }
         return $return(data.src);
       }).then(function ($await_4) {

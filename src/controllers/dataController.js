@@ -7,11 +7,13 @@ import search from "./searchController";
  * @param {Object} ctx - autoComplete.js context
  */
 const getData = async (ctx) => {
-  const { input, data } = ctx;
+  const { input, query, data } = ctx;
 
   if (data.cache && data.store) return;
 
-  ctx.feedback = data.store = typeof data.src === "function" ? await data.src(input.value) : data.src;
+  query = query ? query(input.value) : input.value;
+
+  ctx.feedback = data.store = typeof data.src === "function" ? await data.src(query) : data.src;
 
   /**
    * @emit {response} event on data request
