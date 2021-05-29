@@ -551,7 +551,20 @@ Defaults:
 autoCompleteJS.gotTo(1);
 ```
 
-### results
+***
+
+### response
+
+> Fires after fetching the `data` is completed and the `data` is ready
+
+##### Example:
+
+```js
+document.querySelector("#autoComplete").addEventListener("response", function (event) {
+    // "event.detail" carries the returned data values
+    console.log(event.detail);
+});
+```
 
 ***
 
