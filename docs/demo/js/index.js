@@ -6,7 +6,7 @@ const autoCompleteJS = new autoComplete({
         // Loading placeholder text
         autoCompleteJS.input.setAttribute("placeholder", "Loading...");
         // Fetch External Data Source
-        const source = await fetch("../db/generic.json");
+        const source = await fetch("./db/generic.json");
         const data = await source.json();
         // Post Loading placeholder text
         autoCompleteJS.input.setAttribute("placeholder", autoCompleteJS.placeHolder);
