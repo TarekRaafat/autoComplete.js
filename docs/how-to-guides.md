@@ -52,11 +52,9 @@ resultsList: {
         // Add message list element to the list
         list.appendChild(message);
     },
+    noResults: true,
 }
 ```
-
-##### Code:
-
 
 <!-- div:right-panel -->
 
@@ -211,7 +209,7 @@ filter: (list) => {
     const placeHolder = "Pizza, Burger, Sushi";
     const resultsList= {
         element: (list, data) => {
-            if (data.results.length < 1) {
+            if (!data.results.length) {
                 // Create "No Results" message list element
                 const message = document.createElement("div");
                 message.setAttribute("class", "no_result");
@@ -220,7 +218,8 @@ filter: (list) => {
                 // Add message list element to the list
                 list.prepend(message);
             }
-        }
+        },
+        noResults: true,
     };
     const resultItem = {
         highlight: true
@@ -235,7 +234,7 @@ filter: (list) => {
         events: {
             input: {
                 focus: () => {
-                    if (autoCompleteJS_01.input.value.length) autoCompleteJS.start();
+                    if (autoCompleteJS_01.input.value.length) autoCompleteJS_01.start();
                 },
             },
         },
@@ -266,9 +265,9 @@ filter: (list) => {
         resultsList,
         resultItem,
     });
-
+    
     let history = [];
-
+    
     const autoCompleteJS_04 = new autoComplete({
         selector: "#autoComplete_04",
         placeHolder,
@@ -297,7 +296,6 @@ filter: (list) => {
                     list.prepend(historyBlock);
                 }
             },
-            ...resultsList,
         },
         resultItem,
     });
@@ -326,7 +324,7 @@ filter: (list) => {
 
     autoCompleteJS_03.input.addEventListener("selection", function (event) {
         const feedback = event.detail;
-        const input = document.querySelector("#autoComplete_03");
+        const input = autoCompleteJS_03.input;
         // Trim selected Value
         const selection = feedback.selection.value.trim();
         // Split query into array and trim each value
@@ -341,9 +339,9 @@ filter: (list) => {
 
     autoCompleteJS_04.input.addEventListener("selection", function (event) {
         const feedback = event.detail;
-        const input = document.querySelector("#autoComplete_04");
+        const input = autoCompleteJS_04.input;
         // Get selected Value
-        const selection = feedback.selection.value.trim();
+        const selection = feedback.selection.value;
         // Add selected value to "history" array
         history.push(selection);
     });
