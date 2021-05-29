@@ -62,16 +62,14 @@ const getQuery = (field) =>
  * @returns {String} - Raw "inputField" value as a string
  */
 const format = (value, diacritics) => {
-  value = value.toLowerCase();
+  value = value.toString().toLowerCase();
 
-  return (
-    diacritics
-      ? value
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .normalize("NFC")
-      : value
-  ).toString();
+  return diacritics
+    ? value
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .normalize("NFC")
+    : value;
 };
 
 /**

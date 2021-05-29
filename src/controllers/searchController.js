@@ -13,6 +13,7 @@ export default (query, record, options) => {
   const { mode, diacritics, highlight } = options || {};
 
   const nRecord = format(record, diacritics);
+  record = record.toString();
   query = format(query, diacritics);
 
   if (mode === "loose") {

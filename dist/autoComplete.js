@@ -232,8 +232,8 @@
     return field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : field.innerHTML;
   };
   var format = function format(value, diacritics) {
-    value = value.toLowerCase();
-    return (diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value).toString();
+    value = value.toString().toLowerCase();
+    return diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value;
   };
   var debounce = function debounce(callback, duration) {
     var timer;
@@ -269,6 +269,7 @@
         diacritics = _ref.diacritics,
         highlight = _ref.highlight;
     var nRecord = format(record, diacritics);
+    record = record.toString();
     query = format(query, diacritics);
     if (mode === "loose") {
       query = query.replace(/ /g, "");

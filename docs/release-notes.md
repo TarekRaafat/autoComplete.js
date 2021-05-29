@@ -37,6 +37,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ### v10.0.3 ✨
 - 🔧 Fixed: Scrolling issue moving the entire page
+- 🔧 Fixed: Searching `Numbers` issue (Thanks 👍 @folknor) #226
 
 ### v10.0.2
 - 🔧 Fixed: Missing Package Files
