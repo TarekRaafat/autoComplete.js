@@ -50,7 +50,6 @@ For more information on semantic versioning, please visit <http://semver.org/>.
   - ➕ Added: Document `readyState` listener that initializes the library after `DOM` content is loaded
   - ➕ Added: `query` value to `data.src` for easier data fetching
   - ➕ Added: `resultsList` navigation auto scrolling for long lists
-  - ➕ Added: `resultsList.scroll` API to control scrolling behavior (Thanks 👍 @TimHeinrich) #221
   - ➕ Added: `resultsList.tabSelect` API property to control `tab` button behavior
   - ➕ Added: `events` list API property that holds and assigns events to `input` & `list` (Thanks 👍 @stell) #223
   - ➕ Added: `close` API method controls `resultsList` state
