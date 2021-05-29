@@ -51,6 +51,22 @@ selector: () => {
 
 ***
 
+### wrapper <sub><sup>(optional)</sup></sub>
+
+
+> Wrapper div container
+
+- Type: `Boolean`
+- Default: `true`
+
+##### Example
+
+```js
+wrapper: false,
+```
+
+***
+
 ### data <sub><sup>(required)</sup></sub>
 
 > Data Source
@@ -259,7 +275,7 @@ searchEngine: "strict",
 ##### Example:
 
 ```js
-diacritics: false,
+diacritics: true,
 ```
 
 ***
