@@ -35,7 +35,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.0 ✨
+### v10.0.1 ✨
+- 🔧 Fixed: Missing Package Files
+
+### v10.0
   > <div class="ps-icon ps-icon-warning"></div> Important Note:
   >
   > This release has several breaking changes, so kindly check all the below changes.
