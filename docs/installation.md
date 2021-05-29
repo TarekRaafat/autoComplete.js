@@ -39,7 +39,7 @@ yarn add @tarekraafat/autocomplete.js
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/js/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/autoComplete.min.js"></script>
 ```
 
 `CSS`
@@ -55,7 +55,7 @@ yarn add @tarekraafat/autocomplete.js
 `JS`
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/{{version}}/js/autoComplete.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tarekraafat-autocomplete.js/{{version}}/autoComplete.min.js"></script>
 ```
 
 `CSS`
@@ -71,7 +71,7 @@ yarn add @tarekraafat/autocomplete.js
 `JS`
 
 ```html
-<script src="https://unpkg.com/@tarekraafat/autocomplete.js@{{version}}/dist/js/autoComplete.min.js"></script>
+<script src="https://unpkg.com/@tarekraafat/autocomplete.js@{{version}}/dist/autoComplete.min.js"></script>
 ```
 
 `CSS`
