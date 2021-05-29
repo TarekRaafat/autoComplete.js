@@ -210,14 +210,16 @@ filter: (list) => {
     };
     const placeHolder = "Pizza, Burger, Sushi";
     const resultsList= {
-        element: (list, query) => {
-            // Create "No Results" message list element
-            const message = document.createElement("div");
-            message.setAttribute("class", "no_result");
-            // Add message text content
-            message.innerHTML = `<span>Found No Results for "${query}"</span>`;
-            // Add message list element to the list
-            list.prepend(message);
+        element: (list, data) => {
+            if (data.results.length < 1) {
+                // Create "No Results" message list element
+                const message = document.createElement("div");
+                message.setAttribute("class", "no_result");
+                // Add message text content
+                message.innerHTML = `<span>Found No Results for "${data.query}"</span>`;
+                // Add message list element to the list
+                list.prepend(message);
+            }
         }
     };
     const resultItem = {
