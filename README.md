@@ -27,14 +27,14 @@ autoComplete.js is a simple pure vanilla Javascript library that's progressively
 
 ## Features
 
--   Pure Vanilla Javascript
--   Zero Dependencies
--   Simple & Easy to use
--   Extremely Lightweight
--   Blazing Fast
--   Versatile
--   Hackable & Highly Customizable
--   Well Documented
+-  Pure Vanilla Javascript
+-  Zero Dependencies
+-  Simple & Lightweight
+-  Useful plugin API
+-  WAI-ARIA Compliant
+-  Highly Customizable
+-  Works on anything <small>(`<input>`, `<textarea>` and `contentEditable` elements)</small>
+-  Well Documented
 
 [![autoComplete.js Code Example](./docs/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW?editors=0010)
 
