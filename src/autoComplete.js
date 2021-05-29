@@ -16,6 +16,7 @@ export default function autoComplete(config) {
   // Default Configuration options
   this.id = autoComplete.instances = (autoComplete.instances || 0) + 1;
   this.name = "autoComplete";
+  this.wrapper = 1;
   this.threshold = 1;
   this.debounce = 0;
   this.resultsList = {

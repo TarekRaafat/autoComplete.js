@@ -74,8 +74,8 @@ const render = (ctx) => {
  */
 const open = (ctx) => {
   if (ctx.isOpen) return;
-  // Set expanded attribute on the wrapper to true
-  ctx.wrapper.setAttribute(Expand, true);
+  // Set expanded attribute on the parent to true
+  (ctx.wrapper || ctx.input).setAttribute(Expand, true);
   // Remove hidden attribute from list
   ctx.list.removeAttribute("hidden");
   // Set list to opened
@@ -94,8 +94,8 @@ const open = (ctx) => {
  */
 const close = (ctx) => {
   if (!ctx.isOpen) return;
-  // Set expanded attribute on the wrapper to false
-  ctx.wrapper.setAttribute(Expand, false);
+  // Set expanded attribute on the parent to false
+  (ctx.wrapper || ctx.input).setAttribute(Expand, false);
   // Add input active descendant attribute
   ctx.input.setAttribute(Active, "");
   // Add hidden attribute from list

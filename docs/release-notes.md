@@ -35,7 +35,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.0.4 ✨
+### v10.1.0 ✨
+- ➕ Added: `wrapper` API property controls wrapper rendering
+
+### v10.0.4
 - 🔝 Updated: `data.src` query parameter to be aligned with the `query` method value when set
 
 ### v10.0.3
