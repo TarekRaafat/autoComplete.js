@@ -7,7 +7,7 @@ import gzipPlugin from "rollup-plugin-gzip";
 import analyze from "rollup-plugin-analyzer";
 import sizes from "rollup-plugin-sizes";
 import serve from "rollup-plugin-serve";
-import livereload from "rollup-plugin-livereload";
+// import livereload from "rollup-plugin-livereload";
 
 // Library Name
 const libName = "autoComplete";
@@ -104,8 +104,8 @@ export default [
         verbose: true,
         contentBase: "./docs/demo",
       }),
-      // Live Reload
-      livereload({ watch: "./docs/demo/" }),
+      // // Live Reload
+      // livereload({ watch: "./docs/demo/" }),
     ],
   },
 ];
