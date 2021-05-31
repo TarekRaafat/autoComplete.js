@@ -212,15 +212,15 @@ const select = (ctx, event, index) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const click = (event, ctx) => {
-  const resultItemElement = ctx.resultItem.tag.toUpperCase();
-  const items = Array.from(ctx.list.children);
-  const item = event.target.closest(resultItemElement);
+  const itemTag = ctx.resultItem.tag.toUpperCase();
+  const items = Array.from(ctx.list.querySelectorAll(itemTag));
+  const item = event.target.closest(itemTag);
 
   // Check if clicked item is a "result" item
-  if (item && item.nodeName === resultItemElement) {
+  if (item && item.nodeName === itemTag) {
     event.preventDefault();
 
-    const index = items.indexOf(item) - 1;
+    const index = items.indexOf(item);
 
     select(ctx, event, index);
   }

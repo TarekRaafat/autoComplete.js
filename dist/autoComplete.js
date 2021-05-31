@@ -458,12 +458,12 @@
     close(ctx);
   };
   var click = function click(event, ctx) {
-    var resultItemElement = ctx.resultItem.tag.toUpperCase();
-    var items = Array.from(ctx.list.children);
-    var item = event.target.closest(resultItemElement);
-    if (item && item.nodeName === resultItemElement) {
+    var itemTag = ctx.resultItem.tag.toUpperCase();
+    var items = Array.from(ctx.list.querySelectorAll(itemTag));
+    var item = event.target.closest(itemTag);
+    if (item && item.nodeName === itemTag) {
       event.preventDefault();
-      var index = items.indexOf(item) - 1;
+      var index = items.indexOf(item);
       select(ctx, event, index);
     }
   };
@@ -694,11 +694,7 @@
     configure(this);
     extend.call(this, autoComplete);
     var run = this.observe ? preInit : init;
-    if (document.readyState !== "loading") {
-      run(this);
-    } else {
-      document.addEventListener("DOMContentLoaded", run(this));
-    }
+    run(this);
   }
 
   return autoComplete;
