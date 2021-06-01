@@ -1,5 +1,5 @@
 {
-  "version": "10.0.4",
+  "version": "10.1.0",
   "name": "@tarekraafat/autocomplete.js",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "keywords": [
@@ -216,6 +216,11 @@
       "name": "Cody Peterson",
       "email": "cody@humanshapes.co",
       "url": "https://github.com/codyjames"
+    },
+    {
+      "name": "Nicolas Perriault",
+      "email": "nicolas@perriault.net",
+      "url": "https://github.com/n1k0"
     }
   ],
   "maintainers": [

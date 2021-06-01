@@ -406,14 +406,14 @@
   };
   var open = function open(ctx) {
     if (ctx.isOpen) return;
-    ctx.wrapper.setAttribute(Expand, true);
+    (ctx.wrapper || ctx.input).setAttribute(Expand, true);
     ctx.list.removeAttribute("hidden");
     ctx.isOpen = true;
     eventEmitter("open", ctx);
   };
   var close = function close(ctx) {
     if (!ctx.isOpen) return;
-    ctx.wrapper.setAttribute(Expand, false);
+    (ctx.wrapper || ctx.input).setAttribute(Expand, false);
     ctx.input.setAttribute(Active, "");
     ctx.list.setAttribute("hidden", "");
     ctx.isOpen = false;
@@ -458,12 +458,12 @@
     close(ctx);
   };
   var click = function click(event, ctx) {
-    var resultItemElement = ctx.resultItem.tag.toUpperCase();
-    var items = Array.from(ctx.list.children);
-    var item = event.target.closest(resultItemElement);
-    if (item && item.nodeName === resultItemElement) {
+    var itemTag = ctx.resultItem.tag.toUpperCase();
+    var items = Array.from(ctx.list.querySelectorAll(itemTag));
+    var item = event.target.closest(itemTag);
+    if (item && item.nodeName === itemTag) {
       event.preventDefault();
-      var index = items.indexOf(item) - 1;
+      var index = items.indexOf(item);
       select(ctx, event, index);
     }
   };
@@ -590,26 +590,28 @@
   function init (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var name, input, placeHolder, resultsList, data;
+      var name, input, placeHolder, resultsList, data, parentAttrs;
       name = ctx.name;
       input = ctx.input;
       placeHolder = ctx.placeHolder;
       resultsList = ctx.resultsList;
       data = ctx.data;
-      create(input, _objectSpread2({
-        "aria-controls": resultsList.id,
-        "aria-autocomplete": "both"
-      }, placeHolder && {
-        placeholder: placeHolder
-      }));
-      ctx.wrapper = create("div", {
-        around: input,
-        "class": name + "_wrapper",
+      parentAttrs = {
         role: "combobox",
         "aria-owns": resultsList.id,
         "aria-haspopup": true,
         "aria-expanded": false
-      });
+      };
+      create(input, _objectSpread2(_objectSpread2({
+        "aria-controls": resultsList.id,
+        "aria-autocomplete": "both"
+      }, placeHolder && {
+        placeholder: placeHolder
+      }), !ctx.wrapper && _objectSpread2({}, parentAttrs)));
+      if (ctx.wrapper) ctx.wrapper = create("div", _objectSpread2({
+        around: input,
+        "class": name + "_wrapper"
+      }, parentAttrs));
       if (resultsList) ctx.list = create(resultsList.tag, _objectSpread2({
         dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
         id: resultsList.id,
@@ -678,6 +680,7 @@
     this.options = config;
     this.id = autoComplete.instances = (autoComplete.instances || 0) + 1;
     this.name = "autoComplete";
+    this.wrapper = 1;
     this.threshold = 1;
     this.debounce = 0;
     this.resultsList = {
@@ -691,11 +694,7 @@
     configure(this);
     extend.call(this, autoComplete);
     var run = this.observe ? preInit : init;
-    if (document.readyState !== "loading") {
-      run(this);
-    } else {
-      document.addEventListener("DOMContentLoaded", run(this));
-    }
+    run(this);
   }
 
   return autoComplete;

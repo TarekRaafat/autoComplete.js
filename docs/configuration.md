@@ -51,6 +51,22 @@ selector: () => {
 
 ***
 
+### wrapper <sub><sup>(optional)</sup></sub>
+
+
+> Wrapper div container
+
+- Type: `Boolean`
+- Default: `true`
+
+##### Example
+
+```js
+wrapper: false,
+```
+
+***
+
 ### data <sub><sup>(required)</sup></sub>
 
 > Data Source
@@ -185,15 +201,6 @@ query: (input) => {
 placeHolder: "Search...",
 ```
 
-***
-
-### observe <sub><sup>(optional)</sup></sub>
-
-> Input field observer
-
-- Type: `Boolean`
-- Default: `false`
-
 ##### Example:
 
 ```js
@@ -259,7 +266,7 @@ searchEngine: "strict",
 ##### Example:
 
 ```js
-diacritics: false,
+diacritics: true,
 ```
 
 ***
@@ -412,18 +419,6 @@ events: {
 
 ***
 
-### preInit()
-
-> Runs `preInit()` core function to start watching the `DOM` until the selected input is ready then runs `init()` automatically
-
-##### Example:
-
-```js
-autoCompleteJS.preInit();
-```
-
-***
-
 ### init()
 
 > Runs `init()` core function which is responsible for the following tasks in order:
@@ -546,7 +541,67 @@ Defaults:
 autoCompleteJS.gotTo(1);
 ```
 
+
 ***
+
+### select(index)
+
+> Selects a `resultItem` from the list by its `index` number
+
+Parameters:
+- index: `Number`
+
+Defaults:
+- index: current cursor position
+
+##### Example:
+
+```js
+autoCompleteJS.select(1);
+```
+
+***
+
+### close()
+
+> Closes the `resultsList` if opened
+
+##### Example:
+
+```js
+autoCompleteJS.close();
+```
+
+***
+
+### unInit()
+
+> Removes all the event listeners on the `_events` list
+
+##### Example:
+
+```js
+autoCompleteJS.unInit();
+```
+
+***
+
+## Events
+
+### init
+
+***
+
+> Fires after `autoComplete.js` engine is initialized and ready
+
+- Example:
+
+```js
+document.querySelector("#autoComplete").addEventListener("init", function (event) {
+    // "event.detail" carries the returned data values
+    console.log(event);
+});
+```
 
 ### response
 

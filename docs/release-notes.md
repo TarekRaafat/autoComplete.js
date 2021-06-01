@@ -35,7 +35,12 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.0.4 ✨
+### v10.1.0 ✨
+- ➕ Added: `wrapper` API property controls wrapper rendering (Thanks 👍 @folknor) #227
+- 🔧 Fixed: TypeError: "query" is read-only (Thanks 👍 @n1k0) #231
+- 🔧 Fixed: Mouse `click` item selection error (Thanks 👍 @victor-paumier) #232
+
+### v10.0.4
 - 🔝 Updated: `data.src` query parameter to be aligned with the `query` method value when set
 
 ### v10.0.3
