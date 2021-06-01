@@ -71,8 +71,9 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "scripts": {
+    "dev": "rollup -c -w",
     "build": "rollup -c",
-    "dev": "rollup -c -w"
+    "docs": "jsdoc -c jsdocs.json"
   },
   "license": "Apache-2.0",
   "engines": {
@@ -216,6 +217,10 @@
       "name": "Cody Peterson",
       "email": "cody@humanshapes.co",
       "url": "https://github.com/codyjames"
+    },
+    {
+      "name": "folk",
+      "url": "https://github.com/folknor"
     },
     {
       "name": "Nicolas Perriault",

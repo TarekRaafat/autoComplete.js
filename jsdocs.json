@@ -1,0 +1,24 @@
+{
+  "plugins": ["plugins/markdown"],
+  "recurseDepth": 10,
+  "source": {
+    "include": ["src/autoComplete.js"]
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  },
+  "opts": {
+    "template": "templates/default",
+    "readme": "README.md",
+    "package": "package.json",
+    "encoding": "utf8",
+    "destination": "./out",
+    "recurse": true
+  }
+}
