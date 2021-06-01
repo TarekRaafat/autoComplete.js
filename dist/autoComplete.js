@@ -639,40 +639,39 @@
   }
 
   function extend (autoComplete) {
-    var _this = this;
     var prototype = autoComplete.prototype;
     prototype.preInit = function () {
-      return preInit(_this);
+      preInit(this);
     };
     prototype.init = function () {
-      return init(_this);
+      init(this);
     };
     prototype.start = function () {
-      return start(_this);
+      start(this);
     };
     prototype.unInit = function () {
-      return removeEvents(_this);
+      removeEvents(this);
     };
     prototype.open = function () {
-      return open(_this);
+      open(this);
     };
     prototype.close = function () {
-      return close(_this);
+      close(this);
     };
     prototype.goTo = function (index) {
-      return goTo(index, _this);
+      goTo(index, this);
     };
     prototype.next = function () {
-      return next(_this);
+      next(this);
     };
     prototype.previous = function () {
-      return previous(_this);
+      previous(this);
     };
     prototype.select = function (index) {
-      return select(_this, null, index);
+      select(this, null, index);
     };
     autoComplete.search = prototype.search = function (query, record, options) {
-      return search(query, record, options);
+      search(query, record, options);
     };
   }
 

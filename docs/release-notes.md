@@ -35,7 +35,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.1.0 ✨
+### v10.1.1 ✨
+- 🔧 Fixed: APIs works with the wrong instance (Thanks 👍 @FoHoOV) #230
+
+### v10.1.0
 - ➕ Added: `wrapper` API property controls wrapper rendering (Thanks 👍 @folknor) #227
 - 🔧 Fixed: TypeError: "query" is read-only (Thanks 👍 @n1k0) #231
 - 🔧 Fixed: Mouse `click` item selection error (Thanks 👍 @victor-paumier) #232

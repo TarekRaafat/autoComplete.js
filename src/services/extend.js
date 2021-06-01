@@ -14,22 +14,34 @@ export default function (autoComplete) {
   const { prototype } = autoComplete;
 
   // Pre-Initialize autoComplete.js engine
-  prototype.preInit = () => preInit(this);
+  prototype.preInit = function () {
+    preInit(this);
+  };
 
   // Initialize autoComplete.js engine
-  prototype.init = () => init(this);
+  prototype.init = function () {
+    init(this);
+  };
 
   // Start autoComplete.js engine
-  prototype.start = () => start(this);
+  prototype.start = function () {
+    start(this);
+  };
 
   // Un-Initialize autoComplete.js engine
-  prototype.unInit = () => removeEvents(this);
+  prototype.unInit = function () {
+    removeEvents(this);
+  };
 
   // Open closed list
-  prototype.open = () => open(this);
+  prototype.open = function () {
+    open(this);
+  };
 
   // Close opened list
-  prototype.close = () => close(this);
+  prototype.close = function () {
+    close(this);
+  };
 
   /**
    * Go to result item by index
@@ -38,13 +50,19 @@ export default function (autoComplete) {
    *
    * @returns {void}
    */
-  prototype.goTo = (index) => goTo(index, this);
+  prototype.goTo = function (index) {
+    goTo(index, this);
+  };
 
   // Go to next result item
-  prototype.next = () => next(this);
+  prototype.next = function () {
+    next(this);
+  };
 
   // Go to previous result item
-  prototype.previous = () => previous(this);
+  prototype.previous = function () {
+    previous(this);
+  };
 
   /**
    * Select result item with given index or current cursor
@@ -53,7 +71,9 @@ export default function (autoComplete) {
    *
    * @returns {void}
    */
-  prototype.select = (index) => select(this, null, index);
+  prototype.select = function (index) {
+    select(this, null, index);
+  };
 
   /**
    * autoComplete.js Search Engine
@@ -65,5 +85,7 @@ export default function (autoComplete) {
    *
    * @returns {String} - Matching data record
    */
-  autoComplete.search = prototype.search = (query, record, options) => search(query, record, options);
+  autoComplete.search = prototype.search = function (query, record, options) {
+    search(query, record, options);
+  };
 }
