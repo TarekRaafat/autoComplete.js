@@ -35,7 +35,7 @@ const autoCompleteJS = new autoComplete({
       if (data.results.length > 0) {
         info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
       } else {
-        info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong`;
+        info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong>`;
       }
       list.prepend(info);
     },
