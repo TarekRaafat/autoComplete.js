@@ -1,4 +1,4 @@
-# Plugins
+# Plugins <!-- {docsify-ignore} -->
 
 Add functionality and customize your autoComplete.js with plugins built by our amazing developer community
 

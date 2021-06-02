@@ -84,22 +84,24 @@ query: (query) => {
 
     return newQuery;
 },
-
-// Input field event listener
-document.querySelector("#autoComplete").addEventListener("selection", function (event) {
-    const feedback = event.detail;
-    const input = document.querySelector("#autoComplete");
-    // Trim selected Value
-    const selection = feedback.selection.value.trim();
-    // Split query into array and trim each value
-    const query = input.value.split(",").map(item => item.trim());
-    // Remove last query
-    query.pop();
-    // Add selected value
-    query.push(selection);
-    // Replace Input value with the new query
-    input.value = query.join(", ") + ", ";
-});
+events: {
+    input: {
+        selection: (event) => {
+            const feedback = event.detail;
+            const input = document.querySelector("#autoComplete");
+            // Trim selected Value
+            const selection = feedback.selection.value.trim();
+            // Split query into array and trim each value
+            const query = input.value.split(",").map(item => item.trim());
+            // Remove last query
+            query.pop();
+            // Add selected value
+            query.push(selection);
+            // Replace Input value with the new query
+            input.value = query.join(", ") + ", ";
+        }
+    }
+},
 ```
 
 <!-- div:right-panel -->
@@ -150,16 +152,18 @@ resultsList: {
         }
     }
 },
-
-// Input field event listener
-document.querySelector("#autoComplete").addEventListener("selection", function (event) {
-    const feedback = event.detail;
-    const input = document.querySelector("#autoComplete");
-    // Get selected Value
-    const selection = feedback.selection.value.trim();
-    // Add selected value to "history" array
-    history.push(selection);
-});
+events: {
+    input: {
+        selection: (event) => {
+            const feedback = event.detail;
+            const input = document.querySelector("#autoComplete");
+            // Get selected Value
+            const selection = feedback.selection.value.trim();
+            // Add selected value to "history" array
+            history.push(selection);
+        }
+    }
+},
 ```
 
 <!-- div:right-panel -->
@@ -191,7 +195,7 @@ filter: (list) => {
     });
 
     return results;
-}
+},
 ```
 
 <!-- div:right-panel -->
@@ -264,6 +268,24 @@ filter: (list) => {
 	    },
         resultsList,
         resultItem,
+        events: {
+            input: {
+                selection: (event) => {
+                    const feedback = event.detail;
+                    const input = autoCompleteJS_03.input;
+                    // Trim selected Value
+                    const selection = feedback.selection.value.trim();
+                    // Split query into array and trim each value
+                    const query = input.value.split(",").map(item => item.trim());
+                    // Remove last query
+                    query.pop();
+                    // Add selected value
+                    query.push(selection);
+                    // Replace Input value with the new query
+                    input.value = query.join(", ") + ", ";
+                }
+            }
+        }
     });
     
     let history = [];
@@ -298,6 +320,18 @@ filter: (list) => {
             },
         },
         resultItem,
+        events: {
+            input: {
+                selection: (event) => {
+                    const feedback = event.detail;
+                    const input = autoCompleteJS_04.input;
+                    // Get selected Value
+                    const selection = feedback.selection.value;
+                    // Add selected value to "history" array
+                    history.push(selection);
+                }
+            }
+        }
     });
 
     const autoCompleteJS_05 = new autoComplete({
@@ -320,29 +354,5 @@ filter: (list) => {
         },
         resultsList,
         resultItem,
-    });
-
-    autoCompleteJS_03.input.addEventListener("selection", function (event) {
-        const feedback = event.detail;
-        const input = autoCompleteJS_03.input;
-        // Trim selected Value
-        const selection = feedback.selection.value.trim();
-        // Split query into array and trim each value
-        const query = input.value.split(",").map(item => item.trim());
-        // Remove last query
-        query.pop();
-        // Add selected value
-        query.push(selection);
-        // Replace Input value with the new query
-        input.value = query.join(", ") + ", ";
-    });
-
-    autoCompleteJS_04.input.addEventListener("selection", function (event) {
-        const feedback = event.detail;
-        const input = autoCompleteJS_04.input;
-        // Get selected Value
-        const selection = feedback.selection.value;
-        // Add selected value to "history" array
-        history.push(selection);
     });
 </script>
