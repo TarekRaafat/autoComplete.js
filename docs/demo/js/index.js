@@ -63,46 +63,21 @@ const autoCompleteJS = new autoComplete({
       focus: () => {
         if (autoCompleteJS.input.value.length) autoCompleteJS.start();
       },
+      selection: (event) => {
+        const feedback = event.detail;
+        autoCompleteJS.input.blur();
+        // Prepare User's Selected Value
+        const selection = feedback.selection.value[feedback.selection.key];
+        // Render selected choice to selection div
+        document.querySelector(".selection").innerHTML = selection;
+        // Replace Input value with the selected value
+        autoCompleteJS.input.value = selection;
+        // Console log autoComplete data feedback
+        console.log(feedback);
+      },
     },
   },
 });
-
-// autoCompleteJS.input.addEventListener("init", function (event) {
-//   console.log(event);
-// });
-
-// autoCompleteJS.input.addEventListener("response", function (event) {
-//   console.log(event.detail);
-// });
-
-// autoCompleteJS.input.addEventListener("results", function (event) {
-//   console.log(event.detail);
-// });
-
-// autoCompleteJS.input.addEventListener("open", function (event) {
-//   console.log(event.detail);
-// });
-
-// autoCompleteJS.input.addEventListener("navigate", function (event) {
-//   console.log(event.detail);
-// });
-
-autoCompleteJS.input.addEventListener("selection", function (event) {
-  const feedback = event.detail;
-  autoCompleteJS.input.blur();
-  // Prepare User's Selected Value
-  const selection = feedback.selection.value[feedback.selection.key];
-  // Render selected choice to selection div
-  document.querySelector(".selection").innerHTML = selection;
-  // Replace Input value with the selected value
-  autoCompleteJS.input.value = selection;
-  // Console log autoComplete data feedback
-  console.log(feedback);
-});
-
-// autoCompleteJS.input.addEventListener("close", function (event) {
-//   console.log(event.detail);
-// });
 
 // Toggle Search Engine Type/Mode
 document.querySelector(".toggler").addEventListener("click", () => {

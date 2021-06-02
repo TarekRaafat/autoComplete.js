@@ -201,12 +201,6 @@ query: (input) => {
 placeHolder: "Search...",
 ```
 
-##### Example:
-
-```js
-observe: false,
-```
-
 ***
 
 ### threshold <sub><sup>(optional)</sup></sub>
