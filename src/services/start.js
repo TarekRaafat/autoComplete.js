@@ -20,6 +20,8 @@ export default async function (ctx) {
   if (condition) {
     // Get from source
     await getData(ctx);
+    // Check if data fetch failed
+    if (ctx.feedback instanceof Error) return;
     // Find matching results to the query
     findMatches(queryVal, ctx);
     // Render "resultsList"

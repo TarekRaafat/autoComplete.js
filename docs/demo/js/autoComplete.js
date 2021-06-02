@@ -514,6 +514,7 @@
       if (condition) {
         return getData(ctx).then(function ($await_2) {
           try {
+            if (ctx.feedback instanceof Error) return $return();
             findMatches(queryVal, ctx);
             if (resultsList) render(ctx);
             return $If_1.call(_this);

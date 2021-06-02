@@ -35,7 +35,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.1.1 ✨
+### v10.1.2 ✨
+- 🔧 Fixed: Data fetching error handling (Thanks 👍 @folknor) #234
+
+### v10.1.1
 - 🔧 Fixed: APIs works with the wrong instance (Thanks 👍 @FoHoOV) #230
 
 ### v10.1.0
