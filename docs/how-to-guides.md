@@ -17,7 +17,7 @@ events: {
         focus: () => {
             const inputValue = document.querySelector("#autoComplete").value;
 
-            if (input.length) autoCompleteJS.start();
+            if (inputValue.length) autoCompleteJS.start();
         },
     },
 },
