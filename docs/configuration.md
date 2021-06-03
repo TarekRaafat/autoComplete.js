@@ -10,7 +10,7 @@ API configuration options, methods and events
 
 ### name <sub><sup>(optional)</sup></sub>
 
-> Global instance name where all elements inherit their class names
+> Global instance name where all elements inherit their class & id names
 
 - Type: `String`
 - Default: `autoComplete`
@@ -157,7 +157,7 @@ data: {
 > Event & Condition rules that trigger autoComplete.js engine to start
 
 - Type: `Function` returns `Boolean`
-  - Parameters: (`event`, `query`)
+  - Parameters: (`query`)
 - Default: if input field **NOT** empty **and** greater than or equal threshold
 
 ##### Example:
@@ -409,7 +409,7 @@ events: {
 ***
 
 ## APIs
-*All examples assumes that the "autoComplete" new instance is assigned to an "autoCompleteJS" named variable*
+*All examples assume that the "autoComplete" new instance is assigned to an "autoCompleteJS" named variable*
 
 ***
 
