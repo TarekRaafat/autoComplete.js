@@ -240,6 +240,10 @@ filter: (list) => {
                 focus: () => {
                     if (autoCompleteJS_01.input.value.length) autoCompleteJS_01.start();
                 },
+                selection: (event) => {
+                    const selection = event.detail.selection.value;
+                    autoCompleteJS_01.input.value = selection;
+                }
             },
         },
     });
@@ -249,7 +253,15 @@ filter: (list) => {
         placeHolder,
         data,
         resultsList,
-        resultItem
+        resultItem,
+        events: {
+            input: {
+                selection: (event) => {
+                    const selection = event.detail.selection.value;
+                    autoCompleteJS_02.input.value = selection;
+                }
+            }
+        }
     });
 
     const autoCompleteJS_03 = new autoComplete({
@@ -329,6 +341,8 @@ filter: (list) => {
                     const selection = feedback.selection.value;
                     // Add selected value to "history" array
                     history.push(selection);
+                    
+                    autoCompleteJS_04.input.value = selection;
                 }
             }
         }
@@ -354,5 +368,13 @@ filter: (list) => {
         },
         resultsList,
         resultItem,
+        events: {
+            input: {
+                selection: (event) => {
+                    const selection = event.detail.selection.value;
+                    autoCompleteJS_05.input.value = selection;
+                }
+            }
+        }
     });
 </script>
