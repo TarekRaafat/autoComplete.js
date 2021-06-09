@@ -249,7 +249,7 @@
     return create("mark", _objectSpread2({
       innerHTML: value
     }, typeof klass === "string" && {
-      class: klass
+      "class": klass
     })).outerHTML;
   };
 

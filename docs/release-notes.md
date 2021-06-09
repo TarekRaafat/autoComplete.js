@@ -35,7 +35,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.1.2 ✨
+### v10.1.3 ✨
+- 🔧 Fixed: `mark` tag's invalid "classes" to "class" attribute (Thanks 👍 @50kudos) #242
+
+### v10.1.2
 - 🔧 Fixed: Data fetching error handling (Thanks 👍 @folknor) #234
 
 ### v10.1.1

@@ -1,5 +1,5 @@
 {
-  "version": "10.1.2",
+  "version": "10.1.3",
   "name": "@tarekraafat/autocomplete.js",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "keywords": [
@@ -226,6 +226,10 @@
       "name": "Nicolas Perriault",
       "email": "nicolas@perriault.net",
       "url": "https://github.com/n1k0"
+    },
+    {
+      "name": "Waranyoo Butsingkorn",
+      "url": "https://github.com/50kudos"
     }
   ],
   "maintainers": [
