@@ -245,11 +245,11 @@
   var checkTrigger = function checkTrigger(query, condition, threshold) {
     return condition ? condition(query) : query.length >= threshold;
   };
-  var mark = function mark(value, classes) {
+  var mark = function mark(value, klass) {
     return create("mark", _objectSpread2({
       innerHTML: value
-    }, typeof classes === "string" && {
-      classes: classes
+    }, typeof klass === "string" && {
+      class: klass
     })).outerHTML;
   };
 
