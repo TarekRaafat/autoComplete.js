@@ -13,6 +13,8 @@
 ![Maintained](https://img.shields.io/badge/Maintained%3F-yes-success)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
 
+[![Rate on Openbase](https://badges.openbase.com/js/rating/@tarekraafat/autocomplete.js.svg)](https://openbase.com/js/@tarekraafat/autocomplete.js?utm_source=embedded&utm_medium=badge&utm_campaign=rate-badge)
+
 <a href="https://www.producthunt.com/posts/autocomplete-js?utm_source=badge-top-post-badge&utm_medium=badge&utm_souce=badge-autocomplete-js" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=141833&theme=light&period=weekly" alt="autoComplete.js - Simple autocomplete pure vanilla Javascript library. | Product Hunt Embed" style="margin: 30px 0;width: 250px; height: 54px;" width="250px" height="54px" /></a>
 
 <div class="sharethis-inline-share-buttons"></div>
