@@ -240,11 +240,15 @@
   ],
   "funding": [
     {
-      "type": "Liberapay",
+      "type": "open_collective",
+      "url": "https://opencollective.com/autocompletejs"
+    },
+    {
+      "type": "liberapay",
       "url": "https://liberapay.com/TarekRaafat"
     },
     {
-      "type": "Patreon",
+      "type": "patreon",
       "url": "https://patreon.com/TarekRaafat"
     }
   ]
