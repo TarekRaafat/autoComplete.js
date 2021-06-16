@@ -36,7 +36,7 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 ***
 
 ### v10.1.4 ✨
-- 🔧 Fixed: Unresolved dependencies when building svelte app (Thanks 👍 @sunshineplan) #243
+- 🔧 Fixed: Unresolved dependencies when building a svelte app (Thanks 👍 @sunshineplan) #243
 
 ### v10.1.3
 - 🔧 Fixed: `mark` tag's invalid "classes" to "class" attribute (Thanks 👍 @50kudos) #242
