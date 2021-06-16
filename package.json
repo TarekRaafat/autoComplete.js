@@ -43,18 +43,18 @@
     "email": "tarek.m.raafat@gmail.com"
   },
   "directories": {
-    "doc": "/docs",
-    "lib": "/dist",
-    "example": "/docs/demo"
+    "doc": "docs",
+    "lib": "dist",
+    "example": "docs/demo"
   },
   "files": [
-    "/dist",
-    "/src"
+    "dist",
+    "src"
   ],
-  "main": "/dist/autoComplete.js",
-  "browser": "/dist/autoComplete.min.js",
-  "unpkg": "/dist/autoComplete.min.js",
-  "module": "/dist/autoComplete.min.js",
+  "main": "dist/autoComplete.js",
+  "browser": "dist/autoComplete.min.js",
+  "unpkg": "dist/autoComplete.min.js",
+  "module": "dist/autoComplete.min.js",
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
