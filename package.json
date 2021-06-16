@@ -42,9 +42,13 @@
     "url": "https://github.com/TarekRaafat/autoComplete.js/issues",
     "email": "tarek.m.raafat@gmail.com"
   },
+  "demo": "https://tarekraafat.github.io/autoComplete.js/demo",
+  "download": "https://raw.githubusercontent.com/TarekRaafat/autoComplete.js/master/dist/autoComplete.min.js",
   "directories": {
-    "doc": "docs",
+    "src": "src",
+    "dist": "dist",
     "lib": "dist",
+    "doc": "docs",
     "example": "docs/demo"
   },
   "files": [
