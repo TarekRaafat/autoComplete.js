@@ -17,7 +17,7 @@ const autoCompleteJS = new autoComplete({
       }
     },
     keys: ["food", "cities", "animals"],
-    caches: true,
+    cache: true,
     filter: (list) => {
       // Filter duplicates
       // incase of multiple data keys usage
