@@ -18,7 +18,7 @@ export default async function (ctx) {
     "aria-expanded": false,
   };
 
-  // Set "inputField" attributes
+  // Set "input" attributes
   create(input, {
     "aria-controls": resultsList.id,
     "aria-autocomplete": "both",

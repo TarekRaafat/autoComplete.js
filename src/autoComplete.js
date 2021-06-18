@@ -1,6 +1,5 @@
 import configure from "./services/configure";
 import extend from "./services/extend";
-import preInit from "./services/preInit";
 import init from "./services/init";
 
 /**
@@ -66,8 +65,6 @@ export default function autoComplete(config) {
   configure(this);
   // Stage API methods
   extend.call(this, autoComplete);
-  // Set to run "preInit" if "observer" enabled else "init"
-  const run = this.observe ? preInit : init;
-  // Run autoComplete.js
-  run(this);
+  // Initialize autoComplete.js
+  init(this);
 }

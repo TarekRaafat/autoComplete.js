@@ -10,7 +10,7 @@ import { render, close } from "../controllers/listController";
 export default async function (ctx) {
   const { input, query, trigger, threshold, resultsList } = ctx;
 
-  // Get "inputField" query value
+  // Get "input" query value
   let queryVal = getQuery(input);
   queryVal = query ? query(queryVal) : queryVal;
   // Get trigger decision

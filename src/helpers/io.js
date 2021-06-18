@@ -44,7 +44,7 @@ const create = (tag, options) => {
 };
 
 /**
- * Get the "inputField" query value
+ * Get the "input" query value
  *
  * @param {Element} field - input or textarea element
  *
@@ -59,7 +59,7 @@ const getQuery = (field) =>
  * @param {String} value - user's raw search query value
  * @param {Object} diacritics - formatting on/off
  *
- * @returns {String} - Raw "inputField" value as a string
+ * @returns {String} - Raw "input" value as a string
  */
 const format = (value, diacritics) => {
   value = value.toString().toLowerCase();

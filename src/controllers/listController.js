@@ -273,7 +273,7 @@ const navigate = function (event, ctx) {
     case 27:
       event.preventDefault();
 
-      // Clear "inputField" value
+      // Clear "input" value
       ctx.input.value = "";
 
       close(ctx);

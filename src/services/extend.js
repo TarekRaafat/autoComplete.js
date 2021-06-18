@@ -1,4 +1,3 @@
-import preInit from "./preInit";
 import init from "./init";
 import start from "./start";
 import { removeEvents } from "../controllers/eventController";
@@ -13,11 +12,6 @@ import search from "../controllers/searchController";
 export default function (autoComplete) {
   const { prototype } = autoComplete;
 
-  // Pre-Initialize autoComplete.js engine
-  prototype.preInit = function () {
-    preInit(this);
-  };
-
   // Initialize autoComplete.js engine
   prototype.init = function () {
     init(this);
@@ -30,6 +24,13 @@ export default function (autoComplete) {
 
   // Un-Initialize autoComplete.js engine
   prototype.unInit = function () {
+    if (this.wrapper) {
+      const parentNode = this.wrapper.parentNode;
+
+      parentNode.insertBefore(this.input, this.wrapper);
+      parentNode.removeChild(this.wrapper);
+    }
+
     removeEvents(this);
   };
 

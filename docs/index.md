@@ -32,8 +32,7 @@
 
 ## What it is? <!-- {docsify-ignore} -->
 
-autoComplete.js is a simple pure vanilla Javascript library that's progressively designed for speed,
-high versatility and seamless integration with a wide range of projects & systems.
+autoComplete.js is a simple, pure vanilla Javascript library progressively designed for speed, high versatility, and seamless integration with a wide range of projects & systems. <sub><sup>(Made for a better developer experience)</sub></pub>
 
 ## Features <!-- {docsify-ignore} -->
 

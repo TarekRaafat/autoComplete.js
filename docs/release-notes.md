@@ -35,8 +35,12 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.1.4 ✨
-- 🔧 Fixed: Unresolved dependencies when building a svelte app (Thanks 👍 @sunshineplan) #243
+### v10.1.5 ✨
+- 🧹 Removed: `preInit` stage (Thanks 👍 @folknor) #229
+- 🔧 Fixed: `unInit` to remove the `wrapper` element (Thanks 👍 @deniseismo) #245
+
+### v10.1.4
+- 🔧 Fixed: Unresolved dependencies when building a Svelte app (Thanks 👍 @sunshineplan) #243
 
 ### v10.1.3
 - 🔧 Fixed: `mark` tag's invalid "classes" to "class" attribute (Thanks 👍 @50kudos) #242

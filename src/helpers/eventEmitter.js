@@ -5,6 +5,6 @@
  * @param {Object} ctx - autoComplete.js context
  */
 export default (name, ctx) => {
-  // Dispatch event on "inputField"
+  // Dispatch event on "input"
   ctx.input.dispatchEvent(new CustomEvent(name, { bubbles: true, detail: ctx.feedback, cancelable: true }));
 };

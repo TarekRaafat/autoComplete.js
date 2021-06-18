@@ -186,22 +186,6 @@
     ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
   });
 
-  var preInit = (function (ctx) {
-    var callback = function callback(mutations, observer) {
-      mutations.forEach(function (mutation) {
-        if (ctx.input) {
-          observer.disconnect();
-          ctx.init();
-        }
-      });
-    };
-    var observer = new MutationObserver(callback);
-    observer.observe(document, {
-      childList: true,
-      subtree: true
-    });
-  });
-
   var select$1 = function select(element) {
     return typeof element === "string" ? document.querySelector(element) : element;
   };
@@ -641,9 +625,6 @@
 
   function extend (autoComplete) {
     var prototype = autoComplete.prototype;
-    prototype.preInit = function () {
-      preInit(this);
-    };
     prototype.init = function () {
       init(this);
     };
@@ -651,6 +632,11 @@
       start(this);
     };
     prototype.unInit = function () {
+      if (this.wrapper) {
+        var parentNode = this.wrapper.parentNode;
+        parentNode.insertBefore(this.input, this.wrapper);
+        parentNode.removeChild(this.wrapper);
+      }
       removeEvents(this);
     };
     prototype.open = function () {
@@ -693,8 +679,7 @@
     };
     configure(this);
     extend.call(this, autoComplete);
-    var run = this.observe ? preInit : init;
-    run(this);
+    init(this);
   }
 
   return autoComplete;
