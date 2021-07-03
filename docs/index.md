@@ -39,6 +39,10 @@ autoComplete.js is a simple, pure vanilla Javascript library progressively desig
 -  Pure Vanilla Javascript
 -  Zero Dependencies
 -  Simple & Lightweight
+-  Powerful Search Engine with two different modes
+-  Diacritics Support
+-  Debounce Support
+-  Life Cycle Events
 -  Useful plugin API
 -  WAI-ARIA Compliant
 -  Highly Customizable

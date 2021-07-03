@@ -7,10 +7,12 @@ import gzipPlugin from "rollup-plugin-gzip";
 import analyze from "rollup-plugin-analyzer";
 import sizes from "rollup-plugin-sizes";
 import serve from "rollup-plugin-serve";
-// import livereload from "rollup-plugin-livereload";
+import livereload from "rollup-plugin-livereload";
 
 // Library Name
 const libName = "autoComplete";
+// Build Environment
+const isProduction = process.env.NODE_ENV === "production";
 // Library Max. Size Allowed
 const limitBytes = 3 * 1024 * 1024;
 // Library Size Analyzer
@@ -34,13 +36,14 @@ export default [
         file: "./docs/demo/js/autoComplete.min.js",
         name: libName,
         format: "umd",
+        // sourcemap: isProduction ? false : "inline",
       },
     ],
     plugins: [
       nodent({
         es7: true,
         promises: true,
-        sourcemap: true,
+        // sourcemap: isProduction ? false : true,
         noRuntime: true,
         es6target: true,
       }),
@@ -71,13 +74,14 @@ export default [
         file: "./docs/demo/js/autoComplete.js",
         name: libName,
         format: "umd",
+        // sourcemap: isProduction ? false : "inline",
       },
     ],
     plugins: [
       nodent({
         es7: true,
         promises: true,
-        sourcemap: true,
+        // sourcemap: isProduction ? false : true,
         noRuntime: true,
         es6target: true,
       }),
@@ -96,16 +100,17 @@ export default [
       }),
       sizes(),
       // Server
-      serve({
-        open: true,
-        openPage: "./docs/demo/index.html",
-        host: "localhost",
-        port: 8000,
-        verbose: true,
-        contentBase: "./docs/demo",
-      }),
-      // // Live Reload
-      // livereload({ watch: "./docs/demo/" }),
+      !isProduction &&
+        serve({
+          open: true,
+          openPage: "./docs/demo/index.html",
+          host: "localhost",
+          port: 8000,
+          verbose: true,
+          contentBase: "./docs/demo",
+        }),
+      // Live Reload
+      !isProduction && livereload({ watch: ["./docs/demo/", "./src/"] }),
     ],
   },
 ];

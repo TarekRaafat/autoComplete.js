@@ -1,5 +1,5 @@
 {
-  "version": "10.1.5",
+  "version": "10.2.0",
   "name": "@tarekraafat/autocomplete.js",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "keywords": [
@@ -75,15 +75,11 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "scripts": {
-    "dev": "rollup -c -w",
-    "build": "rollup -c",
+    "dev": "NODE_ENV=development rollup -c -w",
+    "build": "NODE_ENV=production rollup -c",
     "docs": "jsdoc -c jsdocs.json"
   },
   "license": "Apache-2.0",
-  "engines": {
-    "node": ">=12",
-    "npm": ">=6"
-  },
   "contributors": [
     {
       "name": "Tarek Raafat",
@@ -234,6 +230,10 @@
     {
       "name": "Waranyoo Butsingkorn",
       "url": "https://github.com/50kudos"
+    },
+    {
+      "name": "sunshineplan",
+      "url": "https://github.com/sunshineplan"
     }
   ],
   "maintainers": [

@@ -17,9 +17,14 @@ export default function (autoComplete) {
     init(this);
   };
 
-  // Start autoComplete.js engine
-  prototype.start = function () {
-    start(this);
+  /**
+   * Start autoComplete.js engine
+   *
+   * @param {String} query - Search query value
+   *
+   */
+  prototype.start = function (query) {
+    start(this, query);
   };
 
   // Un-Initialize autoComplete.js engine
@@ -49,7 +54,6 @@ export default function (autoComplete) {
    *
    * @param {Number} index - of the selected result item
    *
-   * @returns {void}
    */
   prototype.goTo = function (index) {
     goTo(index, this);
@@ -70,7 +74,6 @@ export default function (autoComplete) {
    *
    * @param {Number} index - of the selected result item
    *
-   * @returns {void}
    */
   prototype.select = function (index) {
     select(this, null, index);

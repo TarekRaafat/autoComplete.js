@@ -14,7 +14,7 @@ Guided examples on how-to use autoComplete.js in different use-cases
 // autoComplete.js Config Options
 events: {
     input: {
-        focus: () => {
+        focus() {
             const inputValue = document.querySelector("#autoComplete").value;
 
             if (inputValue.length) autoCompleteJS.start();
@@ -86,7 +86,7 @@ query: (query) => {
 },
 events: {
     input: {
-        selection: (event) => {
+        selection(event) {
             const feedback = event.detail;
             const input = document.querySelector("#autoComplete");
             // Trim selected Value
@@ -154,7 +154,7 @@ resultsList: {
 },
 events: {
     input: {
-        selection: (event) => {
+        selection(event) {
             const feedback = event.detail;
             const input = document.querySelector("#autoComplete");
             // Get selected Value
@@ -212,7 +212,7 @@ filter: (list) => {
     };
     const placeHolder = "Pizza, Burger, Sushi";
     const resultsList= {
-        element: (list, data) => {
+        element(list, data) {
             if (!data.results.length) {
                 // Create "No Results" message list element
                 const message = document.createElement("div");
@@ -237,10 +237,10 @@ filter: (list) => {
         resultItem,
         events: {
             input: {
-                focus: () => {
+                focus() {
                     if (autoCompleteJS_01.input.value.length) autoCompleteJS_01.start();
                 },
-                selection: (event) => {
+                selection(event) {
                     const selection = event.detail.selection.value;
                     autoCompleteJS_01.input.value = selection;
                 }
@@ -256,7 +256,7 @@ filter: (list) => {
         resultItem,
         events: {
             input: {
-                selection: (event) => {
+                selection(event) {
                     const selection = event.detail.selection.value;
                     autoCompleteJS_02.input.value = selection;
                 }
@@ -268,7 +268,7 @@ filter: (list) => {
         selector: "#autoComplete_03",
         placeHolder,
         data,
-        query: (query) => {
+        query(query) {
             // Split query into array
             const querySplit = query.split(",");
             // Get last query value index
@@ -282,7 +282,7 @@ filter: (list) => {
         resultItem,
         events: {
             input: {
-                selection: (event) => {
+                selection(event) {
                     const feedback = event.detail;
                     const input = autoCompleteJS_03.input;
                     // Trim selected Value
@@ -307,7 +307,7 @@ filter: (list) => {
         placeHolder,
         data,
         resultsList: {
-            element: (list) => {
+            element(list) {
                 const recentSearch = history.reverse();
                 const historyLength = recentSearch.length;
 
@@ -334,7 +334,7 @@ filter: (list) => {
         resultItem,
         events: {
             input: {
-                selection: (event) => {
+                selection(event) {
                     const feedback = event.detail;
                     const input = autoCompleteJS_04.input;
                     // Get selected Value
@@ -353,7 +353,7 @@ filter: (list) => {
         placeHolder,
         data: {
             ...data,
-            filter: (list) => {
+            filter(list) {
                 const results = list.filter((item) => {
                     const inputValue = document.querySelector("#autoComplete_05").value.toLowerCase();
                     const itemValue = item.value.toLowerCase();
@@ -370,7 +370,7 @@ filter: (list) => {
         resultItem,
         events: {
             input: {
-                selection: (event) => {
+                selection(event) {
                     const selection = event.detail.selection.value;
                     autoCompleteJS_05.input.value = selection;
                 }

@@ -229,11 +229,11 @@
   var checkTrigger = function checkTrigger(query, condition, threshold) {
     return condition ? condition(query) : query.length >= threshold;
   };
-  var mark = function mark(value, klass) {
+  var mark = function mark(value, cls) {
     return create("mark", _objectSpread2({
       innerHTML: value
-    }, typeof klass === "string" && {
-      "class": klass
+    }, typeof cls === "string" && {
+      "class": cls
     })).outerHTML;
   };
 
@@ -349,7 +349,6 @@
     eventEmitter("results", ctx);
   };
 
-  var classes;
   var Expand = "aria-expanded";
   var Active = "aria-activedescendant";
   var Selected = "aria-selected";
@@ -404,7 +403,10 @@
     eventEmitter("close", ctx);
   };
   var goTo = function goTo(index, ctx) {
-    var results = ctx.list.getElementsByTagName(ctx.resultItem.tag);
+    var list = ctx.list,
+        resultItem = ctx.resultItem;
+    var results = list.getElementsByTagName(resultItem.tag);
+    var cls = resultItem.selected ? resultItem.selected.split(" ") : false;
     if (ctx.isOpen && results.length) {
       var _results$index$classL;
       var state = ctx.cursor;
@@ -414,12 +416,12 @@
       if (state > -1) {
         var _results$state$classL;
         results[state].removeAttribute(Selected);
-        if (classes) (_results$state$classL = results[state].classList).remove.apply(_results$state$classL, _toConsumableArray(classes));
+        if (cls) (_results$state$classL = results[state].classList).remove.apply(_results$state$classL, _toConsumableArray(cls));
       }
       results[index].setAttribute(Selected, true);
-      if (classes) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(classes));
+      if (cls) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(cls));
       ctx.input.setAttribute(Active, results[ctx.cursor].id);
-      ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
+      list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight + 5;
       ctx.feedback.cursor = ctx.cursor;
       feedback(ctx, index);
       eventEmitter("navigate", ctx);
@@ -446,44 +448,35 @@
     var items = Array.from(ctx.list.querySelectorAll(itemTag));
     var item = event.target.closest(itemTag);
     if (item && item.nodeName === itemTag) {
-      event.preventDefault();
       var index = items.indexOf(item);
       select(ctx, event, index);
     }
   };
   var navigate = function navigate(event, ctx) {
-    var key = event.keyCode;
-    var selected = ctx.resultItem.selected;
-    if (selected) classes = selected.split(" ");
-    switch (key) {
+    switch (event.keyCode) {
       case 40:
       case 38:
         event.preventDefault();
-        key === 40 ? next(ctx) : previous(ctx);
+        event.keyCode === 40 ? next(ctx) : previous(ctx);
         break;
       case 13:
-        event.preventDefault();
-        if (ctx.cursor >= 0) {
-          select(ctx, event);
-        }
+        if (!ctx.submit) event.preventDefault();
+        if (ctx.cursor >= 0) select(ctx, event);
         break;
       case 9:
         if (ctx.resultsList.tabSelect && ctx.cursor >= 0) {
           event.preventDefault();
           select(ctx, event);
-        } else {
-          close(ctx);
         }
         break;
       case 27:
-        event.preventDefault();
         ctx.input.value = "";
         close(ctx);
         break;
     }
   };
 
-  function start (ctx) {
+  function start (ctx, q) {
     var _this = this;
     return new Promise(function ($return, $error) {
       var input, query, trigger, threshold, resultsList, queryVal, condition;
@@ -492,7 +485,7 @@
       trigger = ctx.trigger;
       threshold = ctx.threshold;
       resultsList = ctx.resultsList;
-      queryVal = getQuery(input);
+      queryVal = q || getQuery(input);
       queryVal = query ? query(queryVal) : queryVal;
       condition = checkTrigger(queryVal, trigger, threshold);
       if (condition) {
@@ -519,7 +512,7 @@
   var eventsManager = function eventsManager(events, callback) {
     for (var element in events) {
       for (var event in events[element]) {
-        callback(event, element);
+        callback(element, event);
       }
     }
   };
@@ -557,17 +550,17 @@
         }
       }
     };
-    eventsManager(privateEvents, function (event, element) {
-      if (!resultsList && element === "list") return;
+    eventsManager(privateEvents, function (element, event) {
+      if (!resultsList && event !== "input") return;
       if (publicEvents[element][event]) return;
       publicEvents[element][event] = privateEvents[element][event];
     });
-    eventsManager(publicEvents, function (event, element) {
+    eventsManager(publicEvents, function (element, event) {
       ctx[element].addEventListener(event, publicEvents[element][event]);
     });
   };
   var removeEvents = function removeEvents(ctx) {
-    eventsManager(ctx.events, function (event, element) {
+    eventsManager(ctx.events, function (element, event) {
       ctx[element].removeEventListener(event, ctx.events[element][event]);
     });
   };
@@ -628,8 +621,8 @@
     prototype.init = function () {
       init(this);
     };
-    prototype.start = function () {
-      start(this);
+    prototype.start = function (query) {
+      start(this, query);
     };
     prototype.unInit = function () {
       if (this.wrapper) {

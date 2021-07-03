@@ -105,14 +105,14 @@ const checkTrigger = (query, condition, threshold) => (condition ? condition(que
  * Highlight matching characters
  *
  * @param {String} value - user's raw search query value
- * @param {String} klass - of highlighted character
+ * @param {String} cls - of highlighted character
  *
  * @returns {HTMLElement} - newly create html element
  */
-const mark = (value, klass) =>
+const mark = (value, cls) =>
   create("mark", {
     innerHTML: value,
-    ...(typeof klass === "string" && { class: klass }),
+    ...(typeof cls === "string" && { class: cls }),
   }).outerHTML;
 
 export { select, create, getQuery, format, debounce, checkTrigger, mark };

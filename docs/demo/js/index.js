@@ -60,10 +60,10 @@ const autoCompleteJS = new autoComplete({
   },
   events: {
     input: {
-      focus: () => {
+      focus() {
         if (autoCompleteJS.input.value.length) autoCompleteJS.start();
       },
-      selection: (event) => {
+      selection(event) {
         const feedback = event.detail;
         autoCompleteJS.input.blur();
         // Prepare User's Selected Value

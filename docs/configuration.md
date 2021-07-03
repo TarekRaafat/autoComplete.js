@@ -10,7 +10,7 @@ API configuration options, methods and events
 
 ### name <sub><sup>(optional)</sup></sub>
 
-> Global instance name where all elements inherit their class & id names
+> Responsible for the global instance naming where all elements inherit their class & id names
 
 - Type: `String`
 - Default: `autoComplete`
@@ -26,9 +26,9 @@ name: "autoComplete",
 ### selector <sub><sup>(optional)</sup></sub>
 
 
-> Input field selector
+> Responsible for the input, textarea, or contentEditable element selection
 
-- Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function`
+- Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` returns `Element`
 - Default: `#autoComplete`
 
 ##### Example
@@ -54,7 +54,7 @@ selector: () => {
 ### wrapper <sub><sup>(optional)</sup></sub>
 
 
-> Wrapper div container
+> Responsible for rendering the `div` that wraps the `input` and the `list` element
 
 - Type: `Boolean`
 - Default: `true`
@@ -69,7 +69,7 @@ wrapper: false,
 
 ### data <sub><sup>(required)</sup></sub>
 
-> Data Source
+> Responsible for the data source selection
 
 - Type: `Object`
 
@@ -154,7 +154,7 @@ data: {
 
 ### trigger <sub><sup>(optional)</sup></sub>
 
-> Event & Condition rules that trigger autoComplete.js engine to start
+> Responsible for Event & Condition rules that trigger autoComplete.js engine to start
 
 - Type: `Function` returns `Boolean`
   - Parameters: (`query`)
@@ -172,7 +172,7 @@ trigger: (query) => {
 
 ### query <sub><sup>(optional)</sup></sub>
 
-> Query interceptor
+> Responsible for Query interception & manipulation
 
 - Type: `Function` returns `String`
   - Parameters: (`input`)
@@ -190,7 +190,7 @@ query: (input) => {
 
 ### placeHolder <sub><sup>(optional)</sup></sub>
 
-> Input field placeholder value
+> Responsible for the input field placeholder value setting
 
 - Type: `String`
 - Default: `Blank/Empty`
@@ -205,7 +205,7 @@ placeHolder: "Search...",
 
 ### threshold <sub><sup>(optional)</sup></sub>
 
-> Minimum characters length for autoComplete.js engine to start
+> Responsible for setting threshold value of the minimum characters length where autoComplete.js engine starts
 
 - Type: `Integer`
 - Default: `1`
@@ -220,7 +220,7 @@ threshold: 2,
 
 ### debounce <sub><sup>(optional)</sup></sub>
 
-> Delay duration after done typing for autoComplete.js engine to start
+> Responsible for setting delay time duration that counts after typing is done for autoComplete.js engine to start
 
 - Type: `Integer`
 - Default: `0`
@@ -235,7 +235,7 @@ debounce: 300, // Milliseconds value
 
 ### searchEngine <sub><sup>(optional)</sup></sub>
 
-> Search engine Type/Mode
+> Responsible for setting the Search engine Type/Mode or custom engine
 
 - Type: `String` | `Function`
   - `String` lowerCase `"strict"` | `"loose"`
@@ -252,7 +252,7 @@ searchEngine: "strict",
 
 ### diacritics <sub><sup>(optional)</sup></sub>
 
-> Search engine diacritics handler
+> Responsible for turning on/off language diacritics supported search
 
 - Type: `Boolean`
 - Default: `false`
@@ -267,7 +267,7 @@ diacritics: true,
 
 ### resultsList <sub><sup>(optional)</sup></sub>
 
-> Rendered results list element interceptor and customizer
+> Responsible for the results list element rendering, interception, and customizing
 
 - Type: `Object` | `Boolean` for disabling list rendering
 
@@ -331,7 +331,7 @@ resultsList: {
 
 ### resultItem <sub><sup>(optional)</sup></sub>
 
-> Rendered result item element customizer and interceptor
+> Responsible for the result item element rendering, interception, and customizing
 
 - Type: `Object`
 
@@ -378,9 +378,24 @@ resultItem: {
 
 ***
 
+### submit <sub><sup>(optional)</sup></sub>
+
+> Responsible for the `Enter` button default behavior
+
+- Type: `Boolean`
+- Default: `false`
+
+##### Example:
+
+```js
+submit: true,
+```
+
+***
+
 ### events <sub><sup>(optional)</sup></sub>
 
-> Input field & Results list events additions or overriding
+> Responsible for the input field and results list events additions or overriding
 
 - Type: `Object`
   - input: `Object` of functions with the [event](https://developer.mozilla.org/en-US/docs/Web/Events) type name
@@ -432,21 +447,27 @@ autoCompleteJS.init();
 
 ***
 
-### start()
+### start(query)
 
-> Runs `start()` core function which is responsible for the following tasks in order:
+> Runs `start(query)` core function which is responsible for the following tasks in order:
 
-1. Getting the `input` query value
+1. Getting the `input` query value if NOT passed as an argument
 2. Manipulating `query` value
 3. Checking `trigger` condition validity to proceed
 4. Fetching `data` from `src` or `store` if cached
 5. Start matching results
 6. Rendering `list` if enabled
 
+Arguments:
+- query: `String` <sub><sup>(optional)</sup></sub>
+
+Defaults:
+- query: `input` query value
+
 ##### Example:
 
 ```js
-autoCompleteJS.start();
+autoCompleteJS.start("tea");
 ```
 
 ***
@@ -455,10 +476,10 @@ autoCompleteJS.start();
 
 > autoComplete.js powerful search engine
 
-Parameters:
+Arguments:
 - query: `String`
 - record: `String`
-- options: `Object`
+- options: `Object` <sub><sup>(optional)</sup></sub>
   - mode: `String`
     - `"strict"` search mode
     - `"loose"` search mode
@@ -523,7 +544,7 @@ autoCompleteJS.previous();
 
 > Navigates to a specific `resultItem` on the list by its `index` number
 
-Parameters:
+Arguments:
 - index: `Number`
 
 Defaults:
@@ -542,8 +563,8 @@ autoCompleteJS.gotTo(1);
 
 > Selects a `resultItem` from the list by its `index` number
 
-Parameters:
-- index: `Number`
+Arguments:
+- index: `Number` <sub><sup>(optional)</sup></sub>
 
 Defaults:
 - index: current cursor position
@@ -570,7 +591,7 @@ autoCompleteJS.close();
 
 ### unInit()
 
-> Removes all the event listeners on the `_events` list
+> Removes all the event listeners on the `events` list
 
 ##### Example:
 

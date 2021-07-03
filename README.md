@@ -30,6 +30,10 @@ autoComplete.js is a simple, pure vanilla Javascript library progressively desig
 -  Pure Vanilla Javascript
 -  Zero Dependencies
 -  Simple & Lightweight
+-  Powerful Search Engine with two different modes
+-  Diacritics Support
+-  Debounce Support
+-  Life Cycle Events
 -  Useful plugin API
 -  WAI-ARIA Compliant
 -  Highly Customizable
@@ -47,13 +51,13 @@ autoComplete.js is a simple, pure vanilla Javascript library progressively desig
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.1.5/dist/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.0/dist/autoComplete.min.js"></script>
 ```
 
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.1.5/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.0/dist/css/autoComplete.min.css">
 ```
 #### Package Manager
 

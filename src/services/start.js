@@ -6,12 +6,13 @@ import { render, close } from "../controllers/listController";
  * Start stage
  *
  * @param {Object} ctx - autoComplete.js context
+ * @param {String} q - API search query value
  */
-export default async function (ctx) {
+export default async function (ctx, q) {
   const { input, query, trigger, threshold, resultsList } = ctx;
 
   // Get "input" query value
-  let queryVal = getQuery(input);
+  let queryVal = q || getQuery(input);
   queryVal = query ? query(queryVal) : queryVal;
   // Get trigger decision
   const condition = checkTrigger(queryVal, trigger, threshold);

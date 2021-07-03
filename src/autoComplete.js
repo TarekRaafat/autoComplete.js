@@ -42,6 +42,7 @@ import init from "./services/init";
  * @param {Function} [config.resultItem.element] - Invoked before showing the results list. Allows manipulation of the DOM before it is added to the document. Signature: (item: HTMLElement, data: { match, value, [key] }).
  * @param {(Boolean|String)} [config.resultItem.highlight=false] - Enable to highlight matching characters using HTMLMarkElement, or a string of CSS classes to add to any generated mark elements.
  * @param {String} [config.resultItem.selected] - CSS classes to add and remove from result items the user navigates to using the keyboard.
+ * @param {Boolean} [config.submit] - If enabled pressing enter will not prevent default behavior.
  * @param {Object} [config.events] - Allows adding custom or overriding internal event handling.
  * @param {Object} [config.events.input] - Maps event names to event handlers for the input element. Each key must be a valid event name, see {@link https://developer.mozilla.org/en-US/docs/Web/Events}, and each value must be an event handler function. Default handlers are keydown and blur.
  * @param {Object} [config.events.list] - Same as config.events.input, but for the result list container element. Default handlers are mousedown and click.

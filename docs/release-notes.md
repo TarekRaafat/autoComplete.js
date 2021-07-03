@@ -35,7 +35,14 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.1.5 ✨
+### v10.2.0 ✨
+- ➕ Added: `submit` API property controls `Enter` button default behavior (Thanks 👍 @CodeWithOz) #249 #224 #189
+- ➕ Added: `query` parameter to the `start("query")` API method for programmatic operations
+- 🔧 Fixed: Generated errors when `resultsList` is disabled due to the attachment of the `keydown` event
+- 🎛️ Updated: Library code with minor optimizations
+- 🧹 Removed: Engines field in package.json
+
+### v10.1.5
 - 🧹 Removed: `preInit` stage (Thanks 👍 @folknor) #229
 - 🔧 Fixed: `unInit` to remove the `wrapper` element (Thanks 👍 @deniseismo) #245
 

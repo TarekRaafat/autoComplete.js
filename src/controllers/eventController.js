@@ -11,7 +11,7 @@ import { click, navigate, close } from "./listController";
 const eventsManager = (events, callback) => {
   for (const element in events) {
     for (const event in events[element]) {
-      callback(event, element);
+      callback(element, event);
     }
   }
 };
@@ -37,37 +37,38 @@ const addEvents = (ctx) => {
   // Private events listeners list
   const privateEvents = {
     input: {
-      input: () => {
+      input() {
         run();
       },
-      keydown: (event) => {
+      keydown(event) {
         navigate(event, ctx);
       },
-      blur: () => {
+      blur() {
         close(ctx);
       },
     },
     list: {
-      mousedown: (event) => {
+      mousedown(event) {
         event.preventDefault();
       },
-      click: (event) => {
+      click(event) {
         click(event, ctx);
       },
     },
   };
 
   // Populate all private events into public events list
-  eventsManager(privateEvents, (event, element) => {
-    // do NOT populate list events If "resultsList" disabled
-    if (!resultsList && element === "list") return;
-    // do NOT overwrite public events
+  eventsManager(privateEvents, (element, event) => {
+    // Do NOT populate any events except "input" If "resultsList" disabled
+    if (!resultsList && event !== "input") return;
+    // Do NOT overwrite public events
     if (publicEvents[element][event]) return;
+    // Populate public events
     publicEvents[element][event] = privateEvents[element][event];
   });
 
   // Attach all public events
-  eventsManager(publicEvents, (event, element) => {
+  eventsManager(publicEvents, (element, event) => {
     ctx[element].addEventListener(event, publicEvents[element][event]);
   });
 };
@@ -78,7 +79,7 @@ const addEvents = (ctx) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const removeEvents = (ctx) => {
-  eventsManager(ctx.events, (event, element) => {
+  eventsManager(ctx.events, (element, event) => {
     ctx[element].removeEventListener(event, ctx.events[element][event]);
   });
 };

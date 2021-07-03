@@ -1,8 +1,6 @@
 import { create } from "../helpers/io";
 import eventEmitter from "../helpers/eventEmitter";
 
-let classes;
-
 // String holders
 const Expand = "aria-expanded";
 const Active = "aria-activedescendant";
@@ -116,7 +114,12 @@ const close = (ctx) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const goTo = (index, ctx) => {
-  const results = ctx.list.getElementsByTagName(ctx.resultItem.tag);
+  const { list, resultItem } = ctx;
+
+  // List of result items
+  const results = list.getElementsByTagName(resultItem.tag);
+  // Selected result item Classes
+  const cls = resultItem.selected ? resultItem.selected.split(" ") : false;
 
   if (ctx.isOpen && results.length) {
     // Previous cursor state
@@ -134,19 +137,19 @@ const goTo = (index, ctx) => {
       // Remove "aria-selected" attribute from the item
       results[state].removeAttribute(Selected);
       // Remove "selected" class from the item
-      if (classes) results[state].classList.remove(...classes);
+      if (cls) results[state].classList.remove(...cls);
     }
 
     // Set "aria-selected" value to true
     results[index].setAttribute(Selected, true);
     // Add "selected" class to the selected item
-    if (classes) results[index].classList.add(...classes);
+    if (cls) results[index].classList.add(...cls);
 
     // Set "aria-activedescendant" value to the selected item
     ctx.input.setAttribute(Active, results[ctx.cursor].id);
 
     // Scroll to selection
-    ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
+    list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight + 5;
 
     // Prepare Selection data feedback object
     ctx.feedback.cursor = ctx.cursor;
@@ -218,8 +221,6 @@ const click = (event, ctx) => {
 
   // Check if clicked item is a "result" item
   if (item && item.nodeName === itemTag) {
-    event.preventDefault();
-
     const index = items.indexOf(item);
 
     select(ctx, event, index);
@@ -233,30 +234,23 @@ const click = (event, ctx) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const navigate = function (event, ctx) {
-  const key = event.keyCode;
-  const selected = ctx.resultItem.selected;
-
-  if (selected) classes = selected.split(" ");
-
   // Check pressed key
-  switch (key) {
+  switch (event.keyCode) {
     // Down/Up arrow
     case 40:
     case 38:
       event.preventDefault();
 
       // Move cursor based on pressed key
-      key === 40 ? next(ctx) : previous(ctx);
+      event.keyCode === 40 ? next(ctx) : previous(ctx);
 
       break;
     // Enter
     case 13:
-      event.preventDefault();
+      if (!ctx.submit) event.preventDefault();
 
       // If cursor moved
-      if (ctx.cursor >= 0) {
-        select(ctx, event);
-      }
+      if (ctx.cursor >= 0) select(ctx, event);
 
       break;
     // Tab
@@ -265,14 +259,11 @@ const navigate = function (event, ctx) {
         event.preventDefault();
 
         select(ctx, event);
-      } else {
-        close(ctx);
       }
+
       break;
     // Esc
     case 27:
-      event.preventDefault();
-
       // Clear "input" value
       ctx.input.value = "";
 
