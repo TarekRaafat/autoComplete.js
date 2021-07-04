@@ -464,10 +464,7 @@
         if (ctx.cursor >= 0) select(ctx, event);
         break;
       case 9:
-        if (ctx.resultsList.tabSelect && ctx.cursor >= 0) {
-          event.preventDefault();
-          select(ctx, event);
-        }
+        if (ctx.resultsList.tabSelect && ctx.cursor >= 0) select(ctx, event);
         break;
       case 27:
         ctx.input.value = "";

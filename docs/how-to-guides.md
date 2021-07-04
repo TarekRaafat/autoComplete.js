@@ -44,13 +44,15 @@ events: {
 // autoComplete.js Config Options
 resultsList: {
     element: (list, query) => {
-        // Create "No Results" message list element
-        const message = document.createElement("div");
-        message.setAttribute("class", "no_result");
-        // Add message text content
-        message.innerHTML = `<span>Found No Results for "${query}"</span>`;
-        // Add message list element to the list
-        list.appendChild(message);
+        if (!data.results.length) {
+            // Create "No Results" message list element
+            const message = document.createElement("div");
+            message.setAttribute("class", "no_result");
+            // Add message text content
+            message.innerHTML = `<span>Found No Results for "${query}"</span>`;
+            // Add message list element to the list
+            list.appendChild(message);
+        }
     },
     noResults: true,
 }

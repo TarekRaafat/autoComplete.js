@@ -35,7 +35,11 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.2.0 ✨
+### v10.2.1 ✨
+- 🧹 Removed: `preventDefault` on `Tab` key press event
+- 🎛️ Updated: `No Results Found` example under `How-to Guides` in documentation
+
+### v10.2.0
 - ➕ Added: `submit` API property controls `Enter` button default behavior (Thanks 👍 @CodeWithOz) #249 #224 #189
 - ➕ Added: `query` parameter to the `start("query")` API method for programmatic operations
 - 🔧 Fixed: Generated errors when `resultsList` is disabled due to the attachment of the `keydown` event

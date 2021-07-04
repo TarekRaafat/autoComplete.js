@@ -240,7 +240,6 @@ const navigate = function (event, ctx) {
     case 40:
     case 38:
       event.preventDefault();
-
       // Move cursor based on pressed key
       event.keyCode === 40 ? next(ctx) : previous(ctx);
 
@@ -248,18 +247,14 @@ const navigate = function (event, ctx) {
     // Enter
     case 13:
       if (!ctx.submit) event.preventDefault();
-
       // If cursor moved
       if (ctx.cursor >= 0) select(ctx, event);
 
       break;
     // Tab
     case 9:
-      if (ctx.resultsList.tabSelect && ctx.cursor >= 0) {
-        event.preventDefault();
-
-        select(ctx, event);
-      }
+      // Select on Tab if enabled
+      if (ctx.resultsList.tabSelect && ctx.cursor >= 0) select(ctx, event);
 
       break;
     // Esc

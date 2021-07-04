@@ -32,7 +32,7 @@ const autoCompleteJS = new autoComplete({
   resultsList: {
     element: (list, data) => {
       const info = document.createElement("p");
-      if (data.results.length > 0) {
+      if (data.results.length) {
         info.innerHTML = `Displaying <strong>${data.results.length}</strong> out of <strong>${data.matches.length}</strong> results`;
       } else {
         info.innerHTML = `Found <strong>${data.matches.length}</strong> matching results for <strong>"${data.query}"</strong>`;
