@@ -1,3 +1,5 @@
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -565,27 +567,21 @@
   function init (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var name, input, placeHolder, resultsList, data, parentAttrs;
-      name = ctx.name;
-      input = ctx.input;
-      placeHolder = ctx.placeHolder;
+      var resultsList, parentAttrs;
       resultsList = ctx.resultsList;
-      data = ctx.data;
       parentAttrs = {
         role: "combobox",
         "aria-owns": resultsList.id,
         "aria-haspopup": true,
         "aria-expanded": false
       };
-      create(input, _objectSpread2(_objectSpread2({
+      create(ctx.input, _objectSpread2(_objectSpread2({
         "aria-controls": resultsList.id,
         "aria-autocomplete": "both"
-      }, placeHolder && {
-        placeholder: placeHolder
-      }), !ctx.wrapper && _objectSpread2({}, parentAttrs)));
+      }, !ctx.wrapper && _objectSpread2({}, parentAttrs)), ctx.attrs));
       if (ctx.wrapper) ctx.wrapper = create("div", _objectSpread2({
-        around: input,
-        "class": name + "_wrapper"
+        around: ctx.input,
+        "class": ctx.name + "_wrapper"
       }, parentAttrs));
       if (resultsList) ctx.list = create(resultsList.tag, _objectSpread2({
         dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
@@ -595,7 +591,7 @@
       }, resultsList["class"] && {
         "class": resultsList["class"]
       }));
-      if (data.cache) {
+      if (ctx.data.cache) {
         return getData(ctx).then(function ($await_2) {
           try {
             return $If_1.call(_this);

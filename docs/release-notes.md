@@ -35,6 +35,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
+### v11.0.0 ✨
+- ➕ Added: `attrs` API property for all `input` field attributes
+- 🧹 Removed: `placeHolder` API property to be replaced with `attrs`
+
 ### v10.2.1 ✨
 - 🧹 Removed: `preventDefault` on `Tab` key press event
 - 🎛️ Updated: `No Results Found` example under `How-to Guides` in documentation

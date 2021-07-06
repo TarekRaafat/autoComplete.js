@@ -9,7 +9,7 @@ import eventEmitter from "../helpers/eventEmitter";
  * @param {Object} ctx - autoComplete.js context
  */
 export default async function (ctx) {
-  let { name, input, placeHolder, resultsList, data } = ctx;
+  let { resultsList } = ctx;
 
   const parentAttrs = {
     role: "combobox",
@@ -19,15 +19,15 @@ export default async function (ctx) {
   };
 
   // Set "input" attributes
-  create(input, {
+  create(ctx.input, {
     "aria-controls": resultsList.id,
     "aria-autocomplete": "both",
-    ...(placeHolder && { placeholder: placeHolder }),
     ...(!ctx.wrapper && { ...parentAttrs }),
+    ...ctx.attrs,
   });
 
   // Create wrapper element
-  if (ctx.wrapper) ctx.wrapper = create("div", { around: input, class: name + "_wrapper", ...parentAttrs });
+  if (ctx.wrapper) ctx.wrapper = create("div", { around: ctx.input, class: ctx.name + "_wrapper", ...parentAttrs });
 
   if (resultsList)
     // Create new list element
@@ -45,7 +45,7 @@ export default async function (ctx) {
     });
 
   // Get the data from store
-  if (data.cache) await getData(ctx);
+  if (ctx.data.cache) await getData(ctx);
 
   // Attach Events listeners
   addEvents(ctx);

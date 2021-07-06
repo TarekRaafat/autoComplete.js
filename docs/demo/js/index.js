@@ -3,13 +3,9 @@ const autoCompleteJS = new autoComplete({
   data: {
     src: async () => {
       try {
-        // Loading placeholder text
-        document.getElementById("autoComplete").setAttribute("placeholder", "Loading...");
         // Fetch External Data Source
         const source = await fetch("./db/generic.json");
         const data = await source.json();
-        // Post Loading placeholder text
-        document.getElementById("autoComplete").setAttribute("placeholder", autoCompleteJS.placeHolder);
         // Returns Fetched data
         return data;
       } catch (error) {
@@ -28,7 +24,17 @@ const autoCompleteJS = new autoComplete({
       return filteredResults;
     },
   },
-  placeHolder: "Search for Food & Drinks!",
+  attrs: {
+    type: "text",
+    dir: "ltr",
+    spellcheck: false,
+    autocorrect: "off",
+    autocomplete: "off",
+    autocapitalize: "off",
+    maxlength: "64",
+    placeholder: "Search for Food & Drinks!",
+    tabindex: "1",
+  },
   resultsList: {
     element: (list, data) => {
       const info = document.createElement("p");
