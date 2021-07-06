@@ -19,7 +19,7 @@ import init from "./services/init";
  * @param {Function} [config.data.filter] - Used to filter and sort matching returns from config.data.src before showing them to the user. Signature: (Array), is given all the results from config.data.src that matches the query.
  * @param {Function} [config.trigger] - Return true if you want autoComplete.js to start. Signature: (event, query). Default trigger function returns true if input field is *NOT* empty *and* greater than or equal to config.threshold.
  * @param {Function} [config.query] - For manipulating the input value before running the search, for example if you want to remove spaces or anything else. Signature: (string), must return string, is given the raw input value.
- * @param {String} [config.placeHolder] - Placeholder to set on the input element. For example "Search...".
+ * @param {String} [config.attrs] - Attributes to set on the input element. For example "placeholder, etc..".
  * @param {Number} [config.threshold=1] - Minimum number of characters required in the input before triggering autocompletion.
  * @param {Number} [config.debounce=0] - Delay in milliseconds after input for autocompletion to start.
  * @param {Boolean} [config.wrapper=true] - Wraps the input element in a div for a11y purposes, adding some ARIA attributes.

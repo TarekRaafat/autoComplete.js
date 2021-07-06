@@ -165,29 +165,6 @@
     };
   }
 
-  var configure = (function (ctx) {
-    var id = ctx.id,
-        name = ctx.name,
-        options = ctx.options,
-        resultsList = ctx.resultsList,
-        resultItem = ctx.resultItem;
-    for (var option in options) {
-      if (_typeof(options[option]) === "object") {
-        if (!ctx[option]) ctx[option] = {};
-        for (var subOption in options[option]) {
-          ctx[option][subOption] = options[option][subOption];
-        }
-      } else {
-        ctx[option] = options[option];
-      }
-    }
-    ctx.selector = ctx.selector || "#" + name;
-    resultsList.destination = resultsList.destination || ctx.selector;
-    resultsList.id = resultsList.id || name + "_list_" + id;
-    resultItem.id = resultItem.id || name + "_result";
-    ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
-  });
-
   var select$1 = function select(element) {
     return typeof element === "string" ? document.querySelector(element) : element;
   };
@@ -238,6 +215,29 @@
       "class": cls
     })).outerHTML;
   };
+
+  var configure = (function (ctx) {
+    var id = ctx.id,
+        name = ctx.name,
+        options = ctx.options,
+        resultsList = ctx.resultsList,
+        resultItem = ctx.resultItem;
+    for (var option in options) {
+      if (_typeof(options[option]) === "object") {
+        if (!ctx[option]) ctx[option] = {};
+        for (var subOption in options[option]) {
+          ctx[option][subOption] = options[option][subOption];
+        }
+      } else {
+        ctx[option] = options[option];
+      }
+    }
+    ctx.selector = ctx.selector || "#" + name;
+    resultsList.destination = resultsList.destination || ctx.selector;
+    resultsList.id = resultsList.id || name + "_list_" + id;
+    resultItem.id = resultItem.id || name + "_result";
+    ctx.input = select$1(ctx.selector);
+  });
 
   var eventEmitter = (function (name, ctx) {
     ctx.input.dispatchEvent(new CustomEvent(name, {

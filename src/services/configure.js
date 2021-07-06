@@ -1,3 +1,5 @@
+import { select } from "../helpers/io";
+
 /**
  * Configuring options stage
  *
@@ -24,7 +26,6 @@ export default (ctx) => {
   resultsList.destination = resultsList.destination || ctx.selector;
   resultsList.id = resultsList.id || name + "_list_" + id;
   resultItem.id = resultItem.id || name + "_result";
-
   // Assign the "input" html element
-  ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
+  ctx.input = select(ctx.selector);
 };

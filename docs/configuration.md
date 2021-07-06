@@ -28,7 +28,7 @@ name: "autoComplete",
 
 > Responsible for the input, textarea, or contentEditable element selection
 
-- Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` returns `Element`
+- Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Element`
 - Default: `#autoComplete`
 
 ##### Example
@@ -42,9 +42,7 @@ selector: "#autoComplete", // Any valid selector
 
 #### ** Function **
 ```js
-selector: () => {
-    return [Element]; // Any valid selector
-},
+selector: document.querySelector("#autoComplete"), // Any valid selector
 ```
 
 <!-- tabs:end -->
