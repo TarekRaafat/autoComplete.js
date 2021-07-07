@@ -9,7 +9,7 @@ import eventEmitter from "../helpers/eventEmitter";
  * @param {Object} ctx - autoComplete.js context
  */
 export default async function (ctx) {
-  let { placeHolder, resultsList } = ctx;
+  const { placeHolder, resultsList } = ctx;
 
   const parentAttrs = {
     role: "combobox",

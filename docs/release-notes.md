@@ -35,7 +35,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.2.3 ✨
+### v10.2.4 ✨
+- 🎛️ Updated: Library code with minor optimizations (Thanks 👍 @folknor) #256
+
+### v10.2.3
 - 🔧 Fixed: `query` API issue (Thanks 👍 @folknor) #254
 
 ### v10.2.2

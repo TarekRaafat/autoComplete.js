@@ -18,7 +18,7 @@ export default async function (ctx, q) {
   // Validate trigger condition
   if (condition) {
     // Get from source
-    await getData(ctx);
+    await getData(ctx, queryVal);
     // Check if data fetch failed
     if (ctx.feedback instanceof Error) return;
     // Find matching results to the query

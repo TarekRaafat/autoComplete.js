@@ -274,14 +274,11 @@
     }
   });
 
-  var getData = function getData(ctx) {
+  var getData = function getData(ctx, query) {
     return new Promise(function ($return, $error) {
-      var input, query, data;
-      input = ctx.input;
-      query = ctx.query;
+      var data;
       data = ctx.data;
       if (data.cache && data.store) return $return();
-      query = query ? query(input.value) : input.value;
       return new Promise(function ($return, $error) {
         if (typeof data.src === "function") {
           return data.src(query).then($return, $error);
@@ -475,7 +472,7 @@
       queryVal = ctx.query ? ctx.query(queryVal) : queryVal;
       condition = checkTrigger(queryVal, ctx.trigger, ctx.threshold);
       if (condition) {
-        return getData(ctx).then(function ($await_2) {
+        return getData(ctx, queryVal).then(function ($await_2) {
           try {
             if (ctx.feedback instanceof Error) return $return();
             findMatches(queryVal, ctx);

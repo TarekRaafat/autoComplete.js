@@ -25,7 +25,7 @@ const feedback = (ctx, index) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const render = (ctx) => {
-  let { resultsList, list, resultItem, feedback } = ctx;
+  const { resultsList, list, resultItem, feedback } = ctx;
   const { matches, results } = feedback;
 
   // Reset cursor
