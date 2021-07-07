@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/v/@tarekraafat/autocomplete.js)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
 ![100% Javascript](https://img.shields.io/github/languages/top/TarekRaafat/autoComplete.js?color=yellow)
 ![Zero Dependencies](https://img.shields.io/badge/Dependencies-0-blue.svg)
-![Minified Size](https://badgen.net/bundlephobia/min/@tarekraafat/autocomplete.js@10.2.2)
+![Minified Size](https://badgen.net/bundlephobia/min/@tarekraafat/autocomplete.js)
 ![Yes Maintained](https://img.shields.io/badge/Maintained%3F-yes-success)
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 ![npm](https://img.shields.io/npm/dm/@tarekraafat/autocomplete.js?label=npm)
