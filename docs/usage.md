@@ -151,7 +151,7 @@ const autoCompleteJS = new autoComplete({ config });
 > 
 > `autoComplete.js` does not sanitize/manipulate the user's input data query, mainly for flexibility purposes.
 >
-> Hence, it is advisable to use any trusted sanitization method/strategy/library with the `query()` API method<br>
+> Hence, it is advisable to use any trusted sanitization method/strategy/library with the [`query()`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=query-optional) API method<br>
 > to reduce the risk of `Cross-Frame Scripting (XFS)` or `Cross-Site Scripting (XSS)` attacks.
 >
 >
