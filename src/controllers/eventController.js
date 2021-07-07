@@ -1,5 +1,5 @@
 import start from "../services/start";
-import { debounce } from "../helpers/io";
+import { debounce as debouncer } from "../helpers/io";
 import { click, navigate, close } from "./listController";
 
 /**
@@ -22,16 +22,16 @@ const eventsManager = (events, callback) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const addEvents = (ctx) => {
-  const { events, trigger, debounce: timer, resultsList } = ctx;
+  const { events } = ctx;
 
-  const run = debounce(() => start(ctx), timer);
+  const run = debouncer(() => start(ctx), ctx.debounce);
 
   // Public events listeners list
   const publicEvents = (ctx.events = {
     input: {
       ...(events && events.input),
     },
-    ...(resultsList && { list: events ? { ...events.list } : {} }),
+    ...(ctx.resultsList && { list: events ? { ...events.list } : {} }),
   });
 
   // Private events listeners list
@@ -60,7 +60,7 @@ const addEvents = (ctx) => {
   // Populate all private events into public events list
   eventsManager(privateEvents, (element, event) => {
     // Do NOT populate any events except "input" If "resultsList" disabled
-    if (!resultsList && event !== "input") return;
+    if (!ctx.resultsList && event !== "input") return;
     // Do NOT overwrite public events
     if (publicEvents[element][event]) return;
     // Populate public events

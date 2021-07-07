@@ -9,13 +9,11 @@ import { render, close } from "../controllers/listController";
  * @param {String} q - API search query value
  */
 export default async function (ctx, q) {
-  const { input, query, trigger, threshold, resultsList } = ctx;
-
   // Get "input" query value
-  let queryVal = q || getQuery(input);
-  queryVal = query ? query(queryVal) : queryVal;
+  let queryVal = q || getQuery(ctx.input);
+  queryVal = ctx.query ? query(queryVal) : queryVal;
   // Get trigger decision
-  const condition = checkTrigger(queryVal, trigger, threshold);
+  const condition = checkTrigger(queryVal, ctx.trigger, ctx.threshold);
 
   // Validate trigger condition
   if (condition) {
@@ -26,7 +24,7 @@ export default async function (ctx, q) {
     // Find matching results to the query
     findMatches(queryVal, ctx);
     // Render "resultsList"
-    if (resultsList) render(ctx);
+    if (ctx.resultsList) render(ctx);
   } else {
     // Close open list
     close(ctx);

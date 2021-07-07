@@ -28,7 +28,7 @@ const getData = async (ctx) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const findMatches = (query, ctx) => {
-  const { data, searchEngine, diacritics, resultsList, resultItem } = ctx;
+  const { data, searchEngine } = ctx;
 
   let matches = [];
 
@@ -42,8 +42,8 @@ const findMatches = (query, ctx) => {
           ? searchEngine(query, record)
           : search(query, record, {
               mode: searchEngine,
-              diacritics,
-              highlight: resultItem.highlight,
+              diacritics: ctx.diacritics,
+              highlight: ctx.resultItem.highlight,
             });
 
       if (!match) return;
@@ -67,7 +67,7 @@ const findMatches = (query, ctx) => {
   // Find results matching to the query
   if (data.filter) matches = data.filter(matches);
 
-  const results = matches.slice(0, resultsList.maxResults);
+  const results = matches.slice(0, ctx.resultsList.maxResults);
 
   // Prepare data feedback object
   ctx.feedback = { query, matches, results };

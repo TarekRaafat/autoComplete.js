@@ -92,6 +92,7 @@ const autoCompleteJS = new autoComplete({ config });
 <!-- tabs:end -->
 
 3. Set your `autoComplete.js` instance [configurations](/configuration.md)
+> Note: [data.src](/configuration.md?id=data-required) config is **required**
 
 <!-- tabs:start -->
 #### ** Basic **
@@ -146,7 +147,19 @@ const autoCompleteJS = new autoComplete({ config });
 ```
 
 <!-- tabs:end -->
-> Note: [data.src](/configuration.md?id=data-required) config is **required**
+> <i class="ps-icon ps-icon-important"></i> Security Alert:
+> 
+> `autoComplete.js` does not sanitize/manipulate the user's input data query, mainly for flexibility purposes.
+>
+> Hence, it is advisable to use any trusted sanitization method/strategy/library with the `query()` API method<br>
+> to reduce the risk of `Cross-Frame Scripting (XFS)` or `Cross-Site Scripting (XSS)` attacks.
+>
+>
+>
+> Recommended sanitization Libraries:<br>
+> 1- [DOMPurify](https://github.com/cure53/DOMPurify)<br>
+> 2- [js-xss](https://github.com/leizongmin/js-xss)<br>
+> 3- [sanitize-html](https://github.com/apostrophecms/sanitize-html)
 
 ***
 

@@ -90,6 +90,6 @@ export default function (autoComplete) {
    * @returns {String} - Matching data record
    */
   autoComplete.search = prototype.search = function (query, record, options) {
-    search(query, record, options);
+    return search(query, record, options);
   };
 }

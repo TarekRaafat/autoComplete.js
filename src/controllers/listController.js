@@ -26,7 +26,7 @@ const feedback = (ctx, index) => {
  */
 const render = (ctx) => {
   let { resultsList, list, resultItem, feedback } = ctx;
-  const { query, matches, results } = feedback;
+  const { matches, results } = feedback;
 
   // Reset cursor
   ctx.cursor = -1;
@@ -35,7 +35,7 @@ const render = (ctx) => {
   list.innerHTML = "";
 
   if (matches.length || resultsList.noResults) {
-    const fragment = document.createDocumentFragment();
+    const fragment = new DocumentFragment();
 
     // Generate results elements
     results.forEach((result, index) => {
@@ -114,10 +114,10 @@ const close = (ctx) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const goTo = (index, ctx) => {
-  const { list, resultItem } = ctx;
+  const { resultItem } = ctx;
 
   // List of result items
-  const results = list.getElementsByTagName(resultItem.tag);
+  const results = ctx.list.getElementsByTagName(resultItem.tag);
   // Selected result item Classes
   const cls = resultItem.selected ? resultItem.selected.split(" ") : false;
 
@@ -149,7 +149,7 @@ const goTo = (index, ctx) => {
     ctx.input.setAttribute(Active, results[ctx.cursor].id);
 
     // Scroll to selection
-    list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight + 5;
+    ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
 
     // Prepare Selection data feedback object
     ctx.feedback.cursor = ctx.cursor;

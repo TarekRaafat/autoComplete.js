@@ -163,31 +163,8 @@
     };
   }
 
-  var configure = (function (ctx) {
-    var id = ctx.id,
-        name = ctx.name,
-        options = ctx.options,
-        resultsList = ctx.resultsList,
-        resultItem = ctx.resultItem;
-    for (var option in options) {
-      if (_typeof(options[option]) === "object") {
-        if (!ctx[option]) ctx[option] = {};
-        for (var subOption in options[option]) {
-          ctx[option][subOption] = options[option][subOption];
-        }
-      } else {
-        ctx[option] = options[option];
-      }
-    }
-    ctx.selector = ctx.selector || "#" + name;
-    resultsList.destination = resultsList.destination || ctx.selector;
-    resultsList.id = resultsList.id || name + "_list_" + id;
-    resultItem.id = resultItem.id || name + "_result";
-    ctx.input = typeof ctx.selector === "string" ? document.querySelector(ctx.selector) : ctx.selector();
-  });
-
   var select$1 = function select(element) {
-    return typeof element === "string" ? document.querySelector(element) : element;
+    return typeof element === "string" ? document.querySelector(element) : element();
   };
   var create = function create(tag, options) {
     var el = typeof tag === "string" ? document.createElement(tag) : tag;
@@ -198,7 +175,7 @@
       } else if (key === "dest") {
         select$1(val[0]).insertAdjacentElement(val[1], el);
       } else if (key === "around") {
-        var ref = select$1(val);
+        var ref = val;
         ref.parentNode.insertBefore(el, ref);
         el.append(ref);
         if (ref.getAttribute("autofocus") != null) ref.focus();
@@ -236,6 +213,28 @@
       "class": cls
     })).outerHTML;
   };
+
+  var configure = (function (ctx) {
+    var name = ctx.name,
+        options = ctx.options,
+        resultsList = ctx.resultsList,
+        resultItem = ctx.resultItem;
+    for (var option in options) {
+      if (_typeof(options[option]) === "object") {
+        if (!ctx[option]) ctx[option] = {};
+        for (var subOption in options[option]) {
+          ctx[option][subOption] = options[option][subOption];
+        }
+      } else {
+        ctx[option] = options[option];
+      }
+    }
+    ctx.selector = ctx.selector || "#" + name;
+    resultsList.destination = resultsList.destination || ctx.selector;
+    resultsList.id = resultsList.id || name + "_list_" + ctx.id;
+    resultItem.id = resultItem.id || name + "_result";
+    ctx.input = select$1(ctx.selector);
+  });
 
   var eventEmitter = (function (name, ctx) {
     ctx.input.dispatchEvent(new CustomEvent(name, {
@@ -301,18 +300,15 @@
   };
   var findMatches = function findMatches(query, ctx) {
     var data = ctx.data,
-        searchEngine = ctx.searchEngine,
-        diacritics = ctx.diacritics,
-        resultsList = ctx.resultsList,
-        resultItem = ctx.resultItem;
+        searchEngine = ctx.searchEngine;
     var matches = [];
     data.store.forEach(function (value, index) {
       var find = function find(key) {
         var record = key ? value[key] : value;
         var match = typeof searchEngine === "function" ? searchEngine(query, record) : search(query, record, {
           mode: searchEngine,
-          diacritics: diacritics,
-          highlight: resultItem.highlight
+          diacritics: ctx.diacritics,
+          highlight: ctx.resultItem.highlight
         });
         if (!match) return;
         var result = {
@@ -340,7 +336,7 @@
       }
     });
     if (data.filter) matches = data.filter(matches);
-    var results = matches.slice(0, resultsList.maxResults);
+    var results = matches.slice(0, ctx.resultsList.maxResults);
     ctx.feedback = {
       query: query,
       matches: matches,
@@ -362,13 +358,12 @@
         list = ctx.list,
         resultItem = ctx.resultItem,
         feedback = ctx.feedback;
-    feedback.query;
-        var matches = feedback.matches,
+    var matches = feedback.matches,
         results = feedback.results;
     ctx.cursor = -1;
     list.innerHTML = "";
     if (matches.length || resultsList.noResults) {
-      var fragment = document.createDocumentFragment();
+      var fragment = new DocumentFragment();
       results.forEach(function (result, index) {
         var element = create(resultItem.tag, _objectSpread2({
           id: "".concat(resultItem.id, "_").concat(index),
@@ -403,9 +398,8 @@
     eventEmitter("close", ctx);
   };
   var goTo = function goTo(index, ctx) {
-    var list = ctx.list,
-        resultItem = ctx.resultItem;
-    var results = list.getElementsByTagName(resultItem.tag);
+    var resultItem = ctx.resultItem;
+    var results = ctx.list.getElementsByTagName(resultItem.tag);
     var cls = resultItem.selected ? resultItem.selected.split(" ") : false;
     if (ctx.isOpen && results.length) {
       var _results$index$classL;
@@ -421,7 +415,7 @@
       results[index].setAttribute(Selected, true);
       if (cls) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(cls));
       ctx.input.setAttribute(Active, results[ctx.cursor].id);
-      list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight + 5;
+      ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
       ctx.feedback.cursor = ctx.cursor;
       feedback(ctx, index);
       eventEmitter("navigate", ctx);
@@ -476,21 +470,16 @@
   function start (ctx, q) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var input, query, trigger, threshold, resultsList, queryVal, condition;
-      input = ctx.input;
-      query = ctx.query;
-      trigger = ctx.trigger;
-      threshold = ctx.threshold;
-      resultsList = ctx.resultsList;
-      queryVal = q || getQuery(input);
-      queryVal = query ? query(queryVal) : queryVal;
-      condition = checkTrigger(queryVal, trigger, threshold);
+      var queryVal, condition;
+      queryVal = q || getQuery(ctx.input);
+      queryVal = ctx.query ? query(queryVal) : queryVal;
+      condition = checkTrigger(queryVal, ctx.trigger, ctx.threshold);
       if (condition) {
         return getData(ctx).then(function ($await_2) {
           try {
             if (ctx.feedback instanceof Error) return $return();
             findMatches(queryVal, ctx);
-            if (resultsList) render(ctx);
+            if (ctx.resultsList) render(ctx);
             return $If_1.call(_this);
           } catch ($boundEx) {
             return $error($boundEx);
@@ -515,15 +504,12 @@
   };
   var addEvents = function addEvents(ctx) {
     var events = ctx.events;
-        ctx.trigger;
-        var timer = ctx.debounce,
-        resultsList = ctx.resultsList;
     var run = debounce(function () {
       return start(ctx);
-    }, timer);
+    }, ctx.debounce);
     var publicEvents = ctx.events = _objectSpread2({
       input: _objectSpread2({}, events && events.input)
-    }, resultsList && {
+    }, ctx.resultsList && {
       list: events ? _objectSpread2({}, events.list) : {}
     });
     var privateEvents = {
@@ -548,7 +534,7 @@
       }
     };
     eventsManager(privateEvents, function (element, event) {
-      if (!resultsList && event !== "input") return;
+      if (!ctx.resultsList && event !== "input") return;
       if (publicEvents[element][event]) return;
       publicEvents[element][event] = privateEvents[element][event];
     });
@@ -565,37 +551,34 @@
   function init (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var name, input, placeHolder, resultsList, data, parentAttrs;
-      name = ctx.name;
-      input = ctx.input;
+      var placeHolder, resultsList, parentAttrs;
       placeHolder = ctx.placeHolder;
       resultsList = ctx.resultsList;
-      data = ctx.data;
       parentAttrs = {
         role: "combobox",
         "aria-owns": resultsList.id,
         "aria-haspopup": true,
         "aria-expanded": false
       };
-      create(input, _objectSpread2(_objectSpread2({
+      create(ctx.input, _objectSpread2(_objectSpread2({
         "aria-controls": resultsList.id,
         "aria-autocomplete": "both"
       }, placeHolder && {
         placeholder: placeHolder
       }), !ctx.wrapper && _objectSpread2({}, parentAttrs)));
       if (ctx.wrapper) ctx.wrapper = create("div", _objectSpread2({
-        around: input,
-        "class": name + "_wrapper"
+        around: ctx.input,
+        "class": ctx.name + "_wrapper"
       }, parentAttrs));
       if (resultsList) ctx.list = create(resultsList.tag, _objectSpread2({
-        dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
+        dest: [resultsList.destination, resultsList.position],
         id: resultsList.id,
         role: "listbox",
         hidden: "hidden"
       }, resultsList["class"] && {
         "class": resultsList["class"]
       }));
-      if (data.cache) {
+      if (ctx.data.cache) {
         return getData(ctx).then(function ($await_2) {
           try {
             return $If_1.call(_this);
@@ -648,7 +631,7 @@
       select(this, null, index);
     };
     autoComplete.search = prototype.search = function (query, record, options) {
-      search(query, record, options);
+      return search(query, record, options);
     };
   }
 
