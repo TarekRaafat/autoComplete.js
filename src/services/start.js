@@ -11,7 +11,7 @@ import { render, close } from "../controllers/listController";
 export default async function (ctx, q) {
   // Get "input" query value
   let queryVal = q || getQuery(ctx.input);
-  queryVal = ctx.query ? query(queryVal) : queryVal;
+  queryVal = ctx.query ? ctx.query(queryVal) : queryVal;
   // Get trigger decision
   const condition = checkTrigger(queryVal, ctx.trigger, ctx.threshold);
 

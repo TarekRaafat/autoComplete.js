@@ -472,7 +472,7 @@
     return new Promise(function ($return, $error) {
       var queryVal, condition;
       queryVal = q || getQuery(ctx.input);
-      queryVal = ctx.query ? query(queryVal) : queryVal;
+      queryVal = ctx.query ? ctx.query(queryVal) : queryVal;
       condition = checkTrigger(queryVal, ctx.trigger, ctx.threshold);
       if (condition) {
         return getData(ctx).then(function ($await_2) {

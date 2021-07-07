@@ -160,6 +160,7 @@ const autoCompleteJS = new autoComplete({ config });
 > 1- [DOMPurify](https://github.com/cure53/DOMPurify)<br>
 > 2- [js-xss](https://github.com/leizongmin/js-xss)<br>
 > 3- [sanitize-html](https://github.com/apostrophecms/sanitize-html)
+> 4- [escape-goat](https://github.com/sindresorhus/escape-goat)
 
 ***
 
