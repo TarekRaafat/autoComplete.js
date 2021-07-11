@@ -575,6 +575,7 @@
       }, resultsList["class"] && {
         "class": resultsList["class"]
       }));
+      addEvents(ctx);
       if (ctx.data.cache) {
         return getData(ctx).then(function ($await_2) {
           try {
@@ -585,7 +586,6 @@
         }, $error);
       }
       function $If_1() {
-        addEvents(ctx);
         eventEmitter("init", ctx);
         return $return();
       }

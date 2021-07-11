@@ -39,11 +39,11 @@ export default async function (ctx) {
       ...(resultsList.class && { class: resultsList.class }),
     });
 
-  // Get the data from store
-  if (ctx.data.cache) await getData(ctx);
-
   // Attach Events listeners
   addEvents(ctx);
+
+  // Get the data from store
+  if (ctx.data.cache) await getData(ctx);
 
   /**
    * @emit {init} event on Initialization
