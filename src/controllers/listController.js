@@ -167,9 +167,8 @@ const goTo = (index, ctx) => {
  *
  * @param {Object} ctx - autoComplete.js context
  */
-const next = function (ctx) {
-  const index = ctx.cursor + 1;
-  goTo(index, ctx);
+const next = (ctx) => {
+  goTo(ctx.cursor + 1, ctx);
 };
 
 /**
@@ -178,8 +177,7 @@ const next = function (ctx) {
  * @param {Object} ctx - autoComplete.js context
  */
 const previous = (ctx) => {
-  const index = ctx.cursor - 1;
-  goTo(index, ctx);
+  goTo(ctx.cursor - 1, ctx);
 };
 
 /**
@@ -221,9 +219,7 @@ const click = (event, ctx) => {
 
   // Check if clicked item is a "result" item
   if (item && item.nodeName === itemTag) {
-    const index = items.indexOf(item);
-
-    select(ctx, event, index);
+    select(ctx, event, items.indexOf(item));
   }
 };
 
@@ -233,7 +229,7 @@ const click = (event, ctx) => {
  * @param {Object} event - "keydown" press event Object
  * @param {Object} ctx - autoComplete.js context
  */
-const navigate = function (event, ctx) {
+const navigate = (event, ctx) => {
   // Check pressed key
   switch (event.keyCode) {
     // Down/Up arrow

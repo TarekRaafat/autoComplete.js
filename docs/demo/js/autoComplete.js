@@ -419,12 +419,10 @@
     }
   };
   var next = function next(ctx) {
-    var index = ctx.cursor + 1;
-    goTo(index, ctx);
+    goTo(ctx.cursor + 1, ctx);
   };
   var previous = function previous(ctx) {
-    var index = ctx.cursor - 1;
-    goTo(index, ctx);
+    goTo(ctx.cursor - 1, ctx);
   };
   var select = function select(ctx, event, index) {
     index = index >= 0 ? index : ctx.cursor;
@@ -439,8 +437,7 @@
     var items = Array.from(ctx.list.querySelectorAll(itemTag));
     var item = event.target.closest(itemTag);
     if (item && item.nodeName === itemTag) {
-      var index = items.indexOf(item);
-      select(ctx, event, index);
+      select(ctx, event, items.indexOf(item));
     }
   };
   var navigate = function navigate(event, ctx) {
@@ -627,7 +624,7 @@
     prototype.select = function (index) {
       select(this, null, index);
     };
-    autoComplete.search = prototype.search = function (query, record, options) {
+    prototype.search = function (query, record, options) {
       return search(query, record, options);
     };
   }

@@ -77,7 +77,7 @@ wrapper: false,
 
 #### `src` <sub><sup>(required)</sup></sub>
 - Type: `Array`|`Function` returns `Array` of results values
-  - Parameters: (`query`)
+  - Parameters: (`query`) <small>(works only if `data.cache` is `false`)</small>
 - Default: `null`
 
 #### `keys` <sub><sup>(required)</sup></sub>

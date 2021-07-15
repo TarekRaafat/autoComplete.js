@@ -35,7 +35,17 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.2.5 ✨
+### v10.2.6 ✨
+- ➕ Added:
+  - New `How-to Guides` example for `Dynamic list position` based on it's position inside viewport [#158]
+- 🎛️ Updated: 
+  - Library code with minor cleanup & optimizations resulted in minor size reduction for faster loading time
+  - `Configuration` documentation section
+  - Development dependencies
+- 🧹 Removed:
+  - `autoComplete.search()` API method to be only available per `autoComplete.js` instance instead of global
+
+### v10.2.5
 - 🔧 Fixed: `response` eventEmitter not firing in `data.cache` mode
 
 ### v10.2.4
