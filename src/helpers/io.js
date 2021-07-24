@@ -61,7 +61,7 @@ const getQuery = (field) =>
  * @returns {String} - Raw "input" value as a string
  */
 const format = (value, diacritics) => {
-  value = value.toString().toLowerCase();
+  value = String(value).toLowerCase();
 
   return diacritics
     ? value

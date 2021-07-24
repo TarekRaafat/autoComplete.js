@@ -10,10 +10,11 @@ import init from "./services/init";
  * @example const autoCompleteJS = new autoComplete({config});
  *
  * @param {Object} config - Configuration options.
+ * @param {Number|String} [config.id] - Auto assigned instance unique identifier.
  * @param {String} [config.name=autoComplete] - Prepended to all created DOM element class names.
  * @param {(String|Function)} [config.selector=#autoComplete] - Must point to or return the relevant input field or element that autoComplete.js should act upon.
  * @param {Object} config.data - Data source.
- * @param {(Array|Function)} config.data.src - Values to search or an async or immediate function that returns an array of values to search.
+ * @param {(String[]|Object[]|Function)} config.data.src - Values to search or an async or immediate function that returns an array of values to search.
  * @param {String[]} [config.data.keys] - Only used if config.data.src is an array of objects. Specifies which keys in the objects autoComplete.js should search.
  * @param {Boolean} [config.data.cache=false] - If true, autoComplete.js fetches all config.data.src when initialized and never again.
  * @param {Function} [config.data.filter] - Used to filter and sort matching returns from config.data.src before showing them to the user. Signature: (Array), is given all the results from config.data.src that matches the query.
@@ -29,7 +30,7 @@ import init from "./services/init";
  * @param {String} [config.resultsList.tag=ul] - HTML tag to use for rendering the result container.
  * @param {String} [config.resultsList.id=autoComplete_list_index] - ID given to the result container.
  * @param {String} [config.resultsList.class] - Class names to give to the result container.
- * @param {(String|Function)} [config.resultsList.destination] - Selector that points to where you want to insert the result elements. Defaults to config.selector. Signature: ().
+ * @param {(String|Function)} [config.resultsList.destination=#autoComplete] - Selector that points to where you want to insert the result elements. Defaults to config.selector. Signature: ().
  * @param {String} [config.resultsList.position=afterend] - Position relative to config.selector where to insert the results list. See {@link https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement#parameters}.
  * @param {Function} [config.resultsList.element] - Invoked before showing the results list. Allows manipulation of the DOM before it is added to the document. Signature: (list: HTMLElement, data: { query, matches, results }), where list is the container element.
  * @param {Number} [config.resultsList.maxResults=5] - Maximum number of results to render.
@@ -42,7 +43,7 @@ import init from "./services/init";
  * @param {Function} [config.resultItem.element] - Invoked before showing the results list. Allows manipulation of the DOM before it is added to the document. Signature: (item: HTMLElement, data: { match, value, [key] }).
  * @param {(Boolean|String)} [config.resultItem.highlight=false] - Enable to highlight matching characters using HTMLMarkElement, or a string of CSS classes to add to any generated mark elements.
  * @param {String} [config.resultItem.selected] - CSS classes to add and remove from result items the user navigates to using the keyboard.
- * @param {Boolean} [config.submit] - If enabled pressing enter will not prevent default behavior.
+ * @param {Boolean} [config.submit=false] - If enabled pressing enter will not prevent default behavior.
  * @param {Object} [config.events] - Allows adding custom or overriding internal event handling.
  * @param {Object} [config.events.input] - Maps event names to event handlers for the input element. Each key must be a valid event name, see {@link https://developer.mozilla.org/en-US/docs/Web/Events}, and each value must be an event handler function. Default handlers are keydown and blur.
  * @param {Object} [config.events.list] - Same as config.events.input, but for the result list container element. Default handlers are mousedown and click.

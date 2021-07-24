@@ -279,7 +279,7 @@ diacritics: true,
 
 #### `id` <sub><sup>(optional)</sup></sub>
   - Type: `String` of id value
-  - Default: `autoComplete_list`
+  - Default: `autoComplete_list_[id]`
 
 #### `class` <sub><sup>(optional)</sup></sub>
   - Type: `String` of class values
