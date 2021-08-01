@@ -60,13 +60,13 @@
   background-color: rgba(123, 123, 123, 0.1);
 }
 
-.autoComplete_wrapper > ul > li mark {
+.autoComplete_wrapper .default_hightlight {
   background-color: transparent;
   color: rgba(255, 122, 122, 1);
   font-weight: bold;
 }
 
-.autoComplete_wrapper > ul > li mark::selection {
+.autoComplete_wrapper .default_hightlight::selection {
   color: rgba(#ffffff, 0);
   background-color: rgba(#ffffff, 0);
 }

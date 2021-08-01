@@ -106,7 +106,7 @@
   transition: all 0.2s ease;
 }
 
-.autoComplete_wrapper > ul > li mark {
+.autoComplete_wrapper .default_hightlight {
   background-color: transparent;
   color: rgba(255, 122, 122, 1);
   font-weight: bold;

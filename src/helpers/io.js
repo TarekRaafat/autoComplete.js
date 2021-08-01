@@ -108,10 +108,16 @@ const checkTrigger = (query, condition, threshold) => (condition ? condition(que
  *
  * @returns {HTMLElement} - newly create html element
  */
-const mark = (value, cls) =>
-  create("mark", {
-    innerHTML: value,
-    ...(typeof cls === "string" && { class: cls }),
-  }).outerHTML;
+const mark = (value, cls) => {
+  if(cls === false) return
 
+  const klass = {
+    class: typeof cls === "string" ? cls : "default_hightlight"
+  }
+
+  return create("mark", {
+    innerHTML: value,
+    ...klass,
+  }).outerHTML;
+}
 export { select, create, getQuery, format, debounce, checkTrigger, mark };

@@ -207,11 +207,13 @@
     return condition ? condition(query) : query.length >= threshold;
   };
   var mark = function mark(value, cls) {
+    if (cls === false) return;
+    var klass = {
+      "class": typeof cls === "string" ? cls : "default_hightlight"
+    };
     return create("mark", _objectSpread2({
       innerHTML: value
-    }, typeof cls === "string" && {
-      "class": cls
-    })).outerHTML;
+    }, klass)).outerHTML;
   };
 
   var configure = (function (ctx) {
