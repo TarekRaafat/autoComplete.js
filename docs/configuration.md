@@ -540,7 +540,7 @@ autoCompleteJS.previous();
 
 ***
 
-### gotTo(index)
+### goTo(index)
 
 > Navigates to a specific `resultItem` on the list by its `index` number
 
@@ -553,7 +553,7 @@ Defaults:
 ##### Example:
 
 ```js
-autoCompleteJS.gotTo(1);
+autoCompleteJS.goTo(1);
 ```
 
 
