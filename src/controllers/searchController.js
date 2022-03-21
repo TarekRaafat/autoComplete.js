@@ -39,6 +39,24 @@ export default (query, record, options) => {
 
     // If record is fully scanned
     if (cursor === qLength) return match;
+  } else if (mode === "multiple") {
+      let match = '';
+        query.split(' ').forEach( sStr => {
+          let _match = nRecord.indexOf(sStr);
+          if (~_match) {
+              query = record.substring(_match, _match + query.length);
+              //Add Existing match to a new match
+              if ( match.length ) {
+                _match = match.indexOf(sStr);
+                query = match.substring(_match, _match + sStr.length);
+                record = match;
+              }
+              // Highlight matching characters if active
+              _match = highlight ? record.replace(query, mark(query, highlight)) : record;
+              match = _match;
+          }
+      });
+          return match;
   } else {
     // Get starting index of matching characters
     let match = nRecord.indexOf(query);
