@@ -35,7 +35,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.2.6 ✨
+### v10.2.7 ✨
+- 🎛️ Updated: Development dependencies
+
+### v10.2.6
 - ➕ Added:
   - New `How-to Guides` example for `Dynamic list position` based on it's position inside viewport [#158]
 - 🎛️ Updated: 
