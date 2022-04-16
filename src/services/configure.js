@@ -6,7 +6,7 @@ import { select } from "../helpers/io";
  * @param {Object} ctx - autoComplete.js configuration options
  */
 export default (ctx) => {
-  const { id, name, options, resultsList, resultItem } = ctx;
+  const { name, options, resultsList, resultItem } = ctx;
 
   // Populate Configuration options
   for (const option in options) {
@@ -24,8 +24,9 @@ export default (ctx) => {
   // Dynamic Config Options
   ctx.selector = ctx.selector || "#" + name;
   resultsList.destination = resultsList.destination || ctx.selector;
-  resultsList.id = resultsList.id || name + "_list_" + id;
+  resultsList.id = resultsList.id || name + "_list_" + ctx.id;
   resultItem.id = resultItem.id || name + "_result";
+
   // Assign the "input" html element
   ctx.input = select(ctx.selector);
 };

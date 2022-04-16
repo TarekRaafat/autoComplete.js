@@ -6,12 +6,10 @@ import search from "./searchController";
  *
  * @param {Object} ctx - autoComplete.js context
  */
-const getData = async (ctx) => {
-  let { input, query, data } = ctx;
+const getData = async (ctx, query) => {
+  const { data } = ctx;
 
   if (data.cache && data.store) return;
-
-  query = query ? query(input.value) : input.value;
 
   ctx.feedback = data.store = typeof data.src === "function" ? await data.src(query) : data.src;
 
@@ -28,7 +26,7 @@ const getData = async (ctx) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const findMatches = (query, ctx) => {
-  const { data, searchEngine, diacritics, resultsList, resultItem } = ctx;
+  const { data, searchEngine } = ctx;
 
   let matches = [];
 
@@ -42,8 +40,8 @@ const findMatches = (query, ctx) => {
           ? searchEngine(query, record)
           : search(query, record, {
               mode: searchEngine,
-              diacritics,
-              highlight: resultItem.highlight,
+              diacritics: ctx.diacritics,
+              highlight: ctx.resultItem.highlight,
             });
 
       if (!match) return;
@@ -67,7 +65,7 @@ const findMatches = (query, ctx) => {
   // Find results matching to the query
   if (data.filter) matches = data.filter(matches);
 
-  const results = matches.slice(0, resultsList.maxResults);
+  const results = matches.slice(0, ctx.resultsList.maxResults);
 
   // Prepare data feedback object
   ctx.feedback = { query, matches, results };

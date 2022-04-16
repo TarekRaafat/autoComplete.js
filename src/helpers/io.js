@@ -5,10 +5,10 @@
  *
  * @returns {HTMLElement} - selected html element
  */
-const select = (element) => (typeof element === "string" ? document.querySelector(element) : element);
+const select = (element) => (typeof element === "string" ? document.querySelector(element) : element());
 
 /**
- * Create new element
+ * Create new element or Edit existing element
  *
  * @param {String|HTMLElement} tag - html tag | html element
  * @param {Object} options - of the html element
@@ -26,8 +26,7 @@ const create = (tag, options) => {
     } else if (key === "dest") {
       select(val[0]).insertAdjacentElement(val[1], el);
     } else if (key === "around") {
-      const ref = select(val);
-
+      const ref = val;
       ref.parentNode.insertBefore(el, ref);
 
       el.append(ref);
@@ -62,32 +61,14 @@ const getQuery = (field) =>
  * @returns {String} - Raw "input" value as a string
  */
 const format = (value, diacritics) => {
-  value = value.toString().toLowerCase();
+  value = String(value).toLowerCase();
 
   return diacritics
     ? value
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .normalize("NFC")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .normalize("NFC")
     : value;
-};
-
-/**
- * Debouncer
- *
- * @param {Function} callback - Callback function
- * @param {Number} duration - Delay time value
- *
- * @returns {Function} - Debouncer function
- */
-const debounce = (callback, duration) => {
-  let timer;
-
-  return () => {
-    clearTimeout(timer);
-
-    timer = setTimeout(() => callback(), duration);
-  };
 };
 
 /**
@@ -115,4 +96,4 @@ const mark = (value, cls) =>
     ...(typeof cls === "string" && { class: cls }),
   }).outerHTML;
 
-export { select, create, getQuery, format, debounce, checkTrigger, mark };
+export { select, create, getQuery, format, checkTrigger, mark };

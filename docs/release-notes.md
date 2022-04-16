@@ -35,19 +35,49 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v11.0.0 ✨
-- ➕ Added: `attrs` API property for all `input` field attributes
+### v11.0 ✨
 - 🧹 Removed: `placeHolder` API property to be replaced with `attrs` (Thanks 👍 @mikob @folknor) #10 #11 #228
-- 🌀 Changed: `selector` API property to accept `string` or `element` instead of `string` or `function`
-- 🎛️ Updated: Library code with minor optimizations
+- - 🔧 Fixed: `debounce` behavior (Thanks 👍 @john-999) #336
+- 🎛️ Updated: 
+  - Library code with minor cleanup & optimizations resulted in minor size reduction & faster loading time
+  - `Configuration` documentation section
+  - Development dependencies
+- 📣 SHOUT-OUT: A massive appreciation for @folknor for being the most helpful and supportive member of the `autoComplete.js` community
 
-### v10.2.1 ✨
+### v10.2.7
+- 🔝 Updated: Development dependencies
+
+### v10.2.6
+- ➕ Added:
+  - New `How-to Guides` example for `Dynamic list position` based on it's position inside viewport [#158]
+- 🎛️ Updated: 
+  - Library code with minor cleanup & optimizations resulted in minor size reduction for faster loading time
+  - `Configuration` documentation section
+  - Development dependencies
+- 🧹 Removed:
+  - `autoComplete.search()` API method to be only available per `autoComplete.js` instance instead of global
+
+### v10.2.5
+- 🔧 Fixed: `response` eventEmitter not firing in `data.cache` mode
+
+### v10.2.4
+- 🎛️ Updated: Library code with minor optimizations (Thanks 👍 @folknor) #256
+
+### v10.2.3
+- 🔧 Fixed: `query` API issue (Thanks 👍 @folknor) #254
+
+### v10.2.2
+- ➕ Added: Security awareness note under the `Usage` section in the [Docs](https://tarekraafat.github.io/autoComplete.js/#/usage?id=_2-script) (Thanks 👍 @needlag) #254
+- 🔧 Fixed: `search` API method was not returning the result value
+- 🎛️ Updated: Library code with deep cleanup & minor optimizations resulted in around `2.4%` size reduction of the minified version and `3.2%` of the original version and additional performance improvements
+
+### v10.2.1
 - 🧹 Removed: `preventDefault` on `Tab` key press event
 - 🎛️ Updated: `No Results Found` example under `How-to Guides` in documentation
 
 ### v10.2.0
 - ➕ Added: `submit` API property controls `Enter` button default behavior (Thanks 👍 @CodeWithOz) #249 #224 #189
-- ➕ Added: `query` parameter to the `start("query")` API method for programmatic operations
+- ➕ Added: `query` `String` argument to the `start("query")` API method for programmatic operations
 - 🔧 Fixed: Generated errors when `resultsList` is disabled due to the attachment of the `keydown` event
 - 🎛️ Updated: Library code with minor optimizations
 - 🧹 Removed: Engines field in package.json

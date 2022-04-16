@@ -3,9 +3,13 @@ const autoCompleteJS = new autoComplete({
   data: {
     src: async () => {
       try {
+        // Loading placeholder text
+        document.getElementById("autoComplete").setAttribute("placeholder", "Loading...");
         // Fetch External Data Source
         const source = await fetch("./db/generic.json");
         const data = await source.json();
+        // Post Loading placeholder text
+        document.getElementById("autoComplete").setAttribute("placeholder", autoCompleteJS.attrs.placeholder);
         // Returns Fetched data
         return data;
       } catch (error) {
@@ -45,6 +49,9 @@ const autoCompleteJS = new autoComplete({
       }
       list.prepend(info);
     },
+    // attrs: {
+    //   class: "hello you",
+    // },
     noResults: true,
     maxResults: 15,
     tabSelect: true,
@@ -62,6 +69,9 @@ const autoCompleteJS = new autoComplete({
         ${data.key}
       </span>`;
     },
+    // attrs: {
+    //   class: "hello"
+    // },
     highlight: true,
   },
   events: {

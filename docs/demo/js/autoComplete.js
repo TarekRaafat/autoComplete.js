@@ -2,21 +2,16 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.autoComplete = factory());
-}(this, (function () { 'use strict';
+})(this, (function () { 'use strict';
 
   function ownKeys(object, enumerableOnly) {
     var keys = Object.keys(object);
 
     if (Object.getOwnPropertySymbols) {
       var symbols = Object.getOwnPropertySymbols(object);
-
-      if (enumerableOnly) {
-        symbols = symbols.filter(function (sym) {
-          return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-        });
-      }
-
-      keys.push.apply(keys, symbols);
+      enumerableOnly && (symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      })), keys.push.apply(keys, symbols);
     }
 
     return keys;
@@ -24,19 +19,12 @@
 
   function _objectSpread2(target) {
     for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
+      var source = null != arguments[i] ? arguments[i] : {};
+      i % 2 ? ownKeys(Object(source), !0).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
     }
 
     return target;
@@ -45,17 +33,11 @@
   function _typeof(obj) {
     "@babel/helpers - typeof";
 
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+      return typeof obj;
+    } : function (obj) {
+      return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
   }
 
   function _defineProperty(obj, key, value) {
@@ -164,7 +146,7 @@
   }
 
   var select$1 = function select(element) {
-    return typeof element === "string" ? document.querySelector(element) : element;
+    return typeof element === "string" ? document.querySelector(element) : element();
   };
   var create = function create(tag, options) {
     var el = typeof tag === "string" ? document.createElement(tag) : tag;
@@ -175,7 +157,7 @@
       } else if (key === "dest") {
         select$1(val[0]).insertAdjacentElement(val[1], el);
       } else if (key === "around") {
-        var ref = select$1(val);
+        var ref = val;
         ref.parentNode.insertBefore(el, ref);
         el.append(ref);
         if (ref.getAttribute("autofocus") != null) ref.focus();
@@ -191,17 +173,8 @@
     return field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : field.innerHTML;
   };
   var format = function format(value, diacritics) {
-    value = value.toString().toLowerCase();
+    value = String(value).toLowerCase();
     return diacritics ? value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").normalize("NFC") : value;
-  };
-  var debounce = function debounce(callback, duration) {
-    var timer;
-    return function () {
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        return callback();
-      }, duration);
-    };
   };
   var checkTrigger = function checkTrigger(query, condition, threshold) {
     return condition ? condition(query) : query.length >= threshold;
@@ -215,8 +188,7 @@
   };
 
   var configure = (function (ctx) {
-    var id = ctx.id,
-        name = ctx.name,
+    var name = ctx.name,
         options = ctx.options,
         resultsList = ctx.resultsList,
         resultItem = ctx.resultItem;
@@ -232,7 +204,7 @@
     }
     ctx.selector = ctx.selector || "#" + name;
     resultsList.destination = resultsList.destination || ctx.selector;
-    resultsList.id = resultsList.id || name + "_list_" + id;
+    resultsList.id = resultsList.id || name + "_list_" + ctx.id;
     resultItem.id = resultItem.id || name + "_result";
     ctx.input = select$1(ctx.selector);
   });
@@ -251,7 +223,7 @@
         diacritics = _ref.diacritics,
         highlight = _ref.highlight;
     var nRecord = format(record, diacritics);
-    record = record.toString();
+    record = String(record);
     query = format(query, diacritics);
     if (mode === "loose") {
       query = query.replace(/ /g, "");
@@ -275,14 +247,11 @@
     }
   });
 
-  var getData = function getData(ctx) {
+  var getData = function getData(ctx, query) {
     return new Promise(function ($return, $error) {
-      var input, query, data;
-      input = ctx.input;
-      query = ctx.query;
+      var data;
       data = ctx.data;
       if (data.cache && data.store) return $return();
-      query = query ? query(input.value) : input.value;
       return new Promise(function ($return, $error) {
         if (typeof data.src === "function") {
           return data.src(query).then($return, $error);
@@ -301,18 +270,15 @@
   };
   var findMatches = function findMatches(query, ctx) {
     var data = ctx.data,
-        searchEngine = ctx.searchEngine,
-        diacritics = ctx.diacritics,
-        resultsList = ctx.resultsList,
-        resultItem = ctx.resultItem;
+        searchEngine = ctx.searchEngine;
     var matches = [];
     data.store.forEach(function (value, index) {
       var find = function find(key) {
         var record = key ? value[key] : value;
         var match = typeof searchEngine === "function" ? searchEngine(query, record) : search(query, record, {
           mode: searchEngine,
-          diacritics: diacritics,
-          highlight: resultItem.highlight
+          diacritics: ctx.diacritics,
+          highlight: ctx.resultItem.highlight
         });
         if (!match) return;
         var result = {
@@ -340,7 +306,7 @@
       }
     });
     if (data.filter) matches = data.filter(matches);
-    var results = matches.slice(0, resultsList.maxResults);
+    var results = matches.slice(0, ctx.resultsList.maxResults);
     ctx.feedback = {
       query: query,
       matches: matches,
@@ -362,22 +328,19 @@
         list = ctx.list,
         resultItem = ctx.resultItem,
         feedback = ctx.feedback;
-    feedback.query;
-        var matches = feedback.matches,
+    var matches = feedback.matches,
         results = feedback.results;
     ctx.cursor = -1;
     list.innerHTML = "";
     if (matches.length || resultsList.noResults) {
-      var fragment = document.createDocumentFragment();
+      var fragment = new DocumentFragment();
       results.forEach(function (result, index) {
         var element = create(resultItem.tag, _objectSpread2({
           id: "".concat(resultItem.id, "_").concat(index),
           role: "option",
           innerHTML: result.match,
           inside: fragment
-        }, resultItem["class"] && {
-          "class": resultItem["class"]
-        }));
+        }, resultItem.attrs));
         if (resultItem.element) resultItem.element(element, result);
       });
       list.append(fragment);
@@ -403,9 +366,8 @@
     eventEmitter("close", ctx);
   };
   var goTo = function goTo(index, ctx) {
-    var list = ctx.list,
-        resultItem = ctx.resultItem;
-    var results = list.getElementsByTagName(resultItem.tag);
+    var resultItem = ctx.resultItem;
+    var results = ctx.list.getElementsByTagName(resultItem.tag);
     var cls = resultItem.selected ? resultItem.selected.split(" ") : false;
     if (ctx.isOpen && results.length) {
       var _results$index$classL;
@@ -421,19 +383,17 @@
       results[index].setAttribute(Selected, true);
       if (cls) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(cls));
       ctx.input.setAttribute(Active, results[ctx.cursor].id);
-      list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight + 5;
+      ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
       ctx.feedback.cursor = ctx.cursor;
       feedback(ctx, index);
       eventEmitter("navigate", ctx);
     }
   };
   var next = function next(ctx) {
-    var index = ctx.cursor + 1;
-    goTo(index, ctx);
+    goTo(ctx.cursor + 1, ctx);
   };
   var previous = function previous(ctx) {
-    var index = ctx.cursor - 1;
-    goTo(index, ctx);
+    goTo(ctx.cursor - 1, ctx);
   };
   var select = function select(ctx, event, index) {
     index = index >= 0 ? index : ctx.cursor;
@@ -448,8 +408,7 @@
     var items = Array.from(ctx.list.querySelectorAll(itemTag));
     var item = event.target.closest(itemTag);
     if (item && item.nodeName === itemTag) {
-      var index = items.indexOf(item);
-      select(ctx, event, index);
+      select(ctx, event, items.indexOf(item));
     }
   };
   var navigate = function navigate(event, ctx) {
@@ -474,35 +433,27 @@
   };
 
   function start (ctx, q) {
-    var _this = this;
     return new Promise(function ($return, $error) {
-      var input, query, trigger, threshold, resultsList, queryVal, condition;
-      input = ctx.input;
-      query = ctx.query;
-      trigger = ctx.trigger;
-      threshold = ctx.threshold;
-      resultsList = ctx.resultsList;
-      queryVal = q || getQuery(input);
-      queryVal = query ? query(queryVal) : queryVal;
-      condition = checkTrigger(queryVal, trigger, threshold);
+      var queryVal = q || getQuery(ctx.input);
+      queryVal = ctx.query ? ctx.query(queryVal) : queryVal;
+      var condition = checkTrigger(queryVal, ctx.trigger, ctx.threshold);
+      clearTimeout(ctx.debouncer);
       if (condition) {
-        return getData(ctx).then(function ($await_2) {
-          try {
-            if (ctx.feedback instanceof Error) return $return();
-            findMatches(queryVal, ctx);
-            if (resultsList) render(ctx);
-            return $If_1.call(_this);
-          } catch ($boundEx) {
-            return $error($boundEx);
-          }
-        }, $error);
+        ctx.debouncer = setTimeout(function () {
+          return getData(ctx, queryVal).then(function ($await_1) {
+            try {
+              if (ctx.feedback instanceof Error) return;
+              findMatches(queryVal, ctx);
+              if (ctx.resultsList) render(ctx);
+            } catch ($boundEx) {
+              return $error($boundEx);
+            }
+          }, $error);
+        }, ctx.debounce);
       } else {
         close(ctx);
-        return $If_1.call(_this);
       }
-      function $If_1() {
-        return $return();
-      }
+      return $return();
     });
   }
 
@@ -515,21 +466,15 @@
   };
   var addEvents = function addEvents(ctx) {
     var events = ctx.events;
-        ctx.trigger;
-        var timer = ctx.debounce,
-        resultsList = ctx.resultsList;
-    var run = debounce(function () {
-      return start(ctx);
-    }, timer);
     var publicEvents = ctx.events = _objectSpread2({
       input: _objectSpread2({}, events && events.input)
-    }, resultsList && {
+    }, ctx.resultsList && {
       list: events ? _objectSpread2({}, events.list) : {}
     });
     var privateEvents = {
       input: {
         input: function input() {
-          run();
+          start(ctx);
         },
         keydown: function keydown(event) {
           navigate(event, ctx);
@@ -548,7 +493,7 @@
       }
     };
     eventsManager(privateEvents, function (element, event) {
-      if (!resultsList && event !== "input") return;
+      if (!ctx.resultsList && event !== "input") return;
       if (publicEvents[element][event]) return;
       publicEvents[element][event] = privateEvents[element][event];
     });
@@ -582,13 +527,12 @@
         "class": ctx.name + "_wrapper"
       }, parentAttrs));
       if (resultsList) ctx.list = create(resultsList.tag, _objectSpread2({
-        dest: [typeof resultsList.destination === "string" ? document.querySelector(resultsList.destination) : resultsList.destination(), resultsList.position],
+        dest: [resultsList.destination, resultsList.position],
         id: resultsList.id,
         role: "listbox",
         hidden: "hidden"
-      }, resultsList["class"] && {
-        "class": resultsList["class"]
-      }));
+      }, resultsList.attrs));
+      addEvents(ctx);
       if (ctx.data.cache) {
         return getData(ctx).then(function ($await_2) {
           try {
@@ -599,7 +543,6 @@
         }, $error);
       }
       function $If_1() {
-        addEvents(ctx);
         eventEmitter("init", ctx);
         return $return();
       }
@@ -641,8 +584,8 @@
     prototype.select = function (index) {
       select(this, null, index);
     };
-    autoComplete.search = prototype.search = function (query, record, options) {
-      search(query, record, options);
+    prototype.search = function (query, record, options) {
+      return search(query, record, options);
     };
   }
 
@@ -668,4 +611,4 @@
 
   return autoComplete;
 
-})));
+}));

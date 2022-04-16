@@ -70,7 +70,7 @@ import autoComplete from "@tarekraafat/autocomplete.js";
     <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@{{version}}/dist/autoComplete.min.js"></script>
 
     <script>
-        const autoCompleteJS = new autoComplete({ config });
+        const autoCompleteJS = new autoComplete(config);
     </script>
 </body>
 ```
@@ -80,18 +80,19 @@ import autoComplete from "@tarekraafat/autocomplete.js";
 // CommonJS
 const autoComplete = require("@tarekraafat/autocomplete.js");
 
-const autoCompleteJS = new autoComplete({ config });
+const autoCompleteJS = new autoComplete(config);
 
 /* OR */
 
 // ES6 modules
 import autoComplete from "@tarekraafat/autocomplete.js";
 
-const autoCompleteJS = new autoComplete({ config });
+const autoCompleteJS = new autoComplete(config);
 ```
 <!-- tabs:end -->
 
 3. Set your `autoComplete.js` instance [configurations](/configuration.md)
+> Note: [data.src](/configuration.md?id=data-required) config is **required**
 
 <!-- tabs:start -->
 #### ** Basic **
@@ -146,7 +147,20 @@ const autoCompleteJS = new autoComplete({ config });
 ```
 
 <!-- tabs:end -->
-> Note: [data.src](/configuration.md?id=data-required) config is **required**
+> <i class="ps-icon ps-icon-warning"></i> Security Alert:
+> 
+> `autoComplete.js` does not sanitize/manipulate the user's input data query, mainly for flexibility purposes.
+>
+> Hence, it is advisable to use any trusted sanitization method/strategy/library with the [`query`](https://tarekraafat.github.io/autoComplete.js/#/configuration?id=query-optional) API method<br>
+> to reduce the risk of `Cross-Frame Scripting (XFS)` or `Cross-Site Scripting (XSS)` attacks.
+>
+>
+>
+> Recommended sanitization Libraries:<br>
+> 1- [DOMPurify](https://github.com/cure53/DOMPurify)<br>
+> 2- [js-xss](https://github.com/leizongmin/js-xss)<br>
+> 3- [sanitize-html](https://github.com/apostrophecms/sanitize-html)<br>
+> 4- [escape-goat](https://github.com/sindresorhus/escape-goat)
 
 ***
 

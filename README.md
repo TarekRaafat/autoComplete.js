@@ -21,7 +21,7 @@
 <br>
 <br>
 
-> Simple autocomplete pure vanilla Javascript library. :rocket:  <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a> **v10**
+> Simple autocomplete pure vanilla Javascript library. :rocket:  <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a> **v11**
 
 autoComplete.js is a simple, pure vanilla Javascript library progressively designed for speed, high versatility, and seamless integration with a wide range of projects & systems. <sub><sup>(Made for a better developer experience)</sub></pub>
 

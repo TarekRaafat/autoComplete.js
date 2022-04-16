@@ -28,7 +28,7 @@ name: "autoComplete",
 
 > Responsible for the input, textarea, or contentEditable element selection
 
-- Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Element`
+- Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` returns `Element`
 - Default: `#autoComplete`
 
 ##### Example
@@ -42,7 +42,9 @@ selector: "#autoComplete", // Any valid selector
 
 #### ** Function **
 ```js
-selector: document.querySelector("#autoComplete"), // Any valid selector
+selector: () => {
+    return [Element]; // Any valid selector
+},
 ```
 
 <!-- tabs:end -->
@@ -75,7 +77,7 @@ wrapper: false,
 
 #### `src` <sub><sup>(required)</sup></sub>
 - Type: `Array`|`Function` returns `Array` of results values
-  - Parameters: (`query`)
+  - Parameters: (`query`) <small>(works only if `data.cache` is `false`)</small>
 - Default: `null`
 
 #### `keys` <sub><sup>(required)</sup></sub>
@@ -186,12 +188,12 @@ query: (input) => {
 
 ***
 
-### placeHolder <sub><sup>(optional)</sup></sub>
+### attrs <sub><sup>(optional)</sup></sub>
 
-> Responsible for the input field placeholder value setting
+> Responsible for the input field element's attributes
 
-- Type: `String`
-- Default: `Blank/Empty`
+- Type: `Object`
+- Default: `null`
 
 ##### Example:
 
@@ -277,7 +279,7 @@ diacritics: true,
 
 #### `id` <sub><sup>(optional)</sup></sub>
   - Type: `String` of id value
-  - Default: `autoComplete_list`
+  - Default: `autoComplete_list_[id]`
 
 #### `class` <sub><sup>(optional)</sup></sub>
   - Type: `String` of class values

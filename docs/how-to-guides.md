@@ -15,7 +15,7 @@ Guided examples on how-to use autoComplete.js in different use-cases
 events: {
     input: {
         focus() {
-            const inputValue = document.querySelector("#autoComplete").value;
+            const inputValue = autoCompleteJS.input.value;
 
             if (inputValue.length) autoCompleteJS.start();
         },
@@ -28,6 +28,42 @@ events: {
 ##### Example
 
 <input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_01">
+
+<!-- panels:end -->
+
+***
+
+## `Dynamic list position`
+
+<!-- panels:start -->
+<!-- div:left-panel -->
+
+##### Code:
+
+```js
+// autoComplete.js Config Options
+events: {
+    input: {
+        open() {
+            const position =
+                autoCompleteJS.input.getBoundingClientRect().bottom + autoCompleteJS.list.getBoundingClientRect().height >
+                (window.innerHeight || document.documentElement.clientHeight);
+
+            if (position) {
+                autoCompleteJS.list.style.bottom = autoCompleteJS.input.offsetHeight + 8 + "px";
+            } else {
+                autoCompleteJS.list.style.bottom = -autoCompleteJS.list.offsetHeight - 8 + "px";
+            }
+        },
+    },
+},
+```
+
+<!-- div:right-panel -->
+
+##### Example
+
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_02">
 
 <!-- panels:end -->
 
@@ -62,7 +98,7 @@ resultsList: {
 
 ##### Example
 
-<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_02">
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_03">
 
 <!-- panels:end -->
 
@@ -90,7 +126,7 @@ events: {
     input: {
         selection(event) {
             const feedback = event.detail;
-            const input = document.querySelector("#autoComplete");
+            const input = autoCompleteJS.input;
             // Trim selected Value
             const selection = feedback.selection.value.trim();
             // Split query into array and trim each value
@@ -110,7 +146,7 @@ events: {
 
 ##### Example:
 
-<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_03">
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_04">
 
 <!-- panels:end -->
 
@@ -158,7 +194,7 @@ events: {
     input: {
         selection(event) {
             const feedback = event.detail;
-            const input = document.querySelector("#autoComplete");
+            const input = autoCompleteJS.input;
             // Get selected Value
             const selection = feedback.selection.value.trim();
             // Add selected value to "history" array
@@ -172,7 +208,7 @@ events: {
 
 ##### Example:
 
-<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_04">
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_05">
 
 <!-- panels:end -->
 
@@ -188,7 +224,7 @@ events: {
 // autoComplete.js Config Options
 filter: (list) => {
     const results = list.filter((item) => {
-        const inputValue = document.querySelector("#autoComplete").value.toLowerCase();
+        const inputValue = autoCompleteJS.input.value.toLowerCase();
         const itemValue = item.value.toLowerCase();
 
         if (itemValue.startsWith(inputValue)) {
@@ -204,7 +240,7 @@ filter: (list) => {
 
 ##### Example:
 
-<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_05">
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_06">
 
 <!-- panels:end -->
 
@@ -258,16 +294,43 @@ filter: (list) => {
         resultItem,
         events: {
             input: {
+                open() {
+                    const position =
+                        autoCompleteJS_02.input.getBoundingClientRect().bottom + autoCompleteJS_02.list.getBoundingClientRect().height >
+                        (window.innerHeight || document.documentElement.clientHeight);
+
+                    if (position) {
+                        autoCompleteJS_02.list.style.bottom = autoCompleteJS_02.input.offsetHeight + 8 + "px";
+                    } else {
+                        autoCompleteJS_02.list.style.bottom = -autoCompleteJS_02.list.offsetHeight - 8 + "px";
+                    }
+                },
                 selection(event) {
                     const selection = event.detail.selection.value;
                     autoCompleteJS_02.input.value = selection;
+                }
+            },
+        },
+    });
+
+    const autoCompleteJS_03 = new autoComplete({
+        selector: "#autoComplete_03",
+        placeHolder,
+        data,
+        resultsList,
+        resultItem,
+        events: {
+            input: {
+                selection(event) {
+                    const selection = event.detail.selection.value;
+                    autoCompleteJS_03.input.value = selection;
                 }
             }
         }
     });
 
-    const autoCompleteJS_03 = new autoComplete({
-        selector: "#autoComplete_03",
+    const autoCompleteJS_04 = new autoComplete({
+        selector: "#autoComplete_04",
         placeHolder,
         data,
         query(query) {
@@ -286,7 +349,7 @@ filter: (list) => {
             input: {
                 selection(event) {
                     const feedback = event.detail;
-                    const input = autoCompleteJS_03.input;
+                    const input = autoCompleteJS_04.input;
                     // Trim selected Value
                     const selection = feedback.selection.value.trim();
                     // Split query into array and trim each value
@@ -304,8 +367,8 @@ filter: (list) => {
     
     let history = [];
     
-    const autoCompleteJS_04 = new autoComplete({
-        selector: "#autoComplete_04",
+    const autoCompleteJS_05 = new autoComplete({
+        selector: "#autoComplete_05",
         placeHolder,
         data,
         resultsList: {
@@ -338,26 +401,26 @@ filter: (list) => {
             input: {
                 selection(event) {
                     const feedback = event.detail;
-                    const input = autoCompleteJS_04.input;
+                    const input = autoCompleteJS_05.input;
                     // Get selected Value
                     const selection = feedback.selection.value;
                     // Add selected value to "history" array
                     history.push(selection);
                     
-                    autoCompleteJS_04.input.value = selection;
+                    autoCompleteJS_05.input.value = selection;
                 }
             }
         }
     });
 
-    const autoCompleteJS_05 = new autoComplete({
-        selector: "#autoComplete_05",
+    const autoCompleteJS_06 = new autoComplete({
+        selector: "#autoComplete_06",
         placeHolder,
         data: {
             ...data,
             filter(list) {
                 const results = list.filter((item) => {
-                    const inputValue = document.querySelector("#autoComplete_05").value.toLowerCase();
+                    const inputValue = document.querySelector("#autoComplete_06").value.toLowerCase();
                     const itemValue = item.value.toLowerCase();
 
                     if (itemValue.startsWith(inputValue)) {
@@ -374,7 +437,7 @@ filter: (list) => {
             input: {
                 selection(event) {
                     const selection = event.detail.selection.value;
-                    autoCompleteJS_05.input.value = selection;
+                    autoCompleteJS_06.input.value = selection;
                 }
             }
         }

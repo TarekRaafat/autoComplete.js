@@ -25,8 +25,8 @@ const feedback = (ctx, index) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const render = (ctx) => {
-  let { resultsList, list, resultItem, feedback } = ctx;
-  const { query, matches, results } = feedback;
+  const { resultsList, list, resultItem, feedback } = ctx;
+  const { matches, results } = feedback;
 
   // Reset cursor
   ctx.cursor = -1;
@@ -35,7 +35,7 @@ const render = (ctx) => {
   list.innerHTML = "";
 
   if (matches.length || resultsList.noResults) {
-    const fragment = document.createDocumentFragment();
+    const fragment = new DocumentFragment();
 
     // Generate results elements
     results.forEach((result, index) => {
@@ -45,7 +45,7 @@ const render = (ctx) => {
         role: "option",
         innerHTML: result.match,
         inside: fragment,
-        ...(resultItem.class && { class: resultItem.class }),
+        ...resultItem.attrs,
       });
 
       // If custom content is active pass params
@@ -114,10 +114,10 @@ const close = (ctx) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const goTo = (index, ctx) => {
-  const { list, resultItem } = ctx;
+  const { resultItem } = ctx;
 
   // List of result items
-  const results = list.getElementsByTagName(resultItem.tag);
+  const results = ctx.list.getElementsByTagName(resultItem.tag);
   // Selected result item Classes
   const cls = resultItem.selected ? resultItem.selected.split(" ") : false;
 
@@ -149,7 +149,7 @@ const goTo = (index, ctx) => {
     ctx.input.setAttribute(Active, results[ctx.cursor].id);
 
     // Scroll to selection
-    list.scrollTop = results[index].offsetTop - list.clientHeight + results[index].clientHeight + 5;
+    ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
 
     // Prepare Selection data feedback object
     ctx.feedback.cursor = ctx.cursor;
@@ -167,9 +167,8 @@ const goTo = (index, ctx) => {
  *
  * @param {Object} ctx - autoComplete.js context
  */
-const next = function (ctx) {
-  const index = ctx.cursor + 1;
-  goTo(index, ctx);
+const next = (ctx) => {
+  goTo(ctx.cursor + 1, ctx);
 };
 
 /**
@@ -178,8 +177,7 @@ const next = function (ctx) {
  * @param {Object} ctx - autoComplete.js context
  */
 const previous = (ctx) => {
-  const index = ctx.cursor - 1;
-  goTo(index, ctx);
+  goTo(ctx.cursor - 1, ctx);
 };
 
 /**
@@ -221,9 +219,7 @@ const click = (event, ctx) => {
 
   // Check if clicked item is a "result" item
   if (item && item.nodeName === itemTag) {
-    const index = items.indexOf(item);
-
-    select(ctx, event, index);
+    select(ctx, event, items.indexOf(item));
   }
 };
 
@@ -233,7 +229,7 @@ const click = (event, ctx) => {
  * @param {Object} event - "keydown" press event Object
  * @param {Object} ctx - autoComplete.js context
  */
-const navigate = function (event, ctx) {
+const navigate = (event, ctx) => {
   // Check pressed key
   switch (event.keyCode) {
     // Down/Up arrow
