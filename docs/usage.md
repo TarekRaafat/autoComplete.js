@@ -105,9 +105,7 @@ const autoCompleteJS = new autoComplete({ config });
         src: ["Sauce - Thousand Island", "Wild Boar - Tenderloin", "Goat - Whole Cut"]
     },
     resultItem: {
-        highlight: {
-            render: true
-        }
+        highlight: true,
     }
 }
 ```
@@ -139,9 +137,7 @@ const autoCompleteJS = new autoComplete({ config });
         noResults: true,
     },
     resultItem: {
-        highlight: {
-            render: true
-        }
+        highlight: true,
     }
 }
 ```
