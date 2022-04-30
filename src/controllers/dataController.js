@@ -62,7 +62,7 @@ const findMatches = (query, ctx) => {
     }
   });
 
-  // Find results matching to the query
+  // Filter matching results
   if (data.filter) matches = data.filter(matches);
 
   const results = matches.slice(0, ctx.resultsList.maxResults);
