@@ -1,3 +1,5 @@
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -272,21 +274,22 @@
     var data = ctx.data,
         searchEngine = ctx.searchEngine;
     var matches = [];
-    data.store.forEach(function (value, index) {
+    data.store.forEach(function (record, index) {
       var find = function find(key) {
-        var record = key ? value[key] : value;
-        var match = typeof searchEngine === "function" ? searchEngine(query, record) : search(query, record, {
+        var string = key ? record[key] : record;
+        var match = typeof searchEngine === "function" ? searchEngine(query, record) : search(query, string, {
           mode: searchEngine,
           diacritics: ctx.diacritics,
           highlight: ctx.resultItem.highlight
         });
-        if (!match) return;
-        var result = {
-          match: match,
-          value: value
-        };
-        if (key) result.key = key;
-        matches.push(result);
+        if (match) {
+          var result = {
+            match: match,
+            record: record
+          };
+          if (key) result.key = key;
+          matches.push(result);
+        }
       };
       if (data.keys) {
         var _iterator = _createForOfIteratorHelper(data.keys),

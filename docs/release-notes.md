@@ -37,7 +37,8 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ### v11.0 ✨
 - 🧹 Removed: `placeHolder` API property to be replaced with `attrs` (Thanks 👍 @mikob @folknor) #10 #11 #228
-- - 🔧 Fixed: `debounce` behavior (Thanks 👍 @john-999) #336
+- 🌀 Changed: `searchEngine` parameter `record` to carry the full object instead of string
+- 🔧 Fixed: `debounce` behavior (Thanks 👍 @john-999) #336
 - 🎛️ Updated: 
   - Library code with minor cleanup & optimizations resulted in minor size reduction & faster loading time
   - `Configuration` documentation section

@@ -31,26 +31,26 @@ const findMatches = (query, ctx) => {
   let matches = [];
 
   // Find matches from data source
-  data.store.forEach((value, index) => {
+  data.store.forEach((record, index) => {
     const find = (key) => {
-      const record = key ? value[key] : value;
+      const string = key ? record[key] : record;
 
       const match =
         typeof searchEngine === "function"
           ? searchEngine(query, record)
-          : search(query, record, {
-              mode: searchEngine,
-              diacritics: ctx.diacritics,
-              highlight: ctx.resultItem.highlight,
-            });
+          : search(query, string, {
+            mode: searchEngine,
+            diacritics: ctx.diacritics,
+            highlight: ctx.resultItem.highlight,
+          });
 
-      if (!match) return;
+      if (match) {
+        let result = { match, record };
 
-      let result = { match, value };
+        if (key) result.key = key;
 
-      if (key) result.key = key;
-
-      matches.push(result);
+        matches.push(result);
+      }
     };
 
     if (data.keys) {
