@@ -23,8 +23,6 @@ export default async function (ctx, q) {
     ctx.debouncer = setTimeout(() => {
       // Get from source
       await getData(ctx, queryVal);
-      // Check if data fetch failed
-      if (ctx.feedback instanceof Error) return;
       // Find matching results to the query
       findMatches(queryVal, ctx);
       // Render "resultsList"

@@ -445,7 +445,6 @@
         ctx.debouncer = setTimeout(function () {
           return getData(ctx, queryVal).then(function ($await_1) {
             try {
-              if (ctx.feedback instanceof Error) return;
               findMatches(queryVal, ctx);
               if (ctx.resultsList) render(ctx);
             } catch ($boundEx) {
