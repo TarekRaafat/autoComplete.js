@@ -36,7 +36,9 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 ***
 
 ### v11.0 ✨
-- 🧹 Removed: `placeHolder` API property to be replaced with `attrs` (Thanks 👍 @mikob @folknor) #10 #11 #228
+- 🧹 Removed:
+  - `placeHolder` API property to be replaced with `attrs` (Thanks 👍 @mikob @folknor) #10 #11 #228
+  - Redundant data fetch failure check at the `start` stage
 - 🌀 Changed: `searchEngine` parameter `record` value to serve the full object instead of string
 - 🔧 Fixed: `debounce` behavior (Thanks 👍 @john-999) #336
 - 🎛️ Updated: 
