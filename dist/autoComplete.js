@@ -172,7 +172,7 @@
     return el;
   };
   var getQuery = function getQuery(field) {
-    return field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : field.innerHTML;
+    return field.value || field.innerHTML;
   };
   var format = function format(value, diacritics) {
     value = String(value).toLowerCase();

@@ -49,8 +49,8 @@ const create = (tag, options) => {
  *
  * @returns {String} - Raw query value as a string
  */
-const getQuery = (field) =>
-  field instanceof HTMLInputElement || field instanceof HTMLTextAreaElement ? field.value : field.innerHTML;
+const getQuery = (field) => field.value || field.innerHTML;
+
 
 /**
  * Format input value
