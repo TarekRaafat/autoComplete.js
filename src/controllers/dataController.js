@@ -1,4 +1,5 @@
 import eventEmitter from "../helpers/eventEmitter";
+import isPromise from '../helpers/isPromise';
 import search from "./searchController";
 
 /**
@@ -11,7 +12,18 @@ const getData = async (ctx, query) => {
 
   if (data.cache && data.store) return;
 
-  ctx.feedback = data.store = typeof data.src === "function" ? await data.src(query) : data.src;
+  let result;
+  if (typeof data.src === "function") {
+    if (isPromise(data.src)) {
+       result = await data.src(query);
+    } else {
+      result = data.src(query);
+    }
+  } else {
+    result = data.src;
+  }
+
+  ctx.feedback = data.store = result;
 
   /**
    * @emit {response} event on data request
