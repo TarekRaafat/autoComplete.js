@@ -10,7 +10,7 @@ export default (ctx) => {
 
   // Populate Configuration options
   for (const option in options) {
-    if (typeof options[option] === "object") {
+    if (options[option] instanceof Object) {
       if (!ctx[option]) ctx[option] = {};
 
       for (const subOption in options[option]) {
