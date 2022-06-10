@@ -77,11 +77,11 @@ wrapper: false,
 
 #### `src` <sub><sup>(required)</sup></sub>
 - Type: `Array`|`Function` returns `Array` of results values
-  - Parameters: (`query`) <small>(works only if `data.cache` is `false`)</small>
+  - Parameters: (`query`) <small>(Only works if `data.cache` is `false`)</small>
 - Default: `null`
 
 #### `keys` <sub><sup>(required)</sup></sub>
-- Type: `Array` <small>(required only if `data.src` is `Array` of `Objects`)</small>
+- Type: `Array` <small>(Only required if `data.src` is `Array` of `Objects`)</small>
 - Default: `null`
 
 #### `cache` <sub><sup>(optional)</sup></sub>
@@ -113,6 +113,7 @@ data: {
         { "food": "Wild Boar - Tenderloin" },
         { "food": "Goat - Whole Cut" }
     ],
+    // Data source 'Object' key to be searched
     keys: ["food"]
 },
 ```
@@ -122,7 +123,7 @@ data: {
 ```js
 data: {
     src: (query) => { ... },
-    // Data 'Object' key to be searched
+    // Data source 'Object' key to be searched
     keys: ["food"],
     cache: true
 },
@@ -136,7 +137,7 @@ data: {
       try {
         // Fetch Data from external Source
         const source = await fetch(`https://www.api.com/${query}`);
-        // Data is array of `Objects` | `Strings`
+        // Data should be an array of `Objects` or `Strings`
         const data = await source.json();
 
         return data;
@@ -144,7 +145,7 @@ data: {
         return error;
       }
     },
-    // Data 'Object' key to be searched
+    // Data source 'Object' key to be searched
     keys: ["food"]
 },
 ```
