@@ -35,7 +35,11 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.2.7 ✨
+### v10.2.8 ✨
+- 🔧 Fixed: `data.src` to accept `SyncFunction` not only `AsyncFunction` (Thanks 👍 @xJeneKx) #347
+- 🎛️ Updated: Development dependencies
+
+### v10.2.7
 - 🎛️ Updated: Development dependencies
 
 ### v10.2.6

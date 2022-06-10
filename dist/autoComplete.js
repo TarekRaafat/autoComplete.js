@@ -1,5 +1,3 @@
-
-(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -265,12 +263,17 @@
       if (data.cache && data.store) return $return();
       return new Promise(function ($return, $error) {
         if (typeof data.src === "function") {
-          return data.src(query).then($return, $error);
+          return new Promise(function ($return, $error) {
+            if (data.src.constructor.name === "AsyncFunction") {
+              return data.src(query).then($return, $error);
+            }
+            return $return(data.src(query));
+          }).then($return, $error);
         }
         return $return(data.src);
-      }).then(function ($await_4) {
+      }).then(function ($await_7) {
         try {
-          ctx.feedback = data.store = $await_4;
+          ctx.feedback = data.store = $await_7;
           eventEmitter("response", ctx);
           return $return();
         } catch ($boundEx) {

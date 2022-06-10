@@ -1,5 +1,5 @@
 {
-  "version": "10.2.7",
+  "version": "10.2.8",
   "name": "@tarekraafat/autocomplete.js",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "keywords": [
@@ -234,6 +234,10 @@
     {
       "name": "sunshineplan",
       "url": "https://github.com/sunshineplan"
+    },
+    {
+      "name": "xJeneKx",
+      "url": "https://github.com/xJeneKx"
     }
   ],
   "maintainers": [
