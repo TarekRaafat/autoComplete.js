@@ -187,27 +187,23 @@ const previous = (ctx) => {
  * @param {Object} event - of selection
  * @param {Number} index - of the selected result item
  */
- const select = (ctx, event, index) => {
+const select = (ctx, event, index) => {
   // Check if cursor within list range
   index = index >= 0 ? index : ctx.cursor;
 
   // Prevent empty selection
   if (index < 0) return;
 
-  // Wait for ctx.feedback being fullfilled
-  start(ctx, ' ').then(() => {
+  // Prepare Selection data feedback object
+  ctx.feedback.event = event;
+  feedback(ctx, index);
 
-    // Prepare Selection data feedback object
-    ctx.feedback.event = event;
-    feedback(ctx, index);
+  /**
+   * @emit {selection} event on result item selection
+   **/
+  eventEmitter("selection", ctx);
 
-    /**
-     * @emit {selection} event on result item selection
-     **/
-    eventEmitter("selection", ctx);
-
-    close(ctx);
-  });
+  close(ctx);
 };
 
 /**
