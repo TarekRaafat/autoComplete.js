@@ -2,11 +2,11 @@
 
 API configuration options, methods and events
 
----
+***
 
 ## Options
 
----
+***
 
 ### name <sub><sup>(optional)</sup></sub>
 
@@ -21,9 +21,10 @@ API configuration options, methods and events
 name: "autoComplete",
 ```
 
----
+***
 
 ### selector <sub><sup>(optional)</sup></sub>
+
 
 > Responsible for the input, textarea, or contentEditable element selection
 
@@ -35,13 +36,11 @@ name: "autoComplete",
 <!-- tabs:start -->
 
 #### ** String **
-
 ```js
 selector: "#autoComplete", // Any valid selector
 ```
 
 #### ** Function **
-
 ```js
 selector: () => {
     return [Element]; // Any valid selector
@@ -50,9 +49,10 @@ selector: () => {
 
 <!-- tabs:end -->
 
----
+***
 
 ### wrapper <sub><sup>(optional)</sup></sub>
+
 
 > Responsible for rendering the `div` that wraps the `input` and the `list` element
 
@@ -65,7 +65,7 @@ selector: () => {
 wrapper: false,
 ```
 
----
+***
 
 ### ariaLabel <sub><sup>(optional)</sup></sub>
 
@@ -80,7 +80,7 @@ wrapper: false,
 ariaLabel: 'Search Box',
 ```
 
----
+***
 
 ### data <sub><sup>(required)</sup></sub>
 
@@ -91,23 +91,19 @@ ariaLabel: 'Search Box',
 ##### Methods:
 
 #### `src` <sub><sup>(required)</sup></sub>
-
 - Type: `Array`|`Function` returns `Array` of results values
   - Parameters: (`query`) <small>(Only works if `data.cache` is `false`)</small>
 - Default: `null`
 
 #### `keys` <sub><sup>(required)</sup></sub>
-
 - Type: `Array` <small>(Only required if `data.src` is `Array` of `Objects`)</small>
 - Default: `null`
 
 #### `cache` <sub><sup>(optional)</sup></sub>
-
 - Type: `Boolean`
 - Default: `false`
 
 #### `filter` <sub><sup>(optional)</sup></sub>
-
 - Type: `Function` returns `Array` of results values
   - Parameters: (`list`)
 - Default: No action
@@ -115,7 +111,6 @@ ariaLabel: 'Search Box',
 ##### Example:
 
 <!-- tabs:start -->
-
 #### ** Array (Strings) **
 
 ```js
@@ -169,10 +164,9 @@ data: {
     keys: ["food"]
 },
 ```
-
 <!-- tabs:end -->
 
----
+***
 
 ### trigger <sub><sup>(optional)</sup></sub>
 
@@ -190,7 +184,7 @@ trigger: (query) => {
 },
 ```
 
----
+***
 
 ### query <sub><sup>(optional)</sup></sub>
 
@@ -208,7 +202,7 @@ query: (input) => {
 },
 ```
 
----
+***
 
 ### placeHolder <sub><sup>(optional)</sup></sub>
 
@@ -223,7 +217,7 @@ query: (input) => {
 placeHolder: "Search...",
 ```
 
----
+***
 
 ### threshold <sub><sup>(optional)</sup></sub>
 
@@ -238,7 +232,7 @@ placeHolder: "Search...",
 threshold: 2,
 ```
 
----
+***
 
 ### debounce <sub><sup>(optional)</sup></sub>
 
@@ -253,7 +247,7 @@ threshold: 2,
 debounce: 300, // Milliseconds value
 ```
 
----
+***
 
 ### searchEngine <sub><sup>(optional)</sup></sub>
 
@@ -270,7 +264,7 @@ debounce: 300, // Milliseconds value
 searchEngine: "strict",
 ```
 
----
+***
 
 ### diacritics <sub><sup>(optional)</sup></sub>
 
@@ -285,7 +279,7 @@ searchEngine: "strict",
 diacritics: true,
 ```
 
----
+***
 
 ### resultsList <sub><sup>(optional)</sup></sub>
 
@@ -296,48 +290,39 @@ diacritics: true,
 ##### Methods:
 
 #### `tag` <sub><sup>(optional)</sup></sub>
-
-- Type: `String` of html [tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
-- Default: `ul`
+  - Type: `String` of html [tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
+  - Default: `ul`
 
 #### `id` <sub><sup>(optional)</sup></sub>
-
-- Type: `String` of id value
-- Default: `autoComplete_list_[id]`
+  - Type: `String` of id value
+  - Default: `autoComplete_list_[id]`
 
 #### `class` <sub><sup>(optional)</sup></sub>
-
-- Type: `String` of class values
-- Default: No classes
+  - Type: `String` of class values
+  - Default: No classes
 
 #### `destination` <sub><sup>(optional)</sup></sub>
-
-- Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` destination
-- Default: `#autoComplete`
+  - Type: `String` of [selector](https://developer.mozilla.org/en-US/docs/Learn/CSS/Building_blocks/Selectors) | `Function` destination
+  - Default: `#autoComplete`
 
 #### `position` <sub><sup>(optional)</sup></sub>
-
 - Type: `String` of [position](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentElement#parameters)
 - Default: `afterend`
 
 #### `element` <sub><sup>(optional)</sup></sub>
-
 - Type: `Function` with no return
 - Parameters: (`list`, `data`)
 - Default: `Function`
 
 #### `maxResults` <sub><sup>(optional)</sup></sub>
-
 - Type: `Integer`
 - Default: `5`
 
 #### `tabSelect` <sub><sup>(optional)</sup></sub>
-
 - Type: `Boolean` to enable/disable tab selection
 - Default: `false`
 
 #### `noResults` <sub><sup>(optional)</sup></sub>
-
 - Type: `Boolean` to enable/disable list resistance in case of no results
 - Default: `false`
 
@@ -358,7 +343,7 @@ resultsList: {
 },
 ```
 
----
+***
 
 ### resultItem <sub><sup>(optional)</sup></sub>
 
@@ -369,33 +354,27 @@ resultsList: {
 ##### Methods:
 
 #### `tag` <sub><sup>(optional)</sup></sub>
-
 - Type: `String` of html [tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)
 - Default: `li`
 
 #### `id` <sub><sup>(optional)</sup></sub>
-
 - Type: `String` of id value
 - Default: `autoComplete_result_[index]`
 
 #### `class` <sub><sup>(optional)</sup></sub>
-
 - Type: `String` of class values
 - Default: No classes
 
 #### `element` <sub><sup>(optional)</sup></sub>
-
 - Type: `Function` with no return
 - Parameters: (`item`, `data`)
 - Default: `Function`
 
 #### `highlight` <sub><sup>(optional)</sup></sub>
-
 - Type: `Boolean` | `String` of class values
 - Defaults: `false`
 
 #### `selected` <sub><sup>(optional)</sup></sub>
-
 - Type: `String` of class values
 - Default: No classes
 
@@ -413,7 +392,7 @@ resultItem: {
 },
 ```
 
----
+***
 
 ### submit <sub><sup>(optional)</sup></sub>
 
@@ -428,7 +407,7 @@ resultItem: {
 submit: true,
 ```
 
----
+***
 
 ### events <sub><sup>(optional)</sup></sub>
 
@@ -458,13 +437,12 @@ events: {
 },
 ```
 
----
+***
 
 ## APIs
+*All examples assume that the "autoComplete" new instance is assigned to an "autoCompleteJS" named variable*
 
-_All examples assume that the "autoComplete" new instance is assigned to an "autoCompleteJS" named variable_
-
----
+***
 
 ### init()
 
@@ -475,7 +453,7 @@ _All examples assume that the "autoComplete" new instance is assigned to an "aut
 3. Creating new empty hidden `list`
 4. Getting `data` if set to `cache`
 5. Attaching all event listeners on the `events` list
-6. Emitting `init` event
+6. Emitting `init` event 
 
 ##### Example:
 
@@ -483,7 +461,7 @@ _All examples assume that the "autoComplete" new instance is assigned to an "aut
 autoCompleteJS.init();
 ```
 
----
+***
 
 ### start(query)
 
@@ -497,11 +475,9 @@ autoCompleteJS.init();
 6. Rendering `list` if enabled
 
 Arguments:
-
 - query: `String` <sub><sup>(optional)</sup></sub>
 
 Defaults:
-
 - query: `input` query value
 
 ##### Example:
@@ -510,14 +486,13 @@ Defaults:
 autoCompleteJS.start("tea");
 ```
 
----
+***
 
 ### search(query, record, options)
 
 > autoComplete.js powerful search engine
 
 Arguments:
-
 - query: `String`
 - record: `String`
 - options: `Object` <sub><sup>(optional)</sup></sub>
@@ -528,7 +503,6 @@ Arguments:
   - highlight: `Boolean` | `String` of class values
 
 Defaults:
-
 - options: `Object`
   - mode: `"strict"`
   - diacritics: `false`
@@ -541,10 +515,10 @@ autoCompleteJS.search(query, record, options);
 
 // Or
 
-autoComplete.search(query, record, options);
+autoComplete.search(query, record, options)
 ```
 
----
+***
 
 ### open()
 
@@ -556,7 +530,7 @@ autoComplete.search(query, record, options);
 autoCompleteJS.open();
 ```
 
----
+***
 
 ### next()
 
@@ -568,7 +542,7 @@ autoCompleteJS.open();
 autoCompleteJS.next();
 ```
 
----
+***
 
 ### previous()
 
@@ -580,18 +554,16 @@ autoCompleteJS.next();
 autoCompleteJS.previous();
 ```
 
----
+***
 
 ### goTo(index)
 
 > Navigates to a specific `resultItem` on the list by its `index` number
 
 Arguments:
-
 - index: `Number`
 
 Defaults:
-
 - index: No default value
 
 ##### Example:
@@ -600,18 +572,17 @@ Defaults:
 autoCompleteJS.goTo(1);
 ```
 
----
+
+***
 
 ### select(index)
 
 > Selects a `resultItem` from the list by its `index` number
 
 Arguments:
-
 - index: `Number` <sub><sup>(optional)</sup></sub>
 
 Defaults:
-
 - index: current cursor position
 
 ##### Example:
@@ -620,7 +591,7 @@ Defaults:
 autoCompleteJS.select(1);
 ```
 
----
+***
 
 ### close()
 
@@ -632,7 +603,7 @@ autoCompleteJS.select(1);
 autoCompleteJS.close();
 ```
 
----
+***
 
 ### unInit()
 
@@ -644,25 +615,23 @@ autoCompleteJS.close();
 autoCompleteJS.unInit();
 ```
 
----
+***
 
 ## Events
 
 ### init
 
----
+***
 
 > Fires after `autoComplete.js` engine is initialized and ready
 
 - Example:
 
 ```js
-document
-  .querySelector("#autoComplete")
-  .addEventListener("init", function (event) {
+document.querySelector("#autoComplete").addEventListener("init", function (event) {
     // "event.detail" carries the returned data values
     console.log(event);
-  });
+});
 ```
 
 ### response
@@ -672,15 +641,13 @@ document
 ##### Example:
 
 ```js
-document
-  .querySelector("#autoComplete")
-  .addEventListener("response", function (event) {
+document.querySelector("#autoComplete").addEventListener("response", function (event) {
     // "event.detail" carries the returned data values
     console.log(event.detail);
-  });
+});
 ```
 
----
+***
 
 ### results
 
@@ -689,15 +656,13 @@ document
 ##### Example:
 
 ```js
-document
-  .querySelector("#autoComplete")
-  .addEventListener("results", function (event) {
+document.querySelector("#autoComplete").addEventListener("results", function (event) {
     // "event.detail" carries the matching results values
     console.log(event.detail);
-  });
+});
 ```
 
----
+***
 
 ### open
 
@@ -706,15 +671,13 @@ document
 ##### Example:
 
 ```js
-document
-  .querySelector("#autoComplete")
-  .addEventListener("open", function (event) {
+document.querySelector("#autoComplete").addEventListener("open", function (event) {
     // "event.detail" carries the autoComplete.js "feedback" object
     console.log(event.detail);
-  });
+});
 ```
 
----
+***
 
 ### navigate
 
@@ -723,15 +686,13 @@ document
 ##### Example:
 
 ```js
-document
-  .querySelector("#autoComplete")
-  .addEventListener("navigate", function (event) {
+document.querySelector("#autoComplete").addEventListener("navigate", function (event) {
     // "event.detail" carries the autoComplete.js "feedback" object
     console.log(event.detail);
-  });
+});
 ```
 
----
+***
 
 ### selection
 
@@ -740,15 +701,13 @@ document
 ##### Example:
 
 ```js
-document
-  .querySelector("#autoComplete")
-  .addEventListener("selection", function (event) {
+document.querySelector("#autoComplete").addEventListener("selection", function (event) {
     // "event.detail" carries the autoComplete.js "feedback" object
     console.log(event.detail);
-  });
+});
 ```
 
----
+***
 
 ### close
 
@@ -757,10 +716,8 @@ document
 ##### Example:
 
 ```js
-document
-  .querySelector("#autoComplete")
-  .addEventListener("close", function (event) {
+document.querySelector("#autoComplete").addEventListener("close", function (event) {
     // "event.detail" carries the autoComplete.js "feedback" object
     console.log(event.detail);
-  });
+});
 ```
