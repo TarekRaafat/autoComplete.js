@@ -244,6 +244,31 @@ filter: (list) => {
 
 <!-- panels:end -->
 
+## `Show all items on click`
+
+<!-- panels:start -->
+<!-- div:left-panel -->
+
+##### Code:
+
+```js
+// autoComplete.js Config Options
+threshold: 0,
+resultsList: {
+    maxResults: undefined
+},
+```
+
+<!-- div:right-panel -->
+
+##### Example
+
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_07">
+
+<!-- panels:end -->
+
+***
+
 <script>
     const data = {
         src: ["Pizza", "Burgers", "Sushi", "Coffee", "Soda", "Fresh Juice"]
@@ -441,5 +466,27 @@ filter: (list) => {
                 }
             }
         }
+    });
+
+    const autoCompleteJS_07 = new autoComplete({
+        selector: "#autoComplete_07",
+        placeHolder,
+        data,
+        threshold: 0,
+        resultsList: {
+            maxResults: undefined
+        },
+        resultItem,
+        events: {
+            input: {
+                focus (event) {
+                    autoCompleteJS_07.start();
+                },
+                selection (event) {
+                    const selection = event.detail.selection.value;
+                    autoCompleteJS_07.input.value = selection;
+                }
+            },
+        },
     });
 </script>
