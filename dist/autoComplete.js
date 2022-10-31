@@ -218,6 +218,7 @@
     resultsList.id = resultsList.id || name + "_list_" + ctx.id;
     resultItem.id = resultItem.id || name + "_result";
     ctx.input = select$1(ctx.selector);
+    if (!(ctx.input instanceof HTMLElement)) throw new Error("DOM Element selector not found. Check that your selector is valid and element exist.");
   });
 
   var eventEmitter = (function (name, ctx) {
