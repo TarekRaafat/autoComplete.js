@@ -32,6 +32,16 @@
     return target;
   }
 
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
+      return typeof obj;
+    } : function (obj) {
+      return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    }, _typeof(obj);
+  }
+
   function _defineProperty(obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
@@ -78,63 +88,6 @@
 
   function _nonIterableSpread() {
     throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
-  function _createForOfIteratorHelper(o, allowArrayLike) {
-    var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-
-    if (!it) {
-      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-        if (it) o = it;
-        var i = 0;
-
-        var F = function () {};
-
-        return {
-          s: F,
-          n: function () {
-            if (i >= o.length) return {
-              done: true
-            };
-            return {
-              done: false,
-              value: o[i++]
-            };
-          },
-          e: function (e) {
-            throw e;
-          },
-          f: F
-        };
-      }
-
-      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-    }
-
-    var normalCompletion = true,
-        didErr = false,
-        err;
-    return {
-      s: function () {
-        it = it.call(o);
-      },
-      n: function () {
-        var step = it.next();
-        normalCompletion = step.done;
-        return step;
-      },
-      e: function (e) {
-        didErr = true;
-        err = e;
-      },
-      f: function () {
-        try {
-          if (!normalCompletion && it.return != null) it.return();
-        } finally {
-          if (didErr) throw err;
-        }
-      }
-    };
   }
 
   var select$1 = function select(element) {
@@ -185,11 +138,9 @@
         resultsList = ctx.resultsList,
         resultItem = ctx.resultItem;
     for (var option in options) {
-      if (options[option] instanceof Object) {
+      if (_typeof(options[option]) === "object") {
         if (!ctx[option]) ctx[option] = {};
-        for (var subOption in options[option]) {
-          ctx[option][subOption] = options[option][subOption];
-        }
+        Object.assign(ctx[option], options[option]);
       } else {
         ctx[option] = options[option];
       }
@@ -233,25 +184,29 @@
       var _match = nRecord.indexOf(query);
       if (~_match) {
         query = record.substring(_match, _match + query.length);
-        _match = highlight ? record.replace(query, mark(query, highlight)) : record;
-        return _match;
+        return highlight ? record.replace(query, mark(query, highlight)) : record;
       }
     }
   });
 
   var getData = function getData(ctx, query) {
     return new Promise(function ($return, $error) {
-      var data;
-      data = ctx.data;
-      if (data.cache && data.store) return $return();
+      var src;
+      if (ctx.data.cache && ctx.data.store) return $return();
+      src = ctx.data.src;
       return new Promise(function ($return, $error) {
-        if (typeof data.src === "function") {
-          return data.src(query).then($return, $error);
+        if (src instanceof Function) {
+          return new Promise(function ($return, $error) {
+            if (src.constructor.name === "AsyncFunction") {
+              return src(query).then($return, $error);
+            }
+            return $return(src(query));
+          }).then($return, $error);
         }
-        return $return(data.src);
-      }).then(function ($await_4) {
+        return $return(src);
+      }).then(function ($await_7) {
         try {
-          ctx.feedback = data.store = $await_4;
+          ctx.feedback = ctx.data.store = $await_7;
           eventEmitter("response", ctx);
           return $return();
         } catch ($boundEx) {
@@ -263,43 +218,25 @@
   var findMatches = function findMatches(query, ctx) {
     var data = ctx.data,
         searchEngine = ctx.searchEngine;
-    var matches = [];
-    data.store.forEach(function (record, index) {
+    var matches = data.store.flatMap(function (value, index) {
       var find = function find(key) {
-        var string = key ? record[key] : record;
-        var match = typeof searchEngine === "function" ? searchEngine(query, record) : search(query, string, {
+        var record = key ? value[key] : value;
+        var match = typeof searchEngine === "function" ? searchEngine(query, record) : search(query, record, {
           mode: searchEngine,
           diacritics: ctx.diacritics,
           highlight: ctx.resultItem.highlight
         });
-        if (match) {
-          var result = {
-            match: match,
-            record: record
-          };
-          if (key) result.key = key;
-          matches.push(result);
-        }
+        return match && {
+          match: match,
+          value: value,
+          key: key
+        };
       };
-      if (data.keys) {
-        var _iterator = _createForOfIteratorHelper(data.keys),
-            _step;
-        try {
-          for (_iterator.s(); !(_step = _iterator.n()).done;) {
-            var key = _step.value;
-            find(key);
-          }
-        } catch (err) {
-          _iterator.e(err);
-        } finally {
-          _iterator.f();
-        }
-      } else {
-        find();
-      }
+      return data.keys ? data.keys.map(find) : find();
+    }).filter(function (result) {
+      return result;
     });
-    if (data.filter) matches = data.filter(matches);
-    var results = matches.slice(0, ctx.resultsList.maxResults);
+    var results = (data.filter ? data.filter(matches) : matches).slice(0, ctx.resultsList.maxResults);
     ctx.feedback = {
       query: query,
       matches: matches,
@@ -333,7 +270,7 @@
           role: "option",
           innerHTML: result.match,
           inside: fragment
-        }, resultItem.attrs));
+        }, resultItem.atr));
         if (resultItem.element) resultItem.element(element, result);
       });
       list.append(fragment);
@@ -360,7 +297,7 @@
   };
   var goTo = function goTo(index, ctx) {
     var resultItem = ctx.resultItem;
-    var results = ctx.list.getElementsByTagName(resultItem.tag);
+    var results = ctx.list.querySelectorAll(resultItem.tag);
     var cls = resultItem.selected ? resultItem.selected.split(" ") : false;
     if (ctx.isOpen && results.length) {
       var _results$index$classL;
@@ -376,7 +313,9 @@
       results[index].setAttribute(Selected, true);
       if (cls) (_results$index$classL = results[index].classList).add.apply(_results$index$classL, _toConsumableArray(cls));
       ctx.input.setAttribute(Active, results[ctx.cursor].id);
-      ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
+      results[index].scrollIntoView({
+        block: "center"
+      });
       ctx.feedback.cursor = ctx.cursor;
       feedback(ctx, index);
       eventEmitter("navigate", ctx);
@@ -405,23 +344,18 @@
     }
   };
   var navigate = function navigate(event, ctx) {
-    switch (event.keyCode) {
-      case 40:
-      case 38:
-        event.preventDefault();
-        event.keyCode === 40 ? next(ctx) : previous(ctx);
-        break;
-      case 13:
-        if (!ctx.submit) event.preventDefault();
-        if (ctx.cursor >= 0) select(ctx, event);
-        break;
-      case 9:
-        if (ctx.resultsList.tabSelect && ctx.cursor >= 0) select(ctx, event);
-        break;
-      case 27:
-        ctx.input.value = "";
-        close(ctx);
-        break;
+    var key = event.keyCode;
+    if (key === 40 || key === 38) {
+      event.preventDefault();
+      key === 40 ? next(ctx) : previous(ctx);
+    } else if (key === 13) {
+      if (!ctx.submit) event.preventDefault();
+      if (ctx.cursor >= 0) select(ctx, event);
+    } else if (key === 9 && ctx.resultsList.tabSelect && ctx.cursor >= 0) {
+      select(ctx, event);
+    } else if (key === 27) {
+      ctx.input.value = "";
+      close(ctx);
     }
   };
 
@@ -436,7 +370,7 @@
           return getData(ctx, queryVal).then(function ($await_1) {
             try {
               findMatches(queryVal, ctx);
-              if (ctx.resultsList) render(ctx);
+              ctx.resultsList && render(ctx);
             } catch ($boundEx) {
               return $error($boundEx);
             }
@@ -457,14 +391,8 @@
     }
   };
   var addEvents = function addEvents(ctx) {
-    var events = ctx.events;
-    var publicEvents = ctx.events = _objectSpread2({
-      input: _objectSpread2({}, events && events.input)
-    }, ctx.resultsList && {
-      list: events ? _objectSpread2({}, events.list) : {}
-    });
-    var privateEvents = {
-      input: {
+    var events = {
+      input: _objectSpread2(_objectSpread2({}, ctx.events && ctx.events.input), {}, {
         input: function input() {
           start(ctx);
         },
@@ -474,23 +402,20 @@
         blur: function blur() {
           close(ctx);
         }
-      },
-      list: {
+      })
+    };
+    if (ctx.resultsList) {
+      events.list = _objectSpread2(_objectSpread2({}, ctx.events && ctx.events.list), {}, {
         mousedown: function mousedown(event) {
           event.preventDefault();
         },
         click: function click$1(event) {
           click(event, ctx);
         }
-      }
-    };
-    eventsManager(privateEvents, function (element, event) {
-      if (!ctx.resultsList && event !== "input") return;
-      if (publicEvents[element][event]) return;
-      publicEvents[element][event] = privateEvents[element][event];
-    });
-    eventsManager(publicEvents, function (element, event) {
-      ctx[element].addEventListener(event, publicEvents[element][event]);
+      });
+    }
+    eventsManager(events, function (element, event) {
+      ctx[element].addEventListener(event, events[element][event]);
     });
   };
   var removeEvents = function removeEvents(ctx) {
@@ -502,28 +427,28 @@
   function init (ctx) {
     var _this = this;
     return new Promise(function ($return, $error) {
-      var resultsList, parentAttrs;
+      var resultsList, parentAtr;
       resultsList = ctx.resultsList;
-      parentAttrs = {
+      parentAtr = {
         role: "combobox",
         "aria-owns": resultsList.id,
         "aria-haspopup": true,
         "aria-expanded": false
       };
-      create(ctx.input, _objectSpread2(_objectSpread2({
-        "aria-controls": resultsList.id,
-        "aria-autocomplete": "both"
-      }, !ctx.wrapper && _objectSpread2({}, parentAttrs)), ctx.attrs));
       if (ctx.wrapper) ctx.wrapper = create("div", _objectSpread2({
         around: ctx.input,
         "class": ctx.name + "_wrapper"
-      }, parentAttrs));
+      }, parentAtr));
+      create(ctx.input, _objectSpread2(_objectSpread2({
+        "aria-controls": resultsList.id,
+        "aria-autocomplete": "both"
+      }, !ctx.wrapper && parentAtr), ctx.atr));
       if (resultsList) ctx.list = create(resultsList.tag, _objectSpread2({
         dest: [resultsList.destination, resultsList.position],
         id: resultsList.id,
         role: "listbox",
         hidden: "hidden"
-      }, resultsList.attrs));
+      }, resultsList.atr));
       addEvents(ctx);
       if (ctx.data.cache) {
         return getData(ctx).then(function ($await_2) {

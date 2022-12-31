@@ -51,7 +51,6 @@ const create = (tag, options) => {
  */
 const getQuery = (field) => field.value || field.innerHTML;
 
-
 /**
  * Format input value
  *
@@ -65,9 +64,9 @@ const format = (value, diacritics) => {
 
   return diacritics
     ? value
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .normalize("NFC")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .normalize("NFC")
     : value;
 };
 

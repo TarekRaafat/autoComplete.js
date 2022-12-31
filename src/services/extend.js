@@ -5,9 +5,11 @@ import { open, goTo, next, previous, select, close } from "../controllers/listCo
 import search from "../controllers/searchController";
 
 /**
- * autoComplete.js API extension
+ * Extension function that adds additional methods to the autoComplete.js object instance.
  *
  * @param {Object} autoComplete - autoComplete.js object instance
+ *
+ * @returns {void}
  */
 export default function (autoComplete) {
   const { prototype } = autoComplete;
@@ -22,6 +24,7 @@ export default function (autoComplete) {
    *
    * @param {String} query - Search query value
    *
+   * @returns {void}
    */
   prototype.start = function (query) {
     start(this, query);
@@ -54,6 +57,7 @@ export default function (autoComplete) {
    *
    * @param {Number} index - of the selected result item
    *
+   * @returns {void}
    */
   prototype.goTo = function (index) {
     goTo(index, this);
@@ -74,6 +78,7 @@ export default function (autoComplete) {
    *
    * @param {Number} index - of the selected result item
    *
+   * @returns {void}
    */
   prototype.select = function (index) {
     select(this, null, index);

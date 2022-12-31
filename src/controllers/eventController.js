@@ -21,19 +21,9 @@ const eventsManager = (events, callback) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const addEvents = (ctx) => {
-  const { events } = ctx;
-
-  // Public events listeners list
-  const publicEvents = (ctx.events = {
+  const events = {
     input: {
-      ...(events && events.input),
-    },
-    ...(ctx.resultsList && { list: events ? { ...events.list } : {} }),
-  });
-
-  // Private events listeners list
-  const privateEvents = {
-    input: {
+      ...(ctx.events && ctx.events.input),
       input() {
         start(ctx);
       },
@@ -44,29 +34,23 @@ const addEvents = (ctx) => {
         close(ctx);
       },
     },
-    list: {
+  };
+
+  if (ctx.resultsList) {
+    events.list = {
+      ...(ctx.events && ctx.events.list),
       mousedown(event) {
         event.preventDefault();
       },
       click(event) {
         click(event, ctx);
       },
-    },
-  };
+    };
+  }
 
-  // Populate all private events into public events list
-  eventsManager(privateEvents, (element, event) => {
-    // Do NOT populate any events except "input" If "resultsList" disabled
-    if (!ctx.resultsList && event !== "input") return;
-    // Do NOT overwrite public events
-    if (publicEvents[element][event]) return;
-    // Populate public events
-    publicEvents[element][event] = privateEvents[element][event];
-  });
-
-  // Attach all public events
-  eventsManager(publicEvents, (element, event) => {
-    ctx[element].addEventListener(event, publicEvents[element][event]);
+  // Populate all events into events list
+  eventsManager(events, (element, event) => {
+    ctx[element].addEventListener(event, events[element][event]);
   });
 };
 

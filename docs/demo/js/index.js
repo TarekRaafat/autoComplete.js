@@ -9,7 +9,7 @@ const autoCompleteJS = new autoComplete({
         const source = await fetch("./db/generic.json");
         const data = await source.json();
         // Post Loading placeholder text
-        document.getElementById("autoComplete").setAttribute("placeholder", autoCompleteJS.attrs.placeholder);
+        document.getElementById("autoComplete").setAttribute("placeholder", autoCompleteJS.atr.placeholder);
         // Returns Fetched data
         return data;
       } catch (error) {
@@ -28,7 +28,8 @@ const autoCompleteJS = new autoComplete({
       return filteredResults;
     },
   },
-  attrs: {
+  // wrapper: false,
+  atr: {
     type: "text",
     dir: "ltr",
     spellcheck: false,
@@ -49,7 +50,7 @@ const autoCompleteJS = new autoComplete({
       }
       list.prepend(info);
     },
-    // attrs: {
+    // atr: {
     //   class: "hello you",
     // },
     noResults: true,
@@ -69,7 +70,7 @@ const autoCompleteJS = new autoComplete({
         ${data.key}
       </span>`;
     },
-    // attrs: {
+    // atr: {
     //   class: "hello"
     // },
     highlight: true,

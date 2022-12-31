@@ -41,15 +41,13 @@ export default (query, record, options) => {
     if (cursor === qLength) return match;
   } else {
     // Get starting index of matching characters
-    let match = nRecord.indexOf(query);
+    const match = nRecord.indexOf(query);
     // Strict mode
     if (~match) {
       // Extract matching characters from record
       query = record.substring(match, match + query.length);
       // Highlight matching characters if active
-      match = highlight ? record.replace(query, mark(query, highlight)) : record;
-
-      return match;
+      return highlight ? record.replace(query, mark(query, highlight)) : record;
     }
   }
 };

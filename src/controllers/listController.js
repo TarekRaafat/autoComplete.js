@@ -45,7 +45,7 @@ const render = (ctx) => {
         role: "option",
         innerHTML: result.match,
         inside: fragment,
-        ...resultItem.attrs,
+        ...resultItem.atr,
       });
 
       // If custom content is active pass params
@@ -80,7 +80,7 @@ const open = (ctx) => {
   ctx.isOpen = true;
 
   /**
-   * @emit {open} event after results list is opened
+   * Emit the "open" event after results list is opened
    **/
   eventEmitter("open", ctx);
 };
@@ -102,7 +102,7 @@ const close = (ctx) => {
   ctx.isOpen = false;
 
   /**
-   * @emit {close} event after "resultsList" is closed
+   * Emit the "close" event after "resultsList" is closed
    **/
   eventEmitter("close", ctx);
 };
@@ -117,7 +117,7 @@ const goTo = (index, ctx) => {
   const { resultItem } = ctx;
 
   // List of result items
-  const results = ctx.list.getElementsByTagName(resultItem.tag);
+  const results = ctx.list.querySelectorAll(resultItem.tag);
   // Selected result item Classes
   const cls = resultItem.selected ? resultItem.selected.split(" ") : false;
 
@@ -149,14 +149,14 @@ const goTo = (index, ctx) => {
     ctx.input.setAttribute(Active, results[ctx.cursor].id);
 
     // Scroll to selection
-    ctx.list.scrollTop = results[index].offsetTop - ctx.list.clientHeight + results[index].clientHeight + 5;
+    results[index].scrollIntoView({ block: "center" });
 
     // Prepare Selection data feedback object
     ctx.feedback.cursor = ctx.cursor;
     feedback(ctx, index);
 
     /**
-     * @emit {navigate} event on results list navigation
+     * Emit the "navigate" event on results list navigation
      **/
     eventEmitter("navigate", ctx);
   }
@@ -199,7 +199,7 @@ const select = (ctx, event, index) => {
   feedback(ctx, index);
 
   /**
-   * @emit {selection} event on result item selection
+   * Emit the "selection" event on result item selection
    **/
   eventEmitter("selection", ctx);
 
@@ -230,36 +230,37 @@ const click = (event, ctx) => {
  * @param {Object} ctx - autoComplete.js context
  */
 const navigate = (event, ctx) => {
-  // Check pressed key
-  switch (event.keyCode) {
-    // Down/Up arrow
-    case 40:
-    case 38:
-      event.preventDefault();
-      // Move cursor based on pressed key
-      event.keyCode === 40 ? next(ctx) : previous(ctx);
+  // Get the key code of the pressed key
+  const key = event.keyCode;
 
-      break;
-    // Enter
-    case 13:
-      if (!ctx.submit) event.preventDefault();
-      // If cursor moved
-      if (ctx.cursor >= 0) select(ctx, event);
+  // Check if the down or up arrow key was pressed
+  if (key === 40 || key === 38) {
+    // Prevent the default behavior of the key press
+    event.preventDefault();
 
-      break;
-    // Tab
-    case 9:
-      // Select on Tab if enabled
-      if (ctx.resultsList.tabSelect && ctx.cursor >= 0) select(ctx, event);
+    // Move the cursor based on the pressed key
+    key === 40 ? next(ctx) : previous(ctx);
+  }
+  // Check if the enter key was pressed
+  else if (key === 13) {
+    // If the submit option is not enabled, prevent the default behavior of the key press
+    if (!ctx.submit) event.preventDefault();
 
-      break;
-    // Esc
-    case 27:
-      // Clear "input" value
-      ctx.input.value = "";
+    // If the cursor has moved, select the current result item
+    if (ctx.cursor >= 0) select(ctx, event);
+  }
+  // Check if the tab key was pressed
+  else if (key === 9 && ctx.resultsList.tabSelect && ctx.cursor >= 0) {
+    // Select the current result item if the tab select option is enabled
+    select(ctx, event);
+  }
+  // Check if the esc key was pressed
+  else if (key === 27) {
+    // Clear the value of the input element
+    ctx.input.value = "";
 
-      close(ctx);
-      break;
+    // Close the results list
+    close(ctx);
   }
 };
 
