@@ -4,26 +4,26 @@ import init from "./services/init";
 
 /**
  * @class autoComplete
- * @classdesc Creates a new instance of autoComplete.js with the given configuration.
+ * @classdesc A JavaScript library that provides an autocomplete functionality for input fields or elements.
  *
- * @see {@link https://tarekraafat.github.io/autoComplete.js/#/configuration}
+ * @see {@link https://tarekraafat.github.io/autoComplete.js/#/configuration} for more information on configuration options.
  * @example const autoCompleteJS = new autoComplete({config});
  *
- * @param {Object} config - Configuration options.
- * @param {Number|String} [config.id] - Auto assigned instance unique identifier.
- * @param {String} [config.name=autoComplete] - Prepended to all created DOM element class names.
- * @param {(String|Function)} [config.selector=#autoComplete] - Must point to or return the relevant input field or element that autoComplete.js should act upon.
- * @param {Object} config.data - Data source.
- * @param {(String[]|Object[]|Function)} config.data.src - Values to search or an async or immediate function that returns an array of values to search.
+ * @param {Object} config - Configuration options for the autocomplete instance.
+ * @param {Number|String} [config.id] - An optional, auto-assigned unique identifier for the instance.
+ * @param {String} [config.name=autoComplete] - A string that is prepended to all created DOM element class names.
+ * @param {(String|Function)} [config.selector=#autoComplete] - A CSS selector or a function that returns the relevant input field or element that autoComplete.js should act upon.
+ * @param {Object} config.data - The data source for the autocomplete functionality.
+ * @param {(String[]|Object[]|Function)} config.data.src - An array of values to search or an async or immediate function that returns an array of values to search.
  * @param {String[]} [config.data.keys] - Only used if config.data.src is an array of objects. Specifies which keys in the objects autoComplete.js should search.
- * @param {Boolean} [config.data.cache=false] - If true, autoComplete.js fetches all config.data.src when initialized and never again.
- * @param {Function} [config.data.filter] - Used to filter and sort matching returns from config.data.src before showing them to the user. Signature: (Array), is given all the results from config.data.src that matches the query.
- * @param {Function} [config.trigger] - Return true if you want autoComplete.js to start. Signature: (event, query). Default trigger function returns true if input field is *NOT* empty *and* greater than or equal to config.threshold.
- * @param {Function} [config.query] - For manipulating the input value before running the search, for example if you want to remove spaces or anything else. Signature: (string), must return string, is given the raw input value.
- * @param {String} [config.placeHolder] - Placeholder to set on the input element. For example "Search...".
- * @param {Number} [config.threshold=1] - Minimum number of characters required in the input before triggering autocompletion.
- * @param {Number} [config.debounce=0] - Delay in milliseconds after input for autocompletion to start.
- * @param {Boolean} [config.wrapper=true] - Wraps the input element in a div for a11y purposes, adding some ARIA attributes.
+ * @param {Boolean} [config.data.cache=false] - If set to true, autoComplete.js will fetch all config.data.src when initialized and never again.
+ * @param {Function} [config.data.filter] - A function used to filter and sort matching returns from config.data.src before showing them to the user. Signature: (Array), is given all the results from config.data.src that match the query.
+ * @param {Function} [config.trigger] - A function that returns true if you want autoComplete.js to start. Signature: (event, query). The default trigger function returns true if the input field is NOT empty and the number of characters is greater than or equal to config.threshold.
+ * @param {Function} [config.query] - A function for manipulating the input value before running the search, for example if you want to remove spaces or anything else. Signature: (string), must return string, is given the raw input value.
+ * @param {String} [config.placeHolder] - A placeholder to set on the input element. For example "Search...".
+ * @param {Number} [config.threshold=1] - The minimum number of characters required in the input before triggering autocompletion.
+ * @param {Number} [config.debounce=0] - A delay in milliseconds after input for autocompletion to start.
+ * @param {Boolean} [config.wrapper=true] - If set to true, wraps the input element in a div for a11y purposes, adding some ARIA attributes.
  * @param {(String|Function)} [config.searchEngine=strict] - "strict" checks if the given query is contained within the data, "loose" returns every result where every character in the query is present in the data in any order and location. Signature: (query: string, record: any), given the manipulated query input and each data.src array entry or for each entry[config.data.keys].
  * @param {Boolean} [config.diacritics=false] - Enable to normalize query and data values using String.normalize and by removing u0300 through u036f. See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize}.
  * @param {(Object|Boolean)} [config.resultsList] - false to disable result list rendering.
