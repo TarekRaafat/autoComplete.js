@@ -29,4 +29,5 @@ export default (ctx) => {
 
   // Assign the "input" html element
   ctx.input = select(ctx.selector);
+  if (!(ctx.input instanceof HTMLElement)) throw new Error("DOM Element selector not found. Check that your selector is valid and element exist.");
 };
