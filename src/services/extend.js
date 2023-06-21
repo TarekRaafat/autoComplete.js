@@ -76,7 +76,10 @@ export default function (autoComplete) {
    *
    */
   prototype.select = function (index) {
-    select(this, null, index);
+    // Wait for 'ctx.feedback' being fullfilled
+    start(this, ' ').then(() => {
+      select(this, null, index);
+    });
   };
 
   /**
