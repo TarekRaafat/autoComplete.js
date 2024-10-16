@@ -1,8 +1,8 @@
 import nodent from "rollup-plugin-nodent";
 import babel from "@rollup/plugin-babel";
 import cleanup from "rollup-plugin-cleanup";
-import { terser } from "rollup-plugin-terser";
-import pkg from "./package.json";
+import terser from "@rollup/plugin-terser";
+import pkg from "./package.json" assert { type: "json" };
 import gzipPlugin from "rollup-plugin-gzip";
 import analyze from "rollup-plugin-analyzer";
 import sizes from "rollup-plugin-sizes";
