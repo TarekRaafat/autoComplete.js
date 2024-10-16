@@ -706,3 +706,18 @@ document.querySelector("#autoComplete").addEventListener("close", function (even
     console.log(event.detail);
 });
 ```
+
+***
+
+### clear
+
+> Fires after "resultsList" is cleared
+
+##### Example:
+
+```js
+document.querySelector("#autoComplete").addEventListener("clear", function (event) {
+    // "event.detail" carries the autoComplete.js "feedback" object
+    console.log(event.detail);
+});
+```

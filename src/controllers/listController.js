@@ -258,6 +258,11 @@ const navigate = (event, ctx) => {
       // Clear "input" value
       ctx.input.value = "";
 
+      /**
+       * @emit {clear} event on input clear
+       **/
+      eventEmitter('clear', ctx);
+
       close(ctx);
       break;
   }
