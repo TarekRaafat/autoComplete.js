@@ -47,6 +47,7 @@ const findMatches = (query, ctx) => {
               mode: searchEngine,
               diacritics: ctx.diacritics,
               highlight: ctx.resultItem.highlight,
+              caseSensitive: ctx.caseSensitive
             });
 
       if (!match) return;
