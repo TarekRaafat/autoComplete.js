@@ -26,6 +26,7 @@ import init from "./services/init";
  * @param {Boolean} [config.wrapper=true] - Wraps the input element in a div for a11y purposes, adding some ARIA attributes.
  * @param {(String|Function)} [config.searchEngine=strict] - "strict" checks if the given query is contained within the data, "loose" returns every result where every character in the query is present in the data in any order and location. Signature: (query: string, record: any), given the manipulated query input and each data.src array entry or for each entry[config.data.keys].
  * @param {Boolean} [config.diacritics=false] - Enable to normalize query and data values using String.normalize and by removing u0300 through u036f. See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize}.
+ * @param {Boolean} [config.caseSensitive=false] - Enable to make search result case sensitive.
  * @param {(Object|Boolean)} [config.resultsList] - false to disable result list rendering.
  * @param {String} [config.resultsList.tag=ul] - HTML tag to use for rendering the result container.
  * @param {String} [config.resultsList.id=autoComplete_list_index] - ID given to the result container.

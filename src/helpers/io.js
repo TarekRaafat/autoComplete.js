@@ -57,11 +57,12 @@ const getQuery = (field) =>
  *
  * @param {String} value - user's raw search query value
  * @param {Object} diacritics - formatting on/off
+ * @param {Object} caseSensitive - formatting to lowerCase
  *
  * @returns {String} - Raw "input" value as a string
  */
-const format = (value, diacritics) => {
-  value = String(value).toLowerCase();
+const format = (value, diacritics, caseSensitive = false) => {
+  value = caseSensitive ? String(value) : String(value).toLowerCase();
 
   return diacritics
     ? value

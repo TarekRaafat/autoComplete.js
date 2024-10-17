@@ -486,12 +486,14 @@ Arguments:
     - `"loose"` search mode
   - diacritics: `Boolean`
   - highlight: `Boolean` | `String` of class values
+  - caseSensitive: `Boolean`
 
 Defaults:
 - options: `Object`
   - mode: `"strict"`
   - diacritics: `false`
   - highlight: `false`
+  - caseSensitive: `false`
 
 ##### Example:
 
