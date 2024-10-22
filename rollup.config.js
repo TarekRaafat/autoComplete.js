@@ -59,7 +59,7 @@ export default [
         },
         toplevel: true,
       }),
-      gzipPlugin(),
+      gzipPlugin.default(),
     ],
   },
   {
@@ -91,7 +91,7 @@ export default [
         presets: ["@babel/preset-env"],
       }),
       cleanup(),
-      gzipPlugin(),
+      gzipPlugin.default(),
       // Analyzer
       analyze({
         onAnalysis,

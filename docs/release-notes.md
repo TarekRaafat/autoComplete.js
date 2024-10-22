@@ -35,7 +35,10 @@ For more information on semantic versioning, please visit <http://semver.org/>.
 
 ***
 
-### v10.2.8 ✨
+### v10.2.9 ✨
+- 🔧 Fixed: `"type": "module"` issue (Thanks 👍 @bbysaeth and @jules-w2) #437
+
+### v10.2.8
 - ➕ Added: `Clear` event (Thanks 👍 @alan-rudzinski) #435
 - 🔧 Fixed: `LiveReload` script issue (Thanks 👍 @Jammmmm) #434
 - 🎛️ Updated: Development dependencies

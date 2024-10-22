@@ -1,5 +1,5 @@
 {
-  "version": "10.2.8",
+  "version": "10.2.9",
   "name": "@tarekraafat/autocomplete.js",
   "description": "Simple autocomplete pure vanilla Javascript library.",
   "keywords": [
@@ -55,7 +55,6 @@
     "dist",
     "src"
   ],
-  "type": "module",
   "main": "dist/autoComplete.js",
   "browser": "dist/autoComplete.min.js",
   "unpkg": "dist/autoComplete.min.js",
@@ -77,7 +76,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development rollup -c -w",
-    "build": "NODE_ENV=production rollup -c",
+    "build": "NODE_ENV=production rollup -c --bundleConfigAsCjs",
     "docs": "jsdoc -c jsdocs.json"
   },
   "license": "Apache-2.0",
