@@ -259,8 +259,5 @@
       "type": "patreon",
       "url": "https://patreon.com/TarekRaafat"
     }
-  ],
-  "dependencies": {
-    "@babel/runtime": "^7.27.6"
-  }
+  ]
 }
