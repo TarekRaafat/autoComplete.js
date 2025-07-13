@@ -67,6 +67,21 @@ wrapper: false,
 
 ***
 
+### ariaLabel <sub><sup>(optional)</sup></sub>
+
+> Adds the attribute aria-label to the wrapper if the wrapper option is true, otherwise to the input.
+
+- Type: `String`
+- Default: ``
+
+##### Example
+
+```js
+ariaLabel: 'Search Box',
+```
+
+***
+
 ### data <sub><sup>(required)</sup></sub>
 
 > Responsible for the data source selection

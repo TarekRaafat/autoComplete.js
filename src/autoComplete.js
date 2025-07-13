@@ -24,6 +24,7 @@ import init from "./services/init";
  * @param {Number} [config.threshold=1] - Minimum number of characters required in the input before triggering autocompletion.
  * @param {Number} [config.debounce=0] - Delay in milliseconds after input for autocompletion to start.
  * @param {Boolean} [config.wrapper=true] - Wraps the input element in a div for a11y purposes, adding some ARIA attributes.
+ * @param {String} [config.ariaLabel] - Adds the attribute aria-label to the wrapper if the wrapper option is true, otherwise to the input.
  * @param {(String|Function)} [config.searchEngine=strict] - "strict" checks if the given query is contained within the data, "loose" returns every result where every character in the query is present in the data in any order and location. Signature: (query: string, record: any), given the manipulated query input and each data.src array entry or for each entry[config.data.keys].
  * @param {Boolean} [config.diacritics=false] - Enable to normalize query and data values using String.normalize and by removing u0300 through u036f. See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize}.
  * @param {(Object|Boolean)} [config.resultsList] - false to disable result list rendering.
