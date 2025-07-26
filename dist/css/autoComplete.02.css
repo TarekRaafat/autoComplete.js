@@ -51,8 +51,8 @@
 }
 
 .autoComplete_wrapper > ul > li::selection {
-  color: rgba(#ffffff, 0);
-  background-color: rgba(#ffffff, 0);
+  color: transparent
+  background-color: transparent
 }
 
 .autoComplete_wrapper > ul > li:hover {
@@ -67,8 +67,8 @@
 }
 
 .autoComplete_wrapper > ul > li mark::selection {
-  color: rgba(#ffffff, 0);
-  background-color: rgba(#ffffff, 0);
+  color: transparent
+  background-color: transparent
 }
 
 .autoComplete_wrapper > ul > li[aria-selected="true"] {
