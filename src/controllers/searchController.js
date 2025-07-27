@@ -10,11 +10,11 @@ import { format, mark } from "../helpers/io";
  * @returns {String} - Matching data record
  */
 export default (query, record, options) => {
-  const { mode, diacritics, highlight } = options || {};
+  const { mode, diacritics, highlight, caseSensitive } = options || {};
 
-  const nRecord = format(record, diacritics);
+  const nRecord = format(record, diacritics, caseSensitive);
   record = String(record);
-  query = format(query, diacritics);
+  query = format(query, diacritics, caseSensitive);
 
   if (mode === "loose") {
     // Query string with no spaces
