@@ -10,6 +10,7 @@
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 ![npm](https://img.shields.io/npm/dm/@tarekraafat/autocomplete.js?label=npm)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
+[![kandi X-Ray](https://kandi.openweaver.com/badges/xray.svg)](https://kandi.openweaver.com/javascript/TarekRaafat/autoComplete.js)
 
 <br>
 <br>
