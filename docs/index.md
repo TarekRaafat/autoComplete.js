@@ -32,7 +32,7 @@
 
 autoComplete.js is a simple, lightweight, pure vanilla Javascript autocomplete/autosuggest library with zero dependencies. It is progressively designed for speed, high versatility, and seamless integration with a wide range of projects and systems. <sub><sup>(Made for a better developer experience)</sub></sup>
 
-It works on `<input>`, `<textarea>`, and `contentEditable` elements. It features a powerful search engine with strict (substring) and loose (scattered character) matching modes, diacritics support, async data sources, debouncing, WAI-ARIA 1.2 accessibility, lifecycle events, and a fully customizable API. The library ships at ~9 KB minified (~3.7 KB gzipped) with zero runtime dependencies.
+It works on `<input>`, `<textarea>`, and `contentEditable` elements. It features a powerful search engine with strict (substring) and loose (scattered character) matching modes, diacritics support, async data sources, debouncing, WAI-ARIA 1.2 accessibility, lifecycle events, and a fully customizable API. The library ships at `~9 KB` minified (`~3.7 KB` gzipped) with zero runtime dependencies.
 
 ## Features <!-- {docsify-ignore} -->
 
