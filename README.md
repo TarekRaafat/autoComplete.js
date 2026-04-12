@@ -5,7 +5,7 @@
 [![npm](https://img.shields.io/npm/v/@tarekraafat/autocomplete.js)](https://badge.fury.io/js/%40tarekraafat%2Fautocomplete.js)
 ![100% Javascript](https://img.shields.io/github/languages/top/TarekRaafat/autoComplete.js?color=yellow)
 ![Zero Dependencies](https://img.shields.io/badge/Dependencies-0-blue.svg)
-[![Minified Size](https://badgen.net/bundlephobia/min/@tarekraafat/autocomplete.js@latest)](https://bundlephobia.com/package/@tarekraafat/autocomplete.js@latest)
+![Minified Size](https://img.shields.io/badge/Minified-~9%20KB-blue)
 ![Yes Maintained](https://img.shields.io/badge/Maintained%3F-yes-success)
 [![](https://data.jsdelivr.com/v1/package/npm/@tarekraafat/autocomplete.js/badge)](https://www.jsdelivr.com/package/npm/@tarekraafat/autocomplete.js)
 ![npm](https://img.shields.io/npm/dm/@tarekraafat/autocomplete.js?label=npm)
@@ -23,7 +23,7 @@
 
 > Simple autocomplete pure vanilla Javascript library. :rocket:  <a href="https://tarekraafat.github.io/autoComplete.js/demo/" target="\_blank">Live Demo</a> **v10**
 
-autoComplete.js is a simple, pure vanilla Javascript library progressively designed for speed, high versatility, and seamless integration with a wide range of projects & systems. <sub><sup>(Made for a better developer experience)</sub></pub>
+autoComplete.js is a simple, pure vanilla Javascript library progressively designed for speed, high versatility, and seamless integration with a wide range of projects & systems. <sub><sup>(Made for a better developer experience)</sub></sup>
 
 ## Features
 
@@ -51,13 +51,13 @@ autoComplete.js is a simple, pure vanilla Javascript library progressively desig
 `JS`
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.9/dist/autoComplete.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.10/dist/autoComplete.min.js"></script>
 ```
 
 `CSS`
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.9/dist/css/autoComplete.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.10/dist/css/autoComplete.min.css">
 ```
 #### Package Manager
 
@@ -109,7 +109,7 @@ General questions or new ideas for `autoComplete.js` please start a discussion o
 **Tarek Raafat**
 
 -   Email: tarek.m.raafat@gmail.com
--   Website: [tarekraafat.com](http://www.tarekraafat.com/)
+-   Website: [tarekraafat.com](https://www.tarekraafat.com/)
 -   Github: [github.com/TarekRaafat](https://github.com/TarekRaafat/)
 
 * * *
@@ -118,4 +118,4 @@ General questions or new ideas for `autoComplete.js` please start a discussion o
 
 Released under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
 
-© 2022 [Tarek Raafat](http://www.tarekraafat.com)
+© 2026 [Tarek Raafat](https://www.tarekraafat.com)

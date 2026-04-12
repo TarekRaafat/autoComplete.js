@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>autoComplete.js - Vanilla Javascript library</title>
     <meta name="description"
-        content="Simple autoComplete pure vanilla Javascript library progressively designed for speed, high versatility, and seamless integration.">
+        content="Simple autocomplete pure vanilla Javascript library. Zero dependencies. Designed for speed, high versatility, and seamless integration.">
     <meta name="keywords"
         content="@tarekraafat/autocomplete.js, auto complete js, autocomplete, autocomplete address library, autocomplete ajax library, autocomplete api, autocomplete api javascript, autocomplete autosuggest js, autocomplete custom, autocomplete dropdown, autocomplete dropdown in html, autocomplete dropdown javascript, autocomplete full text search, autocomplete html, autocomplete in javascript, autocomplete in js, autocomplete input javascript, autocomplete input js, autocomplete javascript, autocomplete javascript code, autocomplete javascript example, autocomplete javascript github, autocomplete javascript input, autocomplete javascript library, autocomplete javascript plugin, autocomplete js ajax, autocomplete js cdn, autocomplete js codepen, autocomplete js example, autocomplete js github, autocomplete js library, autocomplete js npm, autocomplete library, autocomplete light, autocomplete light js, autocomplete node js, autocomplete open, autocomplete open event, autocomplete open source, autocomplete openonfocus, autocomplete pure javascript, autocomplete search javascript, autocomplete search js, autocomplete select library, autocomplete text library, autocomplete textbox library, autocomplete tutorial, autocomplete tutorial ajax, autocomplete using pure javascript, autocomplete vanilla js, autocomplete with javascript, autocomplete-js, autocomplete.js, autocomplete.js examples, autocompletejs, autofill js, autosuggest dropdown, autosuggest highlight, autosuggest javascript, autosuggest javascript example, autosuggest js, autosuggest js github, autosuggest js npm, autosuggest npm, autosuggest search, autosuggestion example, autosuggestion javascript, best autocomplete javascript library, blazing fast, customizable, developer friendly, drop down list, drop down list html, drop down list javascript, dropdown javascript, dropdown js library, easy autocomplete, easy autocomplete ajax, easy autocomplete cdn, easy autocomplete multiple values, easy to use autocomplete javascript library, fast, fast autocomplete, fast autocomplete javascript, fastest autocomplete javascript library, form auto suggest javascript, github, hackable, high integration, input autocomplete js, javascript, javascript auto suggest box, javascript autocomplete, javascript autocomplete dropdown, javascript autocomplete framework, javascript autocomplete input, javascript autocomplete library tutorial, javascript autocomplete list, javascript autocomplete search, javascript autocomplete textarea, javascript autocomplete textbox, javascript autocomplete textbox from json, javascript autocomplete tutorial, javascript autosuggest, javascript autosuggest library, javascript autosuggest search, javascript dropdown menu, javascript dropdown select, javascript input autocomplete, javascript library, javascript search autocomplete, js, js autocomplete, js autocomplete ajax, js autocomplete input, js autocomplete library, js autocomplete search, js autocomplete select, js autocomplete tutorial, js autosuggest, js dropdown, js dropdown select, js input autocomplete, js search autocomplete, lightning fast, lightweight, lightweight autocomplete javascript, open source, pure javascript autocomplete, pure vanilla javascript, scalability, scalable, search, search autocomplete javascript, search javascript, search library, search library javascript, select, simple autocomplete, simple autocomplete javascript, speed, string search library javascript, suggestions, tarekraafat/autocomplete.js, text search library javascript, vanilla autocomplete, vanilla javascript autocomplete, vanilla javascript library, vanilla js, vanilla js autocomplete, vanilla js autocomplete npm, vanilla js autocomplete plugin, versatile, zero dependencies">
     <meta name="subject" content="autoComplete Javascript Library">
@@ -14,19 +14,30 @@
     <meta name="owner" content="Tarek Raafat">
     <meta property="og:site_name" content="autoComplete.js">
     <meta property="og:title" content="autoComplete.js">
-    <meta property="og:description" content="Simple autocomplete pure vanilla Javascript library.">
+    <meta property="og:description" content="Simple autocomplete pure vanilla Javascript library. Zero dependencies. Designed for speed, high versatility, and seamless integration.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://tarekraafat.github.io/autoComplete.js/demo/">
+    <meta property="og:url" content="https://tarekraafat.github.io/autoComplete.js/">
     <meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_Preview.png">
-    <meta property="og:image"
-        content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_WidePreview.png">
-    <meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.init.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="1200">
+    <meta property="og:image:alt" content="autoComplete.js library preview">
+    <meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_WidePreview.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:alt" content="autoComplete.js wide preview">
+    <meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.init.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="autoComplete.js code example">
     <meta property="fb:app_id" content="1482373115226718">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="autoComplete.js">
+    <meta name="twitter:description" content="Simple autocomplete pure vanilla Javascript library. Zero dependencies. Designed for speed, high versatility, and seamless integration.">
+    <meta name="twitter:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_WidePreview.png">
+    <meta name="twitter:image:alt" content="autoComplete.js library preview">
+    <link rel="canonical" href="https://tarekraafat.github.io/autoComplete.js/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="Simple autocomplete pure vanilla Javascript library.">
     <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <link rel="manifest" href="./manifest.json">
@@ -47,7 +58,7 @@
     <meta name="msapplication-TileImage" content="./img/icons/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <meta name="google-site-verification" content="UphDCSqXKDBZF8Uyot7RJpQUxqsdrp2GDZXgiORHwgs" />
-    <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+    <link rel="stylesheet" href="https://unpkg.com/docsify/lib/themes/vue.css">
     <link rel="stylesheet" href="assets/ps-icon-pack.min.css">
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
     <style>
@@ -154,10 +165,148 @@
             color: rgba(0, 0, 0, .2);
         }
     </style>
+    <link rel="alternate" type="text/markdown" href="https://tarekraafat.github.io/autoComplete.js/llms.txt" title="LLM-friendly documentation">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "autoComplete.js",
+        "description": "Simple, lightweight, pure vanilla Javascript autocomplete library. Zero dependencies. Designed for speed, high versatility, and seamless integration.",
+        "url": "https://tarekraafat.github.io/autoComplete.js/",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Tarek Raafat",
+            "url": "https://www.tarekraafat.com"
+        },
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "codeRepository": "https://github.com/TarekRaafat/autoComplete.js",
+        "programmingLanguage": "JavaScript",
+        "softwareVersion": "10.2.10",
+        "fileSize": "9 KB",
+        "keywords": "autocomplete, autosuggest, javascript, vanilla js, search, lightweight, zero dependencies, WAI-ARIA"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tarekraafat.github.io/autoComplete.js/" },
+            { "@type": "ListItem", "position": 2, "name": "Getting Started", "item": "https://tarekraafat.github.io/autoComplete.js/#/getting-started" },
+            { "@type": "ListItem", "position": 3, "name": "Installation", "item": "https://tarekraafat.github.io/autoComplete.js/#/installation" },
+            { "@type": "ListItem", "position": 4, "name": "Usage", "item": "https://tarekraafat.github.io/autoComplete.js/#/usage" },
+            { "@type": "ListItem", "position": 5, "name": "Configuration", "item": "https://tarekraafat.github.io/autoComplete.js/#/configuration" },
+            { "@type": "ListItem", "position": 6, "name": "FAQ", "item": "https://tarekraafat.github.io/autoComplete.js/#/faq" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How do I get the selected value in autoComplete.js?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Listen for the selection event on the input element. For string data use event.detail.selection.value. For object data with keys use event.detail.selection.value[event.detail.selection.key]."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I show all results when the input is focused?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Set threshold to 0 and call autoCompleteJS.start() in a focus event handler via the events.input.focus configuration."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I use multiple autocomplete instances on the same page?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Create separate autoComplete instances with unique selector values. Class selectors only match the first element, so always use unique ID selectors with separate instances."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I fetch data from an API with autoComplete.js?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use an async function as data.src. The function receives the current query as a parameter. Set debounce to 300 to reduce API calls. Set data.cache to true to fetch once and search locally, or false to fetch on every keystroke."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I force the user to select from the results list?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Validate the input value on the blur event and clear it if it does not match any entry in the data store using autoCompleteJS.data.store.includes()."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I show a No Results message?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Enable resultsList.noResults to true and use the resultsList.element callback to prepend a message element when data.results.length is 0."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I update the data source at runtime?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "With data.cache set to false (default), the data.src function is called on every search, so it naturally picks up new data. If you use data.cache set to true, you can update the cached store directly via autoCompleteJS.data.store = newDataArray."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I disable the wrapper element in autoComplete.js?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Set wrapper to false in the configuration. The ARIA attributes will be applied directly to the input element instead of a wrapper div."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I search across multiple object keys at the same time?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Pass multiple keys in the data.keys array. Each record will be searched against all specified keys. For example: keys: ['name', 'category']."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I customize the appearance of each result item?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Use the resultItem.element callback to modify each item before it is rendered. The callback receives the item element and data object containing match, value, and key properties."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I use autoComplete.js with a form submit?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "By default, pressing Enter while a result is highlighted selects the result and prevents form submission. Set submit to true to allow the Enter key to submit the form normally."
+                }
+            }
+        ]
+    }
+    </script>
     <script type="text/javascript"
-        src="//platform-api.sharethis.com/js/sharethis.js#property=5c213660c276020011d38212&product=inline-share-buttons"
+        src="https://platform-api.sharethis.com/js/sharethis.js#property=5c213660c276020011d38212&product=inline-share-buttons"
         async="async"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@tarekraafat/autocomplete.js@10.2.9/dist/css/autoComplete.css">
+    <link rel="stylesheet" href="https://unpkg.com/@tarekraafat/autocomplete.js@10.2.10/dist/css/autoComplete.css">
 </head>
 
 <body>
@@ -208,22 +357,22 @@
             mustache: {
                 data: ["../package.json", {
                     minVersion: "10.2",
-                    version: "10.2.9"
+                    version: "10.2.10"
                 }]
             }
         }
     </script>
-    <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
-    <script src="//unpkg.com/docsify/lib/plugins/ga.min.js"></script>
-    <script src="//unpkg.com/docsify-mustache"></script>
-    <script src="//unpkg.com/docsify/lib/plugins/search.min.js"></script>
-    <script src="//unpkg.com/docsify-pagination"></script>
-    <script src="//unpkg.com/docsify-tabs"></script>
-    <script src="//unpkg.com/docsify-copy-code"></script>
-    <script src="//unpkg.com/docsify-example-panels"></script>
-    <script src="//unpkg.com/codeblock-iframe"></script>
-    <script src="//unpkg.com/docsify-codeblock-iframe"></script>
-    <script src="//unpkg.com/@tarekraafat/autocomplete.js"></script>
+    <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
+    <script src="https://unpkg.com/docsify/lib/plugins/ga.min.js"></script>
+    <script src="https://unpkg.com/docsify-mustache"></script>
+    <script src="https://unpkg.com/docsify/lib/plugins/search.min.js"></script>
+    <script src="https://unpkg.com/docsify-pagination"></script>
+    <script src="https://unpkg.com/docsify-tabs"></script>
+    <script src="https://unpkg.com/docsify-copy-code"></script>
+    <script src="https://unpkg.com/docsify-example-panels"></script>
+    <script src="https://unpkg.com/codeblock-iframe"></script>
+    <script src="https://unpkg.com/docsify-codeblock-iframe"></script>
+    <script src="https://unpkg.com/@tarekraafat/autocomplete.js"></script>
 </body>
 
 </html>

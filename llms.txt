@@ -1,0 +1,283 @@
+# autoComplete.js
+
+> Simple, lightweight, pure vanilla Javascript autocomplete library. Zero dependencies. Designed for speed, high versatility, and seamless integration with a wide range of projects and systems.
+
+autoComplete.js is a progressively designed autocomplete/autosuggest library that works on `<input>`, `<textarea>`, and `contentEditable` elements. It features a powerful search engine with strict and loose matching modes, diacritics support, WAI-ARIA accessibility, lifecycle events, and a fully customizable API. The library has zero runtime dependencies and ships at ~9 KB minified.
+
+## Docs
+
+- [Installation](https://tarekraafat.github.io/autoComplete.js/#/installation): Package manager (npm, yarn), CDN (jsDelivr, cdnjs, unpkg), and direct download options
+- [Getting Started](https://tarekraafat.github.io/autoComplete.js/#/getting-started): Quick start guide for beginners to advanced developers
+- [Usage](https://tarekraafat.github.io/autoComplete.js/#/usage): Step-by-step usage guide with HTML, script, and style setup
+- [Configuration](https://tarekraafat.github.io/autoComplete.js/#/configuration): Full API reference for options, methods, and events
+- [How-to Guides](https://tarekraafat.github.io/autoComplete.js/#/how-to-guides): Practical recipes and real-world usage patterns
+- [FAQ](https://tarekraafat.github.io/autoComplete.js/#/faq): Frequently asked questions
+- [Styles](https://tarekraafat.github.io/autoComplete.js/#/styles): Available stylesheets and customization
+- [Playground](https://tarekraafat.github.io/autoComplete.js/#/playground): Interactive demo
+- [Release Notes](https://tarekraafat.github.io/autoComplete.js/#/release-notes): Full changelog and versioning guidelines
+- [Live Demo](https://tarekraafat.github.io/autoComplete.js/demo/): Working demo with real data
+- [GitHub](https://github.com/TarekRaafat/autoComplete.js): Source code, issues, and contributions
+
+## Installation
+
+npm:
+```
+npm i @tarekraafat/autocomplete.js
+```
+
+yarn:
+```
+yarn add @tarekraafat/autocomplete.js
+```
+
+CDN:
+```html
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@latest/dist/autoComplete.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@latest/dist/css/autoComplete.min.css">
+```
+
+## Quick Start
+
+```html
+<input id="autoComplete" type="search">
+
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@latest/dist/autoComplete.min.js"></script>
+<script>
+const autoCompleteJS = new autoComplete({
+    placeHolder: "Search...",
+    data: {
+        src: ["Apple", "Banana", "Cherry", "Date", "Elderberry"],
+        cache: true,
+    },
+    resultItem: {
+        highlight: true
+    },
+    events: {
+        input: {
+            selection: (event) => {
+                autoCompleteJS.input.value = event.detail.selection.value;
+            }
+        }
+    }
+});
+</script>
+```
+
+## Configuration Options
+
+- `selector`: String or Function. Default: `"#autoComplete"`. Points to the input element.
+- `name`: String. Default: `"autoComplete"`. Prefix for all class and id names.
+- `wrapper`: Boolean. Default: `true`. Wraps input in a div for WAI-ARIA combobox.
+- `data.src`: Array or Function (sync/async). Required. The data source to search.
+- `data.keys`: Array. Required for object arrays. Which keys to search.
+- `data.cache`: Boolean. Default: `false`. Fetch once at init and reuse.
+- `data.filter`: Function. Custom filter/sort of matches before rendering.
+- `trigger`: Function returning Boolean. Custom trigger condition.
+- `query`: Function returning String. Transform input value before searching.
+- `placeHolder`: String. Placeholder text for the input.
+- `threshold`: Integer. Default: `1`. Minimum characters to trigger search.
+- `debounce`: Integer. Default: `0`. Delay in ms after typing.
+- `searchEngine`: `"strict"`, `"loose"`, or Function. Default: `"strict"`.
+- `diacritics`: Boolean. Default: `false`. Unicode normalization for accented characters.
+- `resultsList.tag`: String. Default: `"ul"`. HTML tag for list container.
+- `resultsList.maxResults`: Integer. Default: `5`. Max items to render.
+- `resultsList.noResults`: Boolean. Default: `false`. Render list even with 0 matches.
+- `resultsList.tabSelect`: Boolean. Default: `false`. Allow Tab key to select.
+- `resultsList.element`: Function(list, data). Modify list before display.
+- `resultItem.tag`: String. Default: `"li"`. HTML tag for each result.
+- `resultItem.highlight`: Boolean or String. Default: `false`. Highlight matching chars.
+- `resultItem.selected`: String. CSS class for keyboard-navigated item.
+- `resultItem.element`: Function(item, data). Modify each item before display.
+- `submit`: Boolean. Default: `false`. Controls Enter key default behavior.
+- `events.input`: Object. Custom event handlers for the input element.
+- `events.list`: Object. Custom event handlers for the list element.
+
+## API Methods
+
+- `init()`: Re-initialize the instance.
+- `start(query)`: Trigger search with optional custom query string.
+- `unInit()`: Destroy instance, remove events and DOM elements.
+- `open()`: Open the results list.
+- `close()`: Close the results list.
+- `goTo(index)`: Navigate to a specific result by index.
+- `next()`: Navigate to the next result.
+- `previous()`: Navigate to the previous result.
+- `select(index)`: Select a result by index (defaults to current cursor).
+- `search(query, record, options)`: Direct access to the search engine.
+
+## Events
+
+All events are dispatched as CustomEvent on the input element. Listen with `addEventListener`. The `event.detail` property carries the feedback data.
+
+- `init`: Fires after initialization is complete.
+- `response`: Fires after data is fetched and ready.
+- `results`: Fires after search matching is done.
+- `open`: Fires after the results list opens.
+- `navigate`: Fires on each keyboard navigation step.
+- `selection`: Fires when a result item is selected.
+- `close`: Fires after the results list closes.
+- `clear`: Fires after input is cleared.
+
+## Common Patterns
+
+### Async Data Source
+
+```js
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: async (query) => {
+            try {
+                const response = await fetch(`https://api.example.com/search?q=${query}`);
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                return error;
+            }
+        },
+        keys: ["name"],
+        cache: false,
+    },
+    resultItem: {
+        highlight: true
+    }
+});
+```
+
+### Handling Selection
+
+```js
+document.querySelector("#autoComplete").addEventListener("selection", function (event) {
+    const feedback = event.detail;
+    const selection = feedback.selection.value;
+
+    // For string data
+    autoCompleteJS.input.value = selection;
+
+    // For object data with keys
+    autoCompleteJS.input.value = selection[feedback.selection.key];
+});
+```
+
+### No Results Message
+
+```js
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: ["Apple", "Banana", "Cherry"],
+    },
+    resultsList: {
+        noResults: true,
+        element: (list, data) => {
+            if (!data.results.length) {
+                const message = document.createElement("div");
+                message.setAttribute("class", "no_result");
+                message.innerHTML = `Found no results for "${data.query}"`;
+                list.prepend(message);
+            }
+        },
+    },
+});
+```
+
+### Custom Result Item Rendering
+
+```js
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: [
+            { name: "Apple", category: "Fruit" },
+            { name: "Carrot", category: "Vegetable" },
+        ],
+        keys: ["name"],
+    },
+    resultItem: {
+        element: (item, data) => {
+            item.innerHTML = `
+                <span>${data.match}</span>
+                <span style="color: gray; font-size: 0.8em;">${data.value.category}</span>
+            `;
+        },
+    },
+});
+```
+
+### Show All Results on Focus
+
+```js
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: ["Apple", "Banana", "Cherry", "Date", "Elderberry"],
+        cache: true,
+    },
+    resultItem: {
+        highlight: true
+    },
+    events: {
+        input: {
+            focus() {
+                autoCompleteJS.start();
+            },
+        },
+    },
+    threshold: 0,
+});
+```
+
+### Force Selection from List
+
+```js
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: ["Apple", "Banana", "Cherry"],
+        cache: true,
+    },
+    events: {
+        input: {
+            blur() {
+                // Clear input if value doesn't match any data entry
+                if (!autoCompleteJS.data.store.includes(autoCompleteJS.input.value)) {
+                    autoCompleteJS.input.value = "";
+                }
+            },
+            selection(event) {
+                autoCompleteJS.input.value = event.detail.selection.value;
+            },
+        },
+    },
+});
+```
+
+### Multiple Instances
+
+```js
+const searchOne = new autoComplete({
+    selector: "#search-one",
+    data: { src: ["Apple", "Banana"] },
+});
+
+const searchTwo = new autoComplete({
+    selector: "#search-two",
+    data: { src: ["Red", "Blue", "Green"] },
+});
+```
+
+## Features
+
+- Pure vanilla JavaScript, zero dependencies
+- ~9 KB minified, ~3.7 KB gzipped
+- Two search modes: strict (substring) and loose (scattered character)
+- Diacritics/accent-insensitive search
+- Async data sources via Promises or async/await
+- Data caching
+- Debounce support
+- WAI-ARIA 1.2 compliant (combobox + listbox pattern)
+- Keyboard navigation (Arrow keys, Enter, Tab, Escape)
+- Highlight matching characters
+- Works on input, textarea, and contentEditable elements
+- Customizable result list and item rendering
+- Lifecycle events for full control
+- Multiple instances support
+
+## License
+
+Apache 2.0

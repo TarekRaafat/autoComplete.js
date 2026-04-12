@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-129399191-2"></script>
+	<!-- Google Analytics (GA4) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-H6GSXJ5HZZ"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() {
@@ -11,13 +11,12 @@
 		}
 		gtag("js", new Date());
 
-		gtag("config", "UA-129399191-2");
+		gtag("config", "G-H6GSXJ5HZZ");
 	</script>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>autoComplete.js - Vanilla Javascript library</title>
-	<meta name=”description" content=”Simple autocomplete pure vanilla Javascript library that's designed for speed,
-		high versatility and seamless integration with wide range of projects and systems.”>
+	<meta name=”description” content=”Simple autocomplete pure vanilla Javascript library. Zero dependencies. Designed for speed, high versatility, and seamless integration.”>
 	<meta name="keywords"
 		content="autocomplete.js,autocomplete,simple autocomplete,pure vanilla javascript,vanilla js,javascript,js,library,speed,lightning fast,blazing fast,fast,search,suggestions,select,versatile,customizable,hackable,developer friendly,zero dependencies,lightweight,high integration,scalable,scalability,open source,github,javascript autocomplete,autocomplete javascript,autocompletejs,vanilla javascript library,easy to use autocomplete javascript library,fastest autocomplete javascript library,best autocomplete javascript library">
 	<meta name="subject" content="autoComplete Javascript Library">
@@ -27,17 +26,29 @@
 	<meta name="google-site-verification" content="UphDCSqXKDBZF8Uyot7RJpQUxqsdrp2GDZXgiORHwgs" />
 	<meta property="og:site_name" content="autoComplete.js">
 	<meta property="og:title" content="autoComplete.js">
-	<meta property="og:description" content="Simple autocomplete pure vanilla Javascript library.">
-	<meta property="og:type" content="product">
+	<meta property="og:description" content="Simple autocomplete pure vanilla Javascript library. Zero dependencies. Designed for speed, high versatility, and seamless integration.">
+	<meta property="og:type" content="website">
 	<meta property="og:url" content="https://tarekraafat.github.io/autoComplete.js/demo/">
 	<meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_Preview.png">
-	<meta property="og:image"
-		content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_WidePreview.png">
-	<meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.init.png">
 	<meta property="og:image:type" content="image/png">
 	<meta property="og:image:width" content="1200">
 	<meta property="og:image:height" content="1200">
+	<meta property="og:image:alt" content="autoComplete.js library preview">
+	<meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_WidePreview.png">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="1200">
+	<meta property="og:image:alt" content="autoComplete.js wide preview">
+	<meta property="og:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.init.png">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:alt" content="autoComplete.js code example">
 	<meta property="fb:app_id" content="1482373115226718">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="autoComplete.js">
+	<meta name="twitter:description" content="Simple autocomplete pure vanilla Javascript library. Zero dependencies. Designed for speed, high versatility, and seamless integration.">
+	<meta name="twitter:image" content="https://tarekraafat.github.io/autoComplete.js/img/autoComplete.js_WidePreview.png">
+	<meta name="twitter:image:alt" content="autoComplete.js library preview">
+	<link rel="canonical" href="https://tarekraafat.github.io/autoComplete.js/demo/">
 	<meta name="viewport"
 		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<link rel="manifest" href="https://tarekraafat.github.io/autoComplete.js/manifest.json">
@@ -67,12 +78,11 @@
 		href="https://tarekraafat.github.io/autoComplete.js/img/icons/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16"
 		href="https://tarekraafat.github.io/autoComplete.js/img/icons/favicon-16x16.png">
-	<link rel="manifest" href="https://tarekraafat.github.io/autoComplete.js//manifest.json">
 	<meta name="msapplication-TileColor" content="#ffffff">
-	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="msapplication-TileImage" content="https://tarekraafat.github.io/autoComplete.js/img/icons/ms-icon-144x144.png">
 	<meta name="theme-color" content="#ffffff">
 	<!-- <link rel="stylesheet" type="text/css" media="screen"
-		href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.9/dist/css/autoComplete.min.css"> -->
+		href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.10/dist/css/autoComplete.min.css"> -->
 	<link rel="stylesheet" type="text/css" media="screen" href="./css/autoComplete.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="./css/main.css">
 	<link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
@@ -145,12 +155,12 @@
 				Copyright &copy; <span id="year">
 					<script>document.getElementById('year').innerHTML = new Date().getFullYear();</script>
 				</span>
-				<a href="http://www.tarekraafat.com/">Tarek Raafat</a> All Rights
+				<a href="https://www.tarekraafat.com/">Tarek Raafat</a> All Rights
 				Reserved
 			</div>
 		</footer>
 	</div>
-	<!-- <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.9/dist/autoComplete.min.js"></script> -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.10/dist/autoComplete.min.js"></script> -->
 	<script src="./js/autoComplete.js"></script>
 	<script src="./js/index.js"></script>
 </body>

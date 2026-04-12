@@ -9,7 +9,7 @@
 
 ![100% Javascript](https://img.shields.io/github/languages/top/TarekRaafat/autoComplete.js?color=yellow)
 ![Zero Dependencies](https://img.shields.io/badge/Dependencies-0-blue.svg)
-[![Minified Size](https://badgen.net/bundlephobia/min/@tarekraafat/autocomplete.js@latest)](https://bundlephobia.com/package/@tarekraafat/autocomplete.js@latest)
+![Minified Size](https://img.shields.io/badge/Minified-~9%20KB-blue)
 ![Yes Maintained](https://img.shields.io/badge/Maintained%3F-yes-success)
 [![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/TarekRaafat/autoComplete.js)
 
@@ -28,9 +28,11 @@
 
 > Simple autocomplete pure vanilla Javascript library. :rocket: <a href="/autoComplete.js/demo/" target="\_blank" class="link">Live Demo</a>
 
-## What it is? <!-- {docsify-ignore} -->
+## What is autoComplete.js? <!-- {docsify-ignore} -->
 
-autoComplete.js is a simple, pure vanilla Javascript library progressively designed for speed, high versatility, and seamless integration with a wide range of projects & systems. <sub><sup>(Made for a better developer experience)</sub></pub>
+autoComplete.js is a simple, lightweight, pure vanilla Javascript autocomplete/autosuggest library with zero dependencies. It is progressively designed for speed, high versatility, and seamless integration with a wide range of projects and systems. <sub><sup>(Made for a better developer experience)</sub></sup>
+
+It works on `<input>`, `<textarea>`, and `contentEditable` elements. It features a powerful search engine with strict (substring) and loose (scattered character) matching modes, diacritics support, async data sources, debouncing, WAI-ARIA 1.2 accessibility, lifecycle events, and a fully customizable API. The library ships at ~9 KB minified (~3.7 KB gzipped) with zero runtime dependencies.
 
 ## Features <!-- {docsify-ignore} -->
 
@@ -53,11 +55,11 @@ autoComplete.js is a simple, pure vanilla Javascript library progressively desig
 <div class="ps-icon ps-icon-guy-big-smile"></div> <b>Tarek Raafat</b>
 
 - Email: tarek.m.raafat@gmail.com
-- Website: [tarekraafat.com](http://www.tarekraafat.com/)
+- Website: [tarekraafat.com](https://www.tarekraafat.com/)
 - Github: [github.com/TarekRaafat](https://github.com/TarekRaafat/)
 
 ## License <!-- {docsify-ignore} -->
 
 `autoComplete.js` is released under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
 
-© 2024 [Tarek Raafat](http://www.tarekraafat.com)
+© 2026 [Tarek Raafat](https://www.tarekraafat.com)
