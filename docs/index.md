@@ -58,6 +58,13 @@ It works on `<input>`, `<textarea>`, and `contentEditable` elements. It features
 - Website: [tarekraafat.com](https://www.tarekraafat.com/)
 - Github: [github.com/TarekRaafat](https://github.com/TarekRaafat/)
 
+## Also by the Author <!-- {docsify-ignore} -->
+
+| Project | Description |
+|---------|-------------|
+| [Eleva.js](https://github.com/TarekRaafat/eleva) | Ultra-lightweight (~2.5KB) pure vanilla JavaScript framework with signal-based reactivity |
+| [Skalex.js](https://github.com/TarekRaafat/skalex) | AI-first, zero-dependency JavaScript database with vector search and encryption |
+
 ## License <!-- {docsify-ignore} -->
 
 `autoComplete.js` is released under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).

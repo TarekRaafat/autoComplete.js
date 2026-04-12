@@ -114,6 +114,15 @@ General questions or new ideas for `autoComplete.js` please start a discussion o
 
 * * *
 
+## Also by the Author
+
+| Project | Description |
+|---------|-------------|
+| [Eleva.js](https://github.com/TarekRaafat/eleva) | Ultra-lightweight (~2.5KB) pure vanilla JavaScript framework with signal-based reactivity |
+| [Skalex.js](https://github.com/TarekRaafat/skalex) | AI-first, zero-dependency JavaScript database with vector search and encryption |
+
+* * *
+
 ## License
 
 Released under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0).
