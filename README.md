@@ -85,6 +85,10 @@ yarn add @tarekraafat/autocomplete.js
 
 -   [Contao autoComplete.js Bundle](https://github.com/heimrichhannot/contao-autocompletejs-bundle) by [@heimrichhannot](https://github.com/heimrichhannot)
 
+## Used By
+
+[IBM Carbon](https://github.com/carbon-design-system/carbon-for-ibm-dotcom), [The Guardian](https://github.com/guardian), [Snapcraft (Canonical)](https://github.com/canonical/snapcraft.io), [Weblate](https://github.com/WeblateOrg/weblate), [Blockscout](https://github.com/blockscout/blockscout), [Eclipse Ditto](https://github.com/eclipse-ditto/ditto), and [2,400+ more projects](https://tarekraafat.github.io/autoComplete.js/#/used-by) across many industries and ecosystems.
+
 * * *
 
 ## Support

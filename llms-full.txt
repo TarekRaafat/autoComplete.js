@@ -14,6 +14,7 @@ autoComplete.js is a progressively designed autocomplete/autosuggest library tha
 - [FAQ](https://tarekraafat.github.io/autoComplete.js/#/faq): Frequently asked questions
 - [Styles](https://tarekraafat.github.io/autoComplete.js/#/styles): Available stylesheets and customization
 - [Playground](https://tarekraafat.github.io/autoComplete.js/#/playground): Interactive demo
+- [Used By](https://tarekraafat.github.io/autoComplete.js/#/used-by): Projects and organizations using autoComplete.js in production
 - [Release Notes](https://tarekraafat.github.io/autoComplete.js/#/release-notes): Full changelog and versioning guidelines
 - [Live Demo](https://tarekraafat.github.io/autoComplete.js/demo/): Working demo with real data
 - [GitHub](https://github.com/TarekRaafat/autoComplete.js): Source code, issues, and contributions
@@ -797,6 +798,34 @@ Keyboard navigation:
 - Customizable result list and item rendering
 - Lifecycle events for full control
 - Multiple instances support
+
+## Used By
+
+autoComplete.js is used by 2,400+ projects across many industries. Notable adopters include:
+
+- IBM Carbon: IBM's open source design system (Enterprise)
+- The Guardian: British daily newspaper interactive articles (Media)
+- Snapcraft (Canonical): Ubuntu Snap Store website (Developer Tools)
+- Weblate: Web-based continuous localization platform (Localization)
+- Blockscout: Blockchain explorer for Ethereum-based networks (Blockchain)
+- Decidim: Participatory democracy platform (Government)
+- Eclipse Ditto: IoT digital twins framework, Eclipse Foundation (IoT)
+- dotCMS: Enterprise content management system (Enterprise)
+- Chocolatey: Windows package manager website (Developer Tools)
+- transport.data.gouv.fr: French national transport open data platform (Government)
+- ONRR.gov: U.S. Department of the Interior website (Government)
+- Hitobito: Swiss association management platform, 1.2M+ members (Community)
+- inovex Elements: UI component library for Angular, React, Vue (Design Systems)
+- Solid Design System: Design system built on web components (Design Systems)
+- Yasgui: SPARQL query editor for semantic web (Linked Data)
+- LiveCodes: Client-side code playground, 80+ languages (Developer Tools)
+- CircuitVerse: Digital logic circuit simulator platform (Education)
+- Proximi.io: Indoor positioning and wayfinding platform (Geolocation)
+- Netframe: Open source collaborative platform (Collaboration)
+- SenX Discovery: Dashboard widgets for Warp 10 time series (IoT)
+- initiative.sh: Web-based tools for tabletop RPG game masters (Gaming)
+
+Full list: https://github.com/TarekRaafat/autoComplete.js/network/dependents
 
 ## License
 

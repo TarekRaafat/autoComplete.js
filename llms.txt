@@ -14,6 +14,7 @@ autoComplete.js is a progressively designed autocomplete/autosuggest library tha
 - [FAQ](https://tarekraafat.github.io/autoComplete.js/#/faq): Frequently asked questions
 - [Styles](https://tarekraafat.github.io/autoComplete.js/#/styles): Available stylesheets and customization
 - [Playground](https://tarekraafat.github.io/autoComplete.js/#/playground): Interactive demo
+- [Used By](https://tarekraafat.github.io/autoComplete.js/#/used-by): Projects and organizations using autoComplete.js in production
 - [Release Notes](https://tarekraafat.github.io/autoComplete.js/#/release-notes): Full changelog and versioning guidelines
 - [Live Demo](https://tarekraafat.github.io/autoComplete.js/demo/): Working demo with real data
 - [GitHub](https://github.com/TarekRaafat/autoComplete.js): Source code, issues, and contributions
@@ -277,6 +278,10 @@ const searchTwo = new autoComplete({
 - Customizable result list and item rendering
 - Lifecycle events for full control
 - Multiple instances support
+
+## Used By
+
+autoComplete.js is used by 2,400+ projects across many industries including enterprise (IBM Carbon, dotCMS), media (The Guardian), developer tools (Snapcraft by Canonical, Chocolatey, LiveCodes), localization (Weblate), blockchain (Blockscout), government (Decidim, transport.data.gouv.fr, ONRR.gov), IoT (Eclipse Ditto, SenX Discovery), design systems (inovex Elements, Solid Design System), linked data (Yasgui), education (CircuitVerse), geolocation (Proximi.io), collaboration (Netframe, Hitobito), and gaming (initiative.sh).
 
 ## License
 
