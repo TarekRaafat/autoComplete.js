@@ -16,6 +16,7 @@ export default async function (ctx) {
     "aria-owns": resultsList.id,
     "aria-haspopup": true,
     "aria-expanded": false,
+    ...(ctx.ariaLabel && {"aria-label":ctx.ariaLabel}),
   };
 
   // Set "input" attributes
