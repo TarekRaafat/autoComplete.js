@@ -92,6 +92,7 @@ yarn add @tarekraafat/autocomplete.js
 ## Documentation:
 
 -   For usage & configuration details check out **autoComplete.js** <a href="https://tarekraafat.github.io/autoComplete.js/">**docs** :notebook_with_decorative_cover:</a>
+-   For upcoming releases and planned improvements check out the [**Roadmap**](./ROADMAP.md)
 
 <!-- * * * -->
 

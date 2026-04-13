@@ -18,4 +18,5 @@
   - [<div class="ps-icon ps-icon-globe"></div> Used By](used-by.md "Used By | autoComplete.js")
   - [<div class="ps-icon ps-icon-headset"></div> Support](support.md "Support | autoComplete.js")
   - [<div class="ps-icon ps-icon-organisation"></div> Release Notes](release-notes.md "Release Notes | autoComplete.js")
+  - [<div class="ps-icon ps-icon-compass"></div> Roadmap](https://github.com/TarekRaafat/autoComplete.js/blob/master/ROADMAP.md "Roadmap | autoComplete.js")
   - [<div class="ps-icon ps-icon-wand"></div> Contributions](contributions.md "Contributions | autoComplete.js")

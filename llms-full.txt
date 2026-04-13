@@ -18,6 +18,7 @@ autoComplete.js is a progressively designed autocomplete/autosuggest library tha
 - [Used By](https://tarekraafat.github.io/autoComplete.js/#/used-by): Projects and organizations using autoComplete.js in production
 - [Release Notes](https://tarekraafat.github.io/autoComplete.js/#/release-notes): Full changelog and versioning guidelines
 - [Live Demo](https://tarekraafat.github.io/autoComplete.js/demo/): Working demo with real data
+- [Roadmap](https://github.com/TarekRaafat/autoComplete.js/blob/master/ROADMAP.md): Planned releases from v10.3.0 through v11.1.0
 - [GitHub](https://github.com/TarekRaafat/autoComplete.js): Source code, issues, and contributions
 
 ## Installation
