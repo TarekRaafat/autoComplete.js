@@ -166,7 +166,7 @@ const history = [];
 // autoComplete.js Config Options
 resultsList: {
     element: (list) => {
-        const recentSearch = history.reverse();
+        const recentSearch = history.toReversed();
         const historyLength = recentSearch.length;
 
         // Check if there are recent searches
@@ -243,6 +243,207 @@ filter: (list) => {
 <input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_06">
 
 <!-- panels:end -->
+
+## `Force selection from list`
+
+<!-- panels:start -->
+<!-- div:left-panel -->
+##### Code:
+
+```js
+// autoComplete.js Config Options
+events: {
+    input: {
+        blur() {
+            // Clear input if value does not match any entry
+            if (!autoCompleteJS.data.store.includes(autoCompleteJS.input.value)) {
+                autoCompleteJS.input.value = "";
+            }
+        },
+        selection(event) {
+            autoCompleteJS.input.value = event.detail.selection.value;
+        },
+    },
+},
+```
+
+<!-- div:right-panel -->
+
+##### Example
+
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_08">
+
+<!-- panels:end -->
+
+***
+
+## `Async data with error handling`
+
+<!-- panels:start -->
+<!-- div:left-panel -->
+##### Code:
+
+```js
+// autoComplete.js Config Options
+data: {
+    src: async (query) => {
+        try {
+            const response = await fetch(`/api/search?q=${query}`);
+            return await response.json();
+        } catch (error) {
+            return [];
+        }
+    },
+    keys: ["name"],
+    cache: false,
+},
+debounce: 300,
+```
+
+<!-- div:right-panel -->
+
+##### Example
+
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_09">
+
+<!-- panels:end -->
+
+***
+
+## `Custom result rendering`
+
+<!-- panels:start -->
+<!-- div:left-panel -->
+##### Code:
+
+```js
+// autoComplete.js Config Options
+data: {
+    src: [
+        { name: "Pizza", category: "Food" },
+        { name: "Coffee", category: "Drink" },
+    ],
+    keys: ["name"],
+},
+resultItem: {
+    element: (item, data) => {
+        item.innerHTML = `
+            <span>${data.match}</span>
+            <span style="color: rgba(0,0,0,.4); font-size: .8em;">
+                ${data.value.category}
+            </span>
+        `;
+        item.style.display = "flex";
+        item.style.justifyContent = "space-between";
+    },
+},
+```
+
+<!-- div:right-panel -->
+
+##### Example
+
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_10">
+
+<!-- panels:end -->
+
+***
+
+## `Search across multiple keys`
+
+<!-- panels:start -->
+<!-- div:left-panel -->
+##### Code:
+
+```js
+// autoComplete.js Config Options
+data: {
+    src: [
+        { name: "Pizza", category: "Food" },
+        { name: "Coffee", category: "Drink" },
+    ],
+    // Search both "name" and "category" fields
+    keys: ["name", "category"],
+},
+resultItem: {
+    element: (item, data) => {
+        item.innerHTML = `
+            <span>${data.match}</span>
+            <span style="color: rgba(0,0,0,.4); font-size: .8em;">
+                in ${data.key}
+            </span>
+        `;
+        item.style.display = "flex";
+        item.style.justifyContent = "space-between";
+    },
+},
+```
+
+<!-- div:right-panel -->
+
+##### Example
+
+<input type="text" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off" id="autoComplete_11">
+
+<!-- panels:end -->
+
+***
+
+## `Custom search engine (Fuse.js)`
+
+Use any external search library by passing a custom function to the `searchEngine` config. This example uses [Fuse.js](https://www.fusejs.io/) for weighted fuzzy matching with relevance scoring.
+
+##### Code:
+
+```js
+// 1. Import Fuse.js (install separately: npm i fuse.js)
+import Fuse from "fuse.js";
+
+// 2. Set up Fuse.js with your data
+const data = [
+    { name: "Pizza", category: "Food" },
+    { name: "Coffee", category: "Drink" },
+    { name: "Fresh Juice", category: "Drink" },
+];
+
+const fuse = new Fuse(data, {
+    keys: [
+        { name: "name", weight: 2 },
+        { name: "category", weight: 1 },
+    ],
+    threshold: 0.4,
+    includeScore: true,
+    includeMatches: true,
+});
+
+// 3. Plug into autoComplete.js
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: data,
+        keys: ["name"],
+        // Use Fuse.js results to reorder matches by relevance
+        filter: (list) => {
+            const inputValue = autoCompleteJS.input.value;
+            const results = fuse.search(inputValue);
+            // Map Fuse.js results back to autoComplete.js match format
+            const sorted = results.map((r) => {
+                return list.find((item) => item.value === r.item);
+            }).filter(Boolean);
+            return sorted;
+        },
+    },
+    searchEngine: (query, record) => {
+        // Accept all records, let Fuse.js handle filtering via data.filter
+        if (record.toLowerCase().includes(query.toLowerCase())) {
+            return record;
+        }
+    },
+});
+```
+
+> **Note:** Fuse.js is a separate dependency, not part of autoComplete.js. This pattern works with any search library that accepts a query and returns ranked results.
+
+***
 
 ## `Show all items on click`
 
@@ -398,7 +599,7 @@ resultsList: {
         data,
         resultsList: {
             element(list) {
-                const recentSearch = history.reverse();
+                const recentSearch = history.toReversed();
                 const historyLength = recentSearch.length;
 
                 if(historyLength) {
@@ -488,5 +689,112 @@ resultsList: {
                 }
             },
         },
+    });
+
+    const autoCompleteJS_08 = new autoComplete({
+        selector: "#autoComplete_08",
+        placeHolder,
+        data: {
+            ...data,
+            cache: true,
+        },
+        resultsList,
+        resultItem,
+        events: {
+            input: {
+                blur() {
+                    if (!autoCompleteJS_08.data.store.includes(autoCompleteJS_08.input.value)) {
+                        autoCompleteJS_08.input.value = "";
+                    }
+                },
+                selection(event) {
+                    autoCompleteJS_08.input.value = event.detail.selection.value;
+                },
+            },
+        },
+    });
+
+    const objectData = [
+        { name: "Pizza", category: "Food" },
+        { name: "Burgers", category: "Food" },
+        { name: "Sushi", category: "Food" },
+        { name: "Coffee", category: "Drink" },
+        { name: "Soda", category: "Drink" },
+        { name: "Fresh Juice", category: "Drink" },
+    ];
+
+    const autoCompleteJS_09 = new autoComplete({
+        selector: "#autoComplete_09",
+        placeHolder,
+        data: {
+            src: objectData,
+            keys: ["name"],
+        },
+        debounce: 300,
+        resultsList,
+        resultItem,
+        events: {
+            input: {
+                selection(event) {
+                    autoCompleteJS_09.input.value = event.detail.selection.value.name;
+                }
+            }
+        }
+    });
+
+    const autoCompleteJS_10 = new autoComplete({
+        selector: "#autoComplete_10",
+        placeHolder,
+        data: {
+            src: objectData,
+            keys: ["name"],
+        },
+        resultsList,
+        resultItem: {
+            highlight: true,
+            element: (item, data) => {
+                item.innerHTML = `
+                    <span>${data.match}</span>
+                    <span style="color: rgba(0,0,0,.4); font-size: .8em;">${data.value.category}</span>
+                `;
+                item.style.display = "flex";
+                item.style.justifyContent = "space-between";
+            },
+        },
+        events: {
+            input: {
+                selection(event) {
+                    autoCompleteJS_10.input.value = event.detail.selection.value.name;
+                }
+            }
+        }
+    });
+
+    const autoCompleteJS_11 = new autoComplete({
+        selector: "#autoComplete_11",
+        placeHolder,
+        data: {
+            src: objectData,
+            keys: ["name", "category"],
+        },
+        resultsList,
+        resultItem: {
+            highlight: true,
+            element: (item, data) => {
+                item.innerHTML = `
+                    <span>${data.match}</span>
+                    <span style="color: rgba(0,0,0,.4); font-size: .8em;">in ${data.key}</span>
+                `;
+                item.style.display = "flex";
+                item.style.justifyContent = "space-between";
+            },
+        },
+        events: {
+            input: {
+                selection(event) {
+                    autoCompleteJS_11.input.value = event.detail.selection.value.name;
+                }
+            }
+        }
     });
 </script>

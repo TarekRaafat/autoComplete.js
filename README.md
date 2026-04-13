@@ -42,6 +42,20 @@ autoComplete.js is a simple, pure vanilla Javascript library progressively desig
 
 [![autoComplete.js Code Example](./docs/img/autoComplete.init.png "autoComplete.js Code Example")](https://codepen.io/tarekraafat/pen/rQopdW?editors=0010)
 
+## How It Compares
+
+| Library | Size (gzip) | Dependencies | Framework | Drop-in |
+|---------|-------------|--------------|-----------|---------|
+| **autoComplete.js** | **~3.7 KB** | **0** | **None (vanilla JS)** | **Yes** |
+| Downshift | ~8 KB | 5 | React only | No |
+| Tom Select | ~16 KB | 1 | None | Yes |
+| Select2 | ~17 KB | jQuery | jQuery | Yes |
+| Choices.js | ~20 KB | 0 | None | Yes |
+| Algolia Autocomplete | ~25 KB | 5 | Any (Preact core) | Yes |
+| react-select | ~27 KB | 9 | React only | Yes |
+
+autoComplete.js is the smallest full-featured option in the category. See the [full comparison](https://tarekraafat.github.io/autoComplete.js/#/comparison) for details.
+
 ## Getting Started
 
 ### Installation:

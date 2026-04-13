@@ -14,6 +14,7 @@ autoComplete.js is a progressively designed autocomplete/autosuggest library tha
 - [FAQ](https://tarekraafat.github.io/autoComplete.js/#/faq): Frequently asked questions
 - [Styles](https://tarekraafat.github.io/autoComplete.js/#/styles): Available stylesheets and customization
 - [Playground](https://tarekraafat.github.io/autoComplete.js/#/playground): Interactive demo
+- [Comparison](https://tarekraafat.github.io/autoComplete.js/#/comparison): How autoComplete.js compares to other autocomplete libraries
 - [Used By](https://tarekraafat.github.io/autoComplete.js/#/used-by): Projects and organizations using autoComplete.js in production
 - [Release Notes](https://tarekraafat.github.io/autoComplete.js/#/release-notes): Full changelog and versioning guidelines
 - [Live Demo](https://tarekraafat.github.io/autoComplete.js/demo/): Working demo with real data
@@ -259,6 +260,59 @@ const searchOne = new autoComplete({
 const searchTwo = new autoComplete({
     selector: "#search-two",
     data: { src: ["Red", "Blue", "Green"] },
+});
+```
+
+### Searching Across Multiple Keys
+
+```js
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: [
+            { name: "Apple", category: "Fruit" },
+            { name: "Carrot", category: "Vegetable" },
+        ],
+        keys: ["name", "category"],
+    },
+    resultItem: {
+        element: (item, data) => {
+            item.innerHTML = `
+                <span>${data.match}</span>
+                <span style="color: gray; font-size: 0.8em;">in ${data.key}</span>
+            `;
+        },
+    },
+});
+```
+
+### Custom Search Engine (Fuse.js Integration)
+
+```js
+import Fuse from "fuse.js";
+
+const data = [
+    { name: "Apple", category: "Fruit" },
+    { name: "Carrot", category: "Vegetable" },
+];
+
+const fuse = new Fuse(data, {
+    keys: [{ name: "name", weight: 2 }, { name: "category", weight: 1 }],
+    threshold: 0.4,
+    includeScore: true,
+});
+
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: data,
+        keys: ["name"],
+        filter: (list) => {
+            const results = fuse.search(autoCompleteJS.input.value);
+            return results.map((r) => list.find((item) => item.value === r.item)).filter(Boolean);
+        },
+    },
+    searchEngine: (query, record) => {
+        if (record.toLowerCase().includes(query.toLowerCase())) return record;
+    },
 });
 ```
 

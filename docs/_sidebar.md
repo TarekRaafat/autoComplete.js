@@ -12,6 +12,7 @@
   - [<div class="ps-icon ps-icon-laptop"></div> Browser Support](browsers-support.md "Browser Support | autoComplete.js")
   - [<div class="ps-icon ps-icon-book"></div> How-to Guides](how-to-guides.md  "How-to Guides | autoComplete.js")
   - [<div class="ps-icon ps-icon-headset"></div> FAQ](faq.md "FAQ | autoComplete.js")
+  - [<div class="ps-icon ps-icon-contrast"></div> Comparison](comparison.md "Comparison | autoComplete.js")
 - <div class="title">References</div>
 - 
   - [<div class="ps-icon ps-icon-globe"></div> Used By](used-by.md "Used By | autoComplete.js")

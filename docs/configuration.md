@@ -683,12 +683,41 @@ document.querySelector("#autoComplete").addEventListener("navigate", function (e
 
 > Fires on result item selection
 
-##### Example:
+The `event.detail` feedback object contains the full search context:
+
+```js
+event.detail = {
+    query: "app",              // The processed search query
+    matches: [...],            // All matching results (before maxResults limit)
+    results: [...],            // Matches sliced to maxResults
+    cursor: 0,                 // Index of the selected item
+    selection: {
+        index: 0,              // Position in the results array
+        match: "Apple",        // The matched string (with highlights if enabled)
+        value: "Apple",        // The original data record
+        key: "name",           // Only present for object data with keys
+    },
+    event: MouseEvent,         // The triggering DOM event (click or keydown)
+}
+```
+
+##### Example (String data):
 
 ```js
 document.querySelector("#autoComplete").addEventListener("selection", function (event) {
-    // "event.detail" carries the autoComplete.js "feedback" object
-    console.log(event.detail);
+    const selection = event.detail.selection.value;
+    autoCompleteJS.input.value = selection;
+});
+```
+
+##### Example (Object data with keys):
+
+```js
+document.querySelector("#autoComplete").addEventListener("selection", function (event) {
+    const feedback = event.detail;
+    // Access the matched key's value from the original object
+    const selection = feedback.selection.value[feedback.selection.key];
+    autoCompleteJS.input.value = selection;
 });
 ```
 
@@ -721,3 +750,57 @@ document.querySelector("#autoComplete").addEventListener("clear", function (even
     console.log(event.detail);
 });
 ```
+
+***
+
+## Accessibility
+
+autoComplete.js implements the [WAI-ARIA 1.2 combobox pattern](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/) for screen reader and keyboard accessibility.
+
+***
+
+### ARIA Attributes
+
+When `wrapper: true` (default), the library generates this structure:
+
+| Element | Attribute | Value | Purpose |
+|---------|-----------|-------|---------|
+| Wrapper `<div>` | `role` | `"combobox"` | Identifies the composite widget |
+| Wrapper `<div>` | `aria-owns` | List element ID | Associates the listbox with the combobox |
+| Wrapper `<div>` | `aria-haspopup` | `true` | Indicates a popup listbox is available |
+| Wrapper `<div>` | `aria-expanded` | `true` / `false` | Reflects whether the list is open |
+| Input | `aria-controls` | List element ID | Points to the controlled listbox |
+| Input | `aria-autocomplete` | `"both"` | Indicates inline and list completion |
+| Input | `aria-activedescendant` | Active item ID | Tracks the currently highlighted result |
+| Results list | `role` | `"listbox"` | Identifies the list as a listbox |
+| Results list | `hidden` | (present/absent) | Controls visibility |
+| Each result item | `role` | `"option"` | Identifies each item as a selectable option |
+| Each result item | `aria-selected` | `true` / `false` | Reflects keyboard navigation state |
+
+When `wrapper: false`, the combobox ARIA attributes (`aria-owns`, `aria-haspopup`, `aria-expanded`) are applied directly to the input element.
+
+***
+
+### Keyboard Navigation
+
+| Key | Action |
+|-----|--------|
+| Arrow Down | Move to next result item (wraps to first) |
+| Arrow Up | Move to previous result item (wraps to last) |
+| Enter | Select the highlighted result item |
+| Tab | Select the highlighted result item (when `resultsList.tabSelect: true`) |
+| Escape | Close the results list and clear the input |
+
+All keyboard interactions update the corresponding ARIA attributes (`aria-activedescendant`, `aria-selected`, `aria-expanded`) in real time.
+
+***
+
+### Screen Reader Behavior
+
+The combobox pattern ensures that screen readers announce:
+- The input role and its autocomplete capability
+- When the results list opens or closes (via `aria-expanded`)
+- Which result item is currently highlighted during keyboard navigation (via `aria-activedescendant`)
+- The total number of available options (via the listbox role)
+
+For optimal screen reader support, use `wrapper: true` (default) so the combobox role is on a dedicated container element rather than the input itself.

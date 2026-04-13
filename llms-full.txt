@@ -14,6 +14,7 @@ autoComplete.js is a progressively designed autocomplete/autosuggest library tha
 - [FAQ](https://tarekraafat.github.io/autoComplete.js/#/faq): Frequently asked questions
 - [Styles](https://tarekraafat.github.io/autoComplete.js/#/styles): Available stylesheets and customization
 - [Playground](https://tarekraafat.github.io/autoComplete.js/#/playground): Interactive demo
+- [Comparison](https://tarekraafat.github.io/autoComplete.js/#/comparison): How autoComplete.js compares to other autocomplete libraries
 - [Used By](https://tarekraafat.github.io/autoComplete.js/#/used-by): Projects and organizations using autoComplete.js in production
 - [Release Notes](https://tarekraafat.github.io/autoComplete.js/#/release-notes): Full changelog and versioning guidelines
 - [Live Demo](https://tarekraafat.github.io/autoComplete.js/demo/): Working demo with real data
@@ -732,6 +733,61 @@ const autoCompleteJS = new autoComplete({
 });
 ```
 
+### Custom Search Engine (Fuse.js Integration)
+
+Use any external search library by passing a custom function to `searchEngine`. This example uses Fuse.js for weighted fuzzy matching with relevance scoring. Fuse.js is a separate dependency, not part of autoComplete.js.
+
+```js
+import Fuse from "fuse.js";
+
+const data = [
+    { name: "Apple", category: "Fruit" },
+    { name: "Carrot", category: "Vegetable" },
+];
+
+const fuse = new Fuse(data, {
+    keys: [{ name: "name", weight: 2 }, { name: "category", weight: 1 }],
+    threshold: 0.4,
+    includeScore: true,
+});
+
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: data,
+        keys: ["name"],
+        filter: (list) => {
+            const results = fuse.search(autoCompleteJS.input.value);
+            return results.map((r) => list.find((item) => item.value === r.item)).filter(Boolean);
+        },
+    },
+    searchEngine: (query, record) => {
+        if (record.toLowerCase().includes(query.toLowerCase())) return record;
+    },
+});
+```
+
+### Searching Across Multiple Keys
+
+```js
+const autoCompleteJS = new autoComplete({
+    data: {
+        src: [
+            { name: "Apple", category: "Fruit" },
+            { name: "Carrot", category: "Vegetable" },
+        ],
+        keys: ["name", "category"],
+    },
+    resultItem: {
+        element: (item, data) => {
+            item.innerHTML = `
+                <span>${data.match}</span>
+                <span style="color: gray; font-size: 0.8em;">in ${data.key}</span>
+            `;
+        },
+    },
+});
+```
+
 ## FAQ
 
 ### How do I get the selected value?
@@ -769,18 +825,36 @@ Set `submit: true` in the configuration.
 
 ## ARIA Accessibility
 
-autoComplete.js implements the WAI-ARIA 1.2 combobox pattern:
+autoComplete.js implements the WAI-ARIA 1.2 combobox pattern for screen reader and keyboard accessibility.
 
-- Wrapper `<div>`: `role="combobox"`, `aria-owns`, `aria-haspopup`, `aria-expanded`
-- Input element: `aria-controls`, `aria-autocomplete="both"`, `aria-activedescendant`
+### ARIA Attributes
+
+When `wrapper: true` (default):
+
+- Wrapper `<div>`: `role="combobox"`, `aria-owns` (list ID), `aria-haspopup="true"`, `aria-expanded` (true/false)
+- Input element: `aria-controls` (list ID), `aria-autocomplete="both"`, `aria-activedescendant` (active item ID)
 - Results list: `role="listbox"`, `hidden` attribute
-- Result items: `role="option"`, `aria-selected`
+- Result items: `role="option"`, `aria-selected` (true/false)
 
-Keyboard navigation:
-- Arrow Up/Down: Navigate results
+When `wrapper: false`, the combobox ARIA attributes (`aria-owns`, `aria-haspopup`, `aria-expanded`) are applied directly to the input element.
+
+### Keyboard Navigation
+
+- Arrow Down: Move to next result (wraps to first)
+- Arrow Up: Move to previous result (wraps to last)
 - Enter: Select highlighted result
-- Tab: Select highlighted result (when `tabSelect: true`)
+- Tab: Select highlighted result (when `resultsList.tabSelect: true`)
 - Escape: Close results list and clear input
+
+All keyboard interactions update `aria-activedescendant`, `aria-selected`, and `aria-expanded` in real time.
+
+### Screen Reader Behavior
+
+The combobox pattern ensures screen readers announce:
+- The input role and autocomplete capability
+- When the results list opens or closes (via `aria-expanded`)
+- Which result item is currently highlighted (via `aria-activedescendant`)
+- The total number of available options (via the listbox role)
 
 ## Features
 
@@ -798,6 +872,20 @@ Keyboard navigation:
 - Customizable result list and item rendering
 - Lifecycle events for full control
 - Multiple instances support
+
+## Comparison
+
+| Library | Size (gzip) | Dependencies | Framework | Drop-in | WAI-ARIA |
+|---------|-------------|--------------|-----------|---------|----------|
+| **autoComplete.js** | **~3.7 KB** | **0** | **None (vanilla JS)** | **Yes** | **Yes** |
+| Downshift | ~8 KB | 5 | React only | No | Yes |
+| Tom Select | ~16 KB | 1 | None | Yes | Partial |
+| Select2 | ~17 KB | jQuery | jQuery | Yes | Partial |
+| Choices.js | ~20 KB | 0 | None | Yes | Partial |
+| Algolia Autocomplete | ~25 KB | 5 | Any (Preact core) | Yes | Yes |
+| react-select | ~27 KB | 9 | React only | Yes | Yes |
+
+autoComplete.js is the smallest option in the category: zero dependencies, full WAI-ARIA 1.2 compliance, async data, debounce, lifecycle events, and custom search engine support.
 
 ## Used By
 
