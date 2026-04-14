@@ -63,6 +63,8 @@ export default function autoComplete(config) {
     maxResults: 5,
   };
   this.resultItem = { tag: "li" };
+  // Request ID counter to detect and discard stale async responses
+  this._requestId = 0;
   // Set all Configuration options
   configure(this);
   // Stage API methods

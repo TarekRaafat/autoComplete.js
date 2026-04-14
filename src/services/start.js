@@ -17,8 +17,12 @@ export default async function (ctx, q) {
 
   // Validate trigger condition
   if (condition) {
+    // Track this request to detect stale responses
+    const requestId = ++ctx._requestId;
     // Get from source
     await getData(ctx, queryVal);
+    // Discard if a newer request has been made since this one started
+    if (ctx._requestId !== requestId) return;
     // Check if data fetch failed
     if (ctx.feedback instanceof Error) return;
     // Find matching results to the query
