@@ -1,5 +1,8 @@
 # Changelog
 
+### v10.3.0 (Unreleased)
+- ➕ Added: Browser regression tests for source and distributed builds
+
 ### v10.2.10 ✨
 - ➕ Added: `llms.txt` for AI agent discoverability
 - 🔧 Fixed: Async function detection fails in transpiled environments (Thanks 👍 @folknor) #442
