@@ -42,3 +42,18 @@ for (const format of formats) {
     });
   }
 }
+
+for (const format of formats) for (const cache of [false, true]) {
+  test(format + ": synchronous sources, cache=" + cache, async () => {
+    const { value, errors } = await run(format, async ({ cache }) => {
+      let calls = 0;
+      const ac = await mount({ data: { src: () => { calls++; return ["apple", "banana"]; }, cache } });
+      ac.start("app"); await tick();
+      const first = ac.feedback && ac.feedback.results && ac.feedback.results[0].value;
+      ac.start("ban"); await tick();
+      return [first, ac.feedback && ac.feedback.results && ac.feedback.results[0].value, calls];
+    }, { cache });
+    assert.deepEqual(errors, []);
+    assert.deepEqual(value, ["apple", "banana", cache ? 1 : 2]);
+  });
+}

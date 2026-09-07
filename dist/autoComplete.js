@@ -247,7 +247,7 @@
       if (data.cache && data.store) return $return();
       return new Promise(function ($return, $error) {
         if (typeof data.src === "function") {
-          return data.src(query).then($return, $error);
+          return Promise.resolve(data.src(query)).then($return, $error);
         }
         return $return(data.src);
       }).then(function ($await_4) {

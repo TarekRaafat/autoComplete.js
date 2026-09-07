@@ -1,6 +1,7 @@
 # Changelog
 
 ### v10.3.0 (Unreleased)
+- 🔧 Fixed: Synchronous data source callbacks in distributed builds with cache enabled or disabled (Thanks 👍 @QuentiumYT) #492
 - ➕ Added: Browser regression tests for source and distributed builds
 
 ### v10.2.10 ✨
