@@ -188,6 +188,8 @@ const previous = (ctx) => {
  * @param {Number} index - of the selected result item
  */
 const select = (ctx, event, index) => {
+  if (ctx.input.matches(":disabled")) return;
+
   // Check if cursor within list range
   index = index >= 0 ? index : ctx.cursor;
 
