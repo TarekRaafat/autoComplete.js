@@ -11,7 +11,7 @@ const getData = async (ctx, query) => {
 
   if (data.cache && data.store) return;
 
-  ctx.feedback = data.store = typeof data.src === "function" ? await data.src(query) : data.src;
+  ctx.feedback = data.store = typeof data.src === "function" ? await Promise.resolve(data.src(query)) : data.src;
 
   /**
    * @emit {response} event on data request
